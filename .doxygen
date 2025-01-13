@@ -1,5 +1,5 @@
-PROJECT_NAME           = "Real-Time C++"
-PROJECT_BRIEF          = "Efficient Object-Oriented and Template Microcontroller Programming"
+PROJECT_NAME           = "em"
+PROJECT_BRIEF          = "embedded template"
 PROJECT_LOGO           = doc/logo.png
 HTML_OUTPUT            = doc/html
 OUTPUT_DIRECTORY       =
