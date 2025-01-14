@@ -32,7 +32,7 @@
             ],
             "defines": [
                 "L496DISCO", "STM32L496AGI", "CORTEXM", "CORTEXM4", "BARE",
-                "__FPU_PRESENT", "__FPU_USED"
+                "__FPU_PRESENT", "__FPU_USED", "HAVE_INITFINI_ARRAY"
             ],
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",

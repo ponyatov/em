@@ -54,7 +54,9 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+__attribute__((constructor(101))) void init101() { }
+__attribute__((constructor(102))) void init102() { }
+__attribute__((constructor)) void init() { }
 /* USER CODE END 0 */
 
 /**
