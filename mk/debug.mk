@@ -1,3 +1,6 @@
+
+ELF = $(BIN)/$(BINFILE).elf
+
 .PHONY: openocd
-openocd: $(BIN)/$(BINFILE).elf
-	ls -la $<
+openocd: $(CWD)/hw/$(HW).openocd $(ELF)
+	$@ -f $< -c "program $(ELF) verify reset"
