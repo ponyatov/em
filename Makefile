@@ -10,5 +10,6 @@ include mk/format.mk
 include mk/clean.mk
 include mk/doc.mk
 include mk/rule.mk
+include mk/libc.mk
 include mk/install.mk
 include mk/merge.mk
