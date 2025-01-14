@@ -17,7 +17,7 @@
             ]
         },
         {
-            "name": "l496disco",
+            "name": "cortexM",
             "type": "cppdbg",
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
