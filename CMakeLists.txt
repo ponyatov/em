@@ -18,6 +18,7 @@ file(GLOB_RECURSE LD
 )
 file(GLOB_RECURSE A
     "${CWD}/src/*.s*"
+    "${CWD}/hw/${HW}/*.s"
     "${CWD}/hw/${HW}/src/*.s"
     "${CWD}/cpu/${CPU}/src/*.s"
     "${CWD}/arch/${ARCH}/src/*.s"

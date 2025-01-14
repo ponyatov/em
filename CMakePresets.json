@@ -40,20 +40,14 @@
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
             "cacheVariables": {
-                "OS":"bare",
-                "WFLAGS": "-Wall -Wextra -Wpedantic -Wno-unused-parameter",
-                "FSECTIONS": "-fdata-sections -ffunction-sections"
+                "OS":"bare"
             }
         },
         {
             "name": "cortexM4",
             "hidden": true,
             "inherits": "cortexM",
-            "cacheVariables": {
-                "ARCH":"cortexM4",
-                "MCPU":"-mthumb -mcpu=cortex-m4",
-                "MFPU":"-mfpu=fpv4-sp-d16 -mfloat-abi=hard"
-            }
+            "cacheVariables": {"ARCH":"cortexM4"}
         },
         {
             "name": "l496disco",
