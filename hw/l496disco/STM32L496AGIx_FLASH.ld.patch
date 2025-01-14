@@ -1,0 +1,103 @@
+--- STM32L496AGIx_FLASH.ld	2025-01-13 14:56:16.941754779 +0400
++++ STM32L496AGIx_FLASH.ld.fix	2025-01-13 14:56:16.941754779 +0400
+@@ -53,17 +53,17 @@
+ ENTRY(Reset_Handler)
+ 
+ /* Highest address of the user mode stack */
+-_estack = ORIGIN() + LENGTH();    /* end of RAM */
++_estack = ORIGIN(CCMRAM) + LENGTH(CCMRAM);   /* end of CCMRAM */
+ /* Generate a link error if heap and stack don't fit into RAM */
+-_Min_Heap_Size = 0x200;      /* required amount of heap  */
++_Min_Heap_Size  = 0x200; /* required amount of heap  */
+ _Min_Stack_Size = 0x400; /* required amount of stack */
+ 
+ /* Specify the memory areas */
+ MEMORY
+ {
+-RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 256K
+-RAM2 (xrw)      : ORIGIN = 0x10000000, LENGTH = 64K
+-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 1024K
++RAM    (xrw)    : ORIGIN = 0x20000000, LENGTH = 256K
++CCMRAM (xrw)    : ORIGIN = 0x10000000, LENGTH = 64K
++FLASH  (rx)     : ORIGIN = 0x8000000 , LENGTH = 1024K
+ }
+ 
+ /* Define output sections */
+@@ -135,6 +135,7 @@
+     PROVIDE_HIDDEN (__init_array_end = .);
+ 	. = ALIGN(8);
+   } >FLASH
++
+   .fini_array :
+   {
+ 	. = ALIGN(8);
+@@ -149,19 +150,33 @@
+   _sidata = LOADADDR(.data);
+ 
+   /* Initialized data sections goes into RAM, load LMA copy after code */
+-  .data : 
++  .data :
+   {
+     . = ALIGN(8);
+     _sdata = .;        /* create a global symbol at data start */
+-    *(.data)           /* .data sections */
++    *(.data)           /* .data  sections */
+     *(.data*)          /* .data* sections */
+ 
+     . = ALIGN(8);
+     _edata = .;        /* define a global symbol at data end */
+-  } > AT> FLASH
++  } > RAM AT> FLASH
+ 
+-  
+-  /* Uninitialized data section */
++  /* used by the startup to initialize CCMRAM */
++  _siccm = LOADADDR(.ccm);
++
++  /* Initialized data goes into CCMRAM, load LMA copy after code */
++  .ccm :
++  {
++    . = ALIGN(8);
++    _sccm = .;        /* create a global symbol at ccm start */
++    *(.ccm)           /* .ccm  sections */
++    *(.ccm*)          /* .ccm* sections */
++
++    . = ALIGN(8);
++    _eccm = .;        /* define a global symbol at ccm end */
++  } > CCMRAM AT> FLASH
++
++/* Uninitialized data section */
+   . = ALIGN(4);
+   .bss :
+   {
+@@ -175,7 +190,7 @@
+     . = ALIGN(4);
+     _ebss = .;         /* define a global symbol at bss end */
+     __bss_end__ = _ebss;
+-  } >
++  } > RAM
+ 
+   /* User_heap_stack section, used to check that there is enough RAM left */
+   ._user_heap_stack :
+@@ -186,18 +201,13 @@
+     . = . + _Min_Heap_Size;
+     . = . + _Min_Stack_Size;
+     . = ALIGN(8);
+-  } >
+-
+-  
++  } > RAM
+ 
+   /* Remove information from the standard libraries */
+   /DISCARD/ :
+   {
+-    libc.a ( * )
+-    libm.a ( * )
++    libc.a   ( * )
++    libm.a   ( * )
+     libgcc.a ( * )
+   }
+-
+ }
+-
+-

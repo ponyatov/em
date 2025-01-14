@@ -1,0 +1,61 @@
+{
+    "version": 6,
+    "buildPresets": [
+        {
+            "name":              "linux",
+            "configurePreset":   "linux",
+            "targets":          ["all","install"]
+        },
+        {
+            "name":              "l496disco",
+            "configurePreset":   "l496disco",
+            "targets":          ["all","install"]
+        }
+    ],
+    "configurePresets": [
+        {
+            "name": "common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/tmp/${presetName}",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_VERBOSE_MAKEFILE": true,
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux",
+            "inherits": "common",
+            "displayName": "x86_64-linux-gnu",
+            "description": "native host",
+            "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
+            "cacheVariables": {
+                "HW":"pc", "CPU":"i5", "ARCH":"x86_64", "OS":"linux"
+            }
+        },
+        {
+            "name": "cortexM",
+            "hidden": true,
+            "inherits": "common",
+            "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables": {
+                "OS":"bare"
+            }
+        },
+        {
+            "name": "cortexM4",
+            "hidden": true,
+            "inherits": "cortexM",
+            "cacheVariables": {"ARCH":"cortexM4"}
+        },
+        {
+            "name": "l496disco",
+            "inherits": "cortexM4",
+            "cacheVariables": {
+                "HW" :"l496disco",
+                "CPU":"stm32l496agi", "SERIES": "STM32L4"
+            }
+        }
+    ]
+}
