@@ -29,6 +29,10 @@ file(GLOB_RECURSE C
     "${CWD}/cpu/${CPU}/src/*.c*"
     "${CWD}/arch/${ARCH}/src/*.c*"
     "${CWD}/os/${OS}/src/*.c*"
+    # CortexM/CubeMX
+    "${CWD}/hw/${HW}/Core/Src/*.c*"
+    "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Source/*.c*"
+    "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Src/*.c*"
 )
 file(GLOB_RECURSE H
     "${CWD}/inc/*.h*"
@@ -36,6 +40,11 @@ file(GLOB_RECURSE H
     "${CWD}/cpu/${CPU}/inc/*.h*"
     "${CWD}/arch/${ARCH}/inc/*.h*"
     "${CWD}/os/${OS}/inc/*.h*"
+    # CortexM/CubeMX
+    "${CWD}/hw/${HW}/Core/Inc/*.h*"
+    "${CWD}/hw/${HW}/Drivers/CMSIS/Include/*.h*"
+    "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include/*.h*"
+    "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc/*.h*"
 )
 
 include_directories(
@@ -44,6 +53,11 @@ include_directories(
     "${CWD}/cpu/${CPU}/inc"
     "${CWD}/arch/${ARCH}/inc"
     "${CWD}/os/${OS}/inc"
+    # CortexM/CubeMX
+    "${CWD}/hw/${HW}/Core/Inc"
+    "${CWD}/hw/${HW}/Drivers/CMSIS/Include"
+    "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include"
+    "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc"
 )
 
 # include(syntax)
@@ -68,6 +82,14 @@ install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 # cross compiler binaries
 set(ELF ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.elf)
 set(DFU ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.dfu)
+
+add_custom_target(clean_all
+    COMMAND rm -rf
+        ${ELF} ${DFU}
+        ${TMP}/${CMAKE_PROJECT_NAME}*
+        ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME}*
+        ${CMAKE_BINARY_DIR}
+)
 
 add_custom_command(
     OUTPUT  ${DFU}

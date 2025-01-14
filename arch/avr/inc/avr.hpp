@@ -1,2 +1,2 @@
 /// @defgroup avr avr
-/// @ingroup avr
+/// @ingroup arch

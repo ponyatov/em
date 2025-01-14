@@ -1,6 +1,7 @@
-HW ?= pc
+# HW ?= pc
 # HW ?= mega2560
-# HW ?= stm32l496g
+# HW ?= f4disco
+HW ?= l496disco
 
 include   hw/$(HW).mk
 include  cpu/$(CPU).mk
