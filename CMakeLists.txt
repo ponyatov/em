@@ -45,6 +45,8 @@ include_directories(
     "${CWD}/os/${OS}/inc"
 )
 
+# include(syntax)
+
 message("-- toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
 message("--    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH})
 message("--        os: " ${OS})
@@ -60,3 +62,20 @@ target_link_libraries(${CMAKE_PROJECT_NAME})
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME})
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+set(ELF ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.elf)
+set(DFU ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.dfu)
+
+add_custom_command(
+    OUTPUT  ${ELF}
+    DEPENDS ${PROJECT_NAME}
+)
+add_custom_target(elf DEPENDS ${ELF})
+
+add_custom_command(
+    OUTPUT  ${DFU}
+    DEPENDS ${ELF}
+    COMMAND ../elf2dfuse/bin/elf2dfuse ${ELF} ${DFU}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+add_custom_target(dfu DEPENDS ${DFU})
