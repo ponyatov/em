@@ -1,0 +1,49 @@
+{
+    "version": 6,
+    "buildPresets": [
+    ],
+    "configurePresets": [
+        {
+            "name": "common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/tmp/${presetName}",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_VERBOSE_MAKEFILE": true,
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux",
+            "inherits": "common",
+            "displayName": "x86_64-linux-gnu",
+            "description": "native host",
+            "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
+            "cacheVariables": {
+                "HW":"pc", "CPU":"i5", "ARCH":"x86_64", "OS":"linux"
+            }
+        },
+        {
+            "name": "cortexM",
+            "hidden": true,
+            "inherits": "common",
+            "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables": {
+                "OS":"bare",
+                "WFLAGS": "-Wall -Wextra -Wpedantic -Wno-unused-parameter",
+                "FSECTIONS": "-fdata-sections -ffunction-sections"
+            }
+        },
+        {
+            "name": "cortexM4",
+            "hidden": true,
+            "inherits": "cortexM",
+            "cacheVariables": {
+                "ARCH":"cortexM4",
+                "MCPU":"-mthumb -mcpu=cortex-m4",
+                "MFPU":"-mfpu=fpv4-sp-d16 -mfloat-abi=hard"
+            }
+        }
+    ]
+}
