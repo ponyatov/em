@@ -31,7 +31,8 @@
                 "-mfpu=fpv4-sp-d16 -mfloat-abi=hard"
             ],
             "defines": [
-                "STM32L496G", "STM32L496AGI", "CORTEXM", "CORTEXM4", "BARE"
+                "L496DISCO", "STM32L496AGI", "CORTEXM", "CORTEXM4", "BARE",
+                "__FPU_PRESENT", "__FPU_USED"
             ],
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",
