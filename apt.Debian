@@ -1,0 +1,7 @@
+git make curl
+code meld doxygen clang-format
+cmake g++ flex bison libreadline-dev
+gcc-arm-none-eabi  gdb-multiarch qemu-system-arm
+gcc-avr avr-libc   gdb-avr       qemu-system-avr
+g++-i686-linux-gnu               qemu-system-i386
+g++-mingw-w64-i686               wine32
