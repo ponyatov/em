@@ -29,8 +29,9 @@
             "useExtendedRemote": true,
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
-                {"text": "b Reset_Handler"},
-                {"text": "b SystemInit"},
+                {"text":"set substitute-path /home/pere/src/newlib-salsa ~/stm32/ref/newlib-salsa"},
+                // {"text": "b Reset_Handler"},
+                // {"text": "b SystemInit"},
             ],
         }
     ]

@@ -16,3 +16,10 @@ b SystemInit
 b main
 c
 
+# layout split
+# layout asm
+# layout reg
+# set substitute-path ../../../../../../../../newlib ~/stm32/ref/newlib-salsa/newlib
+# set substitute-path /home/dponyatov/flic/ ./
+set substitute-path /home/pere/src/newlib-salsa /home/dponyatov/stm32/ref/newlib-salsa
+
