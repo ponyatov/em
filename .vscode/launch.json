@@ -20,7 +20,18 @@
             "name": "l496disco",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${command:cmake.launchTargetPath}"
+            "program": "${command:cmake.launchTargetPath}",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb-multiarch",
+            "miDebuggerArgs": "--silent",
+            "miDebuggerServerAddress": "localhost:12345",
+            "useExtendedRemote": true,
+            "postRemoteConnectCommands": [
+                {"text": "monitor reset halt"},
+                {"text": "b Reset_Handler"},
+                {"text": "b SystemInit"},
+            ],
         }
     ]
 }
