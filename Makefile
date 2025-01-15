@@ -12,5 +12,6 @@ include mk/clean.mk
 include mk/doc.mk
 include mk/rule.mk
 include mk/libc.mk
+include mk/stm32.mk
 include mk/install.mk
 include mk/merge.mk
