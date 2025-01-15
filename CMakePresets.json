@@ -7,6 +7,11 @@
             "targets":          ["all","install"]
         },
         {
+            "name":              "pillF030",
+            "configurePreset":   "pillF030",
+            "targets":          ["all","install"]
+        },
+        {
             "name":              "l496disco",
             "configurePreset":   "l496disco",
             "targets":          ["all","install"]
@@ -44,10 +49,24 @@
             }
         },
         {
+            "name": "cortexM0",
+            "hidden": true,
+            "inherits": "cortexM",
+            "cacheVariables": {"ARCH":"cortexM0"}
+        },
+        {
             "name": "cortexM4",
             "hidden": true,
             "inherits": "cortexM",
             "cacheVariables": {"ARCH":"cortexM4"}
+        },
+        {
+            "name": "pillF030",
+            "inherits": "cortexM0",
+            "cacheVariables": {
+                "HW" :"pillF030",
+                "CPU":"stm32f030f4p", "SERIES": "STM32F0"
+            }
         },
         {
             "name": "l496disco",
