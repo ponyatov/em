@@ -9,5 +9,7 @@ $(DISTR)/STM32/$(CUBEMX_GZ):
 .PHONY: cubemx
 cubemx: $(HOME)/STM32/CubeMX/STM32CubeMX
 $(HOME)/STM32/CubeMX/STM32CubeMX: /tmp/cubemx/SetupSTM32CubeMX-$(CUBEMX_VER)
+	- $^
+	touch $@
 /tmp/cubemx/SetupSTM32CubeMX-$(CUBEMX_VER): $(DISTR)/STM32/$(CUBEMX_GZ)
 	unzip $< -d $(dir $@) && touch $@
