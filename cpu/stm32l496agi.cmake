@@ -1,3 +1,7 @@
-add_compile_options(
-    -DSTM32L496xx
+add_compile_definitions(
+	PREFETCH_ENABLE=0
+	MSI_VALUE=4000000
+	HSI_VALUE=16000000
+	LSI_VALUE=32000
+	STM32L496xx
 )

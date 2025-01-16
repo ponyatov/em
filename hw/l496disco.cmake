@@ -1,0 +1,5 @@
+add_compile_definitions(
+	HSE_VALUE=8000000
+	LSE_VALUE=32768
+	VDD_VALUE=3300
+)
