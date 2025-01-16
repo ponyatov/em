@@ -91,8 +91,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  /* USER CODE BEGIN 2 */
 
+  /* USER CODE BEGIN 2 */
+    const size_t RAM_SZ = 0x10000;
+    void *ram = NULL;
+    assert(ram = malloc(RAM_SZ));
   /* USER CODE END 2 */
 
   /* Infinite loop */

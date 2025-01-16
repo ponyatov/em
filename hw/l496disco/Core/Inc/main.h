@@ -44,7 +44,9 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdint.h>
+#include <stdlib.h>
+#include <assert.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
