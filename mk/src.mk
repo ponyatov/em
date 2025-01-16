@@ -12,3 +12,12 @@ H += $(wildcard   os/$(OS)/inc/*.h*)
 
 CP += $(TMP)/$(MODULE).parser.cpp $(TMP)/$(MODULE).lexer.cpp
 HP += $(TMP)/$(MODULE).parser.hpp
+
+C += $(wildcard lib/c/src/*.c*)
+H += $(wildcard lib/c/inc/*.h*)
+C += $(wildcard lib/gloss/src/*.c*)
+H += $(wildcard lib/gloss/inc/*.h*)
+C += $(wildcard lib/cli/src/*.c*)
+H += $(wildcard lib/cli/inc/*.h*)
+C += $(wildcard lib/led/src/*.c*)
+H += $(wildcard lib/led/inc/*.h*)
