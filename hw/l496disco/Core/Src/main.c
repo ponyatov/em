@@ -99,7 +99,7 @@ int main(void)
     void *ram = malloc(RAM_SZ);
 
     const char *ccm = hello;
-    void *hp =heap_ptr;
+    // void *hp =heap_ptr;
     void *brk = (void*)sbrk(RAM_SZ);
   /* USER CODE END 2 */
 
