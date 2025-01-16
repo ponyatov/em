@@ -1,5 +1,5 @@
---- STM32L496AGIx_FLASH.ld	2025-01-13 14:56:16.941754779 +0400
-+++ STM32L496AGIx_FLASH.ld.fix	2025-01-13 14:56:16.941754779 +0400
+--- STM32L496AGIx_FLASH.ld	2025-01-16 13:55:24.537476865 +0400
++++ STM32L496AGIx_FLASH.ld.fix	2025-01-16 13:56:41.361476002 +0400
 @@ -53,17 +53,17 @@
  ENTRY(Reset_Handler)
  
@@ -23,6 +23,26 @@
  }
  
  /* Define output sections */
+@@ -103,8 +103,8 @@
+     . = ALIGN(8);
+   } >FLASH
+ 
+-  .ARM.extab   : 
+-  { 
++  .ARM.extab   :
++  {
+   . = ALIGN(8);
+   *(.ARM.extab* .gnu.linkonce.armextab.*)
+   . = ALIGN(8);
+@@ -125,7 +125,7 @@
+     PROVIDE_HIDDEN (__preinit_array_end = .);
+ 	. = ALIGN(8);
+   } >FLASH
+-  
++
+   .init_array :
+   {
+ 	. = ALIGN(8);
 @@ -135,6 +135,7 @@
      PROVIDE_HIDDEN (__init_array_end = .);
  	. = ALIGN(8);
@@ -48,9 +68,7 @@
      _edata = .;        /* define a global symbol at data end */
 -  } > AT> FLASH
 +  } > RAM AT> FLASH
- 
--  
--  /* Uninitialized data section */
++
 +  /* used by the startup to initialize CCMRAM */
 +  _siccm = LOADADDR(.ccm);
 +
@@ -61,7 +79,9 @@
 +    _sccm = .;        /* create a global symbol at ccm start */
 +    *(.ccm)           /* .ccm  sections */
 +    *(.ccm*)          /* .ccm* sections */
-+
+ 
+-  
+-  /* Uninitialized data section */
 +    . = ALIGN(8);
 +    _eccm = .;        /* define a global symbol at ccm end */
 +  } > CCMRAM AT> FLASH
