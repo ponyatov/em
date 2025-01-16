@@ -45,7 +45,8 @@
             "defines": [
                 "L496DISCO", "STM32L496AGI", "CORTEXM", "CORTEXM4", "BARE",
                 "__FPU_PRESENT", "__FPU_USED",
-                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI", "DEFINE_MALLOC",
+                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI",
+                "DEFINE_MALLOC", "INTERNAL_NEWLIB", // !__SINGLE_THREAD__
                 "RCC"
             ],
             "cStandard": "gnu17",
