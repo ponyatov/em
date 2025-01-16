@@ -20,7 +20,7 @@
             "compilerPath": "/usr/bin/x86_64-linux-gnu-g++"
         },
         {
-            "name": "arm-none-eabi",
+            "name": "l496disco",
             "includePath": [
                 "${workspaceFolder}/inc/**",
                 "${workspaceFolder}/tmp/**",
@@ -33,6 +33,25 @@
             "defines": [
                 "L496DISCO", "STM32L496AGI", "CORTEXM", "CORTEXM4", "BARE",
                 "__FPU_PRESENT", "__FPU_USED",
+                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI"
+            ],
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/arm-none-eabi-g++"
+        },
+        {
+            "name": "pillF030",
+            "includePath": [
+                "${workspaceFolder}/inc/**",
+                "${workspaceFolder}/tmp/**",
+                "${workspaceFolder}/src/**"
+            ],
+            "compilerArgs": [
+                "-mthumb =march=armv6m -mcpu=cortex-m0"
+            ],
+            "defines": [
+                "PILLF030", "STM32F040F4P", "CORTEXM", "CORTEXM0", "BARE",
                 "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI"
             ],
             "cStandard": "gnu17",

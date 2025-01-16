@@ -1,5 +1,6 @@
 # HW ?= pc
 # HW ?= mega2560
+# HW ?= pillF030
 # HW ?= f4disco
 HW ?= l496disco
 

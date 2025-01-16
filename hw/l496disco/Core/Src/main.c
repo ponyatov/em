@@ -54,10 +54,6 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-__attribute__((constructor(101))) void init101() { }
-__attribute__((constructor(102))) void init102() { }
-__attribute__((constructor)) void init() { }
-__attribute__ ((section (".ccm"))) static const char hello[] = "hello" ;
 /* USER CODE END 0 */
 
 /**
@@ -68,7 +64,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    char h = hello[0];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
