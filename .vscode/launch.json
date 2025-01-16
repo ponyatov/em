@@ -35,8 +35,8 @@
                 // {"text": "b Reset_Handler"},
                 // {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
-                {"text": "b main"},
-                {"text": "b MX_GPIO_Init"},
+                // {"text": "b main"},
+                // {"text": "b MX_GPIO_Init"},
             ],
         }
     ]
