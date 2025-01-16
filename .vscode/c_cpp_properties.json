@@ -24,7 +24,15 @@
             "includePath": [
                 "${workspaceFolder}/inc/**",
                 "${workspaceFolder}/tmp/**",
-                "${workspaceFolder}/src/**"
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/hw/l496disco/inc",
+                "${workspaceFolder}/cpu/stm32l496agi/inc",
+                "${workspaceFolder}/arch/cortexM4/inc",
+                "${workspaceFolder}/os/bare/inc",
+                "${workspaceFolder}/hw/l496disco/Core/Inc",
+                "${workspaceFolder}/hw/l496disco/Drivers/CMSIS/Include",
+                "${workspaceFolder}/hw/l496disco/Drivers/CMSIS/Device/ST/STM32L4xx/Include",
+                "${workspaceFolder}/hw/l496disco/Drivers/STM32L4xx_HAL_Driver/Inc"
             ],
             "compilerArgs": [
                 "-mthumb -mcpu=cortex-m4",
@@ -45,7 +53,11 @@
             "includePath": [
                 "${workspaceFolder}/inc/**",
                 "${workspaceFolder}/tmp/**",
-                "${workspaceFolder}/src/**"
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/hw/pillF030/inc",
+                "${workspaceFolder}/cpu/stm32f030f4p/inc",
+                "${workspaceFolder}/arch/cortexM0/inc",
+                "${workspaceFolder}/os/bare/inc"
             ],
             "compilerArgs": [
                 "-mthumb =march=armv6m -mcpu=cortex-m0"
