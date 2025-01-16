@@ -22,6 +22,7 @@
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
             "cwd": "${workspaceFolder}",
+            "preLaunchTask": "cmake: build",
             "MIMode": "gdb",
             "miDebuggerPath": "gdb-multiarch",
             "miDebuggerArgs": "--silent",
