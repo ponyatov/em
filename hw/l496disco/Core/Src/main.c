@@ -21,6 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
+extern void* heap_ptr;
 
 /* USER CODE END Includes */
 
@@ -54,6 +56,7 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static const char hello[] = "hello";
 /* USER CODE END 0 */
 
 /**
@@ -93,9 +96,12 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-    const size_t RAM_SZ = 0x10000;
-    void *ram = NULL;
-    assert(ram = malloc(RAM_SZ));
+    const size_t RAM_SZ = 0x10;
+    void *ram = malloc(RAM_SZ);
+
+    const char *ccm = hello;
+    void *hp =heap_ptr;
+    void *brk = (void*)sbrk(RAM_SZ);
   /* USER CODE END 2 */
 
   /* Infinite loop */

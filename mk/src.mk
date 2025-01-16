@@ -1,5 +1,5 @@
-C += $(wildcard src/*.c*)
-H += $(wildcard inc/*.h*)
+C += $(wildcard src/*.c*) $(wildcard src/rtos/*.c*)
+H += $(wildcard inc/*.h*) $(wildcard inc/rtos/*.h*)
 
 C += $(wildcard   hw/$(HW)/src/*.c*)
 H += $(wildcard   hw/$(HW)/inc/*.h*)
@@ -12,4 +12,3 @@ H += $(wildcard   os/$(OS)/inc/*.h*)
 
 CP += $(TMP)/$(MODULE).parser.cpp $(TMP)/$(MODULE).lexer.cpp
 HP += $(TMP)/$(MODULE).parser.hpp
-

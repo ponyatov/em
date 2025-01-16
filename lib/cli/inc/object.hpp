@@ -1,7 +1,7 @@
-/// @defgroup core core
+/// @defgroup cli cli
 
 /// @defgroup object object
-/// @ingroup core
+/// @ingroup cli
 /// @{
 
 class Object {};
