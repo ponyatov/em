@@ -25,10 +25,14 @@
                 "${workspaceFolder}/inc/**",
                 "${workspaceFolder}/tmp/**",
                 "${workspaceFolder}/src/**",
+                // libc
+                "${workspaceFolder}/os/bare/inc",
+                "${workspaceFolder}/lib/c/inc/**",
+                "${workspaceFolder}/lib/gloss/inc/**",
+                // hw
                 "${workspaceFolder}/hw/l496disco/inc",
                 "${workspaceFolder}/cpu/stm32l496agi/inc",
                 "${workspaceFolder}/arch/cortexM4/inc",
-                "${workspaceFolder}/os/bare/inc",
                 "${workspaceFolder}/hw/l496disco/Core/Inc",
                 "${workspaceFolder}/hw/l496disco/Drivers/CMSIS/Include",
                 "${workspaceFolder}/hw/l496disco/Drivers/CMSIS/Device/ST/STM32L4xx/Include",

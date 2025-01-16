@@ -47,6 +47,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "libgloss.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

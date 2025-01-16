@@ -30,6 +30,9 @@ file(GLOB_RECURSE C
     "${CWD}/cpu/${CPU}/src/*.c*"
     "${CWD}/arch/${ARCH}/src/*.c*"
     "${CWD}/os/${OS}/src/*.c*"
+    # libc
+    "${CWD}/lib/c/src/*.c*"
+    "${CWD}/lib/gloss/src/*.c*"
     # CortexM/CubeMX
     "${CWD}/hw/${HW}/Core/Src/*.c*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Source/*.c*"
@@ -41,6 +44,9 @@ file(GLOB_RECURSE H
     "${CWD}/cpu/${CPU}/inc/*.h*"
     "${CWD}/arch/${ARCH}/inc/*.h*"
     "${CWD}/os/${OS}/inc/*.h*"
+    # libc
+    "${CWD}/lib/c/inc/*.h*"
+    "${CWD}/lib/gloss/inc/*.h*"
     # CortexM/CubeMX
     "${CWD}/hw/${HW}/Core/Inc/*.h*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include/*.h*"
@@ -54,6 +60,9 @@ include_directories(
     "${CWD}/cpu/${CPU}/inc"
     "${CWD}/arch/${ARCH}/inc"
     "${CWD}/os/${OS}/inc"
+    # libc
+    "${CWD}/lib/c/inc"
+    "${CWD}/lib/gloss/inc"
     # CortexM/CubeMX
     "${CWD}/hw/${HW}/Core/Inc"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include"

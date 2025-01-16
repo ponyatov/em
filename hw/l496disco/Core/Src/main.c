@@ -22,7 +22,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
-extern void* heap_ptr;
 
 /* USER CODE END Includes */
 
