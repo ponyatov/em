@@ -7,6 +7,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// @name status
 /// @{
 #define SRAM_OK 0x00
@@ -59,3 +63,7 @@ uint8_t BSP_SRAM_WriteData_DMA(uint32_t uwStartAddress, uint16_t *pData,
 void BSP_SRAM_DMA_IRQHandler(void);
 
 /// @}
+
+#ifdef __cplusplus
+}
+#endif
