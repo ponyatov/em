@@ -21,7 +21,9 @@ DOXY    = .doxygen $(subst $(EM)/,,$(shell find $(EM)/doc/* -maxdepth 0 -type f)
 COPY   += $(DOXY)
 
 MK      = Makefile $(subst $(EM)/,,$(shell find $(EM)/mk/* -maxdepth 0 -type f))
-COPY   += $(MK)
+COPY   += Makefile mk/var.mk mk/cfg.mk mk/cross.mk mk/dirs.mk mk/tool.mk
+COPY   += mk/src.mk mk/cfg.mk mk/all.mk mk/format.mk mk/doc.mk
+COPY   += mk/install.mk mk/merge.mk
 
 HW      = $(subst $(EM)/,,$(shell find $(EM)/hw/* -maxdepth 1 -type d))
 
@@ -67,16 +69,20 @@ copy: $(COPY)
 
 .PHONY: meld
 meld:
-	meld .doxygen $(EM)/.doxygen
+	meld .doxygen          $(EM)/.doxygen
+	meld CMakeLists.txt    $(EM)/CMakeLists.txt
+	meld CMakePresets.json $(EM)/CMakePresets.json
+	meld .vscode           $(EM)/.vscode
+	meld mk                $(EM)/mk
 
 apt.Debian: $(EM)/apt.Debian
 	head -n5 $< > $@
 doc/%: $(EM)/doc/%
 	cp $< $@ ; git add -f $@
+mk/%: $(EM)/mk/% $(EM)/template
+	cp $< $@
 %: $(EM)/% $(EM)/template
 	cp $< $@
-# mk/%: $(EM)/mk/%
-# 	cp $< $@
 # cmake/%: $(EM)/cmake/%
 # 	cp $< $@
 # hw/%: $(EM)/hw/% $(EM)/template
