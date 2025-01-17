@@ -1,19 +1,21 @@
 #!/usr/bin/make -f
 
-EM  = $(HOME)/em
-CWD = $(CURDIR)
+MODULE  = $(notdir $(CURDIR))
+EM      = $(HOME)/em
+CWD     = $(CURDIR)
 
 DIRS   += .vscode $(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type d))
 FILES  += $(subst template,,$(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type f)))
 COPY   += .clang-format apt.Debian Makefile
 
 VSCODE  = $(subst $(EM)/,,$(shell find $(EM)/.vscode -type f -regex .+.json))
+FILES  += $(VSCODE)
 COPY   += .vscode/tasks.json .vscode/launch.json
 
 TMPDIR  = bin doc ref tmp
 CMAKE   = $(subst $(EM)/,,$(shell ls $(EM)/CMake*))
+FILES  += $(CMAKE)
 COPY   += $(subst $(EM)/,,$(shell find $(EM)/cmake -type f -regex '.+.cmake'))
-
 
 DOXY    = .doxygen $(subst $(EM)/,,$(shell find $(EM)/doc/* -maxdepth 0 -type f))
 COPY   += $(DOXY)
@@ -23,7 +25,6 @@ COPY   += $(MK)
 
 HW      = $(subst $(EM)/,,$(shell find $(EM)/hw/* -maxdepth 1 -type d))
 
-MODULE  = $(notdir $(CURDIR))
 PROJECT = inc/$(MODULE).hpp src/$(MODULE).cpp src/$(MODULE).lex src/$(MODULE).yacc
 
 # host Linux
@@ -48,7 +49,7 @@ template: dirs giti copy empty meld
 
 .PHONY: dirs
 dirs:
-	mkdir -p $(DIRS) ; 
+	mkdir -p $(DIRS)
 
 .PHONY: giti
 giti:
@@ -59,21 +60,22 @@ giti:
 
 .PHONY: empty
 empty:
-	touch $(VSCODE) $(CMAKE) $(FILES) $(MK) $(PROJECT)
+	touch $(FILES) $(MK) $(PROJECT)
 
 .PHONY: copy
 copy: $(COPY)
 
 .PHONY: meld
 meld:
+	meld .doxygen $(EM)/.doxygen
 
-# apt.Debian: $(EM)/apt.Debian
-# 	head -n5 $< > $@
-# doc/%: $(EM)/doc/%
-# 	cp $< $@ ; git add -f $@
+apt.Debian: $(EM)/apt.Debian
+	head -n5 $< > $@
+doc/%: $(EM)/doc/%
+	cp $< $@ ; git add -f $@
+%: $(EM)/% $(EM)/template
+	cp $< $@
 # mk/%: $(EM)/mk/%
-# 	cp $< $@
-# %: $(EM)/%
 # 	cp $< $@
 # cmake/%: $(EM)/cmake/%
 # 	cp $< $@
