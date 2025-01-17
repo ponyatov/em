@@ -5,6 +5,8 @@
 /// @ingroup stm32l496g
 /// @{
 
+#include <stdint.h>
+
 /// @name status
 /// @{
 #define SRAM_OK 0x00
@@ -26,6 +28,34 @@
 /// @brief burst access mode
 #define SRAM_BURSTACCESS FMC_BURST_ACCESS_MODE_DISABLE
 
+/// @brief burst write mode
+#define SRAM_WRITEBURST FMC_WRITE_BURST_DISABLE
+
 /// @}
+
+/// @name timings for IS66WV51216EBLL-70BLI
+/// @brief clock at 80 MHz (period of 12.5 ns)
+/// @{
+
+/** @brief 60ns */
+#define SRAM_ADDR_SETUP_TIME 5
+
+/** @brief 30ns */
+#define SRAM_DATA_SETUP_TIME 3
+
+/** @brief 5ns */
+#define SRAM_TURN_AROUND_TIME 1
+/// @}
+
+uint8_t BSP_SRAM_Init(void);
+uint8_t BSP_SRAM_ReadData(uint32_t uwStartAddress, uint16_t *pData,
+                          uint32_t uwDataSize);
+uint8_t BSP_SRAM_ReadData_DMA(uint32_t uwStartAddress, uint16_t *pData,
+                              uint32_t uwDataSize);
+uint8_t BSP_SRAM_WriteData(uint32_t uwStartAddress, uint16_t *pData,
+                           uint32_t uwDataSize);
+uint8_t BSP_SRAM_WriteData_DMA(uint32_t uwStartAddress, uint16_t *pData,
+                               uint32_t uwDataSize);
+void BSP_SRAM_DMA_IRQHandler(void);
 
 /// @}
