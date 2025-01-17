@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
-
+#include "app.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +55,6 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static const char hello[] = "hello";
 /* USER CODE END 0 */
 
 /**
@@ -95,12 +94,8 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-    const size_t RAM_SZ = 0x10;
-    void *ram = malloc(RAM_SZ);
-
-    const char *ccm = hello;
-    // void *hp =heap_ptr;
-    void *brk = _sbrk(RAM_SZ);
+  setup();
+  arg(0,"em");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,7 +103,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    loop();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

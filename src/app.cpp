@@ -1,4 +1,10 @@
 #include "app.hpp"
 
-void setup() {}
-void loop() {}
+void setup() {  //
+}
+
+void arg(int argc, char *argv) {  //
+}
+
+void loop() {  //
+}

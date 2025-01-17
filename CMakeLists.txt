@@ -63,7 +63,7 @@ include_directories(
     "${CWD}/cpu/${CPU}/inc"
     "${CWD}/arch/${ARCH}/inc"
     "${CWD}/os/${OS}/inc"
-    "${CWD}/core/inc"
+    "${CWD}/lib/core/inc"
     # libc
     "${CWD}/lib/c/inc"
     "${CWD}/lib/gloss/inc"
