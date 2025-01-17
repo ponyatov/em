@@ -18,11 +18,12 @@ file(GLOB_RECURSE LD
 )
 file(GLOB_RECURSE A
     "${CWD}/src/*.s*"
-    "${CWD}/hw/${HW}/*.s"
-    "${CWD}/hw/${HW}/src/*.s"
-    "${CWD}/cpu/${CPU}/src/*.s"
-    "${CWD}/arch/${ARCH}/src/*.s"
-    "${CWD}/os/${OS}/src/*.s"
+    "${CWD}/hw/${HW}/*.s*"
+    "${CWD}/hw/${HW}/src/*.s*"
+    "${CWD}/cpu/${CPU}/src/*.s*"
+    "${CWD}/arch/${ARCH}/src/*.s*"
+    "${CWD}/os/${OS}/src/*.s*"
+    "${CWD}/lib/core/src/*.s*"
 )
 file(GLOB_RECURSE C
     "${CWD}/src/*.c*"
@@ -30,6 +31,7 @@ file(GLOB_RECURSE C
     "${CWD}/cpu/${CPU}/src/*.c*"
     "${CWD}/arch/${ARCH}/src/*.c*"
     "${CWD}/os/${OS}/src/*.c*"
+    "${CWD}/lib/core/src/*.c*"
     # libc
     "${CWD}/lib/c/src/*.c*"
     "${CWD}/lib/gloss/src/*.c*"
@@ -44,6 +46,7 @@ file(GLOB_RECURSE H
     "${CWD}/cpu/${CPU}/inc/*.h*"
     "${CWD}/arch/${ARCH}/inc/*.h*"
     "${CWD}/os/${OS}/inc/*.h*"
+    "${CWD}/lib/core/src/*.h*"
     # libc
     "${CWD}/lib/c/inc/*.h*"
     "${CWD}/lib/gloss/inc/*.h*"
@@ -60,6 +63,7 @@ include_directories(
     "${CWD}/cpu/${CPU}/inc"
     "${CWD}/arch/${ARCH}/inc"
     "${CWD}/os/${OS}/inc"
+    "${CWD}/core/inc"
     # libc
     "${CWD}/lib/c/inc"
     "${CWD}/lib/gloss/inc"
