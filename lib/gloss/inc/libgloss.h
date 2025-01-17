@@ -3,7 +3,7 @@
 /// @ingroup libc
 /// @{
 
-/// @brief extend heap
+/// @brief expand heap
 extern char* sbrk(int nbytes);
 
 /// @brief top of heap for @ref sbrk

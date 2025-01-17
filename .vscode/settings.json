@@ -27,7 +27,7 @@
     },
     "files.associations": {
         "*.openocd": "properties", "*.gdb*": "properties",
-        "*.ld": "linkerscript"
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
     },
 
     // editor

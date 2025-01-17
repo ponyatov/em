@@ -100,7 +100,7 @@ int main(void)
 
     const char *ccm = hello;
     // void *hp =heap_ptr;
-    void *brk = (void*)sbrk(RAM_SZ);
+    void *brk = _sbrk(RAM_SZ);
   /* USER CODE END 2 */
 
   /* Infinite loop */
