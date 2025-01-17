@@ -1,2 +1,87 @@
 #!/usr/bin/make -f
 
+EM  = $(HOME)/em
+CWD = $(CURDIR)
+
+DIRS   += .vscode $(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type d))
+FILES  += $(subst template,,$(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type f)))
+COPY   += .clang-format apt.Debian Makefile
+
+VSCODE  = $(subst $(EM)/,,$(shell find $(EM)/.vscode -type f -regex .+.json))
+COPY   += .vscode/tasks.json .vscode/launch.json
+
+TMPDIR  = bin doc ref tmp
+CMAKE   = $(subst $(EM)/,,$(shell ls $(EM)/CMake*))
+COPY   += $(subst $(EM)/,,$(shell find $(EM)/cmake -type f -regex '.+.cmake'))
+
+
+DOXY    = .doxygen $(subst $(EM)/,,$(shell find $(EM)/doc/* -maxdepth 0 -type f))
+COPY   += $(DOXY)
+
+MK      = Makefile $(subst $(EM)/,,$(shell find $(EM)/mk/* -maxdepth 0 -type f))
+COPY   += $(MK)
+
+HW      = $(subst $(EM)/,,$(shell find $(EM)/hw/* -maxdepth 1 -type d))
+
+MODULE  = $(notdir $(CURDIR))
+PROJECT = inc/$(MODULE).hpp src/$(MODULE).cpp src/$(MODULE).lex src/$(MODULE).yacc
+
+# host Linux
+DIRS   += $(subst $(EM)/,,$(shell find $(EM)/hw/pc/* -maxdepth 0 -type d))
+DIRS   += $(subst $(EM)/,,$(shell find $(EM)/cpu/i5/* -maxdepth 0 -type d))
+DIRS   += $(subst $(EM)/,,$(shell find $(EM)/arch/x86_64/* -maxdepth 0 -type d))
+DIRS   += $(subst $(EM)/,,$(shell find $(EM)/os/linux/* -maxdepth 0 -type d))
+FILES  += $(subst $(EM)/,,$(shell find $(EM)/hw/pc/*       -type f))
+FILES  += $(subst $(EM)/,,$(shell find $(EM)/cpu/i5/*      -type f))
+FILES  += $(subst $(EM)/,,$(shell find $(EM)/arch/x86_64/* -type f))
+FILES  += $(subst $(EM)/,,$(shell find $(EM)/os/linux/*    -type f))
+PC      = hw/pc.cmake hw/pc.mk
+I5      = cpu/i5.cmake cpu/i5.mk
+X86     = arch/x86_64.cmake arch/x86_64.mk
+LINUX   = os/linux.cmake os/linux.mk
+
+# .gitignore
+GITI    = .gitignore $(foreach dir,$(DIRS),$(dir)/.gitignore)
+
+.PHONY: template
+template: dirs giti copy empty meld
+
+.PHONY: dirs
+dirs:
+	mkdir -p $(DIRS) ; 
+
+.PHONY: giti
+giti:
+	echo -n | tee $(GITI)
+	echo '*' | tee $(foreach dir,$(TMPDIR),$(dir)/.gitignore)
+	echo "~\\n*.swp\\n*.log\\n/doc/html/" | tee -a .gitignore
+	echo '!.gitignore' | tee -a $(GITI)
+
+.PHONY: empty
+empty:
+	touch $(VSCODE) $(CMAKE) $(FILES) $(MK) $(PROJECT)
+
+.PHONY: copy
+copy: $(COPY)
+
+.PHONY: meld
+meld:
+
+# apt.Debian: $(EM)/apt.Debian
+# 	head -n5 $< > $@
+# doc/%: $(EM)/doc/%
+# 	cp $< $@ ; git add -f $@
+# mk/%: $(EM)/mk/%
+# 	cp $< $@
+# %: $(EM)/%
+# 	cp $< $@
+# cmake/%: $(EM)/cmake/%
+# 	cp $< $@
+# hw/%: $(EM)/hw/% $(EM)/template
+# 	cp $< $@
+# cpu/%: $(EM)/cpu/% $(EM)/template
+# 	cp $< $@
+# arch/%: $(EM)/arch/% $(EM)/template
+# 	cp $< $@
+# os/%: $(EM)/os/% $(EM)/template
+# 	cp $< $@
