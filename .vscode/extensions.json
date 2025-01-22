@@ -10,6 +10,7 @@
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",
+        "esbenp.prettier-vscode",
         // misc
         "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",

@@ -26,11 +26,8 @@
         "ref/**": true,
     },
     "files.associations": {
-        "*.openocd": "properties",
-        "*.gdb*": "properties",
-        "*.ld": "linkerscript",
-        "*.ld.fix": "linkerscript",
-        "stm32l496g_discovery_sram.h": "c"
+        "*.openocd": "properties", "*.gdb*": "properties",
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript"
     },
 
     // editor
@@ -55,7 +52,7 @@
 
     // JavaScript
     "[javascript]": {
-        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave":     false
     },
 
@@ -73,11 +70,11 @@
 
     // cmake
     "cmake.sourceDirectory"  : "${workspaceFolder}",
-    // "cmake.buildDirectory"   : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
+    "cmake.buildDirectory"   : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"        : "Unix Makefiles",
-    // "cmake.parallelJobs"     : 4,
+    "cmake.parallelJobs"     : 4,
     "cmake.configureSettings": {
-        // "CMAKE_VERBOSE_MAKEFILE": true
+        "CMAKE_VERBOSE_MAKEFILE": true
     },
     "cmake.useCMakePresets"     : "always",
 
@@ -86,7 +83,7 @@
     "autopep8.args": ["--ignore E26,E302,E305,E401,E402,E701,E702"],
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": false
     },
 
     // Rust
