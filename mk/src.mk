@@ -10,14 +10,21 @@ H += $(wildcard arch/$(ARCH)/inc/*.h*)
 C += $(wildcard   os/$(OS)/src/*.c*)
 H += $(wildcard   os/$(OS)/inc/*.h*)
 
-CP += $(TMP)/$(MODULE).parser.cpp $(TMP)/$(MODULE).lexer.cpp
-HP += $(TMP)/$(MODULE).parser.hpp
+CP += $(TMP)/cli.parser.cpp $(TMP)/cli.lexer.cpp
+HP += $(TMP)/cli.parser.hpp
 
+C += $(wildcard lib/core/src/*.c*)
+H += $(wildcard lib/core/inc/*.h*)
+C += $(wildcard lib/cli/src/*.c*)
+H += $(wildcard lib/cli/inc/*.h*)
+
+# embedded
 C += $(wildcard lib/c/src/*.c*)
 H += $(wildcard lib/c/inc/*.h*)
 C += $(wildcard lib/gloss/src/*.c*)
 H += $(wildcard lib/gloss/inc/*.h*)
-C += $(wildcard lib/cli/src/*.c*)
-H += $(wildcard lib/cli/inc/*.h*)
 C += $(wildcard lib/led/src/*.c*)
 H += $(wildcard lib/led/inc/*.h*)
+
+# ini
+S += $(wildcard lib/*.ini) $(wildcard lib/*.f)

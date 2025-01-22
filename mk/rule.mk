@@ -10,7 +10,7 @@ $(ELF): $(C) $(H)
 
 # $(BIN)/$(BINFILE): $(C) $(H) $(CP) $(HP)
 # 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
-# $(TMP)/%.lexer.cpp: $(SRC)/%.lex
+# $(TMP)/%.lexer.cpp: $(SRC)/lib/cli/%.lex
 # 	flex -o $@ $<
-# $(TMP)/%.parser.cpp: $(SRC)/%.yacc
+# $(TMP)/%.parser.cpp: $(SRC)/lib/cli/%.yacc
 # 	bison -o $@ $<

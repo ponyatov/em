@@ -8,7 +8,8 @@
                 "${workspaceFolder}/tmp/**",
                 "${workspaceFolder}/src/**",
                 "${workspaceFolder}/os/linux/inc/**",
-                "${workspaceFolder}/lib/core/**"
+                "${workspaceFolder}/lib/core/inc/**",
+                "${workspaceFolder}/lib/cli/inc/**"
             ],
             "forcedInclude": [],
             "compilerArgs": ["-march=native"],
