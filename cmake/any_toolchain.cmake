@@ -12,6 +12,7 @@ set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
 set(CMAKE_LINKER       ${TOOLCHAIN_PREFIX}-gzz)
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
+set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 
 include(  os/${OS}.cmake  )
 include(arch/${ARCH}.cmake)
