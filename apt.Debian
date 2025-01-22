@@ -1,6 +1,7 @@
 git make curl
 code meld doxygen clang-format
-cmake g++ gdb flex bison libreadline-dev ragel
+cmake g++ gdb
+flex bison libreadline-dev ragel
 dos2unix
 gcc-arm-none-eabi    gdb-multiarch qemu-system-arm  newlib-source stlink-tools
 g++-mingw-w64-x86-64 gdb-mingw-w64 wine64 wine64-tools
