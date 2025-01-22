@@ -27,7 +27,8 @@
     },
     "files.associations": {
         "*.openocd": "properties", "*.gdb*": "properties",
-        "*.ld": "linkerscript", "*.ld.fix": "linkerscript"
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
+        "*.ini": "properties", "*.f": "properties",
     },
 
     // editor
@@ -89,4 +90,15 @@
     // Rust
     "rust-analyzer.check.allTargets": false,
     "rust-analyzer.cargo.target": "thumbv7em-none-eabihf"
+
+    // MinGW/MSYS2
+    "terminal.integrated.defaultProfile.windows":  "UCRT64",
+    "terminal.integrated.profiles.windows": {
+      "UCRT64": {
+        "path": "C:\\msys64\\usr\\bin\\bash.exe",
+        "args": ["--login","-i"],
+        "env": {
+          "MSYSTEM": "UCRT64",
+          "CHERE_INVOKING": "1",
+        }}},
 }

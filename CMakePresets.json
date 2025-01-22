@@ -7,6 +7,11 @@
             "targets":          ["all","install"]
         },
         {
+            "name":              "mingw",
+            "configurePreset":   "mingw",
+            "targets":          ["all","install"]
+        },
+        {
             "name":              "pillF030",
             "configurePreset":   "pillF030",
             "targets":          ["all","install"]
@@ -37,6 +42,16 @@
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
             "cacheVariables": {
                 "HW":"pc", "CPU":"i5", "ARCH":"x86_64", "OS":"linux"
+            }
+        },
+        {
+            "name": "mingw",
+            "inherits": "common",
+            "displayName": "mingw-w64-ucrt-x86_64",
+            "description": "native win64",
+            "toolchainFile": "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
+            "cacheVariables": {
+                "HW":"pc", "CPU":"i5", "ARCH":"x86_64", "OS":"mingw"
             }
         },
         {

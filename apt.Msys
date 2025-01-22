@@ -1,0 +1,3 @@
+git make curl
+cmake mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb
+flex bison
