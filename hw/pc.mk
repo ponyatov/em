@@ -1,1 +1,2 @@
-CPU = i5
+CPU    ?= i5
+CFLAGS += -DPC

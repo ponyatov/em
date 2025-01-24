@@ -1,0 +1,1 @@
+CFLAGS += -DLINUX -DLIBC

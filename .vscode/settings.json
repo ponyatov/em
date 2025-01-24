@@ -26,11 +26,8 @@
         "ref/**": true,
     },
     "files.associations": {
-        "*.openocd": "properties",
-        "*.gdb*": "properties",
-        "*.ld": "linkerscript",
-        "*.ld.fix": "linkerscript",
-        "stm32l496g_discovery_sram.h": "c"
+        "*.openocd": "properties", "*.gdb*": "properties",
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript"
     },
 
     // editor

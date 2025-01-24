@@ -8,7 +8,7 @@ $(ELF): $(C) $(H)
 	cmake         --preset ${HW}
 	cmake --build --preset ${HW}
 
-# $(BIN)/$(BINFILE): $(C) $(H) $(CP) $(HP)
+# $(BIN)/$(MODULE): $(C) $(H) $(CP) $(HP)
 # 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
 # $(TMP)/%.lexer.cpp: $(SRC)/%.lex
 # 	flex -o $@ $<

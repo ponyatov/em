@@ -40,13 +40,23 @@
             }
         },
         {
+            "name": "avr",
+            "hidden": true,
+            "inherits": "common",
+            "toolchainFile": "${sourceDir}/cmake/avr.cmake",
+            "cacheVariables": {"OS":"bare"}
+        },
+        {
+            "name": "mega2560",
+            "inherits": "avr",
+            "cacheVariables": {}
+        },
+        {
             "name": "cortexM",
             "hidden": true,
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
-            "cacheVariables": {
-                "OS":"bare"
-            }
+            "cacheVariables": {"OS":"bare"}
         },
         {
             "name": "cortexM0",
@@ -74,6 +84,14 @@
             "cacheVariables": {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"
+            }
+        },
+        {
+            "name": "stm32l496g",
+            "inherits": "cortexM4",
+            "cacheVariables": {
+                "HW" :"stm32l496g", "SERIES": "STM32L4",
+                "CPU":"STM32L496AGI"
             }
         }
     ]
