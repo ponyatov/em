@@ -1,8 +1,11 @@
 git make curl
 code meld doxygen clang-format
-cmake g++ flex bison libreadline-dev
+cmake g++ gdb
+flex bison libreadline-dev ragel
 dos2unix
-gcc-arm-none-eabi  gdb-multiarch qemu-system-arm  newlib-source stlink-tools
-gcc-avr avr-libc   gdb-avr       qemu-system-avr
-g++-i686-linux-gnu               qemu-system-i386
-g++-mingw-w64-i686               wine32
+gcc-arm-none-eabi    gdb-multiarch qemu-system-arm  newlib-source stlink-tools
+g++-mingw-w64-x86-64 gdb-mingw-w64 wine64 wine64-tools
+gcc-avr avr-libc     gdb-avr       qemu-system-avr
+g++-i686-linux-gnu                 qemu-system-i386
+g++-mingw-w64-i686                 wine32
+python3 python3-venv

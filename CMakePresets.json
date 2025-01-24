@@ -7,6 +7,11 @@
             "targets":          ["all","install"]
         },
         {
+            "name":              "mingw",
+            "configurePreset":   "mingw",
+            "targets":          ["all","install"]
+        },
+        {
             "name":              "pillF030",
             "configurePreset":   "pillF030",
             "targets":          ["all","install"]
@@ -40,16 +45,14 @@
             }
         },
         {
-            "name": "avr",
-            "hidden": true,
+            "name": "mingw",
             "inherits": "common",
-            "toolchainFile": "${sourceDir}/cmake/avr.cmake",
-            "cacheVariables": {"OS":"bare"}
-        },
-        {
-            "name": "mega2560",
-            "inherits": "avr",
-            "cacheVariables": {}
+            "displayName": "mingw-w64-ucrt-x86_64",
+            "description": "native win64",
+            "toolchainFile": "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
+            "cacheVariables": {
+                "HW":"pc", "CPU":"i5", "ARCH":"x86_64", "OS":"mingw"
+            }
         },
         {
             "name": "cortexM",

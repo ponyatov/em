@@ -1,0 +1,4 @@
+git make curl
+cmake mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb
+flex bison libreadline-devel mingw-w64-ucrt-x86_64-ragel
+mingw-w64-ucrt-x86_64-clang-tools-extra

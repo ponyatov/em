@@ -27,7 +27,8 @@
     },
     "files.associations": {
         "*.openocd": "properties", "*.gdb*": "properties",
-        "*.ld": "linkerscript", "*.ld.fix": "linkerscript"
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
+        "*.ini": "flang", "*.f": "flang",
     },
 
     // editor
@@ -52,7 +53,7 @@
 
     // JavaScript
     "[javascript]": {
-        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave":     false
     },
 
@@ -70,11 +71,11 @@
 
     // cmake
     "cmake.sourceDirectory"  : "${workspaceFolder}",
-    // "cmake.buildDirectory"   : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
+    "cmake.buildDirectory"   : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"        : "Unix Makefiles",
-    // "cmake.parallelJobs"     : 4,
+    "cmake.parallelJobs"     : 4,
     "cmake.configureSettings": {
-        // "CMAKE_VERBOSE_MAKEFILE": true
+        "CMAKE_VERBOSE_MAKEFILE": true
     },
     "cmake.useCMakePresets"     : "always",
 
@@ -83,10 +84,21 @@
     "autopep8.args": ["--ignore E26,E302,E305,E401,E402,E701,E702"],
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": false
     },
 
     // Rust
     "rust-analyzer.check.allTargets": false,
     "rust-analyzer.cargo.target": "thumbv7em-none-eabihf"
+
+    // MinGW/MSYS2
+    "terminal.integrated.defaultProfile.windows":  "UCRT64",
+    "terminal.integrated.profiles.windows": {
+      "UCRT64": {
+        "path": "C:\\msys64\\usr\\bin\\bash.exe",
+        "args": ["--login","-i"],
+        "env": {
+          "MSYSTEM": "UCRT64",
+          "CHERE_INVOKING": "1",
+        }}},
 }

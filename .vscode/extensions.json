@@ -10,6 +10,7 @@
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",
+        "esbenp.prettier-vscode",
         // misc
         "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",
@@ -24,11 +25,16 @@
         // embedded
         "zixuanwang.linkerscript",
         "dan-c-underwood.arm",
+        // ESP32
+        // "espressif.esp-idf-extension",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
+        // Web
+        "esbenp.prettier-vscode",
+        "mechatroner.rainbow-csv",
     ]
 }

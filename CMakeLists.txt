@@ -30,8 +30,9 @@ file(GLOB_RECURSE C
     "${CWD}/hw/${HW}/src/*.c*"
     "${CWD}/cpu/${CPU}/src/*.c*"
     "${CWD}/arch/${ARCH}/src/*.c*"
-    "${CWD}/os/${OS}/src/*.c*"
+    "${CWD}/os/src/*.c*" "${CWD}/os/${OS}/src/*.c*"
     "${CWD}/lib/core/src/*.c*"
+    "${CWD}/lib/cli/src/*.c*"
     # libc
     "${CWD}/lib/c/src/*.c*"
     "${CWD}/lib/gloss/src/*.c*"
@@ -45,8 +46,9 @@ file(GLOB_RECURSE H
     "${CWD}/hw/${HW}/inc/*.h*"
     "${CWD}/cpu/${CPU}/inc/*.h*"
     "${CWD}/arch/${ARCH}/inc/*.h*"
-    "${CWD}/os/${OS}/inc/*.h*"
+    "${CWD}/os/inc/*.h*" "${CWD}/os/${OS}/inc/*.h*"
     "${CWD}/lib/core/src/*.h*"
+    "${CWD}/lib/cli/src/*.h*"
     # libc
     "${CWD}/lib/c/inc/*.h*"
     "${CWD}/lib/gloss/inc/*.h*"
@@ -62,8 +64,9 @@ include_directories(
     "${CWD}/hw/${HW}/inc"
     "${CWD}/cpu/${CPU}/inc"
     "${CWD}/arch/${ARCH}/inc"
-    "${CWD}/os/${OS}/inc"
+    "${CWD}/os/inc" "${CWD}/os/${OS}/inc"
     "${CWD}/lib/core/inc"
+    "${CWD}/lib/cli/inc"
     # libc
     "${CWD}/lib/c/inc"
     "${CWD}/lib/gloss/inc"
@@ -76,6 +79,7 @@ include_directories(
 
 # include(syntax)
 
+message("--       dir: " ${CWD})
 message("-- toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
 message("--    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH})
 message("--        os: " ${OS})
