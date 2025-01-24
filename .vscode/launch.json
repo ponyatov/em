@@ -28,6 +28,9 @@
             "miDebuggerArgs": "--silent",
             "miDebuggerServerAddress": "localhost:12345",
             "useExtendedRemote": true,
+            // "debugServerPath": "openocd",
+            // "debugServerArgs": "-f ${workspaceRoot}/hw/F4DISCO/F4DISCO.openocd",
+            // "serverStarted": "connections",
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
                 {"text": "load"},
