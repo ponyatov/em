@@ -9,7 +9,7 @@ set(CMAKE_CXX_COMPILER_ID     GNU)
 set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}-gcc)
 set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER})
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
-set(CMAKE_LINKER       ${TOOLCHAIN_PREFIX}-gzz)
+set(CMAKE_LINKER       ${CMAKE_C_COMPILER})
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
@@ -28,6 +28,10 @@ add_compile_options(
     "-D${HW_}" "-D${CPU_}" "-D${ARCH_}" "-D${OS_}"
     -Wall -Wextra -Wpedantic
     $<$<CONFIG:Debug>:-DDEBUG>
+)
+
+add_link_options(
+    -Wl,--print-memory-usage
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)

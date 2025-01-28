@@ -1,6 +1,6 @@
 /// @defgroup pillF030 pillF030
-/// @brief @ref stm32f030f4p 6
 /// @ingroup hw
+/// @brief @ref stm32f030f4p
 /// @details
 /// -
 /// ![board](https://user-images.githubusercontent.com/17052262/33550096-feb2b7ec-d8ec-11e7-83e4-816a2d5b5dc3.png)

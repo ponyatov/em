@@ -77,7 +77,7 @@ include_directories(
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc"
 )
 
-# include(syntax)
+include(syntax)
 
 message("--       dir: " ${CWD})
 message("-- toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
