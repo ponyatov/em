@@ -17,6 +17,11 @@
             "targets":          ["all","install"]
         },
         {
+            "name":              "pillF103",
+            "configurePreset":   "pillF103",
+            "targets":          ["all","install"]
+        },
+        {
             "name":              "l496disco",
             "configurePreset":   "l496disco",
             "targets":          ["all","install"]
@@ -66,6 +71,12 @@
             "hidden": true,
             "inherits": "cortexM",
             "cacheVariables": {"ARCH":"cortexM0"}
+        },
+        {
+            "name": "cortexM3",
+            "hidden": true,
+            "inherits": "cortexM",
+            "cacheVariables": {"ARCH":"cortexM3"}
         },
         {
             "name": "cortexM4",
