@@ -1,4 +1,3 @@
-# rule
 $(BIN)/$(BINFILE): $(C) $(H)
 	cmake         --preset linux
 	cmake --build --preset linux -j
@@ -8,7 +7,7 @@ $(ELF): $(C) $(H)
 	cmake         --preset ${HW}
 	cmake --build --preset ${HW}
 
-# $(BIN)/$(BINFILE): $(C) $(H) $(CP) $(HP)
+# $(BIN)/$(MODULE): $(C) $(H) $(CP) $(HP)
 # 	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
 # $(TMP)/%.lexer.cpp: $(SRC)/lib/cli/%.lex
 # 	flex -o $@ $<

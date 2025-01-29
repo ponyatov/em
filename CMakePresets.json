@@ -17,6 +17,11 @@
             "targets":          ["all","install"]
         },
         {
+            "name":              "pillF103",
+            "configurePreset":   "pillF103",
+            "targets":          ["all","install"]
+        },
+        {
             "name":              "l496disco",
             "configurePreset":   "l496disco",
             "targets":          ["all","install"]
@@ -59,15 +64,19 @@
             "hidden": true,
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
-            "cacheVariables": {
-                "OS":"bare"
-            }
+            "cacheVariables": {"OS":"bare"}
         },
         {
             "name": "cortexM0",
             "hidden": true,
             "inherits": "cortexM",
             "cacheVariables": {"ARCH":"cortexM0"}
+        },
+        {
+            "name": "cortexM3",
+            "hidden": true,
+            "inherits": "cortexM",
+            "cacheVariables": {"ARCH":"cortexM3"}
         },
         {
             "name": "cortexM4",
@@ -89,6 +98,14 @@
             "cacheVariables": {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"
+            }
+        },
+        {
+            "name": "stm32l496g",
+            "inherits": "cortexM4",
+            "cacheVariables": {
+                "HW" :"stm32l496g", "SERIES": "STM32L4",
+                "CPU":"STM32L496AGI"
             }
         }
     ]
