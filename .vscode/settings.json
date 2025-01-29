@@ -26,9 +26,14 @@
         "ref/**": true,
     },
     "files.associations": {
+        "*.mk": "makefile",
+        "*.ini": "flang", "*.f": "flang",
         "*.openocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
-        "*.ini": "properties", "*.f": "properties",
+        "*.ioc": "properties",
+        "*.s": "arm", "*.S": "arm",
+        ".boot*": "javascript", ".prettierrc": "jsonc",
+        "*.service": "systemd-unit-file"
     },
 
     // editor
@@ -53,6 +58,11 @@
 
     // JavaScript
     "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave":     false
+    },
+    // JSON
+    "[json,jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave":     false
     },
@@ -89,7 +99,7 @@
 
     // Rust
     "rust-analyzer.check.allTargets": false,
-    "rust-analyzer.cargo.target": "thumbv7em-none-eabihf"
+    "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
 
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows":  "UCRT64",

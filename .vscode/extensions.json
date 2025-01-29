@@ -36,5 +36,8 @@
         // Web
         "esbenp.prettier-vscode",
         "mechatroner.rainbow-csv",
+        // F#
+        "ionide.ionide-fsharp",
+        "mnxn.fsharp-fsl-fsy",
     ]
 }
