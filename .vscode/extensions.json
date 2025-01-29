@@ -4,6 +4,7 @@
         "ryuta46.multi-command",
         "tabnine.tabnine-vscode",
         "ms-vscode.makefile-tools",
+        "IBM.output-colorizer",
         // Linux
         "ms-vscode-remote.remote-ssh",
         "coolbear.systemd-unit-file",
@@ -23,6 +24,7 @@
         "daohong-emilio.yash",
         "rreverser.ragel",
         // embedded
+        "ms-vscode.hexeditor",
         "zixuanwang.linkerscript",
         "dan-c-underwood.arm",
         // ESP32
