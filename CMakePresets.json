@@ -22,6 +22,16 @@
             "targets":          ["all","install"]
         },
         {
+            "name":              "iskra",
+            "configurePreset":   "iskra",
+            "targets":          ["all","install"]
+        },
+        {
+            "name":              "f4disco",
+            "configurePreset":   "f4disco",
+            "targets":          ["all","install"]
+        },
+        {
             "name":              "l496disco",
             "configurePreset":   "l496disco",
             "targets":          ["all","install"]
@@ -34,9 +44,10 @@
             "binaryDir": "${sourceDir}/tmp/${presetName}",
             "generator": "Unix Makefiles",
             "cacheVariables": {
-                "CMAKE_VERBOSE_MAKEFILE": true,
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin",
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_COLOR_DIAGNOSTICS": true,
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_VERBOSE_MAKEFILE": true
             }
         },
         {
@@ -93,19 +104,35 @@
             }
         },
         {
+            "name": "pillF103",
+            "inherits": "cortexM3",
+            "cacheVariables": {
+                "HW" :"pillF103",
+                "CPU":"stm32f103c8t", "SERIES": "STM32F1"
+            }
+        },
+        {
+            "name": "iskra",
+            "inherits": "cortexM4",
+            "cacheVariables": {
+                "HW" :"iskra",
+                "CPU":"stm32f405rgt", "SERIES": "STM32F4"
+            }
+        },
+        {
+            "name": "f4disco",
+            "inherits": "cortexM4",
+            "cacheVariables": {
+                "HW" :"f4disco",
+                "CPU":"stm32f407vgt", "SERIES": "STM32F4"
+            }
+        },
+        {
             "name": "l496disco",
             "inherits": "cortexM4",
             "cacheVariables": {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"
-            }
-        },
-        {
-            "name": "stm32l496g",
-            "inherits": "cortexM4",
-            "cacheVariables": {
-                "HW" :"stm32l496g", "SERIES": "STM32L4",
-                "CPU":"STM32L496AGI"
             }
         }
     ]
