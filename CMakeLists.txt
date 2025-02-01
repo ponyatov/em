@@ -79,8 +79,7 @@ include(syntax)
 
 message("--       dir: " ${CWD})
 message("-- toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
-message("--    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH})
-message("--        os: " ${OS})
+message("--    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${OS})
 message("--   startup: " ${A})
 message("--    binary: " ${BIN_OUTPUT_NAME})
 
