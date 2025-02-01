@@ -1,11 +1,26 @@
 find_package(RAGEL REQUIRED)
-find_package(FLEX  REQUIRED)
-find_package(BISON REQUIRED)
+# find_package(FLEX  REQUIRED)
+# find_package(BISON REQUIRED)
 
-file(GLOB L CONFIGURE_DEPENDS ${SRC}/*.lex)
-file(GLOB Y CONFIGURE_DEPENDS ${SRC}/*.yacc)
-get_filename_component(lex  ${L} NAME_WE)
-get_filename_component(yacc ${Y} NAME_WE)
- FLEX_TARGET(lex  ${L} ${TMP}/${lex}.lexer.cpp)
-BISON_TARGET(yacc ${Y} ${TMP}/${yacc}.parser.cpp
-          DEFINES_FILE ${TMP}/${yacc}.parser.hpp)
+set(RAGEL_EXECUTABLE_opts -G2)
+
+file(GLOB RL
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.ragel lib/src/*.ragel lib/*/src/*.ragel
+)
+
+foreach(RAGEL_FILE ${RL})
+    string(REGEX REPLACE
+        ".+\/(.+)\.ragel$"
+        "tmp/\\1.ragel.cpp"
+        PARSER_FILE ${RAGEL_FILE})
+    list(APPEND CP ${PARSER_FILE})
+    add_custom_command(
+        OUTPUT              ${CMAKE_SOURCE_DIR}/${PARSER_FILE}
+        DEPENDS             ${RAGEL_FILE}
+        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+        COMMAND             ${RAGEL_EXECUTABLE}
+        ARGS                ${RAGEL_EXECUTABLE_opts} -o ${PARSER_FILE} ${RAGEL_FILE}
+    )
+endforeach()
+

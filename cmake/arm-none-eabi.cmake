@@ -3,8 +3,6 @@ set(CMAKE_SYSTEM_PROCESSOR arm)
 set(TOOLCHAIN_PREFIX       arm-none-eabi)
 set(CMAKE_CROSS_COMPILING  true)
 
-include(cmake/any_toolchain.cmake)
-
 add_compile_options(
     -ffunction-sections -fdata-sections
     -DCORTEX -D${SERIES}
@@ -29,3 +27,5 @@ add_link_options(
 set(CMAKE_EXECUTABLE_SUFFIX_ASM ".elf")
 set(CMAKE_EXECUTABLE_SUFFIX_C   ".elf")
 set(CMAKE_EXECUTABLE_SUFFIX_CXX ".elf")
+
+include(any_toolchain)
