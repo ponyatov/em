@@ -1,0 +1,85 @@
+#include "os.hpp"
+#include "cli.hpp"
+
+#include <string>
+
+%%machine cli;
+
+%%write data;
+
+%%access       cli_;
+%%variable cs  cli_cs;
+%%variable eof cli_eof;
+%%variable ts  cli_ts;
+%%variable te  cli_te;
+
+int   cli_cs  = 0;
+int   cli_act = 0;
+char* cli_eof = nullptr;
+char* cli_ts  = nullptr;
+char* cli_te  = nullptr;
+
+static int hex(char *ts, char *te) {
+    char *s = strndupa(ts + 2, te - ts - 2);
+    return std::stol(s, nullptr, 0x10);
+}
+
+static int oct(char *ts, char *te) {
+    char *s = strndupa(ts + 2, te - ts - 2);
+    return std::stol(s, nullptr, 0x08);
+}
+
+static int bin(char *ts, char *te) {
+    char *s = strndupa(ts + 2, te - ts - 2);
+    return std::stol(s, nullptr, 0x02);
+}
+
+static int dec(char *ts, char *te) {
+    char *s = strndupa(ts, te - ts);
+    return std::stol(s, nullptr, 0x0A);
+}
+
+static float num(char *ts, char *te) {
+    char *s = strndupa(ts, te - ts);
+    return atof(s);
+}
+
+static char *id(char *ts, char *te) {  //
+    return strndup(ts, te - ts);
+}
+
+
+void cli(char* p, char *pe){ //
+    cli_eof = pe;
+#ifdef POSIX
+    fprintf(stderr, "\tcli %p %p\n", p, pe);
+#endif
+    %%write init;
+    %%write exec;
+}
+
+%%{
+    comment = '#' [^\n]*;               # comment
+    sign    = [+\-];                    # sign
+    hex     = "0x" [0-9a-fA-F]+;
+    oct     = "0o" [0-7]+;
+    bin     = "0b" [01]+;
+    dec     = sign ? digit+;            # decimal int
+    num     = sign ? digit+ '.' digit+;
+    sp      = space+;                   # space
+    id      = [_a-zA-Z][_a-zA-Z0-9]*;
+    unk     = any ;                     # any other char as is
+
+    main := |*
+        comment => {                                                 };
+        hex     => { fprintf(stderr,"hex:%x ",hex(cli_ts,cli_te));   };
+        oct     => { fprintf(stderr,"oct:%o ",oct(cli_ts,cli_te));   };
+        bin     => { fprintf(stderr,"bin:%i ",bin(cli_ts,cli_te));   };
+        dec     => { fprintf(stderr,"int:%i ",dec(cli_ts,cli_te));   };
+        num     => { fprintf(stderr,"num:%f ",num(cli_ts,cli_te));   };
+        id      => { fprintf(stderr,"id:%s " , id(cli_ts,cli_te));   };
+        sp      => { fprintf(stderr," " );                           };
+        unk     => { fprintf(stderr,"%c ",*cli_ts);                  };
+        # 0 @{ abort(); }
+    *|;
+}%%
