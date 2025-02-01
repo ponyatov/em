@@ -19,62 +19,59 @@ file(GLOB_RECURSE LD
 file(GLOB_RECURSE A
     "${CWD}/src/*.s*"
     "${CWD}/hw/${HW}/*.s*"
-    "${CWD}/hw/${HW}/src/*.s*"
-    "${CWD}/cpu/${CPU}/src/*.s*"
-    "${CWD}/arch/${ARCH}/src/*.s*"
-    "${CWD}/os/${OS}/src/*.s*"
-    "${CWD}/lib/core/src/*.s*"
 )
 file(GLOB_RECURSE C
     "${CWD}/src/*.c*"
-    "${CWD}/hw/${HW}/src/*.c*"
-    "${CWD}/cpu/${CPU}/src/*.c*"
-    "${CWD}/arch/${ARCH}/src/*.c*"
-    "${CWD}/os/src/*.c*" "${CWD}/os/${OS}/src/*.c*"
-    "${CWD}/lib/core/src/*.c*"
-    "${CWD}/lib/cli/src/*.c*"
-    # libc
-    "${CWD}/lib/c/src/*.c*"
-    "${CWD}/lib/gloss/src/*.c*"
+    "${CWD}/hw/src/*.c*"   "${CWD}/hw/${HW}/src/*.c*"
+    "${CWD}/cpu/src/*.c*"  "${CWD}/cpu/${CPU}/src/*.c*"
+    "${CWD}/arch/src/*.c*" "${CWD}/arch/${ARCH}/src/*.c*"
+    "${CWD}/os/src/*.c*"   "${CWD}/os/${OS}/src/*.c*"
     # CortexM/CubeMX
     "${CWD}/hw/${HW}/Core/Src/*.c*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Source/*.c*"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Src/*.c*"
+    # libc
+    "${CWD}/lib/c/src/*.c*"
+    "${CWD}/lib/gloss/src/*.c*"
+    # libs
+    "${CWD}/lib/core/src/*.c*"
+    "${CWD}/lib/cli/src/*.c*"
 )
 file(GLOB_RECURSE H
     "${CWD}/inc/*.h*"
-    "${CWD}/hw/${HW}/inc/*.h*"
-    "${CWD}/cpu/${CPU}/inc/*.h*"
-    "${CWD}/arch/${ARCH}/inc/*.h*"
-    "${CWD}/os/inc/*.h*" "${CWD}/os/${OS}/inc/*.h*"
-    "${CWD}/lib/core/src/*.h*"
-    "${CWD}/lib/cli/src/*.h*"
-    # libc
-    "${CWD}/lib/c/inc/*.h*"
-    "${CWD}/lib/gloss/inc/*.h*"
+    "${CWD}/hw/inc/*.h*"   "${CWD}/hw/${HW}/inc/*.h*"
+    "${CWD}/cpu/inc/*.h*"  "${CWD}/cpu/${CPU}/inc/*.h*"
+    "${CWD}/arch/inc/*.h*" "${CWD}/arch/${ARCH}/inc/*.h*"
+    "${CWD}/os/inc/*.h*"   "${CWD}/os/${OS}/inc/*.h*"
     # CortexM/CubeMX
     "${CWD}/hw/${HW}/Core/Inc/*.h*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include/*.h*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include/*.h*"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc/*.h*"
+    "${CWD}/lib/core/src/*.h*"
+    "${CWD}/lib/cli/src/*.h*"
+    # libc
+    "${CWD}/lib/c/inc/*.h*"
+    "${CWD}/lib/gloss/inc/*.h*"
 )
 
 include_directories(
     ${INC} ${TMP} ${SRC}
-    "${CWD}/hw/${HW}/inc"
-    "${CWD}/cpu/${CPU}/inc"
-    "${CWD}/arch/${ARCH}/inc"
-    "${CWD}/os/inc" "${CWD}/os/${OS}/inc"
-    "${CWD}/lib/core/inc"
-    "${CWD}/lib/cli/inc"
-    # libc
-    "${CWD}/lib/c/inc"
-    "${CWD}/lib/gloss/inc"
+    "${CWD}/hw/inc"   "${CWD}/hw/${HW}/inc"
+    "${CWD}/cpu/inc"  "${CWD}/cpu/${CPU}/inc"
+    "${CWD}/arch/inc" "${CWD}/arch/${ARCH}/inc"
+    "${CWD}/os/inc"   "${CWD}/os/${OS}/inc"
     # CortexM/CubeMX
     "${CWD}/hw/${HW}/Core/Inc"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc"
+    # libs
+    "${CWD}/lib/core/inc"
+    "${CWD}/lib/cli/inc"
+    # libc
+    "${CWD}/lib/c/inc"
+    "${CWD}/lib/gloss/inc"
 )
 
 include(syntax)
@@ -104,9 +101,9 @@ set(DFU ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.dfu)
 add_custom_target(clean_all
     COMMAND rm -rf
         ${ELF} ${DFU}
-        ${TMP}/${CMAKE_PROJECT_NAME}*
         ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME}*
         ${CMAKE_BINARY_DIR}
+        # ${TMP}/${CMAKE_PROJECT_NAME}*
 )
 
 add_custom_command(
