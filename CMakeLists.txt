@@ -30,12 +30,12 @@ file(GLOB_RECURSE C
     "${CWD}/hw/${HW}/Core/Src/*.c*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Source/*.c*"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Src/*.c*"
+    # libs
+    "${CWD}/lib/cli/src/*.c*"
+    "${CWD}/lib/core/src/*.c*"
     # libc
     "${CWD}/lib/c/src/*.c*"
     "${CWD}/lib/gloss/src/*.c*"
-    # libs
-    "${CWD}/lib/core/src/*.c*"
-    "${CWD}/lib/cli/src/*.c*"
 )
 file(GLOB_RECURSE H
     "${CWD}/inc/*.h*"
@@ -48,12 +48,12 @@ file(GLOB_RECURSE H
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include/*.h*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include/*.h*"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc/*.h*"
+    # libs
+    "${CWD}/lib/cli/inc/*.h*"
+    "${CWD}/lib/core/inc/*.h*"
     # libc
     "${CWD}/lib/c/inc/*.h*"
     "${CWD}/lib/gloss/inc/*.h*"
-    # libs
-    "${CWD}/lib/core/src/*.h*"
-    "${CWD}/lib/cli/src/*.h*"
 )
 
 include_directories(
@@ -67,12 +67,12 @@ include_directories(
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc"
+    # libs
+    "${CWD}/lib/cli/inc"
+    "${CWD}/lib/core/inc"
     # libc
     "${CWD}/lib/c/inc"
     "${CWD}/lib/gloss/inc"
-    # libs
-    "${CWD}/lib/core/inc"
-    "${CWD}/lib/cli/inc"
 )
 
 include(syntax)
