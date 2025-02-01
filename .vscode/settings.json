@@ -32,6 +32,7 @@
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties",
         "*.s": "arm", "*.S": "arm",
+        //
         ".boot*": "javascript", ".prettierrc": "jsonc",
         "*.service": "systemd-unit-file"
     },

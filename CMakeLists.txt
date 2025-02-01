@@ -48,11 +48,12 @@ file(GLOB_RECURSE H
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include/*.h*"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include/*.h*"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc/*.h*"
-    "${CWD}/lib/core/src/*.h*"
-    "${CWD}/lib/cli/src/*.h*"
     # libc
     "${CWD}/lib/c/inc/*.h*"
     "${CWD}/lib/gloss/inc/*.h*"
+    # libs
+    "${CWD}/lib/core/src/*.h*"
+    "${CWD}/lib/cli/src/*.h*"
 )
 
 include_directories(
@@ -66,12 +67,12 @@ include_directories(
     "${CWD}/hw/${HW}/Drivers/CMSIS/Include"
     "${CWD}/hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include"
     "${CWD}/hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc"
-    # libs
-    "${CWD}/lib/core/inc"
-    "${CWD}/lib/cli/inc"
     # libc
     "${CWD}/lib/c/inc"
     "${CWD}/lib/gloss/inc"
+    # libs
+    "${CWD}/lib/core/inc"
+    "${CWD}/lib/cli/inc"
 )
 
 include(syntax)
@@ -103,7 +104,7 @@ add_custom_target(clean_all
         ${ELF} ${DFU}
         ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME}*
         ${CMAKE_BINARY_DIR}
-        # ${TMP}/${CMAKE_PROJECT_NAME}*
+        ${TMP}/${CMAKE_PROJECT_NAME}*
 )
 
 add_custom_command(
