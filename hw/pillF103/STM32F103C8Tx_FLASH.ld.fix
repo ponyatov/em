@@ -11,7 +11,7 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = ORIGIN(RAM) + LENGTH(RAM);    /* end of RAM */
+_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size  = 0x200; /* required amount of heap  */
 _Min_Stack_Size = 0x400; /* required amount of stack */
@@ -19,8 +19,8 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH (r x) : ORIGIN =  0x8000000, LENGTH = 64K
-RAM   (rwx) : ORIGIN = 0x20000000, LENGTH = 20K
+FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 64K
+RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 20K
 }
 
 /* Define output sections */
@@ -67,7 +67,7 @@ SECTIONS
     __exidx_end = .;
   } >FLASH
 
-  .preinit_array     :
+  .preinit_array :
   {
     PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array*))
@@ -101,9 +101,8 @@ SECTIONS
 
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
-  } > RAM AT> FLASH
+  } >RAM AT> FLASH
 
-  
   /* Uninitialized data section */
   . = ALIGN(4);
   .bss :
@@ -118,7 +117,7 @@ SECTIONS
     . = ALIGN(4);
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
-  } > RAM
+  } >RAM
 
   /* User_heap_stack section, used to check that there is enough RAM left */
   ._user_heap_stack :
@@ -129,7 +128,7 @@ SECTIONS
     . = . + _Min_Heap_Size;
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
-  } > RAM
+  } >RAM
 
   /* Remove information from the standard libraries */
   /DISCARD/ :

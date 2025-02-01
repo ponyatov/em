@@ -1,0 +1,42 @@
+--- startup_stm32f103xb.s	2025-02-01 15:46:55.040787904 +0400
++++ startup_stm32f103xb.s.fix	2025-02-01 15:48:04.864785863 +0400
+@@ -3,25 +3,6 @@
+   * @file      startup_stm32f103xb.s
+   * @author    MCD Application Team
+   * @brief     STM32F103xB Devices vector table for Atollic toolchain.
+-  *            This module performs:
+-  *                - Set the initial SP
+-  *                - Set the initial PC == Reset_Handler,
+-  *                - Set the vector table entries with the exceptions ISR address
+-  *                - Configure the clock system   
+-  *                - Branches to main in the C library (which eventually
+-  *                  calls main()).
+-  *            After Reset the Cortex-M3 processor is in Thread mode,
+-  *            priority is Privileged, and the Stack is set to Main.
+-  ******************************************************************************
+-  * @attention
+-  *
+-  * Copyright (c) 2017-2021 STMicroelectronics.
+-  * All rights reserved.
+-  *
+-  * This software is licensed under terms that can be found in the LICENSE file
+-  * in the root directory of this software component.
+-  * If no LICENSE file comes with this software, it is provided AS-IS.
+-  *
+   ******************************************************************************
+   */
+ 
+@@ -59,6 +40,7 @@
+   .weak Reset_Handler
+   .type Reset_Handler, %function
+ Reset_Handler:
++  ldr   sp, =_estack     /* set stack pointer */
+ 
+ /* Call the clock system initialization function.*/
+     bl  SystemInit
+@@ -360,5 +342,3 @@
+ 
+   .weak USBWakeUp_IRQHandler
+   .thumb_set USBWakeUp_IRQHandler,Default_Handler
+-
+-

@@ -7,9 +7,9 @@
 /// @ingroup core
 /// @{
 extern int main(int argc, char *argv[]);
-extern void arg(int argc, char *argv);
-extern void setup();
-extern void loop();
+extern void arg(int argc, char *argv) __attribute__((weak));
+extern void setup() __attribute__((weak));
+extern void loop() __attribute__((weak));
 /// @}
 
 #ifdef LINUX

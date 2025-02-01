@@ -3,4 +3,4 @@
 
 /// @defgroup cortexM0 cortexM0
 /// @ingroup cortexM
-/// @brief `cpu:` @ref STM32F030T4P
+/// @brief `cpu:` @ref stm32f030t4p
