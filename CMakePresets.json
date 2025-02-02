@@ -76,7 +76,7 @@
             "hidden": true,
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
-            "cacheVariables": {"OS":"bare"}
+            "cacheVariables": {"OS":"bare","CMAKE_EXECUTABLE_SUFFIX":".elf"}
         },
         {
             "name": "cortexM0",
