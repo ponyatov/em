@@ -2,7 +2,7 @@ find_package(RAGEL REQUIRED)
 # find_package(FLEX  REQUIRED)
 # find_package(BISON REQUIRED)
 
-set(RAGEL_EXECUTABLE_opts -G2)
+set(RAGEL_EXECUTABLE_opts -C -G2 )
 
 file(GLOB RL
     RELATIVE ${CMAKE_SOURCE_DIR}

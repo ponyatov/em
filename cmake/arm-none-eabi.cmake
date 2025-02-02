@@ -1,7 +1,10 @@
-set(CMAKE_SYSTEM_NAME      Generic)
-set(CMAKE_SYSTEM_PROCESSOR arm)
-set(TOOLCHAIN_PREFIX       arm-none-eabi)
-set(CMAKE_CROSS_COMPILING  true)
+set(CMAKE_SYSTEM_NAME       Generic)
+set(CMAKE_SYSTEM_PROCESSOR  arm)
+set(TOOLCHAIN_PREFIX        arm-none-eabi)
+set(CMAKE_CROSS_COMPILING   true)
+set(CMAKE_EXECUTABLE_SUFFIX ".elf")
+
+include(any_toolchain)
 
 add_compile_options(
     -ffunction-sections -fdata-sections
@@ -23,9 +26,3 @@ add_link_options(
     -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group
     -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections
 )
-
-set(CMAKE_EXECUTABLE_SUFFIX_ASM ".elf")
-set(CMAKE_EXECUTABLE_SUFFIX_C   ".elf")
-set(CMAKE_EXECUTABLE_SUFFIX_CXX ".elf")
-
-include(any_toolchain)
