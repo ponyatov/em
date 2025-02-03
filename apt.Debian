@@ -9,4 +9,4 @@ gcc-avr avr-libc     gdb-avr       qemu-system-avr
 g++-i686-linux-gnu                 qemu-system-i386
 g++-mingw-w64-i686                 wine32
 python3 python3-venv
-docker
+docker.io musl-tools

@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+%%machine hex;
+%%write data;
+
+static uint32_t ret      = 0;    ///< result number
+static     bool positive = true; ///< sign flag
+
+int hex(char *p, char *pe) {
+    ret = 0;
+    int cs = 0, act = 0;
+    char *ts = nullptr, *te = nullptr, *eof = pe;
+    %%write init;
+    %%write exec;
+    if (positive) return +ret; else return -ret;
+}
+
+%%{
+    main := |*
+        "0x"  => {                                        };
+        '+'   => { positive =  true;                      };
+        '-'   => { positive = false;                      };
+        [0-9] => { ret = ret << 4 | (ts[0] - '0'       ); };
+        [a-f] => { ret = ret << 4 | (ts[0] - 'a' + 0x0A); };
+        [A-F] => { ret = ret << 4 | (ts[0] - 'A' + 0x0A); };
+    *|;
+}%%

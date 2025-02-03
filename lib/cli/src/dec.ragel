@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+%%machine dec;
+%%write data;
+
+static uint32_t ret      = 0;    ///< result number
+static     bool positive = true; ///< sign flag
+
+int dec(char *p, char *pe) {
+    ret = 0;
+    int cs = 0, act = 0;
+    char *ts = nullptr, *te = nullptr, *eof = pe;
+    %%write init;
+    %%write exec;
+    if (positive) return +ret; else return -ret;
+}
+
+%%{
+    main := |*
+        '+'   => { positive =  true;               };
+        '-'   => { positive = false;               };
+        [0-9] => { ret = ret * 10 + (ts[0] - '0'); };
+    *|;
+}%%

@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+%%machine bin;
+%%write data;
+
+static uint32_t ret      = 0;    ///< result number
+static     bool positive = true; ///< sign flag
+
+int bin(char *p, char *pe) {
+    ret = 0;
+    int cs = 0, act = 0;
+    char *ts = nullptr, *te = nullptr, *eof = pe;
+    %%write init;
+    %%write exec;
+    if (positive) return +ret; else return -ret;
+}
+
+%%{
+    main := |*
+        "0b" => {                     };
+        '+'  => { positive =  true;   };
+        '-'  => { positive = false;   };
+        '0'  => { ret = ret << 1 | 0; };
+        '1'  => { ret = ret << 1 | 1; };
+    *|;
+}%%

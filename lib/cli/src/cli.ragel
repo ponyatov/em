@@ -1,11 +1,7 @@
 #include "os.hpp"
 #include "cli.hpp"
 
-#include <string>
-
 %%machine cli;
-
-%%write data;
 
 %%access       cli_;
 %%variable cs  cli_cs;
@@ -13,46 +9,35 @@
 %%variable ts  cli_ts;
 %%variable te  cli_te;
 
-int   cli_cs  = 0;
-int   cli_act = 0;
-char* cli_eof = nullptr;
-char* cli_ts  = nullptr;
-char* cli_te  = nullptr;
+%%write data;
 
-static int hex(char *ts, char *te) {
-    char *s = strndupa(ts + 2, te - ts - 2);
-    return std::stol(s, nullptr, 0x10);
-}
+static int   cli_cs  = 0;
+static int   cli_act = 0;
+static char* cli_eof = nullptr;
+static char* cli_ts  = nullptr;
+static char* cli_te  = nullptr;
 
-static int oct(char *ts, char *te) {
-    char *s = strndupa(ts + 2, te - ts - 2);
-    return std::stol(s, nullptr, 0x08);
-}
+#ifndef POSIX
+static int stderr = 2;
+static void fprintf(int,char*){}
+static void fprintf(int,char*,char*){}
+static void fprintf(int,char*,int){}
+static void fprintf(int,char*,float){}
+#endif
 
-static int bin(char *ts, char *te) {
-    char *s = strndupa(ts + 2, te - ts - 2);
-    return std::stol(s, nullptr, 0x02);
-}
-
-static int dec(char *ts, char *te) {
-    char *s = strndupa(ts, te - ts);
-    return std::stol(s, nullptr, 0x0A);
-}
-
-static float num(char *ts, char *te) {
-    char *s = strndupa(ts, te - ts);
-    return atof(s);
-}
-
-static char *id(char *ts, char *te) {  //
+static char *id(char *ts, char *te) {
+#ifdef POSIX
     return strndup(ts, te - ts);
+#else
+    static char _id[] = "<id>";
+    return _id;
+#endif
 }
-
 
 void cli(char* p, char *pe){ //
     cli_eof = pe;
 #ifdef POSIX
-    fprintf(stderr, "\tcli %p %p\n", p, pe);
+    fprintf(stderr, "\tcli %p %p %i\n\t\t", p, pe, pe-p);
 #endif
     %%write init;
     %%write exec;

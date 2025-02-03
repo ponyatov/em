@@ -1,0 +1,34 @@
+%%machine num;
+
+%%access       num_;
+%%variable cs  num_cs;
+%%variable eof num_eof;
+%%variable ts  num_ts;
+%%variable te  num_te;
+
+%%write data;
+
+static int   num_cs  = 0;
+static int   num_act = 0;
+static char* num_eof = nullptr;
+static char* num_ts  = nullptr;
+static char* num_te  = nullptr;
+
+static float ret = 0.0;
+
+float num(char *p, char *pe) {
+    ret = 0.0;
+    %%write init;
+    %%write exec;
+    return ret;
+}
+
+%%{
+    plus  = '+';
+    minus = '-';
+
+    main := |*
+        plus  => { ret = +ret; } ;
+        minus => { ret = -ret; } ;
+    *|;
+}%%
