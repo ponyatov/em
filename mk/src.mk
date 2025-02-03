@@ -1,9 +1,13 @@
+# .mk files
 MK += Makefile
 MK += $(wildcard   mk/*.mk)
 MK += $(wildcard   hw/*.mk)
 MK += $(wildcard  cpu/*.mk)
 MK += $(wildcard arch/*.mk)
 MK += $(wildcard   os/*.mk)
+
+# cmake files
+CM += CMake* cmake/*.cmake
 
 # project
 C += $(wildcard src/*.c*)

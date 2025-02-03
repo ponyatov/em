@@ -1,8 +1,8 @@
-$(BIN)/$(BINFILE): $(C) $(H)
-	cmake         --preset linux
-	cmake --build --preset linux -j
+$(BIN)/$(BINFILE): $(C) $(H) $(MK) $(CM)
+	cmake --fresh --preset glibc
+	cmake --build --preset glibc -j
 
 .PHONY: $(ELF)
-$(ELF): $(C) $(H)
-	cmake         --preset ${HW}
+$(ELF): $(C) $(H) $(MK) $(CM)
+	cmake --fresh --preset ${HW}
 	cmake --build --preset ${HW}
