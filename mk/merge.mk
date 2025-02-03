@@ -1,3 +1,5 @@
-MERGE += apt.* Makefile README.md LICENSE .clang-format .doxygen
+MERGE += Makefile README.md LICENSE
+MERGE += apt.* .clang-format .doxygen .gitignore
 MERGE += $(C) $(H) $(S)
-MERGE += .vscode hw cpu arch os lib inc src
+MERGE += .vscode bin doc lib inc src tmp
+MERGE += hw cpu arch os

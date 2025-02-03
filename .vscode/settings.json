@@ -7,7 +7,7 @@
         { "command": "multiCommand.f12",
             "sequence": [ "workbench.action.files.saveAll",
                 { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make update \u000D"}}]},
+                    "args": {"text": "\u000D clear ; LANG=C make docker \u000D"}}]},
         { "command": "multiCommand.altx",
             "sequence": [ "workbench.action.files.saveAll",
                 { "command": "workbench.action.terminal.sendSequence",
@@ -86,6 +86,9 @@
     "cmake.generator"       : "Unix Makefiles",
     "cmake.parallelJobs"    : 4,
     "cmake.useCMakePresets" : "always",
+    "cmake.buildBeforeRun"  : true,
+    "cmake.debugConfig"     : {
+        "args": [ "${workspaceFolder}/lib/${workspaceFolderBasename}.ini" ] },
 
     // Python
     "autopep8.path": ["${workspaceFolder}/bin/autopep8", "autopep8"],

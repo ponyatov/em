@@ -7,7 +7,7 @@
             "${workspaceFolder}/src/**"
         ],
         "crossInclude": [
-            "${workspaceFolder}/hw/inc",
+            "${workspaceFolder}/hw/inc/**",
             "${workspaceFolder}/cpu/inc/**",
             "${workspaceFolder}/arch/inc/**",
             "${workspaceFolder}/os/inc/**"
@@ -18,82 +18,6 @@
             "name": "cmake",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations": true
-        },
-        {
-            "name": "x86_64-linux-gnu",
-            "includePath": [
-                "${coreInclude}", "${crossInclude}",
-                //
-                "${workspaceFolder}/hw/pc/inc/**",
-                "${workspaceFolder}/cpu/i5/inc/**",
-                "${workspaceFolder}/arch/x86_64/inc/**",
-                "${workspaceFolder}/os/linux/inc/**"
-                //
-                "${workspaceFolder}/lib/core/inc/**",
-                "${workspaceFolder}/lib/cli/inc/**"
-            ],
-            "compilerArgs": ["-march=native"],
-            "defines": [
-                "PC", "I5", "X86_64", "LINUX", "POSIX"
-            ],
-            "cStandard": "gnu17", "cppStandard": "gnu++17",
-            "intelliSenseMode": "gcc-x64",
-            "compilerPath": "/usr/bin/x86_64-linux-gnu-g++"
-        },
-        {
-            "name": "l496disco",
-            "includePath": [
-                "${workspaceFolder}/inc/**",
-                "${workspaceFolder}/tmp/**",
-                "${workspaceFolder}/src/**",
-                // libc
-                "${workspaceFolder}/os/bare/inc",
-                "${workspaceFolder}/lib/c/inc/**",
-                "${workspaceFolder}/lib/gloss/inc/**",
-                // hw
-                "${workspaceFolder}/hw/l496disco/inc",
-                "${workspaceFolder}/cpu/stm32l496agi/inc",
-                "${workspaceFolder}/arch/cortexM4/inc",
-                "${workspaceFolder}/hw/l496disco/Core/Inc",
-                "${workspaceFolder}/hw/l496disco/Drivers/CMSIS/Include",
-                "${workspaceFolder}/hw/l496disco/Drivers/CMSIS/Device/ST/STM32L4xx/Include",
-                "${workspaceFolder}/hw/l496disco/Drivers/STM32L4xx_HAL_Driver/Inc"
-            ],
-            "compilerArgs": [
-                "-mthumb -mcpu=cortex-m4",
-                "-mfpu=fpv4-sp-d16 -mfloat-abi=hard"
-            ],
-            "defines": [
-                "L496DISCO", "STM32L496AGI", "CORTEXM", "CORTEXM4", "BARE",
-                "__FPU_PRESENT", "__FPU_USED",
-                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI",
-                "DEFINE_MALLOC", "INTERNAL_NEWLIB", // !__SINGLE_THREAD__
-                "RCC"
-            ],
-            "cStandard": "gnu17",
-            "cppStandard": "gnu++17",
-            "intelliSenseMode": "gcc-x64",
-            "compilerPath": "/usr/bin/arm-none-eabi-g++"
-        },
-        {
-            "name": "pillF103",
-            "includePath": [
-                "${coreInclude}", "${crossInclude}",
-                //
-                "${workspaceFolder}/hw/pillF103/inc/**",
-                "${workspaceFolder}/cpu/stm32f103c8t/inc/**",
-                "${workspaceFolder}/arch/cortexM3/inc/**",
-                "${workspaceFolder}/os/bare/inc/**"
-            ],
-            "compilerArgs": ["-mthumb -march=armv7-m -mcpu=cortex-m3"],
-            "defines": [
-                "PILLF030", "STM32F040F4P", "CORTEXM", "CORTEXM0", "BARE",
-                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI", "DEFINE_MALLOC",
-                "RCC"
-            ],
-            "cStandard": "gnu17", "cppStandard": "gnu++17",
-            "intelliSenseMode": "gcc-arm",
-            "compilerPath": "/usr/bin/arm-none-eabi-g++"
         }
     ]
 }
