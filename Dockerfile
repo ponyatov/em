@@ -1,13 +1,27 @@
-FROM busybox:glibc
-ENV MODULE=l0l
-COPY ./bin /bin/
-COPY ./inc /inc/
-COPY ./lib /lib/
-COPY ./src /src/
-COPY ./tmp /tmp/
-# COPY ./etc /etc/
-# CMD ["/bin/l0l_pc_dponyatov","/lib/l0l.ini"]
-# CMD ["ls","-la","/"]
-# RUN opkg-install python3
-# CMD ["/bin/sh"]
-CMD ["/bin/l0l_pc_dponyatov","lib/l0l.ini"]
+FROM alpine
+# FROM busybox:glibc
+# FROM frolvlad/alpine-glibc
+
+USER    nobody
+WORKDIR /home
+
+COPY ./bin              /home/bin/
+COPY ./doc/*.md         /home/doc/
+COPY ./doc/*.xml        /home/doc/
+COPY ./doc/logo.png     /home/doc/
+COPY ./etc              /etc/
+COPY ./inc              /home/inc/
+COPY ./lib              /home/lib/
+COPY ./src              /home/src/
+COPY ./tmp/.gitignore   /home/tmp/
+COPY ./tmp/*.?pp        /home/tmp/
+COPY ./CMake*           /home/
+COPY ./cmake            /home/cmake/
+COPY ./Makefile         /home/
+COPY ./mk               /home/mk/
+COPY ./hw               /home/hw/
+COPY ./cpu              /home/cpu/
+COPY ./arch             /home/arch/
+COPY ./os               /home/os/
+
+CMD ["/bin/sh"]
