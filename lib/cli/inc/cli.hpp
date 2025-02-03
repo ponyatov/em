@@ -30,12 +30,4 @@ extern float num(char *ts, char *te);  ///< floating point
 
 /// @}
 
-/// @name commands
-/// @{
-
-extern void nop();   ///< `( -- )` do nothing: empty command
-extern void halt();  ///< `( -- )` stop system
-
-/// @}
-
 /// @}
