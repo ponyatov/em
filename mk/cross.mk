@@ -11,7 +11,7 @@ include  cpu/$(CPU).mk
 include arch/$(ARCH).mk
 include   os/$(OS).mk
 
-BINFILE = $(MODULE)_$(HW)_$(BRANCH)_$(NOW)
+BINFILE = $(MODULE)_$(HW)_$(BRANCH)
 ELF     = $(BIN)/$(BINFILE).elf
 DFU     = $(BIN)/$(BINFILE).dfu
 
