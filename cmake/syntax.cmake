@@ -21,3 +21,8 @@ foreach(RAGEL_FILE ${RL})
         ARGS                ${RAGEL_EXECUTABLE_opts} -o ${PARSER_FILE} ${RAGEL_FILE}
     )
 endforeach()
+
+# add_custom_target(${CMAKE_PROJECT_NAME}-ragel
+#     ${CP} ${CH} # parsers
+# )
+# target_compile_options({CMAKE_PROJECT_NAME}-ragel -Wno-implicit-fallthrough)

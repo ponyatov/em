@@ -18,6 +18,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}  # C/C++ source
     ${S}  ${LD} # embedded/lowlevel
     ${CP} ${CH} # parsers
+    # {CMAKE_PROJECT_NAME}-ragel
 )
 
 # target_link_libraries(${CMAKE_PROJECT_NAME} -static)
