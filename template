@@ -9,7 +9,7 @@ T  = $(abspath $(dir $(L))     )
 template:
 # mkdir -p $(D)
 # $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti files
-	$(MAKE) -f $(L) -C $(D) M=$(M) giti
+	$(MAKE) -f $(L) -C $(D) M=$(M) giti files
 
 .PHONY: git
 git: .git
@@ -48,7 +48,9 @@ giti:
 	@echo '*'            > $(D)/tmp/.gitignore
 
 .PHONY: files
-files: $(D)/.clang-format $(D)/README.md $(D)/.doxygen $(D)/LICENSE $(D)/.gitattributes
+files: \
+		$(D)/.clang-format $(D)/README.md $(D)/.doxygen $(D)/LICENSE \
+		$(D)/.gitattributes $(D)/.prettierrc
 	touch \
 		$(D)/apt.Debian $(D)/apt.Msys \
 		$(D)/Makefile
