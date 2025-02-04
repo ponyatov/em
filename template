@@ -8,8 +8,9 @@ T  = $(abspath $(dir $(L))     )
 .PHONY: template
 template:
 # mkdir -p $(D)
-# $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti files
-	$(MAKE) -f $(L) -C $(D) M=$(M) giti files
+# $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti files doc cmake mk
+# $(MAKE) -f $(L) -C $(D) M=$(M) dirs giti
+	$(MAKE) -f $(L) -C $(D) M=$(M) mk
 
 .PHONY: git
 git: .git
@@ -27,7 +28,9 @@ git: .git
 	git push -v -u gh   `whoami`
 	git push       flic `whoami`
 
-DIRS = $(patsubst $(T)/%,$(D)/%,$(shell find $(T)/* -maxdepth 0 -type d))
+DIRS  = $(shell find $(T)/* -maxdepth 0 -type d)
+DIRS += $(shell find $(T)/doc/* -maxdepth 1 -type d)
+DIRS := $(patsubst $(T)/%,$(D)/%,$(DIRS))
 
 .PHONY: dirs
 dirs:
@@ -50,10 +53,10 @@ giti:
 .PHONY: files
 files: \
 		$(D)/.clang-format $(D)/README.md $(D)/.doxygen $(D)/LICENSE \
-		$(D)/.gitattributes $(D)/.prettierrc
+		$(D)/.gitattributes $(D)/.prettierrc $(D)/Dockerfile \
+		$(D)/doc/DoxygenLayout.xml $(D)/doc/logo.png
 	touch \
-		$(D)/apt.Debian $(D)/apt.Msys \
-		$(D)/Makefile
+		$(D)/apt.Debian $(D)/apt.Msys
 
 $(D)/%: $(T)/% $(L)
 	cp $< $@
@@ -98,3 +101,141 @@ $(D)/.doxygen: $(L)
 	@echo 'REPEAT_BRIEF           = NO'                                        >> $@
 	@echo 'CALL_GRAPH             = YES'                                       >> $@
 	@echo 'CALLER_GRAPH           = YES'                                       >> $@
+
+.PHONY: mk
+mk: $(D)/Makefile
+
+$(D)/Makefile: $(L)
+	@echo 'include mk/var.mk'      > $@
+	@echo 'include mk/version.mk' >> $@
+	@echo 'include mk/cross.mk'   >> $@
+	@echo 'include mk/dirs.mk'    >> $@
+	@echo 'include mk/tool.mk'    >> $@
+	@echo 'include mk/src.mk'     >> $@
+	@echo 'include mk/cfg.mk'     >> $@
+	@echo 'include mk/all.mk'     >> $@
+	@echo 'include mk/clean.mk'   >> $@
+	@echo 'include mk/format.mk'  >> $@
+	@echo 'include mk/debug.mk'   >> $@
+	@echo 'include mk/rule.mk'    >> $@
+	@echo 'include mk/doc.mk'     >> $@
+	@echo 'include mk/install.mk' >> $@
+	@echo 'include mk/merge.mk'   >> $@
+	@echo 'include mk/docker.mk'  >> $@
+
+.PHONY: docker
+docker: $(D)/Dockerfile
+$(D)/Dockerfile: $(L)
+	@echo 'FROM alpine'                         > $@
+	@echo ''                                   >> $@
+	@echo 'COPY ./bin              /home/bin/' >> $@
+	@echo 'COPY ./etc              /etc/'      >> $@
+	@echo 'COPY ./lib              /home/lib/' >> $@
+	@echo 'COPY ./tmp/.gitignore   /home/tmp/' >> $@
+	@echo ''                                   >> $@
+	@echo 'USER    nobody'                     >> $@
+	@echo 'WORKDIR /home'                      >> $@
+	@echo ''                                   >> $@
+	@echo 'CMD ["/bin/sh"]'                    >> $@
+
+.PHONY: doc
+doc: $(D)/doc/cli/CLI.md
+
+CMAKE  = $(D)/CMakeLists.txt $(D)/CMakePresets.json
+CMAKE += $(patsubst $(T)/%,$(D)/%,$(wildcard $(T)/cmake/*.cmake))
+CMAKE += $(patsubst $(T)/%,$(D)/%,$(wildcard $(T)/hw/*.cmake))
+CMAKE += $(patsubst $(T)/%,$(D)/%,$(wildcard $(T)/cpu/*.cmake))
+CMAKE += $(patsubst $(T)/%,$(D)/%,$(wildcard $(T)/arch/*.cmake))
+CMAKE += $(patsubst $(T)/%,$(D)/%,$(wildcard $(T)/os/*.cmake))
+
+.PHONY: cmake
+cmake: \
+		$(D)/CMakeLists.txt $(D)/CMakePresets.json \
+		$(D)/cmake/FindRAGEL.cmake $(D)/cmake/any_toolchain.cmake
+	touch $(CMAKE)
+
+$(D)/CMakePresets.json: $(L)
+	echo '{'                                                                             > $@
+	echo '    "version": 6,'                                                            >> $@
+	echo '    "buildPresets": ['                                                        >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"           :   "glibc",'                                    >> $@
+	echo '            "configurePreset":   "glibc",'                                    >> $@
+	echo '            "targets"        :  ["all","install"]'                            >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"           :   "f4disco",'                                  >> $@
+	echo '            "configurePreset":   "f4disco",'                                  >> $@
+	echo '            "targets"        :  ["all","install"]'                            >> $@
+	echo '        },'                                                                   >> $@
+	echo '    ],'                                                                       >> $@
+	echo '    "configurePresets": ['                                                    >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"     : "common",'                                           >> $@
+	echo '            "hidden"   :  true,'                                              >> $@
+	echo '            "binaryDir": "$${sourceDir}/tmp/$${presetName}",'                 >> $@
+	echo '            "generator": "Unix Makefiles",'                                   >> $@
+	echo '            "cacheVariables": {'                                              >> $@
+	echo '                "CMAKE_INSTALL_PREFIX"    : "$${sourceDir}/bin",'             >> $@
+	echo '                "CMAKE_MODULE_PATH"       : "$${sourceDir}/cmake",'           >> $@
+	echo '                "CMAKE_COLOR_DIAGNOSTICS" : false,'                           >> $@
+	echo '                "CMAKE_BUILD_TYPE"        : "Debug",'                         >> $@
+	echo '                "CMAKE_VERBOSE_MAKEFILE"  : true'                             >> $@
+	echo '            }'                                                                >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          : "pc",'                                          >> $@
+	echo '            "inherits"      : "common",'                                      >> $@
+	echo '            "hidden"        : true,'                                          >> $@
+	echo '            "cacheVariables": {'                                              >> $@
+	echo '                "HW":"pc", "CPU":"i5", "ARCH":"x86_64"'                       >> $@
+	echo '            }'                                                                >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          : "linux",'                                       >> $@
+	echo '            "inherits"      : "pc",'                                          >> $@
+	echo '            "hidden"        : true,'                                          >> $@
+	echo '            "cacheVariables": {"OS":"linux"}'                                 >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"       : "glibc",'                                          >> $@
+	echo '            "inherits"   : "linux",'                                          >> $@
+	echo '            "displayName": "x86_64-linux-gnu",'                               >> $@
+	echo '            "description": "native host",'                                    >> $@
+	echo '            "toolchainFile": "$${sourceDir}/cmake/x86_64-linux-gnu.cmake"'    >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          :  "cortexM",'                                    >> $@
+	echo '            "hidden"        :   true,'                                        >> $@
+	echo '            "inherits"      :  "common",'                                     >> $@
+	echo '            "toolchainFile" :  "$${sourceDir}/cmake/arm-none-eabi.cmake",'    >> $@
+	echo '            "cacheVariables": {"OS":"bare","CMAKE_EXECUTABLE_SUFFIX":".elf"}' >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          :  "cortexM0",'                                   >> $@
+	echo '            "hidden"        :   true,'                                        >> $@
+	echo '            "inherits"      :  "cortexM",'                                    >> $@
+	echo '            "cacheVariables": {"ARCH":"cortexM0"}'                            >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          :  "cortexM3",'                                   >> $@
+	echo '            "hidden"        :   true,'                                        >> $@
+	echo '            "inherits"      :  "cortexM",'                                    >> $@
+	echo '            "cacheVariables": {"ARCH":"cortexM3"}'                            >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          :  "cortexM4",'                                   >> $@
+	echo '            "hidden"        :   true,'                                        >> $@
+	echo '            "inherits"      :  "cortexM",'                                    >> $@
+	echo '            "cacheVariables": {"ARCH":"cortexM4"}'                            >> $@
+	echo '        },'                                                                   >> $@
+	echo '        {'                                                                    >> $@
+	echo '            "name"          : "f4disco",'                                     >> $@
+	echo '            "inherits"      : "cortexM4",'                                    >> $@
+	echo '            "cacheVariables": {'                                              >> $@
+	echo '                "HW" :"f4disco",'                                             >> $@
+	echo '                "CPU":"stm32f407vgt", "SERIES": "STM32F4"'                    >> $@
+	echo '            }'                                                                >> $@
+	echo '        },'                                                                   >> $@
+	echo '    ]'                                                                        >> $@
+	echo '}'                                                                            >> $@
