@@ -1,116 +1,147 @@
 #!/usr/bin/make -f
 
-MODULE  = $(notdir $(CURDIR))
-EM      = $(HOME)/em
-CWD     = $(CURDIR)
-
-DIRS   += .vscode $(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type d))
-FILES  += $(subst template,,$(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type f)))
-COPY   += .clang-format apt.Debian Makefile
-
-VSCODE  = $(subst $(EM)/,,$(shell find $(EM)/.vscode -type f -regex .+.json))
-FILES  += $(VSCODE)
-COPY   += .vscode/tasks.json .vscode/launch.json
-
-TMPDIR  = bin doc ref tmp
-CMAKE   = $(subst $(EM)/,,$(shell ls $(EM)/CMake*))
-FILES  += $(CMAKE)
-COPY   += $(subst $(EM)/,,$(shell find $(EM)/cmake -type f -regex '.+.cmake'))
-
-DOXY    = .doxygen $(subst $(EM)/,,$(shell find $(EM)/doc/* -maxdepth 0 -type f))
-COPY   += $(DOXY)
-
-MK      = Makefile $(subst $(EM)/,,$(shell find $(EM)/mk/* -maxdepth 0 -type f))
-COPY   += Makefile mk/var.mk mk/cfg.mk mk/cross.mk mk/dirs.mk mk/tool.mk
-COPY   += mk/src.mk mk/cfg.mk mk/all.mk mk/format.mk mk/doc.mk
-COPY   += mk/install.mk mk/merge.mk
-
-APP     = inc/app.hpp src/app.cpp src/lexer.lex src/parser.yacc lib/app.ini
-FILES  += $(APP)
-COPY   += $(APP)
-
-# host Linux
-
-DIRS   += $(subst $(EM)/,,$(shell find $(EM)/hw/pc/*    -maxdepth 0 -type d))
-PC      = hw/pc.cmake hw/pc.mk
-PC     += $(subst $(EM)/,,$(shell find $(EM)/hw/pc/*                -type f))
-FILES  += $(PC)
-COPY   += $(PC)
-
-DIRS   += $(subst $(EM)/,,$(shell find $(EM)/cpu/i5/* -maxdepth 0 -type d))
-I5      = cpu/i5.cmake cpu/i5.mk
-I5     += $(subst $(EM)/,,$(shell find $(EM)/cpu/i5/*      -type f))
-FILES  += $(I5)
-COPY   += $(I5)
-
-DIRS   += $(subst $(EM)/,,$(shell find $(EM)/arch/x86_64/* -maxdepth 0 -type d))
-X86     = arch/x86_64.cmake arch/x86_64.mk
-X86    += $(subst $(EM)/,,$(shell find $(EM)/arch/x86_64/* -type f))
-FILES  += $(X86)
-COPY   += $(X86)
-
-DIRS   += $(subst $(EM)/,,$(shell find $(EM)/os/linux/* -maxdepth 0 -type d))
-LINUX   = os/linux.cmake os/linux.mk
-LINUX  += $(subst $(EM)/,,$(shell find $(EM)/os/linux/*             -type f))
-FILES  += $(LINUX)
-COPY   += $(LINUX)
-
-DIRS   += $(subst $(EM)/,,$(shell find $(EM)/lib/core/* -maxdepth 0 -type d))
-CORE   += $(subst $(EM)/,,$(shell find $(EM)/lib/core/*             -type f))
-FILES  += $(CORE)
-COPY   += $(CORE)
-
-# .gitignore
-GITI    = .gitignore $(foreach dir,$(DIRS),$(dir)/.gitignore)
+M ?= $(notdir $(CURDIR))
+M_ = $(abspath $(HOME)/$(M))
+L  = $(abspath $(MAKEFILE_LIST))
+T  = $(HOME)/$(subst /$,,$(dir $(L))$)
 
 .PHONY: template
-template: dirs giti copy files meld
+template:
+# mkdir -p $(M_)
+	$(MAKE) -f $(L) -C $(M_) git
 
-.PHONY: dirs
-dirs:
-	mkdir -p $(DIRS)
+.PHONY: git
+git: .git
+.git:
+	git init
+	git remote add gh    git@github.com:ponyatov/$(M).git
+	git remote add flic git@gitflic.ru:dponyatov/$(M).git
+#
+	git checkout --orphan dev
+	ln -fs ../rc rc ; git add rc ; git commit -am "."
+	git push -v -u gh dev
+#
+	git checkout --orphan `whoami`
+	ln -fs ../rc rc ; git add rc ; git commit -am "."
+	git push -v -u gh   `whoami`
+	git push       flic `whoami`
+# 	$(MAKE) -f $(MAKEFILE_LIST) -C $(M) dirs
 
-.PHONY: giti
-giti:
-	echo -n | tee $(GITI)
-	echo '*' | tee $(foreach dir,$(TMPDIR),$(dir)/.gitignore)
-	echo "~\\n*.swp\\n*.log\\n/doc/html/" | tee -a .gitignore
-	echo '!.gitignore' | tee -a $(GITI)
+# .PHONY: dirs
+# dirs:
+# 	echo mkdir $(L)
 
-.PHONY: files
-files:
-	touch $(FILES) $(GITI)
+# MODULE  = $(notdir $(CURDIR))
+# EM      = $(HOME)/em
+# CWD     = $(CURDIR)
 
-.PHONY: copy
-copy: $(COPY)
+# DIRS   += .vscode $(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type d))
+# FILES  += $(subst template,,$(subst $(EM)/,,$(shell find $(EM)/* -maxdepth 0 -type f)))
+# COPY   += .clang-format apt.Debian Makefile
 
-.PHONY: meld
-meld:
-	meld .doxygen          $(EM)/.doxygen
-	meld CMakeLists.txt    $(EM)/CMakeLists.txt
-	meld CMakePresets.json $(EM)/CMakePresets.json
-	meld .vscode           $(EM)/.vscode
-	meld mk/cross.mk       $(EM)/mk/cross.mk
+# VSCODE  = $(subst $(EM)/,,$(shell find $(EM)/.vscode -type f -regex .+.json))
+# FILES  += $(VSCODE)
+# COPY   += .vscode/tasks.json .vscode/launch.json
 
-apt.Debian: $(EM)/apt.Debian
-	head -n5 $< > $@
-doc/%: $(EM)/doc/%
-	cp $< $@ ; git add -f $@
-mk/%: $(EM)/mk/% $(EM)/template
-	cp $< $@
-%: $(EM)/% $(EM)/template
-	cp $< $@
-# cmake/%: $(EM)/cmake/%
+# TMPDIR  = bin doc ref tmp
+# CMAKE   = $(subst $(EM)/,,$(shell ls $(EM)/CMake*))
+# FILES  += $(CMAKE)
+# COPY   += $(subst $(EM)/,,$(shell find $(EM)/cmake -type f -regex '.+.cmake'))
+
+# DOXY    = .doxygen $(subst $(EM)/,,$(shell find $(EM)/doc/* -maxdepth 0 -type f))
+# COPY   += $(DOXY)
+
+# MK      = Makefile $(subst $(EM)/,,$(shell find $(EM)/mk/* -maxdepth 0 -type f))
+# COPY   += Makefile mk/var.mk mk/cfg.mk mk/cross.mk mk/dirs.mk mk/tool.mk
+# COPY   += mk/src.mk mk/cfg.mk mk/all.mk mk/format.mk mk/doc.mk
+# COPY   += mk/install.mk mk/merge.mk
+
+# APP     = inc/app.hpp src/app.cpp src/lexer.lex src/parser.yacc lib/app.ini
+# FILES  += $(APP)
+# COPY   += $(APP)
+
+# # host Linux
+
+# DIRS   += $(subst $(EM)/,,$(shell find $(EM)/hw/pc/*    -maxdepth 0 -type d))
+# PC      = hw/pc.cmake hw/pc.mk
+# PC     += $(subst $(EM)/,,$(shell find $(EM)/hw/pc/*                -type f))
+# FILES  += $(PC)
+# COPY   += $(PC)
+
+# DIRS   += $(subst $(EM)/,,$(shell find $(EM)/cpu/i5/* -maxdepth 0 -type d))
+# I5      = cpu/i5.cmake cpu/i5.mk
+# I5     += $(subst $(EM)/,,$(shell find $(EM)/cpu/i5/*      -type f))
+# FILES  += $(I5)
+# COPY   += $(I5)
+
+# DIRS   += $(subst $(EM)/,,$(shell find $(EM)/arch/x86_64/* -maxdepth 0 -type d))
+# X86     = arch/x86_64.cmake arch/x86_64.mk
+# X86    += $(subst $(EM)/,,$(shell find $(EM)/arch/x86_64/* -type f))
+# FILES  += $(X86)
+# COPY   += $(X86)
+
+# DIRS   += $(subst $(EM)/,,$(shell find $(EM)/os/linux/* -maxdepth 0 -type d))
+# LINUX   = os/linux.cmake os/linux.mk
+# LINUX  += $(subst $(EM)/,,$(shell find $(EM)/os/linux/*             -type f))
+# FILES  += $(LINUX)
+# COPY   += $(LINUX)
+
+# DIRS   += $(subst $(EM)/,,$(shell find $(EM)/lib/core/* -maxdepth 0 -type d))
+# CORE   += $(subst $(EM)/,,$(shell find $(EM)/lib/core/*             -type f))
+# FILES  += $(CORE)
+# COPY   += $(CORE)
+
+# # .gitignore
+# GITI    = .gitignore $(foreach dir,$(DIRS),$(dir)/.gitignore)
+
+# .PHONY: template
+# template: dirs giti copy files meld
+
+# .PHONY: dirs
+# dirs:
+# 	mkdir -p $(DIRS)
+
+# .PHONY: giti
+# giti:
+# 	echo -n | tee $(GITI)
+# 	echo '*' | tee $(foreach dir,$(TMPDIR),$(dir)/.gitignore)
+# 	echo "~\\n*.swp\\n*.log\\n/doc/html/" | tee -a .gitignore
+# 	echo '!.gitignore' | tee -a $(GITI)
+
+# .PHONY: files
+# files:
+# 	touch $(FILES) $(GITI)
+
+# .PHONY: copy
+# copy: $(COPY)
+
+# .PHONY: meld
+# meld:
+# 	meld .doxygen          $(EM)/.doxygen
+# 	meld CMakeLists.txt    $(EM)/CMakeLists.txt
+# 	meld CMakePresets.json $(EM)/CMakePresets.json
+# 	meld .vscode           $(EM)/.vscode
+# 	meld mk/cross.mk       $(EM)/mk/cross.mk
+
+# apt.Debian: $(EM)/apt.Debian
+# 	head -n5 $< > $@
+# doc/%: $(EM)/doc/%
+# 	cp $< $@ ; git add -f $@
+# mk/%: $(EM)/mk/% $(EM)/template
 # 	cp $< $@
-hw/%: $(EM)/hw/% $(EM)/template
-	cp $< $@
-cpu/%: $(EM)/cpu/% $(EM)/template
-	cp $< $@
-arch/%: $(EM)/arch/% $(EM)/template
-	cp $< $@
-os/%: $(EM)/os/% $(EM)/template
-	cp $< $@
-inc/%: $(EM)/inc/% $(EM)/template
-	cp $< $@
-src/%: $(EM)/src/% $(EM)/template
-	cp $< $@
+# %: $(EM)/% $(EM)/template
+# 	cp $< $@
+# # cmake/%: $(EM)/cmake/%
+# # 	cp $< $@
+# hw/%: $(EM)/hw/% $(EM)/template
+# 	cp $< $@
+# cpu/%: $(EM)/cpu/% $(EM)/template
+# 	cp $< $@
+# arch/%: $(EM)/arch/% $(EM)/template
+# 	cp $< $@
+# os/%: $(EM)/os/% $(EM)/template
+# 	cp $< $@
+# inc/%: $(EM)/inc/% $(EM)/template
+# 	cp $< $@
+# src/%: $(EM)/src/% $(EM)/template
+# 	cp $< $@
