@@ -10,7 +10,7 @@ template:
 # mkdir -p $(D)
 # $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti files doc cmake mk
 # $(MAKE) -f $(L) -C $(D) M=$(M) dirs giti
-	$(MAKE) -f $(L) -C $(D) M=$(M) mk
+	$(MAKE) -f $(L) -C $(D) M=$(M) giti files mk
 
 .PHONY: git
 git: .git
