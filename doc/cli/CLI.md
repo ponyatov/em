@@ -1,4 +1,4 @@
-# CLI
+#  CLI/REPL
 ## Command Line Interface {#cli}
 
 - FORTH language inspired
