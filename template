@@ -7,10 +7,9 @@ T  = $(abspath $(dir $(L))     )
 
 .PHONY: template
 template:
-# mkdir -p $(D)
+	mkdir -p $(D)
 # $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti vscode files doc cmake mk
-# $(MAKE) -f $(L) -C $(D) M=$(M) dirs giti files mk cmake
-	$(MAKE) -f $(L) -C $(D) M=$(M) mk
+	$(MAKE) -f $(L) -C $(D) M=$(M) hw
 
 .PHONY: git
 git: .git
@@ -103,14 +102,13 @@ $(D)/.doxygen: $(L)
 	@echo 'CALLER_GRAPH           = YES'                                       >> $@
 
 MK  = var version cross dirs tool pkg src cfg all debug clean format rule doc install merge docker
-MK := $(D)/Makefile $(foreach m,$(MK),$(D)/mk/$(m).mk)
+MK_ = $(foreach m,$(MK),$(D)/mk/$(m).mk)
 
 .PHONY: mk
-mk: $(MK)
-	touch $(MK)
+mk: $(D)/Makefile $(MK_)
 
 $(D)/Makefile: $(L)
-	@echo -n > $@
+	echo $(subst $(D)/,"include_",$(MK_)) | tr ' ' '\n' | tr '_' ' ' > $@
 
 $(D)/mk/version.mk: $(L)
 	@echo 'CUBEMX_VER = 6.12.1' > $@
@@ -356,3 +354,15 @@ $(D)/.vscode/extensions.json: $(L)
 	@echo '        "ms-python.autopep8",' >> $@
 	@echo '    ]' >> $@
 	@echo '}' >> $@
+
+HW  = pc f4disco l496disco
+HWD = $(foreach h,$(HW),$(D)/hw/$(h) $(D)/hw/$(h)/inc $(D)/hw/$(h)/src)
+HWI = $(patsubst %,%/.gitignore,$(HWD))
+HWF = $(foreach h,$(HW),\
+	$(D)/hw/$(h).mk $(D)/hw/$(h).cmake \
+	$(D)/hw/$(h)/inc/$(h).hpp $(D)/hw/$(h)/src/$(h).cpp \
+	$(D)/hw/$(h)/$(h).ioc)
+
+.PHONY: hw
+hw:
+	mkdir -p $(HWD) ; touch $(HWI) $(HWF)
