@@ -9,7 +9,7 @@ T  = $(abspath $(dir $(L))     )
 template:
 	mkdir -p $(D)
 # $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti vscode files doc cmake mk
-	$(MAKE) -f $(L) -C $(D) M=$(M) hw
+	$(MAKE) -f $(L) -C $(D) M=$(M) giti hw
 
 .PHONY: git
 git: .git
@@ -48,6 +48,7 @@ giti:
 	@echo '*'            > $(D)/bin/.gitignore
 	@echo '*'            > $(D)/ref/.gitignore
 	@echo '*'            > $(D)/tmp/.gitignore
+	@echo '.mxproject'  >> $(D)/hw/.gitignore
 
 .PHONY: files
 files: \
