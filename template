@@ -8,7 +8,7 @@ T  = $(abspath $(dir $(L))     )
 .PHONY: template
 template:
 	mkdir -p $(D)
-	$(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti vscode files doc cmake mk hw
+	$(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti vscode files doc cmake mk hw lib
 
 .PHONY: git
 git: .git
@@ -366,3 +366,24 @@ HWF = $(foreach h,$(HW),\
 .PHONY: hw
 hw:
 	mkdir -p $(HWD) ; touch $(HWI) $(HWF)
+
+LIB  = core cli
+LIBD = $(foreach l,$(LIB),$(D)/lib/$(l) $(D)/lib/$(l)/inc $(D)/lib/$(l)/src)
+LIBI = $(patsubst %,%/.gitignore,$(LIBD))
+LIBF = $(foreach l,$(LIB),\
+	$(D)/lib/$(l)/inc/$(l).hpp $(D)/lib/$(l)/src/$(l).cpp \
+	)
+
+.PHONY: lib
+lib: $(CLI)
+	mkdir -p $(LIBD) ; touch $(LIBI) $(LIBF)
+	$(MAKE) -f $(L) -C $(D) M=$(M) cli
+
+CLI = $(wildcard $(T)/lib/cli/src/*.ragel)
+
+.PHONY: cli
+cli: $(CLI)
+
+.PHONY: ls
+ls:
+	ls -la .
