@@ -1,2 +1,0 @@
-CPU    ?= i486
-CFLAGS += -DRETRO
