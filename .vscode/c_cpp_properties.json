@@ -15,9 +15,9 @@
     },
     "configurations": [
         {
-            "name": "cmake",
+            "name"                 : "cmake",
             "configurationProvider": "ms-vscode.cmake-tools",
-            "mergeConfigurations": true
+            "mergeConfigurations"  :  true
         }
     ]
 }

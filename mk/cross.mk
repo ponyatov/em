@@ -1,10 +1,10 @@
 HW ?= pc
-# HW ?= mega2560
-# HW ?= pillF030
-# HW ?= pillF103
-# HW ?= iskra
 # HW ?= f4disco
+# HW ?= iskra
 # HW ?= l496disco
+# HW ?= pillF103
+# HW ?= pillF030
+# HW ?= mega2560
 
 include   hw/$(HW).mk
 include  cpu/$(CPU).mk

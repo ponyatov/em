@@ -16,6 +16,9 @@
         // misc
         "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",
+        // Web
+        "esbenp.prettier-vscode",
+        "mechatroner.rainbow-csv",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
@@ -36,9 +39,6 @@
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
-        // Web
-        "esbenp.prettier-vscode",
-        "mechatroner.rainbow-csv",
         // F#
         "ionide.ionide-fsharp",
         "mnxn.fsharp-fsl-fsy",

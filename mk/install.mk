@@ -1,8 +1,8 @@
-.PHONY: install update ref gz
+.PHONY : install update ref gz
 install: $(HOST)_install
-update: $(HOST)_update
-ref: $(RF)
-gz:  $(GZ)
+update : $(HOST)_update
+ref    : $(RF)
+gz     : $(GZ)
 
 Debian_install: Debian_update doc ref gz
 	sudo dpkg --add-architecture i386
