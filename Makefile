@@ -3,12 +3,13 @@ include mk/version.mk
 include mk/cross.mk
 include mk/dirs.mk
 include mk/tool.mk
+include mk/pkg.mk
 include mk/src.mk
 include mk/cfg.mk
 include mk/all.mk
+include mk/debug.mk
 include mk/clean.mk
 include mk/format.mk
-include mk/debug.mk
 include mk/rule.mk
 include mk/doc.mk
 include mk/install.mk

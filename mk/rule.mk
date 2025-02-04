@@ -5,4 +5,4 @@ $(BIN)/$(BINFILE): $(C) $(H) $(MK) $(CM)
 .PHONY: $(ELF)
 $(ELF): $(C) $(H) $(MK) $(CM)
 	cmake --fresh --preset ${HW}
-	cmake --build --preset ${HW}
+	cmake --build --preset ${HW} -j
