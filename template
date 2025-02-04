@@ -9,7 +9,7 @@ T  = $(abspath $(dir $(L))     )
 template:
 # mkdir -p $(D)
 # $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti files
-	$(MAKE) -f $(L) -C $(D) M=$(M) files
+	$(MAKE) -f $(L) -C $(D) M=$(M) giti
 
 .PHONY: git
 git: .git
@@ -38,12 +38,20 @@ GITI = $(patsubst %,%/.gitignore,$(DIRS))
 .PHONY: giti
 giti:
 	touch $(GITI)
+	@echo '*~'           > $(D)/.gitignore
+	@echo '*.swp'       >> $(D)/.gitignore
+	@echo '*.log'       >> $(D)/.gitignore
+	@echo '!.gitignore' >> $(D)/.gitignore
+	@echo 'html/'        > $(D)/doc/.gitignore
+	@echo '*'            > $(D)/bin/.gitignore
+	@echo '*'            > $(D)/ref/.gitignore
+	@echo '*'            > $(D)/tmp/.gitignore
 
 .PHONY: files
-files: $(D)/.clang-format $(D)/README.md $(D)/.doxygen
+files: $(D)/.clang-format $(D)/README.md $(D)/.doxygen $(D)/LICENSE $(D)/.gitattributes
 	touch \
 		$(D)/apt.Debian $(D)/apt.Msys \
-		$(D)/Makefile $(D)/LICENSE
+		$(D)/Makefile
 
 $(D)/%: $(T)/% $(L)
 	cp $< $@
@@ -51,40 +59,40 @@ $(D)/%: $(T)/% $(L)
 .PHONY: readme
 readme: $(D)/README.md
 $(D)/README.md: $(L)
-	echo "# \`$(M)\`"                                            > $@
-	echo "## $(D)"                                              >> $@
-	echo                                                        >> $@
-	echo "(c) Dmitry Ponyatov <<dponyatov@gmail.com>> 2025 MIT" >> $@
-	echo                                                        >> $@
-	echo "github: https://github.com/ponyatov/$(M)"             >> $@
+	@echo "# \`$(M)\`"                                            > $@
+	@echo "## $(D)"                                              >> $@
+	@echo                                                        >> $@
+	@echo "(c) Dmitry Ponyatov <<dponyatov@gmail.com>> 2025 MIT" >> $@
+	@echo                                                        >> $@
+	@echo "github: https://github.com/ponyatov/$(M)"             >> $@
 
 .PHONY: doxy
 doxy: $(D)/.doxygen
 $(D)/.doxygen: $(L)
-	echo 'PROJECT_NAME           = "$(M)"'                                     > $@
-	echo 'PROJECT_BRIEF          = "$(D)"'                                    >> $@
-	echo 'PROJECT_LOGO           = doc/logo.png'                              >> $@
-	echo 'OUTPUT_DIRECTORY       = doc'                                       >> $@
-	echo 'HTML_OUTPUT            = html'                                      >> $@
-	echo 'INPUT                  = README.md inc lib src doc hw os cpu arch'  >> $@
-	echo 'INCLUDE_PATH           = inc'                                       >> $@
-	echo 'EXCLUDE                = ref/* *.pdf *.djvu Core Drivers'           >> $@
-	echo 'WARN_IF_UNDOCUMENTED   = NO'                                        >> $@
-	echo 'RECURSIVE              = YES'                                       >> $@
-	echo 'USE_MDFILE_AS_MAINPAGE = README.md'                                 >> $@
-	echo 'GENERATE_LATEX         = NO'                                        >> $@
-	echo 'FILE_PATTERNS         += *.lex *.yacc *.ragel *.rl'                 >> $@
-	echo 'EXTENSION_MAPPING      = lex=C++ yacc=C++ ragel=C++ rl=C++ ino=C++' >> $@
-	echo 'HAVE_DOT               = YES'                                       >> $@
-	echo 'EXTRACT_ALL            = YES'                                       >> $@
-	echo 'EXTRACT_STATIC         = YES'                                       >> $@
-	echo 'EXTRACT_PRIVATE        = YES'                                       >> $@
-	echo 'EXTRACT_PACKAGE        = YES'                                       >> $@
-	echo 'EXTRACT_LOCAL_CLASSES  = YES'                                       >> $@
-	echo 'EXTRACT_LOCAL_METHODS  = YES'                                       >> $@
-	echo 'EXTRACT_ANON_NSPACES   = YES'                                       >> $@
-	echo 'LAYOUT_FILE            = doc/DoxygenLayout.xml'                     >> $@
-	echo 'SORT_GROUP_NAMES       = YES'                                       >> $@
-	echo 'REPEAT_BRIEF           = NO'                                        >> $@
-	echo 'CALL_GRAPH             = YES'                                       >> $@
-	echo 'CALLER_GRAPH           = YES'                                       >> $@
+	@echo 'PROJECT_NAME           = "$(M)"'                                     > $@
+	@echo 'PROJECT_BRIEF          = "$(D)"'                                    >> $@
+	@echo 'PROJECT_LOGO           = doc/logo.png'                              >> $@
+	@echo 'OUTPUT_DIRECTORY       = doc'                                       >> $@
+	@echo 'HTML_OUTPUT            = html'                                      >> $@
+	@echo 'INPUT                  = README.md inc lib src doc hw os cpu arch'  >> $@
+	@echo 'INCLUDE_PATH           = inc'                                       >> $@
+	@echo 'EXCLUDE                = ref/* *.pdf *.djvu Core Drivers'           >> $@
+	@echo 'WARN_IF_UNDOCUMENTED   = NO'                                        >> $@
+	@echo 'RECURSIVE              = YES'                                       >> $@
+	@echo 'USE_MDFILE_AS_MAINPAGE = README.md'                                 >> $@
+	@echo 'GENERATE_LATEX         = NO'                                        >> $@
+	@echo 'FILE_PATTERNS         += *.lex *.yacc *.ragel *.rl'                 >> $@
+	@echo 'EXTENSION_MAPPING      = lex=C++ yacc=C++ ragel=C++ rl=C++ ino=C++' >> $@
+	@echo 'HAVE_DOT               = YES'                                       >> $@
+	@echo 'EXTRACT_ALL            = YES'                                       >> $@
+	@echo 'EXTRACT_STATIC         = YES'                                       >> $@
+	@echo 'EXTRACT_PRIVATE        = YES'                                       >> $@
+	@echo 'EXTRACT_PACKAGE        = YES'                                       >> $@
+	@echo 'EXTRACT_LOCAL_CLASSES  = YES'                                       >> $@
+	@echo 'EXTRACT_LOCAL_METHODS  = YES'                                       >> $@
+	@echo 'EXTRACT_ANON_NSPACES   = YES'                                       >> $@
+	@echo 'LAYOUT_FILE            = doc/DoxygenLayout.xml'                     >> $@
+	@echo 'SORT_GROUP_NAMES       = YES'                                       >> $@
+	@echo 'REPEAT_BRIEF           = NO'                                        >> $@
+	@echo 'CALL_GRAPH             = YES'                                       >> $@
+	@echo 'CALLER_GRAPH           = YES'                                       >> $@
