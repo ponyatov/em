@@ -1,1 +1,1 @@
-../patch.mk
+../../mk/patch.mk
