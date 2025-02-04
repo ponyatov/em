@@ -8,8 +8,7 @@ T  = $(abspath $(dir $(L))     )
 .PHONY: template
 template:
 	mkdir -p $(D)
-# $(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti vscode files doc cmake mk
-	$(MAKE) -f $(L) -C $(D) M=$(M) giti hw
+	$(MAKE) -f $(L) -C $(D) M=$(M) git dirs giti vscode files doc cmake mk hw
 
 .PHONY: git
 git: .git
