@@ -1,7 +1,6 @@
 git make curl
 code meld doxygen clang-format
-cmake g++ gdb
-flex bison libreadline-dev ragel
+cmake g++ gdb flex bison libreadline-dev ragel
 python3 python3-venv
 dos2unix
 gcc-arm-none-eabi    gdb-multiarch qemu-system-arm

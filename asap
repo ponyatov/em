@@ -5,25 +5,25 @@ S  = $(abspath $(dir $(T))     )
 M ?= $(notdir $(T))
 D  = $(abspath $(HOME)/$(M))
 
+AUTHOR = $(shell git config user.name )
+EMAIL  = $(shell git config user.email)
+YEAR   = $(shell date +%Y)
+
 template:
 	mkdir -p $(D)
-	$(MAKE) -f $(T) -C $(D) M=$(M) git readme
+	$(MAKE) -f $(T) -C $(D) M=$(M) git readme apt
 
 .PHONY: git
 git: .git
-	git remote -v ; git branch -v
 .git:
 	git init
 	git remote add gh    git@github.com:ponyatov/$(M).git
 	git remote add flic git@gitflic.ru:dponyatov/$(M).git
 	git checkout --orphan dev ; git checkout --orphan `whoami`
 	ln -fs ../rc rc ; git add rc ; git commit -am "."
+	git remote -v ; git branch -v
 	google-chome https://github.com/new &
 	google-chome https://gitflic.ru/project/create &
-
-AUTHOR = $(shell git config user.name )
-EMAIL  = $(shell git config user.email)
-YEAR   = $(shell date +%Y)
 
 .PHONY: readme
 readme: README.md
@@ -35,3 +35,13 @@ README.md:
 	echo '' >> $@
 	echo '-  github: https://github.com/ponyatov/$(M)' >> $@
 	echo '- gitflic: https://gitflic.ru/project/dponyatov/$(M)' >> $@
+
+APT      = apt.Debian apt.Msys
+APT_HEAD = 4
+
+.PHONY: apt
+apt: $(APT)
+apt.%:
+	head -n$(APT_HEAD) $(S)/$@ > $@
+	sudo apt update
+	sudo apt install -uy `cat apt.$(shell lsb_release -si)`
