@@ -14,7 +14,7 @@ template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
 		git readme license apt format dirs giti doxy vscode cmake \
-		cross hw cpu arch
+		cross hw cpu arch os
 
 .PHONY: git
 git: .git
@@ -237,10 +237,11 @@ HW  = pc pillF103 f4disco
 HWD = $(foreach d,$(HW),hw/$(d) hw/$(d)/inc hw/$(d)/src)
 HWI = $(patsubst %,%/.gitignore,$(HWD))
 HWC = $(foreach d,$(HW),hw/$(d)/inc/$(d).hpp hw/$(d)/src/$(d).cpp)
+HWM = $(foreach m,$(HW),hw/$(m)/mk hw/$(m)/cmake)
 
 .PHONY: hw
 hw: $(HWD) $(HWI)
-	touch $(HWC)
+	touch $(HWC) $(HWM)
 $(HWD):
 	mkdir -p $@
 
@@ -248,22 +249,36 @@ CPU  = i5 stm32f103c8t stm32f407vgt
 CPUD = $(foreach d,$(CPU),cpu/$(d) cpu/$(d)/inc cpu/$(d)/src)
 CPUI = $(patsubst %,%/.gitignore,$(CPUD))
 CPUC = $(foreach d,$(CPU),cpu/$(d)/inc/$(d).hpp cpu/$(d)/src/$(d).cpp)
+CPUM = $(foreach m,$(CPU),cpu/$(m)/mk cpu/$(m)/cmake)
 
 .PHONY: cpu
 cpu: $(CPUD) $(CPUI)
-	touch $(CPUC)
+	touch $(CPUC) $(CPUM)
 $(CPUD):
 	mkdir -p $@
 
 ARCH  = x86_64 i386 cortexM cortexM0 cortexM3 cortexM4
 ARCHD = $(foreach d,$(ARCH),arch/$(d) arch/$(d)/inc arch/$(d)/src)
 ARCHI = $(patsubst %,%/.gitignore,$(ARCHD))
+ARCHC = $(foreach d,$(ARCH),arch/$(d)/inc/$(d).hpp arch/$(d)/src/$(d).cpp)
 ARCHM = $(foreach m,$(ARCH),arch/$(m)/mk arch/$(m)/cmake)
 
 .PHONY: arch
 arch: $(ARCHD) $(ARCHI)
 	touch $(ARCHC) $(ARCHM)
 $(ARCHD):
+	mkdir -p $@
+
+OS  = bare linux mingw
+OSD = $(foreach d,$(OS),os/$(d) os/$(d)/inc os/$(d)/src)
+OSI = $(patsubst %,%/.gitignore,$(OSD))
+OSC = $(foreach d,$(OS),os/$(d)/inc/$(d).hpp os/$(d)/src/$(d).cpp)
+OSM = $(foreach m,$(OS),os/$(m)/mk os/$(m)/cmake)
+
+.PHONY: os
+os: $(OSD) $(OSI)
+	touch $(OSC) $(OSM)
+$(OSD):
 	mkdir -p $@
 
 # any non-existent file
