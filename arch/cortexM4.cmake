@@ -1,4 +1,4 @@
-include(arch/cortexM.cmake)
+include(arch/cortexM/cmake)
 
 set(MCPU -march=armv7e-m   -mcpu=cortex-m4)
 set(FCPU -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
