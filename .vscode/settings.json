@@ -31,7 +31,7 @@
         "*.openocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties",
-        "*.s": "arm", "*.S": "arm",
+        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         //
         ".boot*": "javascript", ".prettierrc": "jsonc",
         "*.service": "systemd-unit-file"

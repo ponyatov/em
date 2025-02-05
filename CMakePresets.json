@@ -2,16 +2,6 @@
     "version": 6,
     "buildPresets": [
         {
-            "name"           :   "f4disco",
-            "configurePreset":   "f4disco",
-            "targets"        :  ["all","install"]
-        },
-        {
-            "name":              "iskra",
-            "configurePreset":   "iskra",
-            "targets":          ["all","install"]
-        },
-        {
             "name":              "pillF030",
             "configurePreset":   "pillF030",
             "targets":          ["all","install"]
@@ -19,6 +9,16 @@
         {
             "name":              "pillF103",
             "configurePreset":   "pillF103",
+            "targets":          ["all","install"]
+        },
+        {
+            "name"           :   "f4disco",
+            "configurePreset":   "f4disco",
+            "targets"        :  ["all","install"]
+        },
+        {
+            "name":              "iskra",
+            "configurePreset":   "iskra",
             "targets":          ["all","install"]
         },
         {
@@ -52,22 +52,6 @@
             }
         },
         {
-            "name"          : "mingw32",
-            "inherits"      : "pc",
-            "displayName"   : "i686-w64-mingw32",
-            "description"   : "mingw/32",
-            "toolchainFile" : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
-            "cacheVariables": {"ARCH":"i386","OS":"mingw"}
-        },
-        {
-            "name"          : "ucrt",
-            "inherits"      : "pc",
-            "displayName"   : "mingw-w64-ucrt-x86_64",
-            "description"   : "mingw/64",
-            "toolchainFile" : "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
-            "cacheVariables": {"ARCH":"x86_64","OS":"mingw"}
-        },
-        {
             "name"          :  "cortexM",
             "hidden"        :   true,
             "inherits"      :  "common",
@@ -91,6 +75,22 @@
             "hidden"        :   true,
             "inherits"      :  "cortexM",
             "cacheVariables": {"ARCH":"cortexM4"}
+        },
+        {
+            "name": "pillF030",
+            "inherits": "cortexM0",
+            "cacheVariables": {
+                "HW" :"pillF030",
+                "CPU":"stm32f030f4p", "SERIES": "STM32F0"
+            }
+        },
+        {
+            "name": "pillF103",
+            "inherits": "cortexM3",
+            "cacheVariables": {
+                "HW" :"pillF103",
+                "CPU":"stm32f103c8t", "SERIES": "STM32F1"
+            }
         },
         {
             "name"          : "f4disco",
@@ -117,28 +117,28 @@
             }
         },
         {
-            "name": "pillF030",
-            "inherits": "cortexM0",
-            "cacheVariables": {
-                "HW" :"pillF030",
-                "CPU":"stm32f030f4p", "SERIES": "STM32F0"
-            }
-        },
-        {
-            "name": "pillF103",
-            "inherits": "cortexM3",
-            "cacheVariables": {
-                "HW" :"pillF103",
-                "CPU":"stm32f103c8t", "SERIES": "STM32F1"
-            }
-        },
-        {
             "name"          : "pc",
             "inherits"      : "common",
             "hidden"        : true,
             "cacheVariables": {
                 "HW":"pc", "CPU":"i5", "ARCH":"x86_64"
             }
+        },
+        {
+            "name"          : "mingw32",
+            "inherits"      : "pc",
+            "displayName"   : "i686-w64-mingw32",
+            "description"   : "mingw/32",
+            "toolchainFile" : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
+            "cacheVariables": {"ARCH":"i386","OS":"mingw"}
+        },
+        {
+            "name"          : "ucrt",
+            "inherits"      : "pc",
+            "displayName"   : "mingw-w64-ucrt-x86_64",
+            "description"   : "mingw/64",
+            "toolchainFile" : "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
+            "cacheVariables": {"ARCH":"x86_64","OS":"mingw"}
         },
         {
             "name"          : "linux",
@@ -154,10 +154,10 @@
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-musl.cmake"
        },
        {
-            "name"       : "glibc",
-            "inherits"   : "linux",
-            "displayName": "x86_64-linux-gnu",
-            "description": "native host",
+            "name"         : "glibc",
+            "inherits"     : "linux",
+            "displayName"  : "x86_64-linux-gnu",
+            "description"  : "native host",
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
         }
    ]

@@ -1,7 +1,7 @@
 {
     "version": 4,
     "env":{
-        "coreInclude": [
+        "appInclude": [
             "${workspaceFolder}/inc/**",
             "${workspaceFolder}/tmp/**",
             "${workspaceFolder}/src/**"

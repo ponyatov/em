@@ -12,11 +12,12 @@ ABOUT ?= as soon as possible
 
 template:
 	mkdir -p $(D)
-	$(MAKE) -f $(T) -C $(D) M=$(M) git readme apt format dirs giti doxy
+	$(MAKE) -f $(T) -C $(D) M=$(M) \
+		git readme apt format dirs giti doxy vscode cmake
 
 .PHONY: git
 git: .git
-.git:
+.git: .gitattributes
 	git init
 	git remote add gh    git@github.com:ponyatov/$(M).git
 	git remote add flic git@gitflic.ru:dponyatov/$(M).git
@@ -25,6 +26,9 @@ git: .git
 	git remote -v ; git branch -v
 	google-chome https://github.com/new &
 	google-chome https://gitflic.ru/project/create &
+
+.gitattributes: $(S)/.gitattributes
+	cp $< $@
 
 .PHONY: readme
 readme: README.md
@@ -57,7 +61,7 @@ format: $(FORMAT)
 .prettierrc:   $(S)/.prettierrc
 	cp $< $@
 
-DIRS = .vscode bin doc lib inc src tmp ref hw cpu arch os
+DIRS = .vscode bin doc lib inc src tmp ref hw cpu arch os mk cmake
 
 .PHONY: dirs
 dirs: $(DIRS)
@@ -69,6 +73,9 @@ GITI = .gitignore $(foreach d,$(DIRS),$(d)/.gitignore)
 .PHONY: giti
 giti: $(GITI)
 
+.gitignore: $(S)/.gitignore $(T)
+	cp $< $@
+
 DOXY = .doxygen doc/logo.png doc/DoxygenLayout.xml
 
 .PHONY: doxy
@@ -77,12 +84,118 @@ doxy: $(DOXY)
 doc/DoxygenLayout.xml:
 	doxygen -l ; mv DoxygenLayout.xml $@
 .doxygen: $(S)/.doxygen $(T)
-	@echo 'PROJECT_NAME           = "$(M)"'  > $@
+	@echo 'PROJECT_NAME           = "$(M)"'      > $@
 	@echo 'PROJECT_BRIEF          = "$(ABOUT)"' >> $@
 	tail -n+3 $< >> $@
-doc/logo.png: $(S)/logo.png
+doc/logo.png: $(S)/doc/logo.png
 	cp $< $@
 
+VSCODE = $(patsubst %,.vscode/%.json,settings extensions launch c_cpp_properties tasks)
+
+.PHONY: vscode
+vscode: $(VSCODE)
+
+.vscode/%.json: $(S)/.vscode/%.json
+	cp $< $@
+
+CMAKE = CMakeLists.txt CMakePresets.json
+
+.PHONY: cmake
+cmake: $(CMAKE)
+
+CMakeLists.txt: $(S)/CMakeLists.txt $(T)
+	cp $< $@
+CMakePresets.json: $(S)/CMakePresets.json $(T)
+	head -n2 $<      > $@
+	@echo '    "buildPresets": [' >> $@
+	@echo '        {' >> $@
+	@echo '            "name":              "pillF103",' >> $@
+	@echo '            "configurePreset":   "pillF103",' >> $@
+	@echo '            "targets":          ["all","install"]' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"           :   "f4disco",' >> $@
+	@echo '            "configurePreset":   "f4disco",' >> $@
+	@echo '            "targets"        :  ["all","install"]' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"           :   "glibc",' >> $@
+	@echo '            "configurePreset":   "glibc",' >> $@
+	@echo '            "targets"        :  ["all","install"]' >> $@
+	@echo '        }' >> $@
+	@echo '    ],' >> $@
+	@echo '    "configurePresets": [' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"     : "common",' >> $@
+	@echo '            "hidden"   :  true,' >> $@
+	@echo '            "binaryDir": "$${sourceDir}/tmp/$${presetName}",' >> $@
+	@echo '            "generator": "Unix Makefiles",' >> $@
+	@echo '            "cacheVariables": {' >> $@
+	@echo '                "CMAKE_INSTALL_PREFIX"    : "$${sourceDir}/bin",' >> $@
+	@echo '                "CMAKE_MODULE_PATH"       : "$${sourceDir}/cmake",' >> $@
+	@echo '                "CMAKE_COLOR_DIAGNOSTICS" : false,' >> $@
+	@echo '                "CMAKE_BUILD_TYPE"        : "Debug",' >> $@
+	@echo '                "CMAKE_VERBOSE_MAKEFILE"  : true' >> $@
+	@echo '            }' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"          :  "cortexM",' >> $@
+	@echo '            "hidden"        :   true,' >> $@
+	@echo '            "inherits"      :  "common",' >> $@
+	@echo '            "toolchainFile" :  "$${sourceDir}/cmake/arm-none-eabi.cmake",' >> $@
+	@echo '            "cacheVariables": {"OS":"bare","CMAKE_EXECUTABLE_SUFFIX":".elf"}' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"          :  "cortexM3",' >> $@
+	@echo '            "hidden"        :   true,' >> $@
+	@echo '            "inherits"      :  "cortexM",' >> $@
+	@echo '            "cacheVariables": {"ARCH":"cortexM3"}' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"          :  "cortexM4",' >> $@
+	@echo '            "hidden"        :   true,' >> $@
+	@echo '            "inherits"      :  "cortexM",' >> $@
+	@echo '            "cacheVariables": {"ARCH":"cortexM4"}' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name": "pillF103",' >> $@
+	@echo '            "inherits": "cortexM3",' >> $@
+	@echo '            "cacheVariables": {' >> $@
+	@echo '                "HW" :"pillF103",' >> $@
+	@echo '                "CPU":"stm32f103c8t", "SERIES": "STM32F1"' >> $@
+	@echo '            }' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"          : "f4disco",' >> $@
+	@echo '            "inherits"      : "cortexM4",' >> $@
+	@echo '            "cacheVariables": {' >> $@
+	@echo '                "HW" :"f4disco",' >> $@
+	@echo '                "CPU":"stm32f407vgt", "SERIES": "STM32F4"' >> $@
+	@echo '            }' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"          : "pc",' >> $@
+	@echo '            "inherits"      : "common",' >> $@
+	@echo '            "hidden"        : true,' >> $@
+	@echo '            "cacheVariables": {' >> $@
+	@echo '                "HW":"pc", "CPU":"i5", "ARCH":"x86_64"' >> $@
+	@echo '            }' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"          : "linux",' >> $@
+	@echo '            "inherits"      : "pc",' >> $@
+	@echo '            "hidden"        : true,' >> $@
+	@echo '            "cacheVariables": {"OS":"linux"}' >> $@
+	@echo '        },' >> $@
+	@echo '        {' >> $@
+	@echo '            "name"         : "glibc",' >> $@
+	@echo '            "inherits"     : "linux",' >> $@
+	@echo '            "displayName"  : "x86_64-linux-gnu",' >> $@
+	@echo '            "description"  : "native host",' >> $@
+	@echo '            "toolchainFile": "$${sourceDir}/cmake/x86_64-linux-gnu.cmake"' >> $@
+	@echo '        }' >> $@
+	@echo '   ]' >> $@
+	@echo '}' >> $@
 # any non-existent file
 %:
 	touch $@
