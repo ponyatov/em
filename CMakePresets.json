@@ -2,14 +2,14 @@
     "version": 6,
     "buildPresets": [
         {
-            "name":              "pillF030",
+            "name"           :   "pillF030",
             "configurePreset":   "pillF030",
-            "targets":          ["all","install"]
+            "targets"        :  ["all","install"]
         },
         {
-            "name":              "pillF103",
+            "name"           :   "pillF103",
             "configurePreset":   "pillF103",
-            "targets":          ["all","install"]
+            "targets"        :  ["all","install"]
         },
         {
             "name"           :   "f4disco",
@@ -17,19 +17,19 @@
             "targets"        :  ["all","install"]
         },
         {
-            "name":              "iskra",
+            "name"           :   "iskra",
             "configurePreset":   "iskra",
-            "targets":          ["all","install"]
+            "targets"        :  ["all","install"]
         },
         {
-            "name":              "l496disco",
+            "name"           :   "l496disco",
             "configurePreset":   "l496disco",
-            "targets":          ["all","install"]
+            "targets"        :  ["all","install"]
         },
         {
-            "name":              "musl",
+            "name"           :   "musl",
             "configurePreset":   "musl",
-            "targets":          ["all","install"]
+            "targets"        :  ["all","install"]
         },
         {
             "name"           :   "glibc",
@@ -77,16 +77,16 @@
             "cacheVariables": {"ARCH":"cortexM4"}
         },
         {
-            "name": "pillF030",
-            "inherits": "cortexM0",
+            "name"          : "pillF030",
+            "inherits"      : "cortexM0",
             "cacheVariables": {
                 "HW" :"pillF030",
                 "CPU":"stm32f030f4p", "SERIES": "STM32F0"
             }
         },
         {
-            "name": "pillF103",
-            "inherits": "cortexM3",
+            "name"          : "pillF103",
+            "inherits"      : "cortexM3",
             "cacheVariables": {
                 "HW" :"pillF103",
                 "CPU":"stm32f103c8t", "SERIES": "STM32F1"
@@ -101,16 +101,16 @@
             }
         },
         {
-            "name": "iskra",
-            "inherits": "cortexM4",
+            "name"          : "iskra",
+            "inherits"      : "cortexM4",
             "cacheVariables": {
                 "HW" :"iskra",
                 "CPU":"stm32f405rgt", "SERIES": "STM32F4"
             }
         },
         {
-            "name": "l496disco",
-            "inherits": "cortexM4",
+            "name"          : "l496disco",
+            "inherits"      : "cortexM4",
             "cacheVariables": {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"

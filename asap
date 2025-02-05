@@ -123,9 +123,9 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	head -n2 $<      > $@
 	@echo '    "buildPresets": [' >> $@
 	@echo '        {' >> $@
-	@echo '            "name":              "pillF103",' >> $@
+	@echo '            "name"           :   "pillF103",' >> $@
 	@echo '            "configurePreset":   "pillF103",' >> $@
-	@echo '            "targets":          ["all","install"]' >> $@
+	@echo '            "targets"        :  ["all","install"]' >> $@
 	@echo '        },' >> $@
 	@echo '        {' >> $@
 	@echo '            "name"           :   "f4disco",' >> $@
@@ -172,8 +172,8 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '            "cacheVariables": {"ARCH":"cortexM4"}' >> $@
 	@echo '        },' >> $@
 	@echo '        {' >> $@
-	@echo '            "name": "pillF103",' >> $@
-	@echo '            "inherits": "cortexM3",' >> $@
+	@echo '            "name"          : "pillF103",' >> $@
+	@echo '            "inherits"      : "cortexM3",' >> $@
 	@echo '            "cacheVariables": {' >> $@
 	@echo '                "HW" :"pillF103",' >> $@
 	@echo '                "CPU":"stm32f103c8t", "SERIES": "STM32F1"' >> $@
