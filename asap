@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+T  = $(abspath $(MAKEFILE_LIST))
+S  = $(abspath $(dir $(T))     )
+M ?= $(notdir $(T))
+D  = $(abspath $(HOME)/$(M))
+
+template:
+	mkdir -p $(D)
+	$(MAKE) -f $(T) -C $(D) M=$(M) git readme
+
+.PHONY: git
+git: .git
+	git remote -v ; git branch -v
+.git:
+	git init
+	git remote add gh    git@github.com:ponyatov/$(M).git
+	git remote add flic git@gitflic.ru:dponyatov/$(M).git
+	git checkout --orphan dev ; git checkout --orphan `whoami`
+	ln -fs ../rc rc ; git add rc ; git commit -am "."
+	google-chome https://github.com/new &
+	google-chome https://gitflic.ru/project/create &
+
+AUTHOR = $(shell git config user.name )
+EMAIL  = $(shell git config user.email)
+YEAR   = $(shell date +%Y)
+
+.PHONY: readme
+readme: README.md
+README.md:
+	echo '# `$(M)`'  > $@
+	echo '## $(D)' >> $@
+	echo '' >> $@
+	echo '(c) $(AUTHOR) <<$(EMAIL)>> $(YEAR) MIT' >> $@
+	echo '' >> $@
+	echo '-  github: https://github.com/ponyatov/$(M)' >> $@
+	echo '- gitflic: https://gitflic.ru/project/dponyatov/$(M)' >> $@
