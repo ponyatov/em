@@ -46,11 +46,11 @@ apt.%:
 	sudo apt update
 	sudo apt install -uy `cat apt.$(shell lsb_release -si)`
 
-FORMAT = .clang_format .prettierrc
+FORMAT = .clang-format .prettierrc
 .PHONY: format
 format: $(FORMAT)
 
-.clang_format: $(S)/.clang_format
+.clang-format: $(S)/.clang-format
 	cp $< $@
 .prettierrc:   $(S)/.prettierrc
 	cp $< $@
