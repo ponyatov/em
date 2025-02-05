@@ -11,7 +11,7 @@ YEAR   = $(shell date +%Y)
 
 template:
 	mkdir -p $(D)
-	$(MAKE) -f $(T) -C $(D) M=$(M) git readme apt
+	$(MAKE) -f $(T) -C $(D) M=$(M) git readme apt format
 
 .PHONY: git
 git: .git
@@ -42,6 +42,18 @@ APT_HEAD = 4
 .PHONY: apt
 apt: $(APT)
 apt.%:
-	head -n$(APT_HEAD) $(S)/$@ > $@
+	head -n$(APT_HEAD) $(S)/$@ > $@ ; git add $@
 	sudo apt update
 	sudo apt install -uy `cat apt.$(shell lsb_release -si)`
+
+FORMAT = .clang_format .prettierrc
+.PHONY: format
+format: $(FORMAT)
+
+.clang_format: $(S)/.clang_format
+	cp $< $@
+.prettierrc:   $(S)/.prettierrc
+	cp $< $@
+
+%:
+	touch $@
