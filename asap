@@ -73,6 +73,14 @@ GITI = .gitignore $(foreach d,$(DIRS),$(d)/.gitignore)
 .PHONY: giti
 giti: $(GITI)
 
+bin/.gitignore: $(T)
+	echo '*' > $@
+ref/.gitignore: $(T)
+	echo '*' > $@
+tmp/.gitignore: $(T)
+	echo '*' > $@
+doc/.gitignore: $(T)
+	echo 'html/' > $@
 .gitignore: $(S)/.gitignore $(T)
 	cp $< $@
 
@@ -98,11 +106,17 @@ vscode: $(VSCODE)
 .vscode/%.json: $(S)/.vscode/%.json
 	cp $< $@
 
-CMAKE = CMakeLists.txt CMakePresets.json
+CMAKE   = CMakeLists.txt CMakePresets.json
+CMAKE_  = any_toolchain x86_64-linux-gnu x86_64-linux-musl arm-none-eabi
+CMAKE_ += i686-w64-mingw32 mingw-w64-ucrt-x86_64 avr
+CMAKE_ += FindRAGEL clean cross src syntax version
+CMAKE  += $(patsubst %,cmake/%.cmake,$(CMAKE_))
 
 .PHONY: cmake
 cmake: $(CMAKE)
 
+cmake/%.cmake: $(S)/cmake/%.cmake $(T)
+	cp $< $@
 CMakeLists.txt: $(S)/CMakeLists.txt $(T)
 	cp $< $@
 CMakePresets.json: $(S)/CMakePresets.json $(T)
@@ -196,6 +210,7 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '        }' >> $@
 	@echo '   ]' >> $@
 	@echo '}' >> $@
+
 # any non-existent file
 %:
 	touch $@

@@ -9,15 +9,15 @@ file(GLOB RL
     src/*.ragel lib/src/*.ragel lib/*/src/*.ragel
 )
 
-# file(GLOB L
-#     RELATIVE ${CMAKE_SOURCE_DIR}
-#     src/*.lex   lib/src/*.lex   lib/*/src/*.lex
-# )
+file(GLOB L
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.lex   lib/src/*.lex   lib/*/src/*.lex
+)
 
-# file(GLOB Y
-#     RELATIVE ${CMAKE_SOURCE_DIR}
-#     src/*.yacc  lib/src/*.yacc  lib/*/src/*.yacc
-# )
+file(GLOB Y
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.yacc  lib/src/*.yacc  lib/*/src/*.yacc
+)
 
 foreach(RAGEL_FILE ${RL})
     string(REGEX REPLACE ".+\/(.+)\.ragel$" "tmp/\\1.ragel.cpp"
@@ -32,33 +32,29 @@ foreach(RAGEL_FILE ${RL})
     )
 endforeach()
 
-# foreach(LEX_FILE ${L})
-#     string(REGEX REPLACE ".+\/(.+)\.lex$" "tmp/\\1.lex.cpp"
-#                             PARSER_FILE ${LEX_FILE})
-#     list(APPEND CP          ${PARSER_FILE})
-#     add_custom_command(
-#         OUTPUT              ${CMAKE_SOURCE_DIR}/${PARSER_FILE}
-#         DEPENDS             ${LEX_FILE}
-#         WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-#         COMMAND             ${FLEX_EXECUTABLE}
-#         ARGS                -o ${PARSER_FILE} ${LEX_FILE}
-#     )
-# endforeach()
+foreach(LEX_FILE ${L})
+    string(REGEX REPLACE ".+\/(.+)\.lex$" "tmp/\\1.lex.cpp"
+                            PARSER_FILE ${LEX_FILE})
+    list(APPEND CP          ${PARSER_FILE})
+    add_custom_command(
+        OUTPUT              ${CMAKE_SOURCE_DIR}/${PARSER_FILE}
+        DEPENDS             ${LEX_FILE}
+        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+        COMMAND             ${FLEX_EXECUTABLE}
+        ARGS                -o ${PARSER_FILE} ${LEX_FILE}
+    )
+endforeach()
 
-# foreach(YACC_FILE ${Y})
-#     string(REGEX REPLACE ".+\/(.+)\.yacc$" "tmp/\\1.yacc.cpp"
-#                             PARSER_FILE ${YACC_FILE})
-#     list(APPEND CP          ${PARSER_FILE})
-#     add_custom_command(
-#         OUTPUT              ${CMAKE_SOURCE_DIR}/${PARSER_FILE}
-#         DEPENDS             ${YACC_FILE}
-#         WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-#         COMMAND             ${BISON_EXECUTABLE}
-#         ARGS                -o ${PARSER_FILE} ${YACC_FILE}
-#     )
-# endforeach()
+foreach(YACC_FILE ${Y})
+    string(REGEX REPLACE ".+\/(.+)\.yacc$" "tmp/\\1.yacc.cpp"
+                            PARSER_FILE ${YACC_FILE})
+    list(APPEND CP          ${PARSER_FILE})
+    add_custom_command(
+        OUTPUT              ${CMAKE_SOURCE_DIR}/${PARSER_FILE}
+        DEPENDS             ${YACC_FILE}
+        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+        COMMAND             ${BISON_EXECUTABLE}
+        ARGS                -o ${PARSER_FILE} ${YACC_FILE}
+    )
+endforeach()
 
-# add_custom_target(${CMAKE_PROJECT_NAME}-ragel
-#     ${CP} ${CH} # parsers
-# )
-# target_compile_options({CMAKE_PROJECT_NAME}-ragel -Wno-implicit-fallthrough)
