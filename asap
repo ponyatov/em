@@ -13,7 +13,8 @@ ABOUT ?= as soon as possible
 template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
-		git readme license apt format dirs giti doxy vscode cmake
+		git readme license apt format dirs giti doxy vscode cmake \
+		cross hw cpu
 
 .PHONY: git
 git: .git
@@ -219,6 +220,40 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '        }' >> $@
 	@echo '   ]' >> $@
 	@echo '}' >> $@
+
+CROSS  = hw cpu arch os
+CROSSD = $(foreach d,$(CROSS),$(d)/inc $(d)/src)
+CROSSI = $(foreach i,$(CROSS) $(CROSSD),$(i)/.gitignore)
+CROSSC = $(foreach c,$(CROSS),$(c)/inc/$(c).hpp $(c)/src/$(c).cpp)
+
+.PHONY: cross
+cross: $(CROSS) $(CROSSD) $(CROSSI)
+	touch $(CROSSC)
+
+$(CROSS) $(CROSSD):
+	mkdir -p $@
+
+HW  = pc pillF103 f4disco
+HWD = $(foreach d,$(HW),hw/$(d) hw/$(d)/inc hw/$(d)/src)
+HWI = $(patsubst %,%/.gitignore,$(HWD))
+HWC = $(foreach d,$(HW),hw/$(d)/inc/$(d).hpp hw/$(d)/src/$(d).cpp)
+
+.PHONY: hw
+hw: $(HWD) $(HWI)
+	touch $(HWC)
+$(HWD):
+	mkdir -p $@
+
+CPU  = i5 stm32f103c8t stm32f407vgt
+CPUD = $(foreach d,$(CPU),cpu/$(d) cpu/$(d)/inc cpu/$(d)/src)
+CPUI = $(patsubst %,%/.gitignore,$(CPUD))
+CPUC = $(foreach d,$(CPU),cpu/$(d)/inc/$(d).hpp cpu/$(d)/src/$(d).cpp)
+
+.PHONY: cpu
+cpu: $(CPUD) $(CPUI)
+	touch $(CPUC)
+$(CPUD):
+	mkdir -p $@
 
 # any non-existent file
 %:
