@@ -119,12 +119,18 @@ vscode: $(VSCODE)
 MK  = var version cross dirs tool pkg src cfg
 MK += all debug clean format rule doc install merge docker
 MKD = mk
-MKM = Makefile $(foreach m,$(MK),mk/$(m).mk)
+MKM = $(foreach m,$(MK),mk/$(m).mk)
 
 .PHONY: mk
-mk: $(MKD) $(MKM)
+mk: $(MKD) Makefile $(MKM) mk/patch.mk
 $(MKD):
 	mkdir -p $@
+Makefile: $(T)
+	echo $(foreach m,$(MKM),include_$(m)) | tr ' ' '\n' | tr '_' ' ' > $@
+mk/version.mk: $(T)
+	echo 'CUBEMX_VER = 6.12.1' > $@
+mk/%: $(S)/mk/% $(T)
+	cp $< $@
 
 CMAKE   = CMakeLists.txt CMakePresets.json
 CMAKE_  = any_toolchain x86_64-linux-gnu x86_64-linux-musl arm-none-eabi
