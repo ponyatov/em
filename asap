@@ -249,17 +249,21 @@ cross: $(CROSS) $(CROSSD) $(CROSSI)
 $(CROSS) $(CROSSD):
 	mkdir -p $@
 
-HW  = pc pillF103 f4disco
+HWA = pillF103 f4disco
+HWX = $(foreach m,$(HWA),hw/$(m)/$(m).ioc)
+HW  = pc $(HWA)
 HWD = $(foreach d,$(HW),hw/$(d) hw/$(d)/inc hw/$(d)/src)
 HWI = $(patsubst %,%/.gitignore,$(HWD))
 HWC = $(foreach d,$(HW),hw/$(d)/inc/$(d).hpp hw/$(d)/src/$(d).cpp)
 HWM = $(foreach m,$(HW),hw/$(m)/mk hw/$(m)/cmake)
 
 .PHONY: hw
-hw: $(HWD) $(HWI)
+hw: $(HWD) $(HWI) $(HWX)
 	touch $(HWC) $(HWM)
 $(HWD):
 	mkdir -p $@
+hw/%.ioc: $(S)/hw/%.ioc
+	cp $< $@
 
 CPU  = i5 stm32f103c8t stm32f407vgt
 CPUD = $(foreach d,$(CPU),cpu/$(d) cpu/$(d)/inc cpu/$(d)/src)
