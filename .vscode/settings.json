@@ -26,7 +26,7 @@
         "ref/**": true,
     },
     "files.associations": {
-        "*.mk": "makefile",
+        "*.mk": "makefile", "mk": "makefile", "cmake": "cmake",
         "*.ini": "flang", "*.f": "flang",
         "*.openocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",

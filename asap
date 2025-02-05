@@ -14,7 +14,7 @@ template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
 		git readme license apt format dirs giti doxy vscode cmake \
-		cross hw cpu
+		cross hw cpu arch
 
 .PHONY: git
 git: .git
@@ -253,6 +253,17 @@ CPUC = $(foreach d,$(CPU),cpu/$(d)/inc/$(d).hpp cpu/$(d)/src/$(d).cpp)
 cpu: $(CPUD) $(CPUI)
 	touch $(CPUC)
 $(CPUD):
+	mkdir -p $@
+
+ARCH  = x86_64 i386 cortexM cortexM0 cortexM3 cortexM4
+ARCHD = $(foreach d,$(ARCH),arch/$(d) arch/$(d)/inc arch/$(d)/src)
+ARCHI = $(patsubst %,%/.gitignore,$(ARCHD))
+ARCHM = $(foreach m,$(ARCH),arch/$(m)/mk arch/$(m)/cmake)
+
+.PHONY: arch
+arch: $(ARCHD) $(ARCHI)
+	touch $(ARCHC) $(ARCHM)
+$(ARCHD):
 	mkdir -p $@
 
 # any non-existent file
