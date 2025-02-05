@@ -13,7 +13,7 @@ ABOUT ?= as soon as possible
 template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
-		git readme apt format dirs giti doxy vscode cmake
+		git readme license apt format dirs giti doxy vscode cmake
 
 .PHONY: git
 git: .git
@@ -40,6 +40,15 @@ README.md: $(T)
 	echo '' >> $@
 	echo '-  github: https://github.com/ponyatov/$(M)' >> $@
 	echo '- gitflic: https://gitflic.ru/project/dponyatov/$(M)' >> $@
+
+.PHONY: license
+license: LICENSE
+LICENSE: $(T)
+	@echo 'MIT License' > $@
+	@echo '' >> $@
+	@echo 'Copyright (c) $(YEAR) $(AUTHOR) <$(EMAIL)>' >> $@
+	@echo '' >> $@
+	tail -n+5 $(S)/$@ >> $@
 
 APT      = apt.Debian apt.Msys
 APT_HEAD = 4
