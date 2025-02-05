@@ -14,7 +14,7 @@ template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
 		git readme license apt format dirs giti doxy vscode cmake \
-		cross hw cpu arch os
+		cross hw cpu arch os app
 
 .PHONY: git
 git: .git
@@ -272,7 +272,7 @@ $(ARCHD):
 OS  = bare linux mingw
 OSD = $(foreach d,$(OS),os/$(d) os/$(d)/inc os/$(d)/src)
 OSI = $(patsubst %,%/.gitignore,$(OSD))
-OSC = $(foreach d,$(OS),os/$(d)/inc/$(d).hpp os/$(d)/src/$(d).cpp)
+OSC = $(foreach d,$(OS),os/$(d)/inc/$(d).hpp os/$(d)/src/$(d).cpp) os/src/main.cpp
 OSM = $(foreach m,$(OS),os/$(m)/mk os/$(m)/cmake)
 
 .PHONY: os
@@ -280,6 +280,13 @@ os: $(OSD) $(OSI)
 	touch $(OSC) $(OSM)
 $(OSD):
 	mkdir -p $@
+
+APP = inc/$(M).hpp src/$(M).cpp lib/$(M).ini
+
+.PHONY: app
+app: $(APP)
+$(APP):
+	touch $@
 
 # any non-existent file
 %:

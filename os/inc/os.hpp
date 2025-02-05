@@ -4,7 +4,7 @@
 /// @ingroup cross
 
 /// @defgroup main main
-/// @ingroup core
+/// @ingroup os
 /// @{
 
 /// @brief POSIX entry point
@@ -12,16 +12,17 @@
 /// @param[in] argv arguments array (`argv[0]` = program/firmware name)
 extern int main(int argc, char *argv[]);
 
+/// @brief first call: callback on system startup
+extern void setup();
+
 /// @brief callback for processing command line / boot loader arguments
 /// @param[in] argc argument index (0 = program/firmware name)
 /// @param[in] argv argument string value
 extern void arg(int argc, char *argv);
 
-/// @brief first call: callback on system startup
-extern void setup();
-
 /// @brief application event loop callback
 extern void loop();
+
 /// @}
 
 #ifdef POSIX

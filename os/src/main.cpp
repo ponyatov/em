@@ -1,25 +1,25 @@
 #include "os.hpp"
-#include "cli.hpp"
 
-#ifdef POSIX
-int main(int argc, char *argv[]) {
-    fprintf(stderr, "setup:\n");
+__attribute__((weak)) int main(int argc, char *argv[]) {  //
+    printf("setup:\n");
     setup();
-    fprintf(stderr, "arg:\n");
+    printf("arg:\n");
     arg(0, argv[0]);
     for (int i = 1; i < argc; i++) arg(i, argv[i]);
-    fprintf(stderr, "loop:\n");
+    printf("loop:\n");
     for (;;) loop();
     return 0;
 }
-#endif  // POSIX
 
-__attribute__((weak)) void setup() {}
-
-__attribute__((weak)) void arg(int argc, char *argv) {
-#ifdef POSIX
-    fprintf(stderr, "\targ[%i] = <%s>\n", argc, argv);
-#endif
+__attribute__((weak)) void setup() {  //
+    printf("\tok\n");
 }
 
-__attribute__((weak)) void loop() { halt(); }
+__attribute__((weak)) void arg(int argc, char *argv) {  //
+    printf("\targ[%i] = <%s>\n", argc, argv);
+}
+
+__attribute__((weak)) void loop() {  //
+    printf("\tstop\n");
+    exit(0);
+}
