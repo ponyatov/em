@@ -3,24 +3,6 @@
   * @file      startup_stm32f407xx.s
   * @author    MCD Application Team
   * @brief     STM32F407xx Devices vector table for GCC based toolchains. 
-  *            This module performs:
-  *                - Set the initial SP
-  *                - Set the initial PC == Reset_Handler,
-  *                - Set the vector table entries with the exceptions ISR address
-  *                - Branches to main in the C library (which eventually
-  *                  calls main()).
-  *            After Reset the Cortex-M4 processor is in Thread mode,
-  *            priority is Privileged, and the Stack is set to Main.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
   ******************************************************************************
   */
     
@@ -63,7 +45,7 @@ Reset_Handler:
 /* Call the clock system initialization function.*/
   bl  SystemInit  
 
-/* Copy the data segment initializers from flash to SRAM */  
+/* Copy the .data segment initializers from flash to SRAM */
   ldr r0, =_sdata
   ldr r1, =_edata
   ldr r2, =_sidata
@@ -80,7 +62,24 @@ LoopCopyDataInit:
   cmp r4, r1
   bcc CopyDataInit
   
-/* Zero fill the bss segment. */
+/* Copy the .ccmram segment initializers from flash to CCMRAM */
+  ldr r0, =_sccmram
+  ldr r1, =_eccmram
+  ldr r2, =_siccmram
+  movs r3, #0
+  b LoopCopyCCMInit
+
+CopyCCMInit:
+  ldr r4, [r2, r3]
+  str r4, [r0, r3]
+  adds r3, r3, #4
+
+LoopCopyCCMInit:
+  adds r4, r0, r3
+  cmp r4, r1
+  bcc CopyCCMInit
+
+/* Zero fill the .bss segment. */
   ldr r2, =_sbss
   ldr r4, =_ebss
   movs r3, #0
