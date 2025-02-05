@@ -8,10 +8,11 @@ D  = $(abspath $(HOME)/$(M))
 AUTHOR = $(shell git config user.name )
 EMAIL  = $(shell git config user.email)
 YEAR   = $(shell date +%Y)
+ABOUT ?= as soon as possible
 
 template:
 	mkdir -p $(D)
-	$(MAKE) -f $(T) -C $(D) M=$(M) git readme apt format
+	$(MAKE) -f $(T) -C $(D) M=$(M) git readme apt format dirs giti doxy
 
 .PHONY: git
 git: .git
@@ -27,9 +28,9 @@ git: .git
 
 .PHONY: readme
 readme: README.md
-README.md:
+README.md: $(T)
 	echo '# `$(M)`'  > $@
-	echo '## $(D)' >> $@
+	echo '## $(ABOUT)' >> $@
 	echo '' >> $@
 	echo '(c) $(AUTHOR) <<$(EMAIL)>> $(YEAR) MIT' >> $@
 	echo '' >> $@
@@ -47,6 +48,7 @@ apt.%:
 	sudo apt install -uy `cat apt.$(shell lsb_release -si)`
 
 FORMAT = .clang-format .prettierrc
+
 .PHONY: format
 format: $(FORMAT)
 
@@ -55,5 +57,32 @@ format: $(FORMAT)
 .prettierrc:   $(S)/.prettierrc
 	cp $< $@
 
+DIRS = .vscode bin doc lib inc src tmp ref hw cpu arch os
+
+.PHONY: dirs
+dirs: $(DIRS)
+$(DIRS):
+	mkdir -p $@
+
+GITI = .gitignore $(foreach d,$(DIRS),$(d)/.gitignore)
+
+.PHONY: giti
+giti: $(GITI)
+
+DOXY = .doxygen doc/logo.png doc/DoxygenLayout.xml
+
+.PHONY: doxy
+doxy: $(DOXY)
+
+doc/DoxygenLayout.xml:
+	doxygen -l ; mv DoxygenLayout.xml $@
+.doxygen: $(S)/.doxygen $(T)
+	@echo 'PROJECT_NAME           = "$(M)"'  > $@
+	@echo 'PROJECT_BRIEF          = "$(ABOUT)"' >> $@
+	tail -n+3 $< >> $@
+doc/logo.png: $(S)/logo.png
+	cp $< $@
+
+# any non-existent file
 %:
 	touch $@
