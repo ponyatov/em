@@ -2,69 +2,48 @@
 #include "cli.hpp"
 
 %%machine cli;
+%%write  data;
 
-%%access       cli_;
-%%variable cs  cli_cs;
-%%variable eof cli_eof;
-%%variable ts  cli_ts;
-%%variable te  cli_te;
+static int   cs  = 0;           ///< current state
+static int   act = 0;           ///< ???
+static char* eof = nullptr;     ///< end of file marker
+static char* ts  = nullptr;     ///< token start
+static char* te  = nullptr;     ///< token end
 
-%%write data;
-
-static int   cli_cs  = 0;
-static int   cli_act = 0;
-static char* cli_eof = nullptr;
-static char* cli_ts  = nullptr;
-static char* cli_te  = nullptr;
-
-#ifndef POSIX
-static int stderr = 2;
-static void fprintf(int,char*){}
-static void fprintf(int,char*,char*){}
-static void fprintf(int,char*,int){}
-static void fprintf(int,char*,float){}
-#endif
-
-static char *id(char *ts, char *te) {
-#ifdef POSIX
-    return strndup(ts, te - ts);
-#else
-    static char _id[] = "<id>";
-    return _id;
-#endif
-}
-
-void cli(char* p, char *pe){ //
-    cli_eof = pe;
-#ifdef POSIX
-    fprintf(stderr, "\tcli %p %p %i\n\t\t", p, pe, pe-p);
-#endif
+void cli(char* p, char* pe) {
+    eof = pe; cs = act = 0; ts = te = nullptr;
     %%write init;
     %%write exec;
 }
 
 %%{
-    comment = '#' [^\n]*;               # comment
-    sign    = [+\-];                    # sign
-    hex     = "0x" [0-9a-fA-F]+;
-    oct     = "0o" [0-7]+;
-    bin     = "0b" [01]+;
-    dec     = sign ? digit+;            # decimal int
-    num     = sign ? digit+ '.' digit+;
-    sp      = space+;                   # space
-    id      = [_a-zA-Z][_a-zA-Z0-9]*;
-    unk     = any ;                     # any other char as is
+    comment = '#' [^\n]*;                   # comment
+    nl      = '\n';                         # new line
+    sp      = [ \r\t]+;                     # drop spaces
+    sign    = [+\-];                        # sign
 
-    main := |*
-        comment => {                                                 };
-        hex     => { fprintf(stderr,"hex:%x ",hex(cli_ts,cli_te));   };
-        oct     => { fprintf(stderr,"oct:%o ",oct(cli_ts,cli_te));   };
-        bin     => { fprintf(stderr,"bin:%i ",bin(cli_ts,cli_te));   };
-        dec     => { fprintf(stderr,"int:%i ",dec(cli_ts,cli_te));   };
-        num     => { fprintf(stderr,"num:%f ",num(cli_ts,cli_te));   };
-        id      => { fprintf(stderr,"id:%s " , id(cli_ts,cli_te));   };
-        sp      => { fprintf(stderr," " );                           };
-        unk     => { fprintf(stderr,"%c ",*cli_ts);                  };
-        # 0 @{ abort(); }
-    *|;
+    dec     = sign ? digit+;                # decimal int
+    hex     = "0x" [0-9a-fA-F]+;            # hexadecimal
+    oct     = "0o" [0-7]+;                  # octal
+    bin     = "0b" [01]+;                   # binary
+    num     = sign ? digit+ '.' digit+;     # floating point
+
+    cmd     = "nop"|"halt"|".";             # VM command
+    id      = [_a-zA-Z][_a-zA-Z0-9]*;       # variable/name
+
+    cli := |*
+        comment => { };
+        nl+     => { yylineno += te-ts; /* count line */ };
+        sp      => { };
+
+        hex     => { fprintf(stderr,"\t\t%i: hex:%x\n",yylineno,hex(ts,te)); };
+        oct     => { fprintf(stderr,"\t\t%i: oct:%o\n",yylineno,oct(ts,te)); };
+        bin     => { fprintf(stderr,"\t\t%i: bin:%i\n",yylineno,bin(ts,te)); };
+        dec     => { fprintf(stderr,"\t\t%i: int:%i\n",yylineno,dec(ts,te)); };
+        num     => { fprintf(stderr,"\t\t%i: num:%f\n",yylineno,num(ts,te)); };
+
+        any     => { fprintf(stderr,"\t\t%i: %c\n",yylineno,ts[0]); };
+        cmd     => { fprintf(stderr,"\t\t%i: cmd:%s\n",yylineno,strndupa(ts,te-ts)); };
+        id      => { fprintf(stderr,"\t\t%i: id:%s\n",yylineno,strndupa(ts,te-ts)); };
+   *|;
 }%%

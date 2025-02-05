@@ -1,34 +1,37 @@
-%%machine num;
+%%machine oct;
+%%write  data;
 
-%%access       num_;
-%%variable cs  num_cs;
-%%variable eof num_eof;
-%%variable ts  num_ts;
-%%variable te  num_te;
+static int   cs  = 0;           ///< current state
+static int   act = 0;           ///< ???
+static char* eof = nullptr;     ///< end of file marker
+static char* ts  = nullptr;     ///< token start
+static char* te  = nullptr;     ///< token end
 
-%%write data;
+static  bool positive = true;   ///< sign flag
+static   int integer  = 0;      ///< integer part
+static  bool point    = false;  ///< was point flag
+static   int fraction = 0;      ///< fraction part
+static   int frac     = 0;      ///< fraction divider $10^frac$
 
-static int   num_cs  = 0;
-static int   num_act = 0;
-static char* num_eof = nullptr;
-static char* num_ts  = nullptr;
-static char* num_te  = nullptr;
+#include <cmath>
 
-static float ret = 0.0;
-
-float num(char *p, char *pe) {
-    ret = 0.0;
+float num(char* p, char* pe) {
+    integer = fraction = frac = 0; positive = true; point = false;
+    cs = act = 0; ts = te = nullptr;
     %%write init;
     %%write exec;
-    return ret;
+    static float number = integer + fraction / pow(10.0, frac);
+    if (positive) return +number; else return -number;
 }
 
 %%{
-    plus  = '+';
-    minus = '-';
-
-    main := |*
-        plus  => { ret = +ret; } ;
-        minus => { ret = -ret; } ;
+    num := |*
+        '+'   => { positive =  true; };
+        '-'   => { positive = false; };
+        '.'   => {    point =  true; };
+        [0-9] => {
+            if   (!point) { integer  = integer  * 10 + (ts[0] - '0');         }
+            else          { fraction = fraction * 10 + (ts[0] - '0'); frac++; }
+        };
     *|;
 }%%

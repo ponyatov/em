@@ -1,4 +1,4 @@
-/// @defgroup stm32f030f4p stm32f030f4p
+/// @defgroup stm32f030t4p stm32f030t4p
 /// @brief @ref pillF030
 /// @ingroup cpu
 /// @details

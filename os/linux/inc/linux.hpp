@@ -3,7 +3,8 @@
 /// @defgroup linux linux
 /// @ingroup os
 /// @{
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
 /// @}

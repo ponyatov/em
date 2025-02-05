@@ -375,14 +375,16 @@ LIBF = $(foreach l,$(LIB),\
 	)
 
 .PHONY: lib
-lib: $(CLI)
+lib:
 	mkdir -p $(LIBD) ; touch $(LIBI) $(LIBF)
 	$(MAKE) -f $(L) -C $(D) M=$(M) cli
 
-CLI = $(wildcard $(T)/lib/cli/src/*.ragel)
+CLI  = $(wildcard $(T)/lib/cli/src/*.ragel)
+CLI_ = $(patsubst $(T)/%,$(D)/%,$(CLI))
 
 .PHONY: cli
-cli: $(CLI)
+cli: $(CLI_)
+	echo $^
 
 .PHONY: ls
 ls:

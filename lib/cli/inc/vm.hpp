@@ -5,8 +5,8 @@
 /// @{
 
 /// @brief @ref VM command
-class Cmd: public Object {};
+// class Cmd: public Object {};
 
 /// @brief Virtual Machine
-class VM: public Object {};
+// class VM: public Object {};
 /// @}

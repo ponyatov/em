@@ -26,7 +26,7 @@ string(TOUPPER ${OS}   OS_  )
 
 add_compile_options(
     "-D${HW_}" "-D${CPU_}" "-D${ARCH_}" "-D${OS_}"
-    -Wall -Wextra -Wpedantic
+    -Wall -Wextra               # -Wpedantic
     -Wno-implicit-fallthrough   # ragel
     $<$<CONFIG:Debug>:-DDEBUG>
 )
