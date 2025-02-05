@@ -13,7 +13,7 @@ ABOUT ?= as soon as possible
 template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
-		git readme license apt format dirs giti doxy vscode cmake \
+		git readme license apt format dirs giti doxy vscode mk cmake \
 		cross hw cpu arch os app
 
 .PHONY: git
@@ -115,6 +115,16 @@ vscode: $(VSCODE)
 
 .vscode/%.json: $(S)/.vscode/%.json
 	cp $< $@
+
+MK  = var version cross dirs tool pkg src cfg
+MK += all debug clean format rule doc install merge docker
+MKD = mk
+MKM = Makefile $(foreach m,$(MK),mk/$(m).mk)
+
+.PHONY: mk
+mk: $(MKD) $(MKM)
+$(MKD):
+	mkdir -p $@
 
 CMAKE   = CMakeLists.txt CMakePresets.json
 CMAKE_  = any_toolchain x86_64-linux-gnu x86_64-linux-musl arm-none-eabi
@@ -281,7 +291,7 @@ os: $(OSD) $(OSI)
 $(OSD):
 	mkdir -p $@
 
-APP = inc/$(M).hpp src/$(M).cpp lib/$(M).ini
+APP = inc/app.hpp src/app.cpp lib/app.ini
 
 .PHONY: app
 app: $(APP)
