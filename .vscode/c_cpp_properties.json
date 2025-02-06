@@ -17,7 +17,10 @@
         {
             "name"                 : "cmake",
             "configurationProvider": "ms-vscode.cmake-tools",
-            "mergeConfigurations"  :  true
+            "mergeConfigurations"  :  true,
+            "defines": [
+                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI"
+            ]
         }
     ]
 }

@@ -8,7 +8,7 @@
   - arbitrary debug features
   - hardware isolation
 - multiplatform
-  - fixed little-endian
+  - fixed little-endian (as most used @ref arch es)
   - simpler compiler w/o any hw-specific hacks
   - code/data migration & persistence in heterogeneous clusters
 - unlimited command set

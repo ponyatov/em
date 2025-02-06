@@ -117,7 +117,7 @@ vscode: $(VSCODE)
 	cp $< $@
 
 MK  = var version cross dirs tool pkg src cfg
-MK += all debug clean format rule doc install merge docker
+MK += all debug clean format rule doc libc install merge docker
 MKD = mk
 MKM = $(foreach m,$(MK),mk/$(m).mk)
 
