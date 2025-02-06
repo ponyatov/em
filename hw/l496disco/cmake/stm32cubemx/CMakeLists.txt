@@ -34,6 +34,7 @@ target_include_directories(stm32cubemx INTERFACE
 
 target_sources(stm32cubemx INTERFACE
     ../../Core/Src/main.c
+    ../../Core/Src/gpio.c
     ../../Core/Src/stm32l4xx_it.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_utils.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_exti.c

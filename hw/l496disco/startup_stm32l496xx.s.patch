@@ -1,6 +1,32 @@
---- startup_stm32l496xx.s	2025-01-13 15:12:29.249722216 +0400
-+++ startup_stm32l496xx.s.fix	2025-01-13 15:12:29.253722215 +0400
-@@ -40,6 +40,10 @@
+--- startup_stm32l496xx.s	2025-02-06 11:31:43.093477680 +0400
++++ startup_stm32l496xx.s.fix	2025-02-06 11:27:14.341470280 +0400
+@@ -3,25 +3,6 @@
+   * @file      startup_stm32l496xx.s
+   * @author    MCD Application Team
+   * @brief     STM32L496xx devices vector table GCC toolchain.
+-  *            This module performs:
+-  *                - Set the initial SP
+-  *                - Set the initial PC == Reset_Handler,
+-  *                - Set the vector table entries with the exceptions ISR address,
+-  *                - Configure the clock system  
+-  *                - Branches to main in the C library (which eventually
+-  *                  calls main()).
+-  *            After Reset the Cortex-M4 processor is in Thread mode,
+-  *            priority is Privileged, and the Stack is set to Main.
+-  ******************************************************************************
+-  * @attention
+-  *
+-  * Copyright (c) 2017 STMicroelectronics.
+-  * All rights reserved.
+-  *
+-  * This software is licensed under terms that can be found in the LICENSE file
+-  * in the root directory of this software component.
+-  * If no LICENSE file comes with this software, it is provided AS-IS.
+-  *
+   ******************************************************************************
+   */
+ 
+@@ -40,6 +21,10 @@
  .word	_sdata
  /* end address for the .data section. defined in linker script */
  .word	_edata
@@ -11,7 +37,7 @@
  /* start address for the .bss section. defined in linker script */
  .word	_sbss
  /* end address for the .bss section. defined in linker script */
-@@ -80,7 +84,24 @@
+@@ -80,7 +65,24 @@
    adds r4, r0, r3
    cmp r4, r1
    bcc CopyDataInit
@@ -37,7 +63,7 @@
  /* Zero fill the bss segment. */
    ldr r2, =_sbss
    ldr r4, =_ebss
-@@ -544,4 +565,3 @@
+@@ -544,4 +546,3 @@
  	
  	.weak	DMA2D_IRQHandler
  	.thumb_set FPU_IRQHandler,Default_Handler    

@@ -1,4 +1,4 @@
-include(arch/cortexM.cmake)
+include(arch/cortexM/cortexM.cmake)
 
 set(MCPU -march=armv6e-m   -mcpu=cortex-m0 )
 

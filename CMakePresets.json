@@ -44,6 +44,7 @@
             "binaryDir": "${sourceDir}/tmp/${presetName}",
             "generator": "Unix Makefiles",
             "cacheVariables": {
+                "APP"                     : "${workspaceFolderBasename}",
                 "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
                 "CMAKE_COLOR_DIAGNOSTICS" : false,

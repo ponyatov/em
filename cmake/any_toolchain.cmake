@@ -31,6 +31,8 @@ add_compile_options(
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 
+add_compile_definitions( APP="${APP}" )
+
 add_link_options(
     -Wl,--print-memory-usage
 )

@@ -249,13 +249,13 @@ cross: $(CROSS) $(CROSSD) $(CROSSI)
 $(CROSS) $(CROSSD):
 	mkdir -p $@
 
-HWA = pillF103 f4disco
+HWA = pillF103 f4disco l496disco
 HWX = $(foreach m,$(HWA),hw/$(m)/$(m).ioc)
 HW  = pc $(HWA)
 HWD = $(foreach d,$(HW),hw/$(d) hw/$(d)/inc hw/$(d)/src)
 HWI = $(patsubst %,%/.gitignore,$(HWD))
 HWC = $(foreach d,$(HW),hw/$(d)/inc/$(d).hpp hw/$(d)/src/$(d).cpp)
-HWM = $(foreach m,$(HW),hw/$(m)/mk hw/$(m)/cmake)
+HWM = $(foreach m,$(HW),hw/$(m)/$(m).mk hw/$(m)/$(m).cmake)
 
 .PHONY: hw
 hw: $(HWD) $(HWI) $(HWX)
@@ -265,11 +265,11 @@ $(HWD):
 hw/%.ioc: $(S)/hw/%.ioc
 	cp $< $@
 
-CPU  = i5 stm32f103c8t stm32f407vgt
+CPU  = i5 stm32f103c8t stm32f407vgt stm32f405rgt stm32l496agi
 CPUD = $(foreach d,$(CPU),cpu/$(d) cpu/$(d)/inc cpu/$(d)/src)
 CPUI = $(patsubst %,%/.gitignore,$(CPUD))
 CPUC = $(foreach d,$(CPU),cpu/$(d)/inc/$(d).hpp cpu/$(d)/src/$(d).cpp)
-CPUM = $(foreach m,$(CPU),cpu/$(m)/mk cpu/$(m)/cmake)
+CPUM = $(foreach m,$(CPU),cpu/$(m)/$(m).mk cpu/$(m)/$(m).cmake)
 
 .PHONY: cpu
 cpu: $(CPUD) $(CPUI)
@@ -277,11 +277,11 @@ cpu: $(CPUD) $(CPUI)
 $(CPUD):
 	mkdir -p $@
 
-ARCH  = x86_64 i386 cortexM cortexM0 cortexM3 cortexM4
+ARCH  = x86_64 cortexM cortexM0 cortexM3 cortexM4
 ARCHD = $(foreach d,$(ARCH),arch/$(d) arch/$(d)/inc arch/$(d)/src)
 ARCHI = $(patsubst %,%/.gitignore,$(ARCHD))
 ARCHC = $(foreach d,$(ARCH),arch/$(d)/inc/$(d).hpp arch/$(d)/src/$(d).cpp)
-ARCHM = $(foreach m,$(ARCH),arch/$(m)/mk arch/$(m)/cmake)
+ARCHM = $(foreach m,$(ARCH),arch/$(m)/$(m).mk arch/$(m)/$(m).cmake)
 
 .PHONY: arch
 arch: $(ARCHD) $(ARCHI)
@@ -293,7 +293,7 @@ OS  = bare linux mingw
 OSD = $(foreach d,$(OS),os/$(d) os/$(d)/inc os/$(d)/src)
 OSI = $(patsubst %,%/.gitignore,$(OSD))
 OSC = $(foreach d,$(OS),os/$(d)/inc/$(d).hpp os/$(d)/src/$(d).cpp) os/src/main.cpp
-OSM = $(foreach m,$(OS),os/$(m)/mk os/$(m)/cmake)
+OSM = $(foreach m,$(OS),os/$(m)/$(m).mk os/$(m)/$(m).cmake)
 
 .PHONY: os
 os: $(OSD) $(OSI)
