@@ -20,8 +20,8 @@ void cli(char* p, char* pe) {
     comment = '#' [^\n]*;                   # comment
     nl      = '\n';                         # new line
     sp      = [ \r\t]+;                     # drop spaces
-    sign    = [+\-];                        # sign
 
+    sign    = [+\-];                        # sign
     dec     = sign ? digit+;                # decimal int
     hex     = "0x" [0-9a-fA-F]+;            # hexadecimal
     oct     = "0o" [0-7]+;                  # octal
@@ -36,14 +36,15 @@ void cli(char* p, char* pe) {
         nl+     => { yylineno += te-ts; /* count line */ };
         sp      => { };
 
-        hex     => { fprintf(stderr,"\t\t%i: hex:%x\n",yylineno,hex(ts,te)); };
-        oct     => { fprintf(stderr,"\t\t%i: oct:%o\n",yylineno,oct(ts,te)); };
-        bin     => { fprintf(stderr,"\t\t%i: bin:%i\n",yylineno,bin(ts,te)); };
-        dec     => { fprintf(stderr,"\t\t%i: int:%i\n",yylineno,dec(ts,te)); };
-        num     => { fprintf(stderr,"\t\t%i: num:%f\n",yylineno,num(ts,te)); };
+        hex     => { printf("\t\t%i: hex:%x\n",yylineno,hex(ts,te)); };
+        oct     => { printf("\t\t%i: oct:%o\n",yylineno,oct(ts,te)); };
+        bin     => { printf("\t\t%i: bin:%i\n",yylineno,bin(ts,te)); };
+        dec     => { printf("\t\t%i: int:%i\n",yylineno,dec(ts,te)); };
+        num     => { printf("\t\t%i: num:%f\n",yylineno,num(ts,te)); };
 
-        any     => { fprintf(stderr,"\t\t%i: %c\n",yylineno,ts[0]); };
-        cmd     => { fprintf(stderr,"\t\t%i: cmd:%s\n",yylineno,strndupa(ts,te-ts)); };
-        id      => { fprintf(stderr,"\t\t%i: id:%s\n",yylineno,strndupa(ts,te-ts)); };
-   *|;
+        cmd     => { printf("\t\t%i: cmd:%s\n",yylineno,strndupa(ts,te-ts)); };
+        id      => { printf("\t\t%i:  id:%s\n",yylineno,strndupa(ts,te-ts)); };
+
+        any     => { yyerror(strndup(ts,te-ts)); };
+    *|;
 }%%

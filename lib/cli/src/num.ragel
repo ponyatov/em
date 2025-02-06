@@ -17,7 +17,7 @@ static   int frac     = 0;      ///< fraction divider $10^frac$
 
 float num(char* p, char* pe) {
     integer = fraction = frac = 0; positive = true; point = false;
-    cs = act = 0; ts = te = nullptr;
+    eof = pe; cs = act = 0; ts = te = nullptr;
     %%write init;
     %%write exec;
     static float number = integer + fraction / pow(10.0, frac);

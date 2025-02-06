@@ -12,7 +12,7 @@ static bool positive = true;    ///< sign flag
 
 int hex(char* p, char* pe) {
     number = 0; positive = true;
-    cs = act = 0; ts = te = nullptr;
+    eof = pe; cs = act = 0; ts = te = nullptr;
     %%write init;
     %%write exec;
     if (positive) return +number; else return -number;

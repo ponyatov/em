@@ -1,5 +1,6 @@
 #include "os.hpp"
 
+#ifdef POSIX
 __attribute__((weak)) int main(int argc, char *argv[]) {  //
     printf("setup:\n");
     setup();
@@ -10,6 +11,7 @@ __attribute__((weak)) int main(int argc, char *argv[]) {  //
     for (;;) loop();
     return 0;
 }
+#endif  // POSIX
 
 __attribute__((weak)) void setup() {  //
     printf("\tok\n");
