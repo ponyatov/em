@@ -13,7 +13,7 @@ static  bool point    = false;  ///< was point flag
 static   int fraction = 0;      ///< fraction part
 static   int frac     = 0;      ///< fraction divider $10^frac$
 
-#include <cmath>
+#include <math.h>
 
 float num(char* p, char* pe) {
     integer = fraction = frac = 0; positive = true; point = false;

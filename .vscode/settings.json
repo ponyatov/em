@@ -87,8 +87,10 @@
     "cmake.parallelJobs"    : 4,
     "cmake.useCMakePresets" : "always",
     "cmake.buildBeforeRun"  : true,
+    "cmake.saveBeforeBuild" : true,
     "cmake.debugConfig"     : {
-        "args": [ "${workspaceFolder}/lib/${workspaceFolderBasename}.ini" ] },
+        "args": [ "${workspaceFolder}/lib/app.ini" ] },
+    "cmake.allowCommentsInPresetsFile" : true,
 
     // Python
     "autopep8.path": ["${workspaceFolder}/bin/autopep8", "autopep8"],

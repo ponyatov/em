@@ -7,7 +7,8 @@
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
             "cwd": "${workspaceFolder}",
-            "preLaunchTask": "CMake: build",
+            // "preLaunchTask": "debug: openocd",
+            // "preLaunchTask": "CMake: build",
             "stopAtEntry": true,
             "MIMode": "gdb",
             "miDebuggerPath": "gdb-multiarch",
@@ -18,7 +19,7 @@
                 {"text": "-enable-pretty-printing", "ignoreFailures": true}
             ],
             // "debugServerPath": "openocd",
-            // "debugServerArgs": "-f ${workspaceRoot}/hw/F4DISCO/F4DISCO.openocd",
+            // "debugServerArgs": "-f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.openocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             // "serverStarted": "connections",
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},

@@ -12,15 +12,13 @@ extern int yylineno;  ///< current line number
 /// @brief syntax error callback
 extern void yyerror(const char *msg);
 
-#ifdef POSIX
 /// @brief parse disk file
 extern void cli(char *filename);
-#endif  // POSIX
 
 /// @brief parse string in memory
 /// @param[in] p data pointer (current position)
 /// @param[in] pe data end pointer (end of data)
-extern void cli(char *p, char *pe);
+extern void cli(char* p, char* pe);
 
 /// @name token conversion
 /// @{
