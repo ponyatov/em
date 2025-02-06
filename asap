@@ -127,8 +127,6 @@ $(MKD):
 	mkdir -p $@
 Makefile: $(T)
 	echo $(foreach m,$(MKM),include_$(m)) | tr ' ' '\n' | tr '_' ' ' > $@
-mk/version.mk: $(T)
-	echo 'CUBEMX_VER = 6.12.1' > $@
 mk/%: $(S)/mk/% $(T)
 	cp $< $@
 

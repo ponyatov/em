@@ -1,2 +1,3 @@
 /// @defgroup l496disco l496disco
-/// @ingroup hw
+/// @ingroup discovery
+/// @brief `cpu:` @ref stm32l496agi

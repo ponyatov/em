@@ -1,11 +1,12 @@
-HW ?= pc
+# HW ?= pc
 # HW ?= f4disco
 # HW ?= pillF103
+HW ?= l496disco
 
-include   hw/$(HW)/mk
-include  cpu/$(CPU)/mk
-include arch/$(ARCH)/mk
-include   os/$(OS)/mk
+include   hw/$(HW)/$(HW).mk
+include  cpu/$(CPU)/$(CPU).mk
+include arch/$(ARCH)/$(ARCH).mk
+include   os/$(OS)/$(OS).mk
 
 .PHONY: elf
 elf: $(ELF)

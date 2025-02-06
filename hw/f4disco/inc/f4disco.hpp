@@ -1,2 +1,3 @@
 /// @defgroup f4disco f4disco
-/// @ingroup hw
+/// @ingroup discovery
+/// @brief `cpu:` @ref stm32f407vgt
