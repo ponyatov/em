@@ -57,4 +57,3 @@ foreach(YACC_FILE ${Y})
         ARGS                -o ${PARSER_FILE} ${YACC_FILE}
     )
 endforeach()
-
