@@ -69,6 +69,8 @@ APP = inc/app.hpp src/app.cpp src/main.cpp lib/app.ini
 
 .PHONY: app
 app: $(APP)
+lib/app.ini: $(S)/lib/app.ini $(T)
+	cp $< $@
 
 VSCODE  = settings extensions launch c_cpp_properties tasks
 VSCODE := $(patsubst %,.vscode/%.json,$(VSCODE))

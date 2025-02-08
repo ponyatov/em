@@ -1,4 +1,5 @@
 #include "os.hpp"
+#include "cli.hpp"
 
 #ifdef POSIX
 __attribute__((weak)) int main(int argc, char *argv[]) {  //
@@ -19,6 +20,9 @@ __attribute__((weak)) void setup() {  //
 
 __attribute__((weak)) void arg(int argc, char *argv) {  //
     printf("\targ[%i] = <%s>\n", argc, argv);
+#ifdef POSIX
+    if (argc) cli(argv);
+#endif
 }
 
 __attribute__((weak)) void loop() {  //
