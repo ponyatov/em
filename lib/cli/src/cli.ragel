@@ -22,11 +22,11 @@ void cli(char* p, char* pe) {
     sp      = [ \r\t]+;                     # drop spaces
 
     sign    = [+\-];                        # sign
+    num     = sign ? digit+ '.' digit+;     # floating point
     dec     = sign ? digit+;                # decimal int
     hex     = "0x" [0-9a-fA-F]+;            # hexadecimal
     oct     = "0o" [0-7]+;                  # octal
     bin     = "0b" [01]+;                   # binary
-    num     = sign ? digit+ '.' digit+;     # floating point
 
     cmd     = "nop"|"halt"|".";             # VM command
     id      = [_a-zA-Z][_a-zA-Z0-9]*;       # variable/name
@@ -36,11 +36,11 @@ void cli(char* p, char* pe) {
         nl+     => { yylineno += te-ts; /* count line */ };
         sp      => { };
 
+        num     => { printf("\t\t%i: num:%f\n",yylineno,num(ts,te)); };
         hex     => { printf("\t\t%i: hex:%x\n",yylineno,hex(ts,te)); };
         oct     => { printf("\t\t%i: oct:%o\n",yylineno,oct(ts,te)); };
         bin     => { printf("\t\t%i: bin:%i\n",yylineno,bin(ts,te)); };
         dec     => { printf("\t\t%i: int:%i\n",yylineno,dec(ts,te)); };
-        num     => { printf("\t\t%i: num:%f\n",yylineno,num(ts,te)); };
 
         cmd     => { printf("\t\t%i: cmd:%s\n",yylineno,strndupa(ts,te-ts)); };
         id      => { printf("\t\t%i:  id:%s\n",yylineno,strndupa(ts,te-ts)); };
