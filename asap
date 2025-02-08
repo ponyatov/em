@@ -310,18 +310,23 @@ $(OSD):
 $(OSC) $(OSM): $(T)
 	$(foreach i,$@,cp $(S)/$(i) $(i))
 
-LIB = cli core
-LIBD = $(foreach d,$(LIB),lib/$(d) lib/$(d)/inc lib/$(d)/src)
-LIBI = $(patsubst %,%/.gitignore,$(LIBD))
-LIBC = $(foreach d,$(LIB),lib/$(d)/inc/$(d).hpp lib/$(d)/src/$(d).cpp)
-LIBR = lib/cli/cli.ragel
+LIB   = cli core
+LIBD  = $(foreach d,$(LIB),lib/$(d) lib/$(d)/inc lib/$(d)/src)
+LIBI  = $(patsubst %,%/.gitignore,$(LIBD))
+LIBC  = $(foreach d,$(LIB),lib/$(d)/inc/$(d).hpp lib/$(d)/src/$(d).cpp)
+LIBC += lib/cli/inc/parser.hpp lib/core/inc/types.hpp
+LIBR  = lib/cli/src/cli.ragel
 
 .PHONY: lib
 lib: $(LIBD) $(LIBI) $(LIBC) $(LIBR)
 $(LIBD):
 	mkdir -p $@
-$(LIBC) $(LIBR):
-	touch $@
+lib/core/inc/%: $(S)/lib/core/inc/% $(T)
+	cp $< $@
+lib/cli/inc/%.hpp: $(S)/lib/cli/inc/%.hpp $(T)
+	cp $< $@
+lib/cli/src/%.cpp: $(S)/lib/cli/src/%.cpp $(T)
+	cp $< $@
 
 # any non-existent file
 %:
