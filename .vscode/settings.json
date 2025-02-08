@@ -107,6 +107,8 @@
 
     // F#
     "[fsharp]": {
+        "editor.defaultFormatter": "Ionide.Ionide-fsharp",
+        "editor.formatOnSave":     true
         // "diffEditor.ignoreTrimWhitespace": false
     },
 

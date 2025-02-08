@@ -18,7 +18,7 @@ extern void cli(char *filename);
 /// @brief parse string in memory
 /// @param[in] p data pointer (current position)
 /// @param[in] pe data end pointer (end of data)
-extern void cli(char* p, char* pe);
+extern void cli(char *p, char *pe);
 
 /// @name token conversion
 /// @{
