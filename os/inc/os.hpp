@@ -7,9 +7,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef POSIX
 #include <assert.h>
 #include <string.h>
+#ifdef POSIX
 #endif  // POSIX
 
 #ifdef LINUX
