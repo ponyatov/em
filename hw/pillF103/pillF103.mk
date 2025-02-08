@@ -1,1 +1,1 @@
-ARCH = cortexM3
+CPU = stm32f103c8t

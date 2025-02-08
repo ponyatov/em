@@ -2,7 +2,7 @@
 
 T  = $(abspath $(MAKEFILE_LIST))
 S  = $(abspath $(dir $(T))     )
-M ?= $(notdir $(T))
+M ?= $(notdir $(CURDIR))
 D  = $(abspath $(HOME)/$(M))
 
 AUTHOR = $(shell git config user.name )
@@ -13,8 +13,9 @@ ABOUT ?= as soon as possible
 template:
 	mkdir -p $(D)
 	$(MAKE) -f $(T) -C $(D) M=$(M) \
-		git readme license apt format dirs giti doxy vscode mk cmake \
-		cross hw cpu arch os app
+		git dirs giti cross app vscode \
+		readme license apt format doxy \
+		mk cmake hw cpu arch os
 
 .PHONY: git
 git: .git
@@ -25,10 +26,57 @@ git: .git
 	git checkout --orphan dev ; git checkout --orphan `whoami`
 	ln -fs ../rc rc ; git add rc ; git commit -am "."
 	git remote -v ; git branch -v
-	google-chome https://github.com/new &
-	google-chome https://gitflic.ru/project/create &
+	google-chrome https://github.com/new &
+	google-chrome https://gitflic.ru/project/create &
 
-.gitattributes: $(S)/.gitattributes
+CROSS = hw cpu arch os
+MKD   = mk cmake
+DIRS  = .vscode bin doc lib inc src tmp ref $(CROSS) $(MKD)
+
+.PHONY: dirs
+dirs:
+	mkdir -p $(DIRS)
+
+GITI = .gitignore $(foreach d,$(DIRS),$(d)/.gitignore)
+
+.PHONY: giti
+giti: $(GITI)
+	git add -f bin ref tmp
+
+bin/.gitignore: $(T)
+	echo '*' > $@
+ref/.gitignore: $(T)
+	echo '*' > $@
+tmp/.gitignore: $(T)
+	echo '*' > $@
+doc/.gitignore: $(T)
+	echo 'html/' > $@
+.gitignore: $(S)/.gitignore $(T)
+	cp $< $@
+
+CROSSD = $(foreach d,$(CROSS),$(d)/inc $(d)/src)
+CROSSI = $(foreach i,$(CROSS) $(CROSSD),$(i)/.gitignore)
+CROSSC = $(foreach c,$(CROSS),$(c)/inc/$(c).hpp $(c)/src/$(c).cpp) hw/inc/cross.hpp
+
+.PHONY: cross
+cross: $(CROSS) $(CROSSD) $(CROSSI)
+	touch $(CROSSC)
+
+$(CROSS) $(CROSSD):
+	mkdir -p $@
+
+APP = inc/app.hpp src/app.cpp src/main.cpp lib/app.ini
+
+.PHONY: app
+app: $(APP)
+
+VSCODE  = settings extensions launch c_cpp_properties tasks
+VSCODE := $(patsubst %,.vscode/%.json,$(VSCODE))
+
+.PHONY: vscode
+vscode: $(VSCODE)
+
+.vscode/%: $(S)/.vscode/%
 	cp $< $@
 
 .PHONY: readme
@@ -56,10 +104,10 @@ APT_HEAD = 4
 
 .PHONY: apt
 apt: $(APT)
-apt.%:
-	head -n$(APT_HEAD) $(S)/$@ > $@ ; git add $@
 	sudo apt update
 	sudo apt install -uy `cat apt.$(shell lsb_release -si)`
+apt.%:
+	head -n$(APT_HEAD) $(S)/$@ > $@
 
 FORMAT = .clang-format .prettierrc
 
@@ -69,29 +117,6 @@ format: $(FORMAT)
 .clang-format: $(S)/.clang-format
 	cp $< $@
 .prettierrc:   $(S)/.prettierrc
-	cp $< $@
-
-DIRS = .vscode bin doc lib inc src tmp ref hw cpu arch os mk cmake
-
-.PHONY: dirs
-dirs: $(DIRS)
-$(DIRS):
-	mkdir -p $@
-
-GITI = .gitignore $(foreach d,$(DIRS),$(d)/.gitignore)
-
-.PHONY: giti
-giti: $(GITI)
-
-bin/.gitignore: $(T)
-	echo '*' > $@
-ref/.gitignore: $(T)
-	echo '*' > $@
-tmp/.gitignore: $(T)
-	echo '*' > $@
-doc/.gitignore: $(T)
-	echo 'html/' > $@
-.gitignore: $(S)/.gitignore $(T)
 	cp $< $@
 
 DOXY = .doxygen doc/logo.png doc/DoxygenLayout.xml
@@ -108,32 +133,20 @@ doc/DoxygenLayout.xml:
 doc/logo.png: $(S)/doc/logo.png
 	cp $< $@
 
-VSCODE = $(patsubst %,.vscode/%.json,settings extensions launch c_cpp_properties tasks)
-
-.PHONY: vscode
-vscode: $(VSCODE)
-
-.vscode/%.json: $(S)/.vscode/%.json
-	cp $< $@
-
 MK  = var version cross dirs tool pkg src cfg
 MK += all debug clean format rule doc libc install merge docker
-MKD = mk
 MKM = $(foreach m,$(MK),mk/$(m).mk)
 
 .PHONY: mk
-mk: $(MKD) Makefile $(MKM) mk/patch.mk
-$(MKD):
-	mkdir -p $@
+mk: Makefile $(MKM) mk/patch.mk
 Makefile: $(T)
 	echo $(foreach m,$(MKM),include_$(m)) | tr ' ' '\n' | tr '_' ' ' > $@
 mk/%: $(S)/mk/% $(T)
 	cp $< $@
 
 CMAKE   = CMakeLists.txt CMakePresets.json
-CMAKE_  = any_toolchain x86_64-linux-gnu x86_64-linux-musl arm-none-eabi
-CMAKE_ += i686-w64-mingw32 mingw-w64-ucrt-x86_64 avr
-CMAKE_ += FindRAGEL clean cross src syntax version
+CMAKE_  = any_toolchain x86_64-linux-gnu arm-none-eabi
+CMAKE_ += version src syntax FindRAGEL cross clean
 CMAKE  += $(patsubst %,cmake/%.cmake,$(CMAKE_))
 
 .PHONY: cmake
@@ -141,21 +154,22 @@ cmake: $(CMAKE)
 
 cmake/%.cmake: $(S)/cmake/%.cmake $(T)
 	cp $< $@
-CMakeLists.txt: $(S)/CMakeLists.txt $(T)
+CMakeLists.txt: $(S)/CMakeLists.txt
 	cp $< $@
-CMakePresets.json: $(S)/CMakePresets.json $(T)
-	head -n2 $<      > $@
+CMakePresets.json: $(T)
+	@echo '{' > $@
+	@echo '    "version": 6,' >> $@
 	@echo '    "buildPresets": [' >> $@
 	@echo '        {' >> $@
 	@echo '            "name"           :   "pillF103",' >> $@
 	@echo '            "configurePreset":   "pillF103",' >> $@
 	@echo '            "targets"        :  ["all","install"]' >> $@
 	@echo '        },' >> $@
-	@echo '        {' >> $@
-	@echo '            "name"           :   "f4disco",' >> $@
-	@echo '            "configurePreset":   "f4disco",' >> $@
-	@echo '            "targets"        :  ["all","install"]' >> $@
-	@echo '        },' >> $@
+# 	@echo '        {' >> $@
+# 	@echo '            "name"           :   "f4disco",' >> $@
+# 	@echo '            "configurePreset":   "f4disco",' >> $@
+# 	@echo '            "targets"        :  ["all","install"]' >> $@
+# 	@echo '        },' >> $@
 	@echo '        {' >> $@
 	@echo '            "name"           :   "glibc",' >> $@
 	@echo '            "configurePreset":   "glibc",' >> $@
@@ -169,6 +183,7 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '            "binaryDir": "$${sourceDir}/tmp/$${presetName}",' >> $@
 	@echo '            "generator": "Unix Makefiles",' >> $@
 	@echo '            "cacheVariables": {' >> $@
+	@echo '                "APP"                     : "$${workspaceFolderBasename}",' >> $@
 	@echo '                "CMAKE_INSTALL_PREFIX"    : "$${sourceDir}/bin",' >> $@
 	@echo '                "CMAKE_MODULE_PATH"       : "$${sourceDir}/cmake",' >> $@
 	@echo '                "CMAKE_COLOR_DIAGNOSTICS" : false,' >> $@
@@ -189,12 +204,12 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '            "inherits"      :  "cortexM",' >> $@
 	@echo '            "cacheVariables": {"ARCH":"cortexM3"}' >> $@
 	@echo '        },' >> $@
-	@echo '        {' >> $@
-	@echo '            "name"          :  "cortexM4",' >> $@
-	@echo '            "hidden"        :   true,' >> $@
-	@echo '            "inherits"      :  "cortexM",' >> $@
-	@echo '            "cacheVariables": {"ARCH":"cortexM4"}' >> $@
-	@echo '        },' >> $@
+# 	@echo '        {' >> $@
+# 	@echo '            "name"          :  "cortexM4",' >> $@
+# 	@echo '            "hidden"        :   true,' >> $@
+# 	@echo '            "inherits"      :  "cortexM",' >> $@
+# 	@echo '            "cacheVariables": {"ARCH":"cortexM4"}' >> $@
+# 	@echo '        },' >> $@
 	@echo '        {' >> $@
 	@echo '            "name"          : "pillF103",' >> $@
 	@echo '            "inherits"      : "cortexM3",' >> $@
@@ -203,14 +218,14 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '                "CPU":"stm32f103c8t", "SERIES": "STM32F1"' >> $@
 	@echo '            }' >> $@
 	@echo '        },' >> $@
-	@echo '        {' >> $@
-	@echo '            "name"          : "f4disco",' >> $@
-	@echo '            "inherits"      : "cortexM4",' >> $@
-	@echo '            "cacheVariables": {' >> $@
-	@echo '                "HW" :"f4disco",' >> $@
-	@echo '                "CPU":"stm32f407vgt", "SERIES": "STM32F4"' >> $@
-	@echo '            }' >> $@
-	@echo '        },' >> $@
+# 	@echo '        {' >> $@
+# 	@echo '            "name"          : "f4disco",' >> $@
+# 	@echo '            "inherits"      : "cortexM4",' >> $@
+# 	@echo '            "cacheVariables": {' >> $@
+# 	@echo '                "HW" :"f4disco",' >> $@
+# 	@echo '                "CPU":"stm32f407vgt", "SERIES": "STM32F4"' >> $@
+# 	@echo '            }' >> $@
+# 	@echo '        },' >> $@
 	@echo '        {' >> $@
 	@echo '            "name"          : "pc",' >> $@
 	@echo '            "inherits"      : "common",' >> $@
@@ -235,19 +250,7 @@ CMakePresets.json: $(S)/CMakePresets.json $(T)
 	@echo '   ]' >> $@
 	@echo '}' >> $@
 
-CROSS  = hw cpu arch os
-CROSSD = $(foreach d,$(CROSS),$(d)/inc $(d)/src)
-CROSSI = $(foreach i,$(CROSS) $(CROSSD),$(i)/.gitignore)
-CROSSC = $(foreach c,$(CROSS),$(c)/inc/$(c).hpp $(c)/src/$(c).cpp)
-
-.PHONY: cross
-cross: $(CROSS) $(CROSSD) $(CROSSI)
-	touch $(CROSSC)
-
-$(CROSS) $(CROSSD):
-	mkdir -p $@
-
-HWA = pillF103 f4disco l496disco
+HWA = pillF103
 HWX = $(foreach m,$(HWA),hw/$(m)/$(m).ioc)
 HW  = pc $(HWA)
 HWD = $(foreach d,$(HW),hw/$(d) hw/$(d)/inc hw/$(d)/src)
@@ -256,14 +259,18 @@ HWC = $(foreach d,$(HW),hw/$(d)/inc/$(d).hpp hw/$(d)/src/$(d).cpp)
 HWM = $(foreach m,$(HW),hw/$(m)/$(m).mk hw/$(m)/$(m).cmake)
 
 .PHONY: hw
-hw: $(HWD) $(HWI) $(HWX)
-	touch $(HWC) $(HWM)
+hw: $(HWD) $(HWI) $(HWC) $(HWM) $(HWX) $(HWL)
 $(HWD):
 	mkdir -p $@
-hw/%.ioc: $(S)/hw/%.ioc
+$(HWC):
+	touch $@
+hw/%: $(S)/hw/% $(T)
 	cp $< $@
+hw/%.ioc: $(S)/hw/%.ioc $(T)
+	echo -n > $@
 
-CPU  = i5 stm32f103c8t stm32f407vgt stm32f405rgt stm32l496agi
+CPU  = i5 stm32f103c8t
+# stm32f407vgt stm32f405rgt stm32l496agi
 CPUD = $(foreach d,$(CPU),cpu/$(d) cpu/$(d)/inc cpu/$(d)/src)
 CPUI = $(patsubst %,%/.gitignore,$(CPUD))
 CPUC = $(foreach d,$(CPU),cpu/$(d)/inc/$(d).hpp cpu/$(d)/src/$(d).cpp)
@@ -286,8 +293,8 @@ arch: $(ARCHD) $(ARCHI)
 	touch $(ARCHC) $(ARCHM)
 $(ARCHD):
 	mkdir -p $@
-
-OS  = bare linux mingw
+	
+OS  = bare linux
 OSD = $(foreach d,$(OS),os/$(d) os/$(d)/inc os/$(d)/src)
 OSI = $(patsubst %,%/.gitignore,$(OSD))
 OSC = $(foreach d,$(OS),os/$(d)/inc/$(d).hpp os/$(d)/src/$(d).cpp) os/src/main.cpp
@@ -299,13 +306,8 @@ os: $(OSD) $(OSI)
 $(OSD):
 	mkdir -p $@
 
-APP = inc/app.hpp src/app.cpp lib/app.ini
-
-.PHONY: app
-app: $(APP)
-$(APP):
-	touch $@
-
 # any non-existent file
 %:
+	touch $@
+src/%:
 	touch $@

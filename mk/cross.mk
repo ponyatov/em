@@ -1,7 +1,7 @@
-# HW ?= pc
+HW ?= pc
 # HW ?= f4disco
 # HW ?= pillF103
-HW ?= l496disco
+# HW ?= l496disco
 
 include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk
