@@ -104,6 +104,12 @@
     "rust-analyzer.check.allTargets": false,
     "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
 
+
+    // F#
+    "[fsharp]": {
+        // "diffEditor.ignoreTrimWhitespace": false
+    },
+
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows":  "UCRT64",
     "terminal.integrated.profiles.windows": {

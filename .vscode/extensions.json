@@ -40,7 +40,9 @@
         // "rust-lang.rust-analyzer",
         // "tamasfe.even-better-toml",
         // F#
-        // "ionide.ionide-fsharp",
-        // "mnxn.fsharp-fsl-fsy",
+        "ionide.ionide-fsharp",
+        "tintoy.msbuild-project-tools",
+        // "ms-dotnettools.csdevkit",
+        "mnxn.fsharp-fsl-fsy",
     ]
 }
