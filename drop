@@ -1,1 +1,198 @@
 #!/usr/bin/python3
+
+import datetime
+import os as _os
+
+CWD = _os.getcwd()
+MODULE = CWD.split('/')[-1]
+ABOUT = 'embedded drop/down infrastructure'
+AUTHOR = 'Dmitry Ponyatov'
+EMAIL = 'dponyatov@gmail.com'
+YEAR = datetime.date.today().year
+LICENSE = 'MIT'
+
+
+def add(f): _os.system(f'git add {f}')
+def touch(f): open(f, 'a').close(); add(f)
+def cp(f): _os.system(f'cp ~/em/{f} {f}') ; add(f)
+
+def mkd(d):
+    try:
+        _os.mkdir(d)
+    except FileExistsError:
+        pass
+    touch(f'{d}/.gitignore')
+
+
+def rc():
+    _os.system('ln -fs ../rc rc && git add rc')
+
+
+def readme():
+    md = 'README.md'
+    with open(md, 'w') as f:
+        print(f'''# ![](doc/logo.png) `{MODULE}`
+## {ABOUT}
+\n(c) {AUTHOR} <<{EMAIL}>> {YEAR} {LICENSE}
+\n github: https://github.com/ponyatov/pyc/{MODULE}
+gitflic: https://gitflic.ru/project/dponyatov/{MODULE}''', file=f)
+    add(md)
+
+
+def dirs():
+    map(mkd, ['.', '.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref'])
+    for i in ['bin','doc','tmp','ref']: cp(f'{i}/.gitignore')
+
+def hw(): mkd('hw')
+def cpu(): mkd('cpu')
+def arch(): mkd('arch')
+def os(): mkd('os')
+
+
+def cross():
+    hw()
+    cpu()
+    arch()
+    os()
+
+
+def mk():
+    mkd('mk')
+    touch('Makefile')
+
+
+def presets():
+    p = 'CMakePresets.json'
+    with open(p, 'w') as f:
+        print('''{
+    "version": 6,
+    "buildPresets": [
+        {
+            "name"           :   "pillF103",
+            "configurePreset":   "pillF103",
+            "targets"        :  ["all","install"]
+        },
+        {
+            "name"           :   "f4disco",
+            "configurePreset":   "f4disco",
+            "targets"        :  ["all","install"]
+        },
+        {
+            "name"           :   "glibc",
+            "configurePreset":   "glibc",
+            "targets"        :  ["all","install"]
+        }
+    ],
+    "configurePresets": [
+        {
+            "name"     : "common",
+            "hidden"   :  true,
+            "binaryDir": "${sourceDir}/tmp/${presetName}",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "APP"                     : "${workspaceFolderBasename}",
+                "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
+                "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
+                "CMAKE_COLOR_DIAGNOSTICS" : false,
+                "CMAKE_BUILD_TYPE"        : "Debug",
+                "CMAKE_VERBOSE_MAKEFILE"  : true
+            }
+        },
+        {
+            "name"          :  "cortexM",
+            "hidden"        :   true,
+            "inherits"      :  "common",
+            "toolchainFile" :  "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables": {"OS":"bare","CMAKE_EXECUTABLE_SUFFIX":".elf"}
+        },
+        {
+            "name"          :  "cortexM0",
+            "hidden"        :   true,
+            "inherits"      :  "cortexM",
+            "cacheVariables": {"ARCH":"cortexM0"}
+        },
+        {
+            "name"          :  "cortexM3",
+            "hidden"        :   true,
+            "inherits"      :  "cortexM",
+            "cacheVariables": {"ARCH":"cortexM3"}
+        },
+        {
+            "name"          :  "cortexM4",
+            "hidden"        :   true,
+            "inherits"      :  "cortexM",
+            "cacheVariables": {"ARCH":"cortexM4"}
+        },
+        {
+            "name"          : "pillF103",
+            "inherits"      : "cortexM3",
+            "cacheVariables": {
+                "HW" :"pillF103",
+                "CPU":"stm32f103c8t", "SERIES": "STM32F1"
+            }
+        },
+        {
+            "name"          : "f4disco",
+            "inherits"      : "cortexM4",
+            "cacheVariables": {
+                "HW" :"f4disco",
+                "CPU":"stm32f407vgt", "SERIES": "STM32F4"
+            }
+        },
+        {
+            "name"          : "pc",
+            "inherits"      : "common",
+            "hidden"        : true,
+            "cacheVariables": {
+                "HW":"pc", "CPU":"i5", "ARCH":"x86_64"
+            }
+        },
+        {
+            "name"          : "linux",
+            "inherits"      : "pc",
+            "hidden"        : true,
+            "cacheVariables": {"OS":"linux"}
+        },
+       {
+            "name"         : "glibc",
+            "inherits"     : "linux",
+            "displayName"  : "x86_64-linux-gnu",
+            "description"  : "native host",
+            "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
+        }
+   ]
+}''', file=f)
+    touch(p)
+
+
+def cmake():
+    cp('CMakeLists.txt')
+    presets()
+    mkd('cmake')
+
+
+def vscode():
+    d = '.vscode'
+    f = 'settings', 'extensions', 'launch', 'tasks', 'c_cpp_properties'
+    mkd(d)
+    for i in f:
+        touch(f'{d}/{i}.json')
+
+
+def apt():
+    for i in ['Debian', 'Msys']:
+        touch(f'apt.{i}')
+
+
+def gen():
+    rc()
+    readme()
+    dirs()
+    cross()
+    mk()
+    cmake()
+    vscode()
+    apt()
+
+
+gen()
