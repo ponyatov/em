@@ -53,8 +53,39 @@ def giti():
             print('*', file=f)
 
 
-def hw(): mkd('hw')
-def cpu(): mkd('cpu')
+HW = {'pc': 'i5', 'pillF103': 'stm32f103c8t', 'f4disco': 'stm32f407vgt'}
+CPU = {'i5': 'x86_64', 'stm32f103c8t': 'cortexM3', 'stm32f407vgt': 'cortexM4'}
+
+
+def hw():
+    h = HW.keys()
+    mkd('hw')
+    for i in h:
+        mkd(f'hw/{i}')
+        for j in ['inc', 'src']:
+            mkd(f'hw/{i}/{j}')
+        for k in ['cmake', 'ocd', 'gdb']:
+            touch(f'hw/{i}/{i}.{k}')
+        mk = f'hw/{i}/{i}.mk'
+        with open(mk, 'w') as m:
+            print(f'CPU = {HW[i]}', file=m)
+        add(mk)
+
+
+def cpu():
+    c = CPU.keys()
+    mkd('cpu')
+    for i in c:
+        mkd(f'cpu/{i}')
+        for j in ['inc', 'src']:
+            mkd(f'cpu/{i}/{j}')
+        touch(f'cpu/{i}/{i}.cmake')
+        mk = f'cpu/{i}/{i}.mk'
+        with open(mk, 'w') as m:
+            print(f'ARCH = {CPU[i]}', file=m)
+        add(mk)
+
+
 def arch(): mkd('arch')
 def os(): mkd('os')
 
