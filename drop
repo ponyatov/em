@@ -49,6 +49,7 @@ def dirs():
 
 
 def giti():
+    cp('.gitattributes')
     for i in ['bin', 'ref', 'tmp']:
         with open(f'{i}/.gitignore', 'w') as f:
             print('*', file=f)
@@ -65,12 +66,17 @@ def hw():
         mkd(f'hw/{i}')
         for j in ['inc', 'src']:
             mkd(f'hw/{i}/{j}')
+        touch(f'hw/{i}/inc/{i}.hpp')
+        touch(f'hw/{i}/src/{i}.cpp')
         for k in ['cmake', 'ocd', 'gdb']:
             touch(f'hw/{i}/{i}.{k}')
         mk = f'hw/{i}/{i}.mk'
         with open(mk, 'w') as m:
             print(f'CPU = {HW[i]}', file=m)
         add(mk)
+    mkd('hw/inc')
+    mkd('hw/src')
+    cp('hw/inc/hw.hpp')
 
 
 def cpu():
@@ -80,14 +86,19 @@ def cpu():
         mkd(f'cpu/{i}')
         for j in ['inc', 'src']:
             mkd(f'cpu/{i}/{j}')
+        touch(f'cpu/{i}/inc/{i}.hpp')
+        touch(f'cpu/{i}/src/{i}.cpp')
         touch(f'cpu/{i}/{i}.cmake')
         mk = f'cpu/{i}/{i}.mk'
         with open(mk, 'w') as m:
             print(f'ARCH = {CPU[i]}', file=m)
         add(mk)
+    mkd('cpu/inc')
+    mkd('cpu/src')
+    cp('cpu/inc/cpu.hpp')
 
 
-ARCH = {'x86_64': '', 'cortexM': '', 'cortexM3': '', 'cortexM4': ''}
+ARCH = {'x86_64': 'linux', 'cortexM': 'bare', 'cortexM3': '', 'cortexM4': ''}
 
 
 def arch():
@@ -96,18 +107,58 @@ def arch():
         mkd(f'arch/{i}')
         for j in ['inc', 'src']:
             mkd(f'arch/{i}/{j}')
+        touch(f'arch/{i}/inc/{i}.hpp')
+        touch(f'arch/{i}/src/{i}.cpp')
         touch(f'arch/{i}/{i}.cmake')
         mk = f'arch/{i}/{i}.mk'
         with open(mk, 'w') as m:
             if re.match(r'cortexM\d', i):
                 print('include arch/cortexM/cortexM.mk', file=m)
+            else:
+                print(f'OS = {ARCH[i]}', file=m)
         add(mk)
+    mkd('arch/inc')
+    mkd('arch/src')
+    cp('arch/inc/arch.hpp')
 
 
-def os(): mkd('os')
+OS = ['linux', 'bare']
+
+
+def linux():
+    cp('os/linux/inc/linux.hpp')
+    cp('os/linux/src/linux.cpp')
+    cp('os/linux/linux.cmake')
+
+
+def bare():
+    cp('os/bare/inc/bare.hpp')
+    cp('os/bare/src/bare.cpp')
+    cp('os/bare/bare.cmake')
+
+
+def os():
+    mkd('os')
+    for i in OS:
+        mkd(f'os/{i}')
+        for j in ['inc', 'src']:
+            mkd(f'os/{i}/{j}')
+        touch(f'os/{i}/inc/{i}.hpp')
+        touch(f'os/{i}/src/{i}.cpp')
+        touch(f'os/{i}/{i}.cmake')
+        touch(f'os/{i}/{i}.mk')
+    mkd('os/inc')
+    mkd('os/src')
+    cp('os/inc/os.hpp')
+    cp('os/inc/main.hpp')
+    cp('os/src/os.cpp')
+    cp('os/src/main.cpp')
+    linux()
+    bare()
 
 
 def cross():
+    cp('hw/inc/cross.hpp')
     hw()
     cpu()
     arch()
@@ -116,7 +167,14 @@ def cross():
 
 def mk():
     mkd('mk')
-    touch('Makefile')
+    with open('Makefile', 'w') as m:
+        for i in ['var', 'version', 'dirs', 'cross', 'tool',
+                  'pkg', 'src', 'cfg',
+                  'all', 'clean', 'format', 'rule', 'doc', 'install', 'merge']:
+            print(f'include mk/{i}.mk', file=m)
+            cp(f'mk/{i}.mk')
+    add('Makefile')
+    cp('mk/patch.mk')
 
 
 def presets():
@@ -223,10 +281,19 @@ def presets():
     touch(p)
 
 
+CMAKE = ['version', 'src', 'syntax', 'FindRAGEL', 'cross', 'clean',
+         'any_toolchain',
+         'x86_64-linux-gnu',
+         'arm-none-eabi'
+         ]
+
+
 def cmake():
     cp('CMakeLists.txt')
     presets()
     mkd('cmake')
+    for i in CMAKE:
+        cp(f'cmake/{i}.cmake')
 
 
 def vscode():
@@ -242,6 +309,143 @@ def apt():
         touch(f'apt.{i}')
 
 
+def format():
+    for i in ['.clang-format', '.prettierrc']:
+        cp(i)
+
+
+LIB = ['cli', 'core']
+
+
+def cli():
+    open('lib/cli/src/cli.ragel', 'w').close()
+    for i in ['hex', 'bin', 'dec', 'oct', 'num']:
+        cp(f'lib/cli/src/{i}.ragel')
+    for h in ['cli', 'parser']:
+        cp(f'lib/cli/inc/{h}.hpp')
+    for c in ['cli']:
+        cp(f'lib/cli/src/{c}.cpp')
+    rl = 'lib/cli/src/cli.ragel'
+    with open(rl, 'w') as f:
+        print(r'''
+#include "os.hpp"
+#include "cli.hpp"
+
+%%machine cli;
+%%write  data;
+
+static int   cs  = 0;           ///< current state
+static int   act = 0;           ///< ???
+static char* eof = nullptr;     ///< end of file marker
+static char* ts  = nullptr;     ///< token start
+static char* te  = nullptr;     ///< token end
+
+void cli(char* p, char* pe) {
+    eof = pe; cs = act = 0; ts = te = nullptr;
+    %%write init;
+    %%write exec;
+}
+
+%%{
+    comment = '#' [^\n]*;                   # comment
+    nl      = '\n';                         # new line
+    sp      = [ \r\t]+;                     # drop spaces
+
+    sign    = [+\-];                        # sign
+    num     = sign ? digit+ '.' digit+;     # floating point
+    dec     = sign ? digit+;                # decimal int
+    hex     = "0x" [0-9a-fA-F]+;            # hexadecimal
+    oct     = "0o" [0-7]+;                  # octal
+    bin     = "0b" [01]+;                   # binary
+
+    id      = [_a-zA-Z][_a-zA-Z0-9]*;       # variable/name
+
+    cli := |*
+        comment => { };
+        nl+     => { yylineno += te-ts; /* count line */ };
+        sp      => { };
+
+        num     => { printf("\t\t%i: num:%f\n",yylineno,num(ts,te)); };
+        hex     => { printf("\t\t%i: hex:%x\n",yylineno,hex(ts,te)); };
+        oct     => { printf("\t\t%i: oct:%o\n",yylineno,oct(ts,te)); };
+        bin     => { printf("\t\t%i: bin:%i\n",yylineno,bin(ts,te)); };
+        dec     => { printf("\t\t%i: int:%i\n",yylineno,dec(ts,te)); };
+
+        id      => { printf("\t\t%i:  id:%s\n",yylineno,strndup(ts,te-ts)); };
+
+        any     => { yyerror(strndup(ts,te-ts)); };
+    *|;
+}%%''', file=f)
+    add(rl)
+
+
+def core():
+    for i in ['types']:
+        cp(f'lib/core/inc/{i}.hpp')
+        cp(f'lib/core/src/{i}.cpp')
+    for j in ['object', 'gc',
+              'vm', 'cmd',
+              'prim', 'int', 'num',
+              'cont', 'list', 'map', 'stack',
+              'io', 'path', 'dir', 'file',
+              'net', 'socket', 'tcp', 'udp', 'mqtt',
+              'pin', 'led', 'color',
+              'analog', 'block', 'mem', 'dma',
+              ]:
+        touch(f'lib/core/inc/{j}.hpp')
+        touch(f'lib/core/src/{j}.cpp')
+
+
+def lib():
+    mkd('lib')
+    mkd('lib/inc')
+    touch('lib/inc/lib.hpp')
+    mkd('lib/src')
+    touch('lib/src/lib.cpp')
+    for i in LIB:
+        mkd(f'lib/{i}')
+        for j in ['inc', 'src']:
+            mkd(f'lib/{i}/{j}')
+        touch(f'lib/{i}/inc/{i}.hpp')
+        touch(f'lib/{i}/src/{i}.cpp')
+    cli()
+    core()
+
+
+def app():
+    touch('inc/app.hpp')
+    touch('src/app.cpp')
+    cp('lib/app.ini')
+
+
+def doxygen():
+    with open('../em/.doxygen', 'r') as s:
+        s.readline()
+        s.readline()
+        with open('.doxygen', 'w') as t:
+            print(f'PROJECT_NAME           = "{MODULE}"', file=t)
+            print(f'PROJECT_BRIEF          = "{ABOUT}"', file=t)
+            while True:
+                r = s.readline()
+                if not r:
+                    break
+                t.write(r)
+
+
+def doxy():
+    doxygen()
+    cp('doc/logo.png')
+    cp('doc/DoxygenLayout.xml')
+
+
+def doc():
+    doxy()
+    for d in ['cli', 'stm32']:
+        mkd(f'doc/{d}')
+    for f in ['ByteCode', 'CLI', 'FORTH']:
+        cp(f'doc/cli/{f}.md')
+
+
 def gen():
     rc()
     readme()
@@ -252,6 +456,10 @@ def gen():
     cmake()
     vscode()
     apt()
+    format()
+    lib()
+    app()
+    doc()
 
 
 gen()

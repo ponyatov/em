@@ -2,7 +2,7 @@
 ******************************************************************************
 **  Abstract    : Linker script for STM32F407VGTx series
 **                1024Kbytes FLASH and 192Kbytes RAM
-*****************************************************************************
+******************************************************************************
 */
 
 /* Entry Point */
@@ -17,9 +17,9 @@ _Min_Stack_Size = 0x400;          /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
-CCMRAM (xrw)      : ORIGIN = 0x10000000, LENGTH = 64K
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 1024K
+FLASH  (r x)     : ORIGIN = 0x8000000,  LENGTH = 1024K
+RAM    (rwx)     : ORIGIN = 0x20000000, LENGTH = 128K
+CCMRAM (rwx)     : ORIGIN = 0x10000000, LENGTH = 64K
 }
 
 /* Define output sections */
@@ -100,7 +100,7 @@ SECTIONS
 
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
-  } >RAM AT>FLASH
+  } >RAM AT> FLASH
 
   _siccmram = LOADADDR(.ccmram);
 
@@ -119,7 +119,8 @@ SECTIONS
     
     . = ALIGN(4);
     _eccmram = .;       /* create a global symbol at ccmram end */
-  } >CCMRAM AT>FLASH
+  } >CCMRAM AT> FLASH
+
   
   /* Uninitialized data section */
   . = ALIGN(4);

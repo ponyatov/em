@@ -1,5 +1,5 @@
---- startup_stm32f407xx.s	2025-02-05 23:47:34.304484017 +0400
-+++ startup_stm32f407xx.s.fix	2025-02-05 23:47:24.408484327 +0400
+--- startup_stm32f407xx.s	2025-02-09 20:30:59.305206753 +0400
++++ startup_stm32f407xx.s.fix	2025-02-09 20:30:59.305206753 +0400
 @@ -3,24 +3,6 @@
    * @file      startup_stm32f407xx.s
    * @author    MCD Application Team

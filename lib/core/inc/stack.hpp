@@ -2,6 +2,3 @@
 
 /// @defgroup stack stack
 /// @ingroup cont
-/// @{
-
-/// @}
