@@ -14,7 +14,8 @@ LICENSE = 'MIT'
 
 def add(f): _os.system(f'git add {f}')
 def touch(f): open(f, 'a').close(); add(f)
-def cp(f): _os.system(f'cp ~/em/{f} {f}') ; add(f)
+def cp(f): _os.system(f'cp ~/em/{f} {f}'); add(f)
+
 
 def mkd(d):
     try:
@@ -40,8 +41,17 @@ gitflic: https://gitflic.ru/project/dponyatov/{MODULE}''', file=f)
 
 
 def dirs():
-    map(mkd, ['.', '.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref'])
-    for i in ['bin','doc','tmp','ref']: cp(f'{i}/.gitignore')
+    for d in ['.', '.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref']:
+        mkd(d)
+    for i in ['bin', 'doc', 'tmp', 'ref']:
+        cp(f'{i}/.gitignore')
+
+
+def giti():
+    for i in ['bin', 'ref', 'tmp']:
+        with open(f'{i}/.gitignore', 'w') as f:
+            print('*', file=f)
+
 
 def hw(): mkd('hw')
 def cpu(): mkd('cpu')
@@ -176,7 +186,7 @@ def vscode():
     f = 'settings', 'extensions', 'launch', 'tasks', 'c_cpp_properties'
     mkd(d)
     for i in f:
-        touch(f'{d}/{i}.json')
+        cp(f'{d}/{i}.json')
 
 
 def apt():
@@ -188,6 +198,7 @@ def gen():
     rc()
     readme()
     dirs()
+    giti()
     cross()
     mk()
     cmake()
