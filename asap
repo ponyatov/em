@@ -28,6 +28,7 @@ git: .git
 	git remote -v ; git branch -v
 	google-chrome https://github.com/new &
 	google-chrome https://gitflic.ru/project/create &
+	git add $^
 
 CROSS = hw cpu arch os
 MKD   = mk cmake
@@ -41,7 +42,7 @@ GITI = .gitignore $(foreach d,$(DIRS),$(d)/.gitignore)
 
 .PHONY: giti
 giti: $(GITI)
-	git add -f bin ref tmp
+	git add -f bin ref tmp $^
 
 bin/.gitignore: $(T)
 	echo '*' > $@
@@ -60,15 +61,16 @@ CROSSC = $(foreach c,$(CROSS),$(c)/inc/$(c).hpp $(c)/src/$(c).cpp) hw/inc/cross.
 
 .PHONY: cross
 cross: $(CROSS) $(CROSSD) $(CROSSI)
-	touch $(CROSSC)
+	touch $(CROSSC) && git add $^
 
 $(CROSS) $(CROSSD):
-	mkdir -p $@
+	mkdir -p $@ && git add $@
 
 APP = inc/app.hpp src/app.cpp src/main.cpp lib/app.ini
 
 .PHONY: app
 app: $(APP)
+	git add $^
 lib/app.ini: $(S)/lib/app.ini $(T)
 	cp $< $@
 
@@ -299,7 +301,7 @@ $(ARCHM) $(ARCHC): $(T)
 	$(foreach i,$@,cp $(S)/$(i) $(i))
 	
 OS   = bare linux
-OSD  = $(foreach d,$(OS),os/$(d) os/$(d)/inc os/$(d)/src)
+OSD  = $(foreach d,$(OS),os/$(d) os/$(d)/inc os/$(d)/src) os/inc os/src
 OSI  = $(patsubst %,%/.gitignore,$(OSD))
 OSC  = $(foreach d,$(OS),os/$(d)/inc/$(d).hpp os/$(d)/src/$(d).cpp)
 OSC += $(foreach s,os main,os/inc/$(s).hpp os/src/$(s).cpp)
@@ -307,7 +309,8 @@ OSM  = $(foreach m,$(OS),os/$(m)/$(m).mk os/$(m)/$(m).cmake)
 
 .PHONY: os
 os: $(OSD) $(OSI) $(OSC) $(OSM)
-$(OSD):
+	git add $^
+$(OSD): $(T)
 	mkdir -p $@
 $(OSC) $(OSM): $(T)
 	$(foreach i,$@,cp $(S)/$(i) $(i))
