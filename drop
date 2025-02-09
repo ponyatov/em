@@ -88,7 +88,7 @@ def cpu():
             mkd(f'cpu/{i}/{j}')
         touch(f'cpu/{i}/inc/{i}.hpp')
         touch(f'cpu/{i}/src/{i}.cpp')
-        touch(f'cpu/{i}/{i}.cmake')
+        cp(f'cpu/{i}/{i}.cmake')
         mk = f'cpu/{i}/{i}.mk'
         with open(mk, 'w') as m:
             print(f'ARCH = {CPU[i]}', file=m)
@@ -109,7 +109,7 @@ def arch():
             mkd(f'arch/{i}/{j}')
         touch(f'arch/{i}/inc/{i}.hpp')
         touch(f'arch/{i}/src/{i}.cpp')
-        touch(f'arch/{i}/{i}.cmake')
+        cp(f'arch/{i}/{i}.cmake')
         mk = f'arch/{i}/{i}.mk'
         with open(mk, 'w') as m:
             if re.match(r'cortexM\d', i):
