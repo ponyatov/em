@@ -32,3 +32,6 @@ S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # F#
 F += $(wildcard meta/*.f*)
+
+# Python
+P += $(wildcard meta/*.py)

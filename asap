@@ -331,6 +331,7 @@ LIBR  = lib/cli/src/cli.ragel lib/cli/src/dec.ragel lib/cli/src/num.ragel
 
 .PHONY: lib
 lib: $(LIBD) $(LIBI) $(LIBC) $(LIBR)
+	git add $^
 $(LIBD):
 	mkdir -p $@
 lib/core/inc/%: $(S)/lib/core/inc/% $(T)
