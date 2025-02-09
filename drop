@@ -2,6 +2,7 @@
 
 import datetime
 import os as _os
+import re
 
 CWD = _os.getcwd()
 MODULE = CWD.split('/')[-1]
@@ -86,7 +87,23 @@ def cpu():
         add(mk)
 
 
-def arch(): mkd('arch')
+ARCH = {'x86_64': '', 'cortexM': '', 'cortexM3': '', 'cortexM4': ''}
+
+
+def arch():
+    mkd('arch')
+    for i in ARCH:
+        mkd(f'arch/{i}')
+        for j in ['inc', 'src']:
+            mkd(f'arch/{i}/{j}')
+        touch(f'arch/{i}/{i}.cmake')
+        mk = f'arch/{i}/{i}.mk'
+        with open(mk, 'w') as m:
+            if re.match(r'cortexM\d', i):
+                print('include arch/cortexM/cortexM.mk', file=m)
+        add(mk)
+
+
 def os(): mkd('os')
 
 
