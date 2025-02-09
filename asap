@@ -79,12 +79,14 @@ VSCODE := $(patsubst %,.vscode/%.json,$(VSCODE))
 
 .PHONY: vscode
 vscode: $(VSCODE)
+	git add $^
 
 .vscode/%: $(S)/.vscode/%
 	cp $< $@
 
 .PHONY: readme
 readme: README.md
+	git add $^
 README.md: $(T)
 	echo '# `$(M)`'  > $@
 	echo '## $(ABOUT)' >> $@
@@ -96,6 +98,7 @@ README.md: $(T)
 
 .PHONY: license
 license: LICENSE
+	git add $^
 LICENSE: $(T)
 	@echo 'MIT License' > $@
 	@echo '' >> $@
@@ -110,13 +113,14 @@ APT_HEAD = 4
 apt: $(APT)
 	sudo apt update
 	sudo apt install -uy `cat apt.$(shell lsb_release -si)`
-apt.%:
-	head -n$(APT_HEAD) $(S)/$@ > $@
+apt.%: $(T)
+	head -n$(APT_HEAD) $(S)/$@ > $@ && git add $@
 
 FORMAT = .clang-format .prettierrc
 
 .PHONY: format
 format: $(FORMAT)
+	git add $^
 
 .clang-format: $(S)/.clang-format
 	cp $< $@
@@ -127,6 +131,7 @@ DOXY = .doxygen doc/logo.png doc/DoxygenLayout.xml
 
 .PHONY: doxy
 doxy: $(DOXY)
+	git add $^
 
 doc/DoxygenLayout.xml:
 	doxygen -l ; mv DoxygenLayout.xml $@
@@ -143,6 +148,7 @@ MKM = $(foreach m,$(MK),mk/$(m).mk)
 
 .PHONY: mk
 mk: Makefile $(MKM) mk/patch.mk
+	git add $^
 Makefile: $(T)
 	echo $(foreach m,$(MKM),include_$(m)) | tr ' ' '\n' | tr '_' ' ' > $@
 mk/%: $(S)/mk/% $(T)
@@ -155,6 +161,7 @@ CMAKE  += $(patsubst %,cmake/%.cmake,$(CMAKE_))
 
 .PHONY: cmake
 cmake: $(CMAKE)
+	git add $^
 
 cmake/%.cmake: $(S)/cmake/%.cmake $(T)
 	cp $< $@
