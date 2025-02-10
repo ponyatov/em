@@ -36,6 +36,7 @@
         // Python
         "ms-python.python",
         "ms-python.autopep8",
+        // "batisteo.vscode-django",
         // Rust
         // "rust-lang.rust-analyzer",
         // "tamasfe.even-better-toml",
