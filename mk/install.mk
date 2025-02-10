@@ -1,6 +1,7 @@
 .PHONY : install update ref gz
 install: $(HOST)_install
-update : $(HOST)_update
+update : $(HOST)_update $(PIP)
+	$(PIP) install -U -r requirements.txt
 ref    : $(RF)
 gz     : $(GZ)
 
@@ -14,3 +15,8 @@ Msys_install: doc ref gz
 	pacman -Suy
 Msys_update:
 	pacman -S $(shell cat apt.$(HOST) | tr '\n' ' ')
+
+$(PIP): $(PY)
+	$@ install -U pip
+$(PY):
+	python3 -m venv .
