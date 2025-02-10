@@ -1,0 +1,22 @@
+[
+    {
+        "model": "task.task",
+        "pk": 0,
+        "fields": {
+            "project": 0,
+            "index": 0,
+            "title": "_",
+            "owner": 1
+        }
+    },
+    {
+        "model": "task.task",
+        "pk": 1,
+        "fields": {
+            "project": 1,
+            "index": 6,
+            "title": "[tracker] backend и веб-админка",
+            "owner": 1
+        }
+    }
+]
