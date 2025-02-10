@@ -66,10 +66,10 @@ def hw():
         mkd(f'hw/{i}')
         for j in ['inc', 'src']:
             mkd(f'hw/{i}/{j}')
-        touch(f'hw/{i}/inc/{i}.hpp')
-        touch(f'hw/{i}/src/{i}.cpp')
+        cp(f'hw/{i}/inc/{i}.hpp')
+        cp(f'hw/{i}/src/{i}.cpp')
         for k in ['cmake', 'ocd', 'gdb']:
-            touch(f'hw/{i}/{i}.{k}')
+            cp(f'hw/{i}/{i}.{k}')
         mk = f'hw/{i}/{i}.mk'
         with open(mk, 'w') as m:
             print(f'CPU = {HW[i]}', file=m)
@@ -77,6 +77,7 @@ def hw():
     mkd('hw/inc')
     mkd('hw/src')
     cp('hw/inc/hw.hpp')
+    cp('hw/src/hw.cpp')
 
 
 def cpu():
@@ -86,8 +87,8 @@ def cpu():
         mkd(f'cpu/{i}')
         for j in ['inc', 'src']:
             mkd(f'cpu/{i}/{j}')
-        touch(f'cpu/{i}/inc/{i}.hpp')
-        touch(f'cpu/{i}/src/{i}.cpp')
+        cp(f'cpu/{i}/inc/{i}.hpp')
+        cp(f'cpu/{i}/src/{i}.cpp')
         cp(f'cpu/{i}/{i}.cmake')
         mk = f'cpu/{i}/{i}.mk'
         with open(mk, 'w') as m:
