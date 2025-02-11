@@ -7,8 +7,10 @@
         "IBM.output-colorizer",
         // Linux
         "ms-vscode-remote.remote-ssh",
-        "ms-azuretools.vscode-docker",
         "coolbear.systemd-unit-file",
+        // "ms-azuretools.vscode-docker",
+        // "github.vscode-github-actions",
+        // "redhat.vscode-yaml",
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",
@@ -41,9 +43,9 @@
         // "rust-lang.rust-analyzer",
         // "tamasfe.even-better-toml",
         // F#
-        "ionide.ionide-fsharp",
-        "tintoy.msbuild-project-tools",
+        // "ionide.ionide-fsharp",
+        // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
-        "mnxn.fsharp-fsl-fsy",
+        // "mnxn.fsharp-fsl-fsy",
     ]
 }
