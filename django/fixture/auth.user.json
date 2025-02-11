@@ -1,0 +1,22 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$Q5FxbSgwj42Z2yY5r5ShKL$pmDTNdYKUUDf4e5ZWeWZpXDhgpwUCQV8ZU3X5fb50zk=",
+            "last_login": "2025-02-10T15:49:27Z",
+            "is_superuser": true,
+            "username": "dponyatov",
+            "first_name": "Dmitry",
+            "last_name": "Ponyatov",
+            "email": "dponyatov@t.me",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-02-10T15:49:08Z",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    }
+]

@@ -35,3 +35,6 @@ F += $(wildcard meta/*.f*)
 
 # Python
 P += $(wildcard meta/*.py)
+P += $(wildcard django/*.py)
+P += $(wildcard django/tracker/settings.py)
+P += $(wildcard django/task/*.py)

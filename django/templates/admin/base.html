@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="icon" href={% static "logo.png" %} type="image/png">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    site
+    <img src={% static "logo.png" %}/>
+</h1>
+{% endblock %}
+
+{% block nav-global %}xxxx{% endblock %}

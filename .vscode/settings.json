@@ -21,6 +21,9 @@
     // files
     "files.exclude": {
         "doc/html/**": true,
+        "bin/py*": true, "bin/pip*": true,
+        "bin/?ctivate*": true, "bin/autopep*": true,
+        "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
         "ref/**": true,
@@ -93,7 +96,7 @@
     "cmake.allowCommentsInPresetsFile" : true,
 
     // Python
-    // "autopep8.path": ["${workspaceFolder}/bin/autopep8", "autopep8"],
+    "autopep8.path": ["${workspaceFolder}/bin/autopep8"],
     "autopep8.args": ["--ignore E26,E302,E305,E401,E402,E701,E702"],
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8",
