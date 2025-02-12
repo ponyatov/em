@@ -492,11 +492,40 @@ PACKS = [git,
          vscode, apt, format, lib, app, doc]
 
 
+def service():
+    USER = GROUP = 'dponyatov'
+    with open(f'{MODULE}.service', 'w') as f:
+        print(f'''
+# sudo ln -fs ~/{MODULE}/{MODULE}.service /etc/systemd/system/{MODULE}@{USER}.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable  tracker@dponyatov
+# sudo systemctl disable tracker@dponyatov
+# sudo systemctl restart tracker@dponyatov
+# systemctl status tracker@dponyatov
+
+[Unit]
+Description={MODULE}: {ABOUT}
+After=network.target
+
+[Service]
+User=%i
+Group=%i
+SyslogIdentifier={MODULE}
+WorkingDirectory=/home/%i/{MODULE}/django
+StandardOutput=file:/home/%i/{MODULE}/tmp/{MODULE}.out
+StandardError=file:/home/%i/{MODULE}/tmp/{MODULE}.err
+ExecStart=/home/%i/{MODULE}/bin/python3 ./manage.py runserver
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target''', file=f)
+
+
 def gen(packs=PACKS):
     for i in packs:
         i()
 
 
-gen()
+# gen()
 # gen(PACKS[1:])
-# gen([apt])
+gen([service])
