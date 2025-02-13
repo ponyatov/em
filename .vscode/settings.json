@@ -7,11 +7,11 @@
         { "command": "multiCommand.f12",
             "sequence": [ "workbench.action.files.saveAll",
                 { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make docker \u000D"}}]},
+                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} cpp \u000D"}}]},
         { "command": "multiCommand.altx",
             "sequence": [ "workbench.action.files.saveAll",
                 { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make run \u000D"}}]},
+                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} run \u000D"}}]},
         { "command": "multiCommand.alts",
             "sequence": [ "workbench.action.files.saveAll",
                 { "command": "workbench.action.terminal.sendSequence",
@@ -103,9 +103,7 @@
         "editor.defaultFormatter": "ms-python.autopep8",
         "editor.formatOnSave": false
     },
-    "python.analysis.extraPaths": [
-        "./scripts"
-    ],
+    "python.analysis.extraPaths": ["./scripts"],
 
     // Rust
     "rust-analyzer.check.allTargets":  false,
@@ -114,7 +112,7 @@
     // F#
     "[fsharp]": {
         "editor.defaultFormatter": "Ionide.Ionide-fsharp",
-        "editor.formatOnSave":     true
+        "editor.formatOnSave"    :  true
         // "diffEditor.ignoreTrimWhitespace": false
     },
 
