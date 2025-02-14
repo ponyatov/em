@@ -9,7 +9,7 @@ MK += $(wildcard   os/*.mk)
 # cmake files
 CM += CMake* cmake/*.cmake
 
-# project
+# C/C++
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
 
@@ -38,3 +38,6 @@ P += $(wildcard meta/*.py)
 P += $(wildcard django/*.py)
 P += $(wildcard django/tracker/settings.py)
 P += $(wildcard django/task/*.py)
+
+# Rust
+R += $(wildcard src/*.rs)

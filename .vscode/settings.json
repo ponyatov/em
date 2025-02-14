@@ -106,8 +106,17 @@
     "python.analysis.extraPaths": ["./scripts"],
 
     // Rust
-    "rust-analyzer.check.allTargets":  false,
-    "rust-analyzer.cargo.target"    : "thumbv7em-none-eabihf",
+    "rust-analyzer.check.allTargets": false,
+    "rust-analyzer.checkOnSave"     : false,
+    // "rust-analyzer.cargo.target"    : "thumbv6m-none-eabi",
+    // "rust-analyzer.cargo.target"    : "thumbv7m-none-eabi",
+    // "rust-analyzer.cargo.target"    : "thumbv7em-none-eabihf",
+    // "rust-analyzer.cargo.target"    : "wasm32-unknown-unknown",
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave"    :  true
+        // "diffEditor.ignoreTrimWhitespace": false
+    },
 
     // F#
     "[fsharp]": {
