@@ -17,11 +17,12 @@ _Min_Stack_Size = 0x400;          /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH  (r x)    : ORIGIN = 0x8000000 , LENGTH = 1024K
-RAM    (rwx)    : ORIGIN = 0x20000000, LENGTH = 320K
-SRAM1  (rwx)    : ORIGIN = 0x20000000, LENGTH = 256K
-SRAM2  (rwx)    : ORIGIN = 0x20040000, LENGTH = 64K
-CCMRAM (rwx)    : ORIGIN = 0x10000000, LENGTH = 64K
+FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
+RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 320K
+SRAM1  (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
+SRAM2  (rwx) : ORIGIN = 0x20040000, LENGTH = 64K
+CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH = 64K
+EXTRAM (rwx) : ORIGIN = 0x60000000, LENGTH = 0K  /* bank 1 */
 }
 
 /* Define output sections */
@@ -160,6 +161,20 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >RAM
+
+  /* EXTRAM (bank1) section, code must be located here explicitly          */
+  /* Example: extern int foo(void) __attribute__ ((section (".extext"))); */
+  .extram :
+  {
+    *(.extext)          /* .extext   sections (code)  */
+    *(.extext*)         /* .extext*  sections (code)  */
+    *(.exrodata)        /* read-only data (constants) */
+    *(.exrodata*)
+    *(.extdata)         /* .extdata  sections (r/w)   */
+    *(.extdata*)        /* .extdata* sections (r/w)   */
+    *(.extbss)          /* .extbss   arrays   (r/w)   */
+    *(.extbss*)         /* .extbss*  arrays   (r/w)   */
+  } >EXTRAM AT> FLASH
 
   /* Remove information from the standard libraries */
   /DISCARD/ :
