@@ -24,13 +24,14 @@
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
                 {"text": "load"},
-                {"text": "set substitute-path /home/pere/src/newlib-salsa ${workspaceFolder}/ref/newlib-salsa"},
-                {"text": "b Reset_Handler"},
+                {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
+                // {"text": "b Reset_Handler"},
                 // {"text": "b SystemInit"},
-                // {"text": "b __libc_init_array"},
+                {"text": "b startup_bp"},
+                {"text": "b __libc_init_array"},
                 {"text": "b main"},
                 // {"text": "b MX_GPIO_Init"},
-                // {"text": "b sbrk"}, {"text": "b _sbrk"},
+                {"text": "b sbrk"}, {"text": "b _sbrk"},
                 // {"text": "b jsvObjectSetChild"},
                 {"text": "monitor reset halt"}, // req
             ],

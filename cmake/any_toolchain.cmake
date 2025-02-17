@@ -24,6 +24,7 @@ string(TOUPPER ${HW}   HW_  )
 string(TOUPPER ${CPU}  CPU_ )
 string(TOUPPER ${ARCH} ARCH_)
 string(TOUPPER ${OS}   OS_  )
+string(TOUPPER ${APP}  APP_ )
 
 add_compile_options(
     "-D${HW_}" "-D${CPU_}" "-D${ARCH_}" "-D${OS_}"
@@ -33,7 +34,7 @@ add_compile_options(
 )
 
 add_compile_definitions(
-    APP="${APP}"
+    ${HW_} ${CPU_} ${ARCH_} ${OS_} ${APP_}
     HAVE_INITFINI_ARRAY HAVE_INIT_FINI
 )
 
