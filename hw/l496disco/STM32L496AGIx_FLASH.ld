@@ -17,9 +17,17 @@ _Min_Stack_Size = 0x400;          /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH  (r x)    : ORIGIN = 0x8000000 , LENGTH = 1024K
-RAM    (rwx)    : ORIGIN = 0x20000000, LENGTH = 256K
-CCMRAM (rwx)    : ORIGIN = 0x10000000, LENGTH = 64K
+FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
+RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 320K
+SRAM1  (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
+SRAM2  (rwx) : ORIGIN = 0x20040000, LENGTH = 64K        /* CCM mapped??? */
+CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH = 64K
+FMC1   (rwx) : ORIGIN = 0x60000000, LENGTH = 0K         /* bank 1  */
+XRAM   (rwx) : ORIGIN = 0xD0000000, LENGTH = 0x00200000 /* fmc.h   ??? */
+FMC3   (rwx) : ORIGIN = 0x80000000, LENGTH = 0K         /* bank 3  */
+QSPI   (rwx) : ORIGIN = 0x90000000, LENGTH = 0K         /* QUADSPI */
+FMCrg  (rw ) : ORIGIN = 0xA0000000, LENGTH = 0x1000     /* FMC registers  */
+QSPIrg (rw ) : ORIGIN = 0xA0001000, LENGTH = 0x1400     /* QSPI registers */
 }
 
 /* Define output sections */
@@ -102,6 +110,18 @@ SECTIONS
 	. = ALIGN(8);
   } >FLASH
 
+  /* hold FMC configuration in static segment, memcpy from startup_ */
+  _sifmcrg = LOADADDR(.fmcrg);
+  .fmcrg : {
+    . = ALIGN(8);
+    _sfmcrg = .;
+    *(.fmcrg)
+    *(.fmcrg*)
+    KEEP (*(.fmcrg*))
+    . = ALIGN(8);
+    _efmcrg = .;
+  } >FMCrg AT>FLASH
+
   /* used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
@@ -115,7 +135,7 @@ SECTIONS
 
     . = ALIGN(8);
     _edata = .;        /* define a global symbol at data end */
-  } >RAM AT> FLASH
+  } >RAM AT>FLASH
 
   /* used by the startup to initialize CCMRAM */
   _siccm = LOADADDR(.ccm);
@@ -130,7 +150,7 @@ SECTIONS
 
     . = ALIGN(8);
     _eccm = .;        /* define a global symbol at ccm end */
-  } >CCMRAM AT> FLASH
+  } >CCMRAM AT>FLASH
 
 /* Uninitialized data section */
   . = ALIGN(4);
@@ -158,6 +178,22 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >RAM
+
+  /* EXTRAM (bank1) section, code must be located here explicitly        */
+  /* Example: extern int foo(void) __attribute__ ((section (".xtext"))); */
+  _sixram = LOADADDR(.xram);
+  .xram :
+  {
+    . = ALIGN(8);
+    _sxram = .;
+    *(.xtext)
+    *(.xtext*)
+    . = ALIGN(8);
+    *(.xram)
+    *(.xram*)
+    . = ALIGN(8);
+    _exram = .;
+  } >XRAM AT>FLASH
 
   /* Remove information from the standard libraries */
   /DISCARD/ :

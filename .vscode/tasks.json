@@ -28,10 +28,20 @@
         {
             "label"          : "debug: openocd",
             "type"           : "shell",
-            "group"          : {"kind": "build","isDefault": true},
+            "group"          : {"kind": "build", "isDefault": true},
             "dependsOn"      : "CMake: build",
-            "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.openocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
+            "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             "problemMatcher" : []
+        },
+        {
+            "type": "cmake",
+            "label": "cmake: build",
+            "command": "build",
+            "targets": ["all"],
+            "preset": "${command:cmake.activeBuildPresetName}",
+            "group": "build",
+            "problemMatcher": [],
+            "promptOnClose": false
         }
     ]
 }

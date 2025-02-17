@@ -1,6 +1,6 @@
---- STM32L496AGIx_FLASH.ld	2025-02-06 11:31:43.093477680 +0400
-+++ STM32L496AGIx_FLASH.ld.fix	2025-02-06 11:28:36.745472549 +0400
-@@ -1,69 +1,25 @@
+--- STM32L496AGIx_FLASH.ld	2025-02-17 11:24:35.178931208 +0400
++++ STM32L496AGIx_FLASH.ld.fix	2025-02-17 10:40:58.834924373 +0400
+@@ -1,69 +1,33 @@
  /*
  ******************************************************************************
 -**
@@ -71,13 +71,21 @@
 -RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 256K
 -RAM2 (xrw)      : ORIGIN = 0x10000000, LENGTH = 64K
 -FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 1024K
-+FLASH  (r x)    : ORIGIN = 0x8000000 , LENGTH = 1024K
-+RAM    (rwx)    : ORIGIN = 0x20000000, LENGTH = 256K
-+CCMRAM (rwx)    : ORIGIN = 0x10000000, LENGTH = 64K
++FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
++RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 320K
++SRAM1  (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
++SRAM2  (rwx) : ORIGIN = 0x20040000, LENGTH = 64K        /* CCM mapped??? */
++CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH = 64K
++FMC1   (rwx) : ORIGIN = 0x60000000, LENGTH = 0K         /* bank 1  */
++XRAM   (rwx) : ORIGIN = 0xD0000000, LENGTH = 0x00200000 /* fmc.h   ??? */
++FMC3   (rwx) : ORIGIN = 0x80000000, LENGTH = 0K         /* bank 3  */
++QSPI   (rwx) : ORIGIN = 0x90000000, LENGTH = 0K         /* QUADSPI */
++FMCrg  (rw ) : ORIGIN = 0xA0000000, LENGTH = 0x1000     /* FMC registers  */
++QSPIrg (rw ) : ORIGIN = 0xA0001000, LENGTH = 0x1400     /* QSPI registers */
  }
  
  /* Define output sections */
-@@ -103,8 +59,8 @@
+@@ -103,8 +67,8 @@
      . = ALIGN(8);
    } >FLASH
  
@@ -88,7 +96,7 @@
    . = ALIGN(8);
    *(.ARM.extab* .gnu.linkonce.armextab.*)
    . = ALIGN(8);
-@@ -125,7 +81,7 @@
+@@ -125,7 +89,7 @@
      PROVIDE_HIDDEN (__preinit_array_end = .);
  	. = ALIGN(8);
    } >FLASH
@@ -97,7 +105,7 @@
    .init_array :
    {
  	. = ALIGN(8);
-@@ -135,6 +91,7 @@
+@@ -135,6 +99,7 @@
      PROVIDE_HIDDEN (__init_array_end = .);
  	. = ALIGN(8);
    } >FLASH
@@ -105,7 +113,23 @@
    .fini_array :
    {
  	. = ALIGN(8);
-@@ -149,19 +106,33 @@
+@@ -145,23 +110,49 @@
+ 	. = ALIGN(8);
+   } >FLASH
+ 
++  /* hold FMC configuration in static segment, memcpy from startup_ */
++  _sifmcrg = LOADADDR(.fmcrg);
++  .fmcrg : {
++    . = ALIGN(8);
++    _sfmcrg = .;
++    *(.fmcrg)
++    *(.fmcrg*)
++    KEEP (*(.fmcrg*))
++    . = ALIGN(8);
++    _efmcrg = .;
++  } >FMCrg AT>FLASH
++
+   /* used by the startup to initialize data */
    _sidata = LOADADDR(.data);
  
    /* Initialized data sections goes into RAM, load LMA copy after code */
@@ -121,13 +145,11 @@
      . = ALIGN(8);
      _edata = .;        /* define a global symbol at data end */
 -  } > AT> FLASH
-+  } >RAM AT> FLASH
++  } >RAM AT>FLASH
 +
 +  /* used by the startup to initialize CCMRAM */
 +  _siccm = LOADADDR(.ccm);
- 
--  
--  /* Uninitialized data section */
++
 +  /* Initialized data goes into CCMRAM, load LMA copy after code */
 +  .ccm :
 +  {
@@ -138,13 +160,15 @@
 +
 +    . = ALIGN(8);
 +    _eccm = .;        /* define a global symbol at ccm end */
-+  } >CCMRAM AT> FLASH
-+
++  } >CCMRAM AT>FLASH
+ 
+-  
+-  /* Uninitialized data section */
 +/* Uninitialized data section */
    . = ALIGN(4);
    .bss :
    {
-@@ -175,7 +146,7 @@
+@@ -175,7 +166,7 @@
      . = ALIGN(4);
      _ebss = .;         /* define a global symbol at bss end */
      __bss_end__ = _ebss;
@@ -153,14 +177,29 @@
  
    /* User_heap_stack section, used to check that there is enough RAM left */
    ._user_heap_stack :
-@@ -186,18 +157,13 @@
+@@ -186,18 +177,29 @@
      . = . + _Min_Heap_Size;
      . = . + _Min_Stack_Size;
      . = ALIGN(8);
 -  } >
--
--  
 +  } >RAM
+ 
+-  
++  /* EXTRAM (bank1) section, code must be located here explicitly        */
++  /* Example: extern int foo(void) __attribute__ ((section (".xtext"))); */
++  _sixram = LOADADDR(.xram);
++  .xram :
++  {
++    . = ALIGN(8);
++    _sxram = .;
++    *(.xtext)
++    *(.xtext*)
++    . = ALIGN(8);
++    *(.xram)
++    *(.xram*)
++    . = ALIGN(8);
++    _exram = .;
++  } >XRAM AT>FLASH
  
    /* Remove information from the standard libraries */
    /DISCARD/ :

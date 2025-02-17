@@ -61,11 +61,11 @@
     "clang-format.style":          "file",
 
     // JavaScript
-    "prettier.configPath"         :   "${workspaceFolder}/.prettierrc",
-    "prettier.requireConfig"      : true,
+    "prettier.configPath"         : "${workspaceFolder}/.prettierrc",
+    "prettier.requireConfig"      :  true,
     "[javascript]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave"     :     false
+        "editor.formatOnSave"     :  false
     },
     "[json,jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -101,7 +101,7 @@
     "autopep8.args": ["--ignore E26,E302,E305,E401,E402,E701,E702"],
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8",
-        "editor.formatOnSave": false
+        "editor.formatOnSave"    :  false
     },
     "python.analysis.extraPaths": ["./scripts"],
 

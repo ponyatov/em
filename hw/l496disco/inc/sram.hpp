@@ -1,19 +1,17 @@
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// @defgroup sram sram
 /// @brief BSP: external memory (PSRAM)
 /// @ingroup l496disco
 /// @{
 
-#include <stdint.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /// @name status
 /// @{
-#define SRAM_OK 0x00
+#define SRAM_OK    0x00
 #define SRAM_ERROR 0x01
 /// @}
 
