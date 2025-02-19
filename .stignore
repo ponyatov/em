@@ -1,9 +1,9 @@
 **/.git
-bin/**
-tmp/**
-ref/**
+/bin
+/tmp
+/ref
 /rc
 *.dump
 *.log
-lib/python*/**
-lib64
+/lib/python*/**
+/lib64
