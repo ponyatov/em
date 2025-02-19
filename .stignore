@@ -4,34 +4,39 @@
 /tmp
 /ref
 /rc
-*.dump
-*.log
-
-/node_modules
-
-/target
-!/.cargo
-!/Cargo.toml
-
-/lib/python*/**
-/lib64
-
 !/lib
 !/inc
 !/src
 !*.mk
 !*.cmake
 !Makefile
+*.dump
+*.log
 
+# js
+/node_modules
+
+# python
+/lib/python*/**
+/lib64
+
+# rust
+/target
+!/.cargo
+!/Cargo.toml
+
+# cross
+!/cpu
+!/arch
+!/os
 !/hw/inc
 !/hw/src
-!*.s
-!*.ld
-!*.fix
-!*.patch
+!startup_*.s*
+!STM32*.ld*
 !*.ocd
 !*.gdb
-/hw
+!hw/l496disco/Core/Src
+!hw/f4disco/Core/Src
 
 !/cpu
 !/arch
