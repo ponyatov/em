@@ -4,7 +4,8 @@
 # HW ?= pillF103
 # HW ?= f4disco
 # HW ?= iskra
-HW ?= l496disco
+# HW ?= l496disco
+HW ?= pi800
 
 ELF     = $(BIN)/$(BINFILE).elf
 DFU     = $(BIN)/$(BINFILE).dfu

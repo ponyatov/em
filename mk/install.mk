@@ -11,7 +11,7 @@ Debian_install: Debian_update doc ref gz
 # sudo dpkg --add-architecture i386
 Debian_update:
 	sudo apt update
-	sudo apt install -uy `cat apt.$(HOST)`
+	sudo apt install -uy `cat apt.$(HOST)` $(APT)
 
 Msys_install: doc ref gz
 	pacman -Suy

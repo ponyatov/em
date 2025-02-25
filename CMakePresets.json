@@ -153,8 +153,8 @@
             "displayName"  : "x86_64-linux-musl",
             "description"  : "busybox:musl/docker",
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-musl.cmake"
-       },
-       {
+        },
+        {
             "name"         : "glibc",
             "inherits"     : "linux",
             "displayName"  : "x86_64-linux-gnu",
