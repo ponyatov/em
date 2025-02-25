@@ -34,7 +34,7 @@
         "*.ini": "flang", "*.f": "flang",
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
-        "*.ioc": "properties",
+        "*.ioc": "properties", "*.config": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         //
         ".boot*": "javascript", ".prettierrc": "jsonc",
