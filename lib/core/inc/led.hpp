@@ -2,13 +2,9 @@
 /// @ingroup io
 /// @brief LED control
 
-#include "object.hpp"
-#include "pin.hpp"
-#include "color.hpp"
+#include "core.hpp"
 
 class LED : public Object {
     Pin pin;
     Color color;
-
-   public:
 };

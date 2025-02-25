@@ -1,7 +1,7 @@
 include mk/var.mk
 include mk/version.mk
-include mk/cross.mk
 include mk/dirs.mk
+include mk/cross.mk
 include mk/tool.mk
 include mk/pkg.mk
 include mk/src.mk
@@ -12,8 +12,8 @@ include mk/clean.mk
 include mk/format.mk
 include mk/rule.mk
 include mk/doc.mk
-include mk/libc.mk
+# include mk/libc.mk
 include mk/install.mk
 include mk/merge.mk
 include mk/docker.mk
-include mk/dotnet.mk
+# include mk/dotnet.mk

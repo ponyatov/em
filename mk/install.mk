@@ -3,7 +3,7 @@ install: $(HOST)_install $(RUSTUP)
 	$(RUSTUP) component add rustfmt
 	$(RUSTUP) target add $(RTARGET)
 update : $(HOST)_update  $(RUSTUP) $(PIP)
-# $(PIP) install -U -r requirements.txt
+	$(PIP) install -U -r requirements.txt
 ref    : $(RF)
 gz     : $(GZ)
 

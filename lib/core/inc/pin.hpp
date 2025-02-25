@@ -1,5 +1,5 @@
 /// @defgroup pin pin
 /// @ingroup io
-/// @brieg @ref gpio pin
+/// @brief GPIO pin
 
 class Pin : public IO {};

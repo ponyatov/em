@@ -9,6 +9,7 @@
 
 extern LED LD2;  ///< `PB13` green / active high
 extern LED LD3;  ///< `PA5`  green / active low
+#define LED1 LD2
 
 extern void blink();  ///< toggle @ref LD2
 

@@ -20,10 +20,9 @@ MEMORY
 FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
 RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 320K
 SRAM1  (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
-SRAM2  (rwx) : ORIGIN = 0x20040000, LENGTH = 64K        /* CCM mapped??? */
+SRAM2  (rwx) : ORIGIN = ORIGIN(SRAM1) + LENGTH(SRAM1), LENGTH = 64K /* CCM mapped */
 CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH = 64K
-FMC1   (rwx) : ORIGIN = 0x60000000, LENGTH = 0K         /* bank 1  */
-XRAM   (rwx) : ORIGIN = 0xD0000000, LENGTH = 0x00200000 /* fmc.h   ??? */
+XRAM   (rwx) : ORIGIN = 0x60000000, LENGTH = 64M        /* bank 2 rw SDRAM  */
 FMC3   (rwx) : ORIGIN = 0x80000000, LENGTH = 0K         /* bank 3  */
 QSPI   (rwx) : ORIGIN = 0x90000000, LENGTH = 0K         /* QUADSPI */
 FMCrg  (rw ) : ORIGIN = 0xA0000000, LENGTH = 0x1000     /* FMC registers  */
