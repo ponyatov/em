@@ -38,8 +38,4 @@
 !hw/l496disco/Core/Src
 !hw/f4disco/Core/Src
 
-!/cpu
-!/arch
-!/os
-
 *

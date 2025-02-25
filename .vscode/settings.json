@@ -20,6 +20,7 @@
 
     // files
     "files.exclude": {
+        ".stfolder": true,
         "doc/html/**": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true,

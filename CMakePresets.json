@@ -49,7 +49,7 @@
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
                 "CMAKE_COLOR_DIAGNOSTICS" : false,
                 "CMAKE_BUILD_TYPE"        : "Debug",
-                "CMAKE_VERBOSE_MAKEFILE"  : true
+                "CMAKE_VERBOSE_MAKEFILE"  : false
             }
         },
         {
