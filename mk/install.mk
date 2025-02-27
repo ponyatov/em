@@ -1,7 +1,9 @@
 .PHONY : install update ref gz
 install: $(HOST)_install $(RUSTUP)
 	$(RUSTUP) component add rustfmt
-	$(RUSTUP) target add $(RTARGET)
+	$(RUSTUP) target    add $(RTARGET)
+	$(CARGO)  install   cargo-binutils
+	$(RUSTUP) component add llvm-tools
 update : $(HOST)_update  $(RUSTUP) $(PIP)
 	$(PIP) install -U -r requirements.txt
 ref    : $(RF)
