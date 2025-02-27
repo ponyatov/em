@@ -2,6 +2,6 @@
 /// @ingroup core
 /// @brief I/O
 
-#include "object.hpp"
+#include "core.hpp"
 
 class IO : public Object {};

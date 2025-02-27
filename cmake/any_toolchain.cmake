@@ -43,7 +43,7 @@ add_link_options(
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    add_compile_options(-Og -g3)
+    add_compile_options(-O0 -g3)
 endif()
 if(CMAKE_BUILD_TYPE MATCHES Release)
     add_compile_options(-Os -g0)

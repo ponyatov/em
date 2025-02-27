@@ -3,8 +3,8 @@
 
 Object::Object() {
     ref = 0;
-    next = pool;
-    pool = this;
+    next = pool;  // \ register object in global pool
+    pool = this;  // /
 }
 
 Object *Object::pool = nullptr;

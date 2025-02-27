@@ -3,4 +3,5 @@
 *.log
 /target/
 !.gitignore
+/target/
 .stfolder/

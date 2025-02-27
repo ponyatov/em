@@ -1,4 +1,17 @@
 [package]
-name    = "em"
+name    = "flang"
 version = "0.0.1"
 edition = "2021"
+
+[workspace]
+members = ["fortex"]
+
+[[bin]]
+path = "src/main.rs"
+name = "F"
+
+# [lib]
+# path = "src/vm.rs"
+# crate-type = ["cdylib"]
+# name = "vm"
+# # bench = false

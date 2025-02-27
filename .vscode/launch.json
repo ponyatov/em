@@ -38,17 +38,17 @@
             // "debugServerPath": "openocd",
             // "debugServerArgs": "-f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.openocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             // "serverStarted": "connections",
-            "stopAtEntry": false,
+            "stopAtEntry": false, // don't enable!
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
-                // {"text": "b Reset_Handler"},
+                {"text": "b Reset_Handler"},
                 // {"text": "b SystemInit"},
                 {"text": "b __libc_init_array"},
                 {"text": "b main"},
                 // {"text": "b MX_GPIO_Init"},
-                {"text": "b sbrk"}, {"text": "b _sbrk"},
+                // {"text": "b sbrk"}, {"text": "b _sbrk"},
                 // {"text": "b jsvObjectSetChild"},
                 {"text": "monitor reset halt"}, // req
             ],

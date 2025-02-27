@@ -1,2 +1,2 @@
-TARGET  = $(ARCH)-$(OS)-gnu
+ TARGET = $(ARCH)-$(OS)-gnu
 RTARGET = $(ARCH)-unknown-$(OS)-gnu
