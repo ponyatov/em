@@ -8,8 +8,6 @@ add_compile_options(
 )
 
 add_compile_definitions(
-    INSTRUCTION_CACHE_ENABLE=1
-    DATA_CACHE_ENABLE=1
 )
 
 add_link_options(
