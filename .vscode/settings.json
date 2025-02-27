@@ -27,6 +27,7 @@
     },
     "files.watcherExclude": {
         "ref/**": true,
+        "target/**": true,
     },
     "files.associations": {
         "*.mk": "makefile", "mk": "makefile", "cmake": "cmake",

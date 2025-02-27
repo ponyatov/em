@@ -40,12 +40,17 @@
         "ms-python.autopep8",
         // "batisteo.vscode-django",
         // Rust
-        // "rust-lang.rust-analyzer",
-        // "tamasfe.even-better-toml",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "vadimcn.vscode-lldb",
+        "probe-rs.probe-rs-debugger",
         // F#
         // "ionide.ionide-fsharp",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
         // "mnxn.fsharp-fsl-fsy",
+        // LLVM
+        "rreverser.llvm",
+        "revng.llvm-ir",
     ]
 }

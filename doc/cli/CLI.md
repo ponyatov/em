@@ -1,5 +1,8 @@
-# CLI
-## Command Line Interface (REPL) {#cli}
+#  CLI/REPL
+## Command Line Interface {#cli}
 
-- @ref FORTH language inspired
-- minimized memory for MCU-based devices
+- FORTH language inspired
+    - https://www.forth.com/starting-forth/
+    - https://thinking-forth.sourceforge.net/
+- postfix syntax
+- minimized memory

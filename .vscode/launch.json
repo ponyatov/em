@@ -2,6 +2,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "lldb",
+            "request": "launch",
+            "name": "rust",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=${workspaceFolderBasename}",
+                    "--package=${workspaceFolderBasename}"
+                ],
+                "filter": {
+                    "name": "${workspaceFolderBasename}",
+                    "kind": "bin"
+                }
+            },
+            "args": ["1024", "578"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "name": "cortexM",
             "type": "cppdbg",
             "request": "launch",
@@ -20,14 +38,13 @@
             // "debugServerPath": "openocd",
             // "debugServerArgs": "-f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.openocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             // "serverStarted": "connections",
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
                 // {"text": "b Reset_Handler"},
                 // {"text": "b SystemInit"},
-                {"text": "b startup_bp"},
                 {"text": "b __libc_init_array"},
                 {"text": "b main"},
                 // {"text": "b MX_GPIO_Init"},

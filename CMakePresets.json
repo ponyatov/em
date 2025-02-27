@@ -49,7 +49,7 @@
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
                 "CMAKE_COLOR_DIAGNOSTICS" : false,
                 "CMAKE_BUILD_TYPE"        : "Debug",
-                "CMAKE_VERBOSE_MAKEFILE"  : true
+                "CMAKE_VERBOSE_MAKEFILE"  : false
             }
         },
         {
@@ -153,8 +153,8 @@
             "displayName"  : "x86_64-linux-musl",
             "description"  : "busybox:musl/docker",
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-musl.cmake"
-       },
-       {
+        },
+        {
             "name"         : "glibc",
             "inherits"     : "linux",
             "displayName"  : "x86_64-linux-gnu",
