@@ -35,6 +35,7 @@
         "*.ini": "flang", "*.f": "flang",
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
+        "memory.x": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         //
@@ -111,7 +112,7 @@
     "rust-analyzer.check.allTargets": false,
     "rust-analyzer.checkOnSave"     : false,
     // "rust-analyzer.cargo.target"    : "thumbv6m-none-eabi",
-    // "rust-analyzer.cargo.target"    : "thumbv7m-none-eabi",
+    "rust-analyzer.cargo.target"    : "thumbv7m-none-eabi",
     // "rust-analyzer.cargo.target"    : "thumbv7em-none-eabihf",
     // "rust-analyzer.cargo.target"    : "wasm32-unknown-unknown",
     // "rust-analyzer.cargo.target"    : "aarch64-unknown-linux-gnu",
