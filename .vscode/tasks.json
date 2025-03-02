@@ -34,23 +34,24 @@
             "problemMatcher" : []
         },
         {
-            "type": "cmake",
-            "label": "cmake: build",
-            "command": "build",
-            "targets": ["all"],
-            "preset": "${command:cmake.activeBuildPresetName}",
-            "group": "build",
-            "problemMatcher": [],
-            "promptOnClose": false
+            "type"           : "cmake",
+            "label"          : "cmake: build",
+            "command"        : "build",
+            "targets"        : ["all"],
+            "preset"         : "${command:cmake.activeBuildPresetName}",
+            "group"          : "build",
+            "problemMatcher" : [],
+            "promptOnClose"  : false
         },
         {
-            "label"         :  "cargo: fortex",
-            "type"          :  "shell",
-            "command"       :  "cargo",
-            "args"          : ["build", "--target", "thumbv7m-none-eabi"],
-            "options"       : {"cwd": "${workspaceFolder}/fortex"},
-            "problemMatcher": ["$rustc"],
-            "group"         : {"kind": "build", "isDefault": true}
+            "label"          :  "cargo: fortex",
+            "type"           :  "shell",
+            "command"        :  "cargo",
+            "args"           : ["build", "--target", "thumbv7m-none-eabi"],
+            "options"        : {"cwd": "${workspaceFolder}/fortex"},
+            "problemMatcher" : ["$rustc"],
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
+            "group"          : {"kind": "build", "isDefault": true}
         }
     ]
 }

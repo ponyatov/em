@@ -20,6 +20,27 @@
             "cwd": "${workspaceFolder}"
         },
         {
+            "name"      : "lm3s6",
+            "type"      : "cortex-debug",
+            "request"   : "launch",
+            "executable": "target/thumbv7m-none-eabi/debug/fortex",
+            "cwd"       : "${workspaceFolder}/fortex",
+            "servertype"        : "qemu",
+            "cpu"               : "cortex-m3",
+            "machine"           : "lm3s6965evb",
+            // "gdbTarget": ":12345",
+            "preLaunchTask"     : "cargo: fortex",
+            // "runToEntryPoint"   : "DefaultPreInit",
+            "runToEntryPoint"   : "main",
+            "preRestartCommands": [
+                "load",
+                // "break DefaultPreInit",
+                "break Reset",
+                "break ResetHandler",
+                "break DefaultHandler",
+            ]
+        },
+        {
             "name": "cortexM",
             "type": "cppdbg",
             "request": "launch",
@@ -44,8 +65,9 @@
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
                 {"text": "b Reset_Handler"},
+                {"text": "b DefaultHandler"},
                 // {"text": "b SystemInit"},
-                {"text": "b __libc_init_array"},
+                // {"text": "b __libc_init_array"},
                 {"text": "b main"},
                 // {"text": "b MX_GPIO_Init"},
                 // {"text": "b sbrk"}, {"text": "b _sbrk"},
