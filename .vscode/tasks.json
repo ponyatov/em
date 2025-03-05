@@ -31,7 +31,8 @@
             "group"          : {"kind": "build", "isDefault": true},
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
-            "problemMatcher" : []
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true}
         },
         {
             "type"           : "cmake",

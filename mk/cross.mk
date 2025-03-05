@@ -7,8 +7,8 @@ HW ?= pillF103
 # HW ?= l496disco
 # HW ?= pi800
 
-ELF     = $(BIN)/$(BINFILE).elf
-DFU     = $(BIN)/$(BINFILE).dfu
+ELF = $(BIN)/$(BINFILE).elf
+DFU = $(BIN)/$(BINFILE).dfu
 
 include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk
@@ -17,7 +17,7 @@ include   os/$(OS)/$(OS).mk
 
 .PHONY: elf
 elf: $(CWD)/hw/$(HW)/$(HW).ocd $(ELF)
-# openocd -f $< -c "program $(ELF) verify reset exit"
+	openocd -f $< -c "program $(ELF) verify reset exit"
 
 .PHONY: dfu
 dfu: $(DFU)

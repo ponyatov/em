@@ -106,9 +106,9 @@
             }
         },
         {
-            "name"          : "l496disco",
-            "inherits"      : "cortexM4",
-            "cacheVariables": {
+            "name"           : "l496disco",
+            "inherits"       : "cortexM4",
+            "cacheVariables" : {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"
             }
