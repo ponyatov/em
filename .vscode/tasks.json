@@ -28,7 +28,7 @@
         {
             "label"          : "debug: openocd",
             "type"           : "shell",
-            "group"          : {"kind": "build"},
+            "group"          : {"kind": "build", "isDefault": true},
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             "problemMatcher" : []

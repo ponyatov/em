@@ -1,3 +1,3 @@
 /// @defgroup stm32f407vgt stm32f407vgt
-/// @ingroup STM32F
-/// @brief `arch:` @ref cortexM4
+/// @ingroup cortexM4
+/// @brief 'hw: ' @ref f4disco

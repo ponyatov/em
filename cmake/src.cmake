@@ -19,10 +19,10 @@ file(GLOB C
     # libs
     lib/src/*.c* lib/*/src/*.c*
     # CortexM/CubeMX
-    hw/${HW}/Core/Src/*.c*
+    hw/${HW}/Src/*.c*
+    # hw/${HW}/Core/Src/*.c*
     hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Source/*.c*
     hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Src/*.c*
-    hw/${HW}/USB_DEVICE/App/*.c* hw/${HW}/USB_DEVICE/Target/*.c*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Src/*.c*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/*.c*
 )
@@ -38,17 +38,17 @@ file(GLOB H
     # libs
     lib/inc/*.h* lib/*/inc/*.h*
     # CortexM/CubeMX
-    hw/${HW}/Core/Inc/*.h*
+    hw/${HW}/Inc/*.h*
+    # hw/${HW}/Core/Inc/*.h*
     hw/${HW}/Drivers/CMSIS/Include/*.h*
     hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include/*.h*
     hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc/*.h*
-    hw/${HW}/USB_DEVICE/App/*.h* hw/${HW}/USB_DEVICE/Target/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/*.h*
 )
 
 file(GLOB INC
-    RELATIVE ${CMAKE_SOURCE_DIR}
+    RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
     inc tmp src
     # cross
       hw/inc   hw/${HW}/inc
@@ -58,12 +58,27 @@ file(GLOB INC
     # libs
     lib/inc lib/*/inc
     # CortexM/CubeMX
-    hw/${HW}/Core/Inc
+    hw/${HW}/Inc
+    # hw/${HW}/Core/Inc
     hw/${HW}/Drivers/CMSIS/Include
     hw/${HW}/Drivers/CMSIS/Device/ST/${SERIES}xx/Include
     hw/${HW}/Drivers/${SERIES}xx_HAL_Driver/Inc
-    hw/${HW}/USB_DEVICE/App hw/${HW}/USB_DEVICE/Target
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
 )
 include_directories(${INC})
+
+file(GLOB L
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.lex lib/src/*.lex lib/*/src/*.lex
+)
+
+file(GLOB Y
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.yacc lib/src/*.yacc lib/*/src/*.yacc
+)
+
+file(GLOB R
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.ragel lib/src/*.ragel lib/*/src/*.ragel
+)

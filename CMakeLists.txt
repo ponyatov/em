@@ -24,9 +24,8 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 # target install
 set_target_properties(${CMAKE_PROJECT_NAME}
-    PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME})
+    PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
 install(TARGETS ${CMAKE_PROJECT_NAME}
     DESTINATION ${CMAKE_INSTALL_PREFIX})
 
-include(cross)
 include(clean)

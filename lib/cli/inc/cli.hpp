@@ -1,12 +1,4 @@
-#pragma once
-
-#include "types.hpp"
-
 /// @defgroup cli cli
 /// @ingroup lib
-/// @brief @ref cli
-/// @{
-
+/// @brief CLI: Command Line Interface
 #include "parser.hpp"
-
-/// @}

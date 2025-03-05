@@ -7,40 +7,42 @@ add_library(stm32cubemx INTERFACE)
 enable_language(C ASM)
 
 target_compile_definitions(stm32cubemx INTERFACE 
-	USE_FULL_LL_DRIVER 
-	HSE_VALUE=8000000 
-	HSE_STARTUP_TIMEOUT=100 
-	LSE_STARTUP_TIMEOUT=5000 
-	LSE_VALUE=32768 
-	EXTERNAL_CLOCK_VALUE=12288000 
-	HSI_VALUE=16000000 
-	LSI_VALUE=32000 
-	VDD_VALUE=3300 
-	PREFETCH_ENABLE=1 
-	INSTRUCTION_CACHE_ENABLE=1 
-	DATA_CACHE_ENABLE=1 
+	USE_HAL_DRIVER 
 	STM32F407xx
     $<$<CONFIG:Debug>:DEBUG>
 )
 
 target_include_directories(stm32cubemx INTERFACE
-    ../../Core/Inc
+    ../../Inc
     ../../Drivers/STM32F4xx_HAL_Driver/Inc
+    ../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
     ../../Drivers/CMSIS/Device/ST/STM32F4xx/Include
     ../../Drivers/CMSIS/Include
 )
 
 target_sources(stm32cubemx INTERFACE
-    ../../Core/Src/main.c
-    ../../Core/Src/gpio.c
-    ../../Core/Src/stm32f4xx_it.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c
-    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c
-    ../../Core/Src/system_stm32f4xx.c
-    ../../Core/Src/sysmem.c
-    ../../Core/Src/syscalls.c
+    ../../Src/main.c
+    ../../Src/gpio.c
+    ../../Src/stm32f4xx_it.c
+    ../../Src/stm32f4xx_hal_msp.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+    ../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+    ../../Src/system_stm32f4xx.c
+    ../../Src/sysmem.c
+    ../../Src/syscalls.c
     ../../startup_stm32f407xx.s
 )
 
