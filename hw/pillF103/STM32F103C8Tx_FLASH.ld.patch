@@ -1,13 +1,13 @@
---- STM32F103C8Tx_FLASH.ld	2025-02-01 15:55:56.936772060 +0400
-+++ STM32F103C8Tx_FLASH.ld.fix	2025-02-01 16:32:43.336707549 +0400
-@@ -1,51 +1,9 @@
+--- STM32F103C8Tx_FLASH.ld	2025-03-08 12:18:45.546470337 +0400
++++ STM32F103C8Tx_FLASH.ld.fix	2025-03-08 12:18:45.570470337 +0400
+@@ -1,51 +1,7 @@
  /*
  ******************************************************************************
 -**
 -
- **  File        : LinkerScript.ld
+-**  File        : LinkerScript.ld
 -**
- **  Author		: STM32CubeMX
+-**  Author		: STM32CubeMX
 -**
  **  Abstract    : Linker script for STM32F103C8Tx series
  **                64Kbytes FLASH and 20Kbytes RAM
@@ -52,37 +52,29 @@
  *****************************************************************************
  */
  
-@@ -53,16 +11,16 @@
+@@ -53,16 +9,16 @@
  ENTRY(Reset_Handler)
  
  /* Highest address of the user mode stack */
 -_estack = ORIGIN() + LENGTH();    /* end of RAM */
-+_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of RAM */
++_estack = ORIGIN(RAM) + LENGTH(RAM);            /* end of RAM */
  /* Generate a link error if heap and stack don't fit into RAM */
 -_Min_Heap_Size = 0x200;      /* required amount of heap  */
-+_Min_Heap_Size  = 0x200; /* required amount of heap  */
- _Min_Stack_Size = 0x400; /* required amount of stack */
+-_Min_Stack_Size = 0x400; /* required amount of stack */
++_Min_Heap_Size  = 0x200;          /* required amount of heap  */
++_Min_Stack_Size = 0x400;          /* required amount of stack */
  
  /* Specify the memory areas */
  MEMORY
  {
 -RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 20K
 -FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 64K
-+FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 64K
-+RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 20K
++  FLASH (rx)  : ORIGIN =  0x8000000, LENGTH = 64K
++  RAM   (rwx) : ORIGIN = 0x20000000, LENGTH = 20K
  }
  
  /* Define output sections */
-@@ -109,7 +67,7 @@
-     __exidx_end = .;
-   } >FLASH
- 
--  .preinit_array     :
-+  .preinit_array :
-   {
-     PROVIDE_HIDDEN (__preinit_array_start = .);
-     KEEP (*(.preinit_array*))
-@@ -143,9 +101,8 @@
+@@ -143,9 +99,8 @@
  
      . = ALIGN(4);
      _edata = .;        /* define a global symbol at data end */
@@ -93,7 +85,7 @@
    /* Uninitialized data section */
    . = ALIGN(4);
    .bss :
-@@ -160,7 +117,7 @@
+@@ -160,7 +115,7 @@
      . = ALIGN(4);
      _ebss = .;         /* define a global symbol at bss end */
      __bss_end__ = _ebss;
@@ -102,7 +94,7 @@
  
    /* User_heap_stack section, used to check that there is enough RAM left */
    ._user_heap_stack :
-@@ -171,18 +128,13 @@
+@@ -171,18 +126,13 @@
      . = . + _Min_Heap_Size;
      . = . + _Min_Stack_Size;
      . = ALIGN(8);
