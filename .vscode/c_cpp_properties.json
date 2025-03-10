@@ -26,6 +26,10 @@
                 "${appInclude}", "${crossInclude}", "${libInclude}"
             ],
             "defines": [
+                "F4DISCO"  , "STM32F407xx", "STM32F4",
+                "L496DISCO", "STM32L496xx", "STM32L4",
+                "ISKRAJS"  , "STM32F405xx", "STM32F4",
+                "__FPU_PRESENT", "__FPU_USED",
                 "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI"
             ]
         }
