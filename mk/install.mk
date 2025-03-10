@@ -18,4 +18,4 @@ Debian_update:
 Msys_install: doc ref gz
 	pacman -Suy
 Msys_update:
-	pacman -S $(shell cat apt.$(HOST) | tr '\n' ' ')
+	pacman -S $(shell cat apt.$(HOST) | tr '\n' ' ') $(MSYS)
