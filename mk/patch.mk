@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-PATCH = $(wildcard *.patch)
+PATCH = $(wildcard *.patch               )
 FILES = $(patsubst %.patch,%    ,$(PATCH))
 FIXES = $(patsubst %.patch,%.fix,$(PATCH))
 

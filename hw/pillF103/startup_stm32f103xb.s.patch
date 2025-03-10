@@ -1,5 +1,5 @@
---- startup_stm32f103xb.s	2025-02-01 15:46:55.040787904 +0400
-+++ startup_stm32f103xb.s.fix	2025-02-01 15:48:04.864785863 +0400
+--- startup_stm32f103xb.s	2025-03-08 12:00:22.818487422 +0400
++++ startup_stm32f103xb.s.fix	2025-03-08 12:00:12.362487584 +0400
 @@ -3,25 +3,6 @@
    * @file      startup_stm32f103xb.s
    * @author    MCD Application Team
