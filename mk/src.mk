@@ -30,10 +30,11 @@ H += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 # ini
 S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
-# F#
-F += $(wildcard meta/*.f*)
+# JavaScript
+J += $(wildcard src/*.js)
 
 # Python
+P += $(wildcard src/*.py)
 P += $(wildcard meta/*.py)
 P += $(wildcard django/*.py)
 P += $(wildcard django/tracker/settings.py)
@@ -41,3 +42,7 @@ P += $(wildcard django/task/*.py)
 
 # Rust
 R += $(wildcard src/*.rs)
+
+# F#
+F += $(wildcard meta/*.f*)
+

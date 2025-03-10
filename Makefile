@@ -14,6 +14,6 @@ include mk/rule.mk
 include mk/doc.mk
 # include mk/libc.mk
 include mk/install.mk
-# include mk/merge.mk
+include mk/merge.mk
 # include mk/docker.mk
 # include mk/dotnet.mk

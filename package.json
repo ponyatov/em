@@ -1,0 +1,15 @@
+{
+  "name": "jsel",
+  "version": "0.0.1",
+  "description": "JavaScript Environment / Language",
+  "main": "src/index.js",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dmitry Ponyatov <dponyatov@gmail.com>",
+  "license": "MIT"
+}
