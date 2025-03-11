@@ -30,6 +30,8 @@
         "daohong-emilio.yash",
         "rreverser.ragel",
         // embedded
+        "ms-vscode.vscode-serial-monitor",
+        "awsxxf.serialterminal",
         "ms-vscode.hexeditor",
         "zixuanwang.linkerscript",
         "dan-c-underwood.arm",

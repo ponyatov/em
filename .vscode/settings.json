@@ -27,8 +27,7 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-        "ref/**": true,
-        "target/**": true,
+        "ref/**": true, "target/**": true,
     },
     "files.associations": {
         "*.mk": "makefile", "mk": "makefile", "cmake": "cmake",
@@ -63,6 +62,9 @@
     "clang-format.fallbackStyle":  "Google",
     "clang-format.style":          "file",
 
+    // terminal
+    "SerialTerminal.serial port.configurations": ["115200n1","9600n1"],
+
     // JavaScript
     "prettier.configPath"         : "${workspaceFolder}/.prettierrc",
     "prettier.requireConfig"      :  true,
@@ -96,7 +98,8 @@
     "cmake.buildBeforeRun"  : true,
     "cmake.saveBeforeBuild" : true,
     "cmake.debugConfig"     : {
-        "args": [ "${workspaceFolder}/lib/app.ini" ] },
+        "cwd" :   "${workspaceFolder}",
+        "args": [ "${workspaceFolder}/lib/${workspaceFolderBasename}.ini" ] },
     "cmake.allowCommentsInPresetsFile" : true,
 
     // Python

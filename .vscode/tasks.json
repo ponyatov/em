@@ -26,6 +26,12 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "git: checkout .vscode",
+            "type"           : "shell",
+            "command"        : "git checkout .vscode/settings.json",
+            "problemMatcher" : []
+        },
+        {
             "label"          : "debug: openocd",
             "type"           : "shell",
             "group"          : {"kind": "build", "isDefault": true},
@@ -33,6 +39,17 @@
             "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true}
+        },
+        {
+            "label"          : "openocd: firmware",
+            "type"           : "shell",
+            "group"          : {"kind": "build", "isDefault": true },
+            "dependsOn"      : "CMake: build",
+            "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit \"",
+            "problemMatcher" : [],
+            "presentation"   : {
+                "showReuseMessage": false, "focus": true, "close": false
+            }
         },
         {
             "type"           : "cmake",
