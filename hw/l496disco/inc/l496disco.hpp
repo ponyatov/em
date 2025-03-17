@@ -3,8 +3,8 @@
 #include "led.hpp"
 
 /// @defgroup l496disco l496disco
-/// @ingroup discovery
-/// @brief `cpu:` @ref stm32l496agi
+/// @ingroup hw
+/// @brief `cpu: ` @ref stm32l496agi
 /// @{
 
 extern LED LD2;  ///< `PB13` green / active high

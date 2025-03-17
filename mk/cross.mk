@@ -1,10 +1,10 @@
 # HW ?= pc
 # HW ?= mega2560
 # HW ?= pillF030
-HW ?= pillF103
+# HW ?= pillF103
 # HW ?= f4disco
 # HW ?= iskra
-# HW ?= l496disco
+HW ?= l496disco
 # HW ?= pi800
 
 ELF = $(BIN)/$(BINFILE).elf
@@ -16,8 +16,7 @@ include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
 
 .PHONY: elf
-elf: $(CWD)/hw/$(HW)/$(HW).ocd $(ELF)
-	openocd -f $< -c "program $(ELF) verify reset exit"
+elf: $(ELF)
 
 .PHONY: dfu
 dfu: $(DFU)

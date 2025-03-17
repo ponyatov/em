@@ -57,57 +57,62 @@
     "git.enabled": false,
     "terminal.integrated.copyOnSelection": true,
 
-    // clang-format
-    "clang-format.executable":     "clang-format",
-    "clang-format.fallbackStyle":  "Google",
-    "clang-format.style":          "file",
-
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1","9600n1"],
 
-    // JavaScript
-    "prettier.configPath"         : "${workspaceFolder}/.prettierrc",
+    // JS
     "prettier.requireConfig"      :  true,
+    "prettier.configPath"         : ".prettierrc",
+    "json.format.enable"          :  true,
     "[javascript]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
         "editor.formatOnSave"     :  false
     },
-    "[json,jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave":     false
+    "[json]": {
+        "editor.defaultFormatter" : "esbenp.prettier-vscode",
+        "editor.formatOnSave"     :  false
     },
+    "[jsonc]": {
+        "editor.defaultFormatter" : "esbenp.prettier-vscode",
+        "editor.formatOnSave"     :  false
+    },
+
+    // clang-format
+    "clang-format.executable"     : "clang-format",
+    "clang-format.fallbackStyle"  : "Google",
+    "clang-format.style"          : "file",
 
     // C++
     "[c]": {
-        "editor.defaultFormatter": "xaver.clang-format",
-        "editor.formatOnSave":     false
+        "editor.defaultFormatter" : "xaver.clang-format",
+        "editor.formatOnSave"     :  false
     },
     "[cpp]": {
-        "editor.defaultFormatter": "xaver.clang-format",
-        "editor.formatOnSave":     false
+        "editor.defaultFormatter" : "xaver.clang-format",
+        "editor.formatOnSave"     :  false
     },
     // "C_Cpp.intelliSenseEngine": "Tag Parser",
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    // "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
 
     // cmake
     "cmake.sourceDirectory" : "${workspaceFolder}",
     "cmake.buildDirectory"  : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"       : "Unix Makefiles",
-    "cmake.parallelJobs"    : 4,
+    "cmake.parallelJobs"    :  4,
     "cmake.useCMakePresets" : "always",
-    "cmake.buildBeforeRun"  : true,
-    "cmake.saveBeforeBuild" : true,
+    "cmake.buildBeforeRun"  :  true,
+    "cmake.saveBeforeBuild" :  true,
     "cmake.debugConfig"     : {
         "cwd" :   "${workspaceFolder}",
-        "args": [ "${workspaceFolder}/lib/${workspaceFolderBasename}.ini" ] },
+        "args": [ "lib/${workspaceFolderBasename}.ini" ] },
     "cmake.allowCommentsInPresetsFile" : true,
 
     // Python
-    "autopep8.path": ["/usr/bin/autopep8"],
-    "autopep8.args": ["--ignore E26,E302,E305,E401,E402,E701,E702"],
+    "python.defaultInterpreterPath": "python3",
+    "autopep8.args"                : ["--ignore","E26,E302,E305,E401,E402,E701,E702"],
     "[python]": {
-        "editor.defaultFormatter": "ms-python.autopep8",
-        "editor.formatOnSave"    :  false
+        "editor.defaultFormatter" : "ms-python.autopep8",
+        "editor.formatOnSave"     :  false
     },
     "python.analysis.extraPaths": ["./scripts"],
 
@@ -133,7 +138,7 @@
     },
 
     // MinGW/MSYS2
-    "terminal.integrated.defaultProfile.windows":  "UCRT64",
+    "terminal.integrated.defaultProfile.windows": "UCRT64",
     "terminal.integrated.profiles.windows": {
       "UCRT64": {
         "path": "C:\\msys64\\usr\\bin\\bash.exe",

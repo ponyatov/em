@@ -1,4 +1,5 @@
-/// @defgroup arm arm
-/// @ingroup cpu
+#pragma once
 /// @defgroup cortexM cortexM
 /// @ingroup arch
+/// @{
+/// @}

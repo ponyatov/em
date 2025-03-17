@@ -39,12 +39,11 @@
     ],
     "configurePresets": [
         {
-            "name"                        : "common",
-            "hidden"                      :  true,
-            "binaryDir"                   : "${sourceDir}/tmp/${presetName}",
-            "generator"                   : "Unix Makefiles",
-            "cacheVariables": {
-                "APP"                     : "${workspaceFolderBasename}",
+            "name"           : "common",
+            "hidden"         :  true,
+            "binaryDir"      : "${sourceDir}/tmp/${presetName}",
+            "generator"      : "Unix Makefiles",
+            "cacheVariables" : {
                 "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
                 "CMAKE_COLOR_DIAGNOSTICS" :  false,
@@ -53,11 +52,13 @@
             }
         },
         {
-            "name"           :  "cortexM",
-            "hidden"         :   true,
-            "inherits"       :  "common",
-            "toolchainFile"  :  "${sourceDir}/cmake/arm-none-eabi.cmake",
-            "cacheVariables" : {"OS":"bare"}
+            "name"           : "cortexM",
+            "inherits"       : "common",
+            "hidden"         :  true,
+            "toolchainFile"  : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables" : {
+                "OS":"bare"
+            }
         },
         {
             "name"          :  "cortexM0",
@@ -72,10 +73,12 @@
             "cacheVariables" : {"ARCH":"cortexM3"}
         },
         {
-            "name"           :  "cortexM4",
-            "hidden"         :   true,
-            "inherits"       :  "cortexM",
-            "cacheVariables" : {"ARCH":"cortexM4"}
+            "name"           : "cortexM4",
+            "inherits"       : "cortexM",
+            "hidden"         :  true,
+            "cacheVariables" : {
+                "ARCH":"cortexM4"
+            }
         },
         {
             "name"          : "pillF030",
