@@ -30,12 +30,11 @@
         "daohong-emilio.yash",
         "rreverser.ragel",
         // embedded
-        "ms-vscode.vscode-serial-monitor",
-        "awsxxf.serialterminal",
-        "ms-vscode.hexeditor",
-        "zixuanwang.linkerscript",
         "dan-c-underwood.arm",
-        // ESP32
+        "zixuanwang.linkerscript",
+        "ms-vscode.vscode-serial-monitor",
+        // "awsxxf.serialterminal",
+        // "ms-vscode.hexeditor",
         // "espressif.esp-idf-extension",
         // Python
         "ms-python.python",
