@@ -25,6 +25,7 @@ file(GLOB C
     hw/${HW}/USB_DEVICE/App/*.c* hw/${HW}/USB_DEVICE/Target/*.c*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Src/*.c*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/*.c*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/*.c*
 )
 
 file(GLOB H
@@ -45,6 +46,7 @@ file(GLOB H
     hw/${HW}/USB_DEVICE/App/*.h* hw/${HW}/USB_DEVICE/Target/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/*.h*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Inc/*.h*
 )
 
 file(GLOB INC
@@ -65,6 +67,7 @@ file(GLOB INC
     hw/${HW}/USB_DEVICE/App hw/${HW}/USB_DEVICE/Target
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Inc
 )
 include_directories(${INC})
 
