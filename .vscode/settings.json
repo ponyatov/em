@@ -30,6 +30,7 @@
         "ref/**": true, "target/**": true,
     },
     "files.associations": {
+        "requirements.*": "properties",
         "*.mk": "makefile", "mk": "makefile", "cmake": "cmake",
         "*.ini": "flang", "*.f": "flang",
         "*.ocd": "properties", "*.gdb*": "properties",
@@ -106,6 +107,7 @@
         "cwd" :   "${workspaceFolder}",
         "args": [ "lib/${workspaceFolderBasename}.ini" ] },
     "cmake.allowCommentsInPresetsFile" : true,
+    "cmake.ignoreCMakeListsMissing"    : true,
 
     // Python
     "python.defaultInterpreterPath": "python3",
