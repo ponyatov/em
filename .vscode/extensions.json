@@ -29,6 +29,7 @@
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
+        "supremeconset.binpac-vscode-extension",
         // embedded
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
