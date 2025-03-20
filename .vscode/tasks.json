@@ -5,12 +5,14 @@
             "label"          : "project: install",
             "type"           : "shell",
             "command"        : "make install",
+            "presentation"   : {"focus": true},
             "problemMatcher" : []
         },
         {
             "label"          : "project: update",
             "type"           : "shell",
             "command"        : "make update",
+            "presentation"   : {"focus": true},
             "problemMatcher" : []
         },
         {
@@ -56,6 +58,7 @@
             "type"           : "shell",
             "command"        : "python3 src/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
             "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
         },
         {
