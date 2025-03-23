@@ -45,16 +45,16 @@
 
     // editor
     "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
     "editor.rulers": [80],
+    "editor.lineNumbers": "on",
     "workbench.tree.indent": 24,
     "editor.fontSize": 14,
-    "editor.lineNumbers": "on",
     "explorer.autoReveal": false,
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
     "git.enabled": false,
     "terminal.integrated.copyOnSelection": true,
 
@@ -95,7 +95,7 @@
     // "C_Cpp.intelliSenseEngine": "Tag Parser",
     // "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
 
-    // cmake
+    // CMake
     "cmake.sourceDirectory" : "${workspaceFolder}",
     "cmake.buildDirectory"  : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"       : "Unix Makefiles",
@@ -110,13 +110,14 @@
     "cmake.ignoreCMakeListsMissing"    : true,
 
     // Python
-    "python.defaultInterpreterPath": "python3",
+    "python.defaultInterpreterPath":  "python3",
+    "autopep8.path"                : ["autopep8"],
     "autopep8.args"                : ["--ignore","E26,E302,E305,E401,E402,E701,E702"],
+    "python.analysis.extraPaths"   : ["${workspaceFolder}/meta"],
     "[python]": {
-        "editor.defaultFormatter" : "ms-python.autopep8",
-        "editor.formatOnSave"     :  false
+        "editor.defaultFormatter"  : "ms-python.autopep8",
+        "editor.formatOnSave"      :  false
     },
-    "python.analysis.extraPaths": ["./scripts"],
 
     // Rust
     "rust-analyzer.check.allTargets": false,

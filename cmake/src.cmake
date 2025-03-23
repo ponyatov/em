@@ -50,7 +50,8 @@ file(GLOB H
 )
 
 file(GLOB INC
-    RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
     inc
     # cross
       hw/inc   hw/${HW}/inc
@@ -73,15 +74,18 @@ include_directories(${INC})
 
 file(GLOB L
     RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.lex lib/src/*.lex lib/*/src/*.lex
+    src/*.lex
+    lib/src/*.lex lib/*/src/*.lex
 )
 
 file(GLOB Y
     RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.yacc lib/src/*.yacc lib/*/src/*.yacc
+    src/*.yacc
+    lib/src/*.yacc lib/*/src/*.yacc
 )
 
 file(GLOB R
     RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.ragel lib/src/*.ragel lib/*/src/*.ragel
+    src/*.ragel
+    lib/src/*.ragel lib/*/src/*.ragel
 )
