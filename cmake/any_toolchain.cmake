@@ -18,13 +18,11 @@ include(  os/${OS}/${OS}.cmake    )
 include(arch/${ARCH}/${ARCH}.cmake)
 include( cpu/${CPU}/${CPU}.cmake  )
 include(  hw/${HW}/${HW}.cmake    )
-include(             app.cmake    )
 
 string(TOUPPER ${HW}   HW_  )
 string(TOUPPER ${CPU}  CPU_ )
 string(TOUPPER ${ARCH} ARCH_)
 string(TOUPPER ${OS}   OS_  )
-string(TOUPPER ${APP}  APP_ )
 
 add_compile_options(
     -Wall -Wextra               # -Wpedantic
