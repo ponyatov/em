@@ -22,6 +22,11 @@
             "targets"         : ["all","install"]
         },
         {
+            "name"            :  "f429disco",
+            "configurePreset" :  "f429disco",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "l496disco",
             "configurePreset" :  "l496disco",
             "targets"         : ["all","install"]
@@ -41,7 +46,7 @@
             "cacheVariables"  : {
                 "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
-                "CMAKE_COLOR_DIAGNOSTICS" :  true,
+                "CMAKE_COLOR_DIAGNOSTICS" :  false,
                 "CMAKE_BUILD_TYPE"        : "Debug",
                 "CMAKE_VERBOSE_MAKEFILE"  :  false
             }
@@ -71,9 +76,7 @@
             "name"           : "cortexM4",
             "inherits"       : "cortexM",
             "hidden"         :  true,
-            "cacheVariables" : {
-                "ARCH":"cortexM4"
-            }
+            "cacheVariables" : {"ARCH":"cortexM4"}
         },
         {
             "name"          : "pillF030",
@@ -109,6 +112,14 @@
             "cacheVariables" : {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"
+            }
+        },
+        {
+            "name"           : "f429disco",
+            "inherits"       : "cortexM4",
+            "cacheVariables" : {
+                "HW" :"f429disco",
+                "CPU":"stm32f429zi", "SERIES": "STM32F4"
             }
         },
         {

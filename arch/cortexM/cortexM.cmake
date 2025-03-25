@@ -1,5 +1,3 @@
-
-
 add_compile_options(
     -mthumb
 )
