@@ -5,6 +5,7 @@
         "tabnine.tabnine-vscode",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        "esbenp.prettier-vscode",
         // Linux
         "ms-vscode-remote.remote-ssh",
         "coolbear.systemd-unit-file",
@@ -14,7 +15,6 @@
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",
-        "esbenp.prettier-vscode",
         // misc
         "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",
@@ -42,6 +42,7 @@
         "ms-python.autopep8",
         // "batisteo.vscode-django",
         // Rust
+        "swellaby.vscode-rust-test-adapter",
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
         "vadimcn.vscode-lldb",
