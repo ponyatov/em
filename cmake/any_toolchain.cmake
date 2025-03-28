@@ -37,8 +37,6 @@ add_compile_definitions(
     ${HW_} ${CPU_} ${ARCH_} ${OS_}
 )
 
-#    HAVE_INITFINI_ARRAY HAVE_INIT_FINI
-
 add_link_options(
     -Wl,--print-memory-usage
 )

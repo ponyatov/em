@@ -145,17 +145,17 @@
             "cacheVariables": {"ARCH":"x86_64","OS":"mingw"}
         },
         {
-            "name"            : "linux",
-            "inherits"        : "pc",
-            "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
-            "cacheVariables"  : {"OS":"linux"}
-        },
-        {
             "name"         : "musl",
             "inherits"     : "linux",
             "displayName"  : "x86_64-linux-musl",
             "description"  : "busybox:musl/docker",
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-musl.cmake"
+        },
+        {
+            "name"            : "linux",
+            "inherits"        : "pc",
+            "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
+            "cacheVariables"  : {"OS":"linux"}
         }
     ]
 }

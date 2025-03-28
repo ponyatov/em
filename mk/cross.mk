@@ -1,10 +1,12 @@
 # HW ?= pc
 # HW ?= mega2560
+# HW ?= lm3s6
 # HW ?= pillF030
 # HW ?= pillF103
 # HW ?= f4disco
 # HW ?= iskra
-HW ?= l496disco
+# HW ?= l496disco
+HW ?= f429disco
 # HW ?= pi800
 
 ELF = $(BIN)/$(BINFILE).elf
