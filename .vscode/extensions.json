@@ -56,5 +56,7 @@
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
+        // Zig
+        "ziglang.vscode-zig",
     ]
 }

@@ -80,6 +80,15 @@
             "problemMatcher" : ["$rustc"],
             "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
             "group"          : {"kind": "build", "isDefault": true}
-        }
+        },
+        {
+            "label"          : "zig: build",
+            "type"           : "shell",
+            "command"        : "zig build",
+            "presentation"   : {"focus": true},
+            "problemMatcher" : [],
+            "group"          : { "kind": "build", "isDefault": true }
+
+        },
     ]
 }
