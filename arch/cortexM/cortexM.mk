@@ -1,6 +1,6 @@
 OS     = bare
 TARGET = arm-none-eabi
 EXE    = .elf
-APT   += gcc-$(TARGET)   gdb-multiarch
-APT   += qemu-system-arm newlib-source
-APT   += stlink-tools dfu-util dos2unix
+
+APT   += gcc-arm-none-eabi gdb-multiarch qemu-system-arm
+APT   += newlib-source stlink-tools dfu-util dos2unix

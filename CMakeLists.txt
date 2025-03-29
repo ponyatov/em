@@ -17,7 +17,7 @@ message("-- |")
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}  # C/C++ source
     ${S}  ${LD} # embedded/lowlevel
-    ${CP} ${HP} # parsers
+    ${CP} ${CH} # parsers
 )
 
 # target_link_libraries(${CMAKE_PROJECT_NAME} -static)
@@ -28,4 +28,5 @@ set_target_properties(${CMAKE_PROJECT_NAME}
 install(TARGETS ${CMAKE_PROJECT_NAME}
     DESTINATION ${CMAKE_INSTALL_PREFIX})
 
+include(cross)
 include(clean)

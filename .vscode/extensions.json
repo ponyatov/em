@@ -5,6 +5,7 @@
         "tabnine.tabnine-vscode",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        "esbenp.prettier-vscode",
         // Linux
         "ms-vscode-remote.remote-ssh",
         "coolbear.systemd-unit-file",
@@ -42,6 +43,7 @@
         "ms-python.autopep8",
         // "batisteo.vscode-django",
         // Rust
+        "swellaby.vscode-rust-test-adapter",
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
         "vadimcn.vscode-lldb",
@@ -55,5 +57,7 @@
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
+        // Zig
+        "ziglang.vscode-zig",
     ]
 }
