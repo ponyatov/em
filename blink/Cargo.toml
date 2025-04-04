@@ -1,0 +1,12 @@
+[package]
+name        =  "blink"
+description =  "on MCU device"
+authors     = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
+version     =  "0.0.1"
+edition     =  "2024"
+
+[dependencies]
+config = { path = "../config" }
+cortex-m-rt = "0.7.5"
+panic-halt = "1.0.0"
+cortex-m-semihosting = "0.5.0"

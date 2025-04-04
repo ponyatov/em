@@ -72,11 +72,31 @@
             "promptOnClose"  : false
         },
         {
-            "label"          :  "cargo: fortex",
+            "label"          :  "cargo: build",
             "type"           :  "shell",
             "command"        :  "cargo",
-            "args"           : ["build", "--target", "thumbv7m-none-eabi"],
-            "options"        : {"cwd": "${workspaceFolder}/fortex"},
+            "args"           : ["build"], //"--target", "thumbv7em-none-eabihf"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          :  "cargo: blink (M3)",
+            "type"           :  "shell",
+            "command"        :  "cargo",
+            "args"           : ["run","-p","blink", "--target", "thumbv7m-none-eabi"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          :  "cargo: blink (M4)",
+            "type"           :  "shell",
+            "command"        :  "cargo",
+            "args"           : ["run","-p","blink", "--target", "thumbv7em-none-eabihf"],
+            "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
             "group"          : {"kind": "build", "isDefault": true}
