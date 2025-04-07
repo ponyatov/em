@@ -1,0 +1,43 @@
+[build]
+target = "x86_64-unknown-linux-gnu"
+
+[target.x86_64-unknown-linux-gnu]
+linker = "x86_64-linux-gnu-gcc"
+runner = 'arch/x86_64/x86_64.runner'
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+runner = 'arch/aarch64/aarch64.runner'
+
+[target.thumbv7m-none-eabi]
+linker = "arm-none-eabi-gcc"
+runner = [
+    'qemu-system-arm',
+    '-machine','netduino2','-cpu','cortex-m3',
+    '-nographic','-semihosting-config','enable=on,target=native',
+    '-kernel'
+]
+rustflags = [
+    "-C", "link-arg=-Tlink.x",
+    "-C", "link-arg=-nostartfiles",
+]
+
+[target.thumbv7em-none-eabihf]
+linker = "arm-none-eabi-gcc"
+runner = [
+    'qemu-system-arm',
+    '-machine','netduinoplus2','-cpu','cortex-m4',
+    '-nographic','-semihosting-config','enable=on,target=native',
+    '-kernel'
+]
+rustflags = [
+    "-C", "link-arg=-Tlink.x",
+    "-C", "link-arg=-nostartfiles",
+]
+
+[target.wasm32-unknown-unknown]
+linker = "rust-lld"
+
+[target.i686-pc-windows-gnu]
+linker = "i686-w64-mingw32-gcc"
+runner = 'os/mingw/mingw.runner'

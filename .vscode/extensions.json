@@ -43,9 +43,9 @@
         "ms-python.autopep8",
         // "batisteo.vscode-django",
         // Rust
-        "swellaby.vscode-rust-test-adapter",
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
+        "swellaby.vscode-rust-test-adapter",
         "vadimcn.vscode-lldb",
         "probe-rs.probe-rs-debugger",
         "marus25.cortex-debug",
