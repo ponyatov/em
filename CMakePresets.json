@@ -52,74 +52,74 @@
             }
         },
         {
-            "name"           : "cortexM",
-            "inherits"       : "common",
-            "hidden"         :  true,
-            "toolchainFile"  : "${sourceDir}/cmake/arm-none-eabi.cmake",
-            "cacheVariables" : {
+            "name"            : "cortexM",
+            "inherits"        : "common",
+            "hidden"          :  true,
+            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables"  : {
                 "OS":"bare"
             }
         },
         {
-            "name"          :  "cortexM0",
-            "hidden"        :   true,
-            "inherits"      :  "cortexM",
-            "cacheVariables": {"ARCH":"cortexM0"}
+            "name"            :  "cortexM0",
+            "hidden"          :   true,
+            "inherits"        :  "cortexM",
+            "cacheVariables"  : {"ARCH":"cortexM0"}
         },
         {
-            "name"           :  "cortexM3",
-            "hidden"         :   true,
-            "inherits"       :  "cortexM",
-            "cacheVariables" : {"ARCH":"cortexM3"}
+            "name"            :  "cortexM3",
+            "hidden"          :   true,
+            "inherits"        :  "cortexM",
+            "cacheVariables"  : {"ARCH":"cortexM3"}
         },
         {
-            "name"           : "cortexM4",
-            "inherits"       : "cortexM",
-            "hidden"         :  true,
-            "cacheVariables" : {"ARCH":"cortexM4"}
+            "name"            : "cortexM4",
+            "inherits"        : "cortexM",
+            "hidden"          :  true,
+            "cacheVariables"  : {"ARCH":"cortexM4"}
         },
         {
-            "name"          : "pillF030",
-            "inherits"      : "cortexM0",
-            "cacheVariables": {
+            "name"            : "pillF030",
+            "inherits"        : "cortexM0",
+            "cacheVariables"  : {
                 "HW" :"pillF030",
                 "CPU":"stm32f030f4p", "SERIES": "STM32F0"
             }
         },
         {
-            "name"           :  "pillF103",
-            "inherits"       :  "cortexM3",
-            "cacheVariables" : {"HW" :"pillF103",
-                                "CPU":"stm32f103c8t", "SERIES": "STM32F1"}
+            "name"            :  "pillF103",
+            "inherits"        :  "cortexM3",
+            "cacheVariables"  : {"HW" :"pillF103",
+                                 "CPU":"stm32f103c8t", "SERIES": "STM32F1"}
         },
         {
-            "name"           :  "f4disco",
-            "inherits"       :  "cortexM4",
-            "cacheVariables" : {"HW" :"f4disco",
+            "name"            :  "f4disco",
+            "inherits"        :  "cortexM4",
+            "cacheVariables"  : {"HW" :"f4disco",
                                 "CPU":"stm32f407vgt", "SERIES": "STM32F4"}
         },
         {
-            "name"          : "iskra",
-            "inherits"      : "cortexM4",
-            "cacheVariables": {
+            "name"            : "iskra",
+            "inherits"        : "cortexM4",
+            "cacheVariables"  : {
                 "HW" :"iskra",
                 "CPU":"stm32f405rgt", "SERIES": "STM32F4"
             }
         },
         {
-            "name"           : "l496disco",
-            "inherits"       : "cortexM4",
-            "cacheVariables" : {
+            "name"            : "l496disco",
+            "inherits"        : "cortexM4",
+            "cacheVariables"  : {
                 "HW" :"l496disco",
                 "CPU":"stm32l496agi", "SERIES": "STM32L4"
             }
         },
         {
-            "name"           : "f429disco",
-            "inherits"       : "cortexM4",
-            "cacheVariables" : {
+            "name"            : "f429disco",
+            "inherits"        : "cortexM4",
+            "cacheVariables"  : {
                 "HW" :"f429disco",
-                "CPU":"stm32f429zi", "SERIES": "STM32F4"
+                "CPU":"stm32f429zit", "SERIES": "STM32F4"
             }
         },
         {

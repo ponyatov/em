@@ -13,7 +13,7 @@ n [0-9]
 [ \t\r\n]+      {}                  // drop spaces
 
 {s}?{n}+\.{n}+  TOKEN(Num,NUM)      // float
-0x[0-9a-fA-F]+  TOKEN(Hex,INT)      // hexadecimal
+0x[0-9a-fA-F]+  TOKEN(Hex,HEX)      // hexadecimal
 {s}?{n}+        TOKEN(Int,INT)      // integer
 
 .               {yyerror("lex");}   // any undetected char
