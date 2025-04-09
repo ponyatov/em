@@ -30,13 +30,13 @@
         "ref/**": true, "target/**": true,
     },
     "files.associations": {
-        "requirements.*": "properties",
-        "*.mk": "makefile", "mk": "makefile", "cmake": "cmake",
+        "*.mk": "makefile",
         "*.ini": "flang", "*.f": "flang",
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
-        "memory.x": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
+        "requirements.*": "properties",
+        "memory.x": "linkerscript",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         //
         ".boot*": "javascript", ".prettierrc": "jsonc",
