@@ -61,9 +61,9 @@
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1","9600n1"],
 
-    // JS
-    "prettier.requireConfig"      :  true,
+    // JavaScript
     "prettier.configPath"         : ".prettierrc",
+    "prettier.requireConfig"      :  true,
     "json.format.enable"          :  true,
     "[javascript]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
