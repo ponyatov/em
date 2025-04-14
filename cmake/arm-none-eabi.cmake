@@ -7,6 +7,7 @@ set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 include(any_toolchain)
 
 add_compile_options(
+    -mthumb
     -ffunction-sections -fdata-sections
     -DCORTEX -D${SERIES}
     $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
@@ -20,6 +21,7 @@ add_compile_options(
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 add_link_options(
+    -mthumb
     -T ${CMAKE_SOURCE_DIR}/hw/${HW}/${CPU_}x_FLASH.ld
     --specs=nano.specs
     -Wl,--start-group -lc -lm -lnosys   -Wl,--end-group

@@ -2,6 +2,24 @@ find_package(FLEX  REQUIRED)
 find_package(BISON REQUIRED)
 find_package(RAGEL REQUIRED)
 
+file(GLOB L
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.lex
+    lib/src/*.lex lib/*/src/*.lex
+)
+
+file(GLOB Y
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.yacc
+    lib/src/*.yacc lib/*/src/*.yacc
+)
+
+file(GLOB R
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.ragel
+    lib/src/*.ragel lib/*/src/*.ragel
+)
+
 foreach(LEX_FILE ${L})
     string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.cpp"
         LEXER_CPP           ${LEX_FILE})
