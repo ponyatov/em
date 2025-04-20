@@ -32,6 +32,11 @@
             "targets"         : ["all","install"]
         },
         {
+            "name"            :  "esp8266",
+            "configurePreset" :  "esp8266",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"]

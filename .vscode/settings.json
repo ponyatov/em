@@ -100,13 +100,13 @@
     "cmake.generator"       : "Unix Makefiles",
     "cmake.parallelJobs"    :  4,
     "cmake.useCMakePresets" : "always",
+    "cmake.ignoreCMakeListsMissing" : false,
     "cmake.buildBeforeRun"  :  true,
     "cmake.saveBeforeBuild" :  true,
     "cmake.debugConfig"     : {
         "cwd" :   "${workspaceFolder}",
         "args": [ "lib/${workspaceFolderBasename}.ini" ] },
     "cmake.allowCommentsInPresetsFile" : true,
-    "cmake.ignoreCMakeListsMissing"    : true,
 
     // Python
     "python.defaultInterpreterPath":  "python3",
