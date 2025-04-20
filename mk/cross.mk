@@ -6,11 +6,12 @@
 # HW ?= f4disco
 # HW ?= iskra
 # HW ?= l496disco
-HW ?= f429disco
+# HW ?= f429disco
 # HW ?= pi800
+HW ?= esp8266
 
-ELF = $(BIN)/$(BINFILE).elf
-DFU = $(BIN)/$(BINFILE).dfu
+ELF = bin/$(BINFILE).elf
+DFU = bin/$(BINFILE).dfu
 
 include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk
@@ -27,4 +28,4 @@ $(DFU): $(ELF)
 
 .PHONY: qemu
 qemu: $(ELF)
-	$(QEMU) $(QEMU_CFG) -S -kernel $<
+	$(QEMU) $(QEMU_CFG) -S -s -kernel $<

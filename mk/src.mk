@@ -7,7 +7,7 @@ MK += $(wildcard arch/*.mk)
 MK += $(wildcard   os/*.mk)
 
 # cmake files
-CM += CMake* cmake/*.cmake
+CMK += CMake* cmake/*.cmake
 
 # C/C++
 C += $(wildcard src/*.c*)
@@ -28,7 +28,7 @@ C += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
 H += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 
 # ini
-S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
+F += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # JavaScript
 J += $(wildcard src/*.js)
@@ -42,7 +42,3 @@ P += $(wildcard django/task/*.py)
 
 # Rust
 R += $(wildcard src/*.rs)
-
-# F#
-F += $(wildcard meta/*.f*)
-
