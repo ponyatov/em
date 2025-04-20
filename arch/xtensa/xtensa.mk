@@ -23,13 +23,18 @@ $(DISTR)/ESP/$(LX106_GZ):
 RTOS8266_URL = https://github.com/espressif/ESP8266_RTOS_SDK/releases/download
 RTOS8266_GZ  = ESP8266_RTOS_SDK-v$(RTOS8266_VER).zip
 
-GZ += $(DISTR)/ESP/$(RTOS8266_GZ)
+GZ += $(ESP)/ESP8266_RTOS_SDK/bin/pip3
+$(ESP)/ESP8266_RTOS_SDK/bin/pip3: $(DISTR)/ESP/$(RTOS8266_GZ)
+	unzip -d $(ESP) $<
+	cd $(ESP)/ESP8266_RTOS_SDK ; python3 -m venv . ; $@ -U -r requirements.txt
 $(DISTR)/ESP/$(RTOS8266_GZ):
 	$(CURL) $@ $(RTOS8266_URL)/v${RTOS8266_VER)/$(RTOS8266_GZ)
 
 ESPTOOL_GZ = esptool-v$(ESPTOOL_VER)-linux-arm64.zip
 ESPTOOL_URL = https://github.com/espressif/esptool/releases/download
 
-GZ += $(DISTR)/ESP/$(ESPTOOL_GZ)
+GZ += $(ESP)/esptool/esptool.py
+$(ESP)/esptool/esptool.py: $(DISTR)/ESP/$(ESPTOOL_GZ)
+	unzip $< -d $(dir $@) && touch $@
 $(DISTR)/ESP/$(ESPTOOL_GZ):
 	$(CURL) $@ $(ESPTOOL_URL)/v$(ESPTOOL_VER)/$(ESPTOOL_GZ)
