@@ -4,7 +4,6 @@
 
 /// @defgroup main main
 /// @ingroup core
-/// @brief @ref os entry points
 /// @{
 
 #ifdef POSIX

@@ -34,6 +34,16 @@
             "problemMatcher" : []
         },
         {
+            "type"           : "cmake",
+            "label"          : "cmake: build",
+            "command"        : "build",
+            "targets"        : ["all"],
+            "preset"         : "${command:cmake.activeBuildPresetName}",
+            "group"          : "build",
+            "problemMatcher" : [],
+            "promptOnClose"  : false
+        },
+        {
             "label"          : "debug: openocd",
             "type"           : "shell",
             "group"          : {"kind": "build", "isDefault": true},
@@ -60,16 +70,6 @@
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
-        },
-        {
-            "type"           : "cmake",
-            "label"          : "cmake: build",
-            "command"        : "build",
-            "targets"        : ["all"],
-            "preset"         : "${command:cmake.activeBuildPresetName}",
-            "group"          : "build",
-            "problemMatcher" : [],
-            "promptOnClose"  : false
         },
         {
             "label"          :  "cargo: build",
@@ -108,7 +108,6 @@
             "presentation"   : {"focus": true},
             "problemMatcher" : [],
             "group"          : { "kind": "build", "isDefault": true }
-
         },
     ]
 }

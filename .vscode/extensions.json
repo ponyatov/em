@@ -30,6 +30,7 @@
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
+        "serghei-iakovlev.language-lemon",
         // "supremeconset.binpac-vscode-extension",
         // embedded
         "dan-c-underwood.arm",

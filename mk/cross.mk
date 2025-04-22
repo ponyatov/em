@@ -1,4 +1,4 @@
-# HW ?= pc
+HW ?= pc
 # HW ?= mega2560
 # HW ?= lm3s6
 # HW ?= pillF030

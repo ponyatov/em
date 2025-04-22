@@ -19,7 +19,7 @@ void cli(char* p, char* pe) {
 %%{
     comment = '#' [^\n]*;                   # comment
     nl      = '\n';                         # new line
-    sp      = [ \r\t]+;                     # drop spaces
+    sp      = [ \r\t]+;                     # any spaces
 
     sign    = [+\-];                        # sign
     num     = sign ? digit+ '.' digit+;     # floating point
@@ -32,9 +32,9 @@ void cli(char* p, char* pe) {
     id      = [_a-zA-Z][_a-zA-Z0-9]*;       # variable/name
 
     cli := |*
-        comment => { };
-        nl+     => { yylineno += te-ts; /* count line */ };
-        sp      => { };
+        comment => {                                      };
+        nl+     => { yylineno += te-ts; /* count line  */ };
+        sp      => {                    /* drop spaces */ };
 
         num     => { printf("\t\t%i: num:%f\n",yylineno,num(ts,te)); };
         hex     => { printf("\t\t%i: hex:%x\n",yylineno,hex(ts,te)); };

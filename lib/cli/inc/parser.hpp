@@ -27,13 +27,16 @@ extern void yyerror(char *msg);  ///< syntax error callback
         return X;                 \
     }
 
-/// @brief parse disk file
-extern void cli(char *filename);
+/// @brief interpret file
+extern void clif(char* filename);
 
-/// @brief parse string in memory
-/// @param[in] p data pointer (current position)
-/// @param[in] pe data end pointer (end of data)
-extern void cli(char *p, char *pe);
+/// @brief interpret string
+extern void clis(char* str);
+
+/// @brief interpret memory buffer
+/// @param[in] p  lexer pointer (current position)
+/// @param[in] pe lexer end pointer (end of data)
+extern void cli(char* p, char* pe);
 
 /// @name token conversion
 /// @{
