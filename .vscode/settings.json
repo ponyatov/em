@@ -26,7 +26,7 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-        "ref/**": true, "target/**": true,
+        "ref/**": true, "target/**": true, "obj/**": true,
     },
     "files.associations": {
         "*.mk": "makefile",
@@ -34,12 +34,13 @@
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
+        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
         "memory.x": "linkerscript",
-        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         //
         ".boot*": "javascript", ".prettierrc": "jsonc",
         "*.service": "systemd-unit-file"
+        "*.*proj": "xml",
     },
 
     // editor

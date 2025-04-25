@@ -9,7 +9,7 @@
         // Linux
         "ms-vscode-remote.remote-ssh",
         "coolbear.systemd-unit-file",
-        "nico-castell.linux-desktop-file",
+        // "nico-castell.linux-desktop-file",
         // "ms-azuretools.vscode-docker",
         // "github.vscode-github-actions",
         // "redhat.vscode-yaml",
@@ -52,6 +52,7 @@
         "marus25.cortex-debug",
         // F#
         // "ionide.ionide-fsharp",
+        // "redhat.vscode-xml",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
         // "mnxn.fsharp-fsl-fsy",
