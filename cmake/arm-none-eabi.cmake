@@ -6,10 +6,13 @@ set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 include(any_toolchain)
 
+add_compile_definitions(
+    CORTEX ${SERIES}
+)
+
 add_compile_options(
     -mthumb
     -ffunction-sections -fdata-sections
-    -DCORTEX -D${SERIES}
     $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
