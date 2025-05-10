@@ -41,25 +41,21 @@
             ]
         },
         {
-            "name"         : "cortex",
-            "type"         : "cppdbg",
-            "request"      : "launch",
-            "program"      : "${command:cmake.launchTargetPath}",
-            "preLaunchTask": "CMake: build",
-            "cwd"          : "${workspaceFolder}",
-            "MIMode": "gdb",
+            "name"          : "cortex",
+            "type"          : "cppdbg",
+            "request"       : "launch",
+            "program"       : "${command:cmake.launchTargetPath}",
+            "preLaunchTask" : "CMake: build",
+            "cwd"           : "${workspaceFolder}",
+            "MIMode"        : "gdb",
+            "miDebuggerPath": "gdb-multiarch",
+            "miDebuggerArgs": "--silent",
+            "miDebuggerServerAddress": "localhost:12345",
+            "useExtendedRemote": true,
             "setupCommands": [
                 {"text": "-enable-pretty-printing", "ignoreFailures": true}
             ],
-            "miDebuggerPath"           : "gdb-multiarch",
-            "miDebuggerArgs"           : "--silent",
-            "miDebuggerServerAddress"  : "localhost:12345",
-            "useExtendedRemote"        : true,
-            // "preLaunchTask"  : "debug: openocd",
-            // "debugServerPath": "openocd",
-            // "debugServerArgs": "-f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.openocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
-            // "serverStarted"  : "connections",
-            "stopAtEntry"              : false, // don't enable!
+            "stopAtEntry": false, // don't enable!
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
                 {"text": "load"},
