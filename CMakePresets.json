@@ -22,13 +22,13 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "f429disco",
-            "configurePreset" :  "f429disco",
+            "name"            :  "l496disco",
+            "configurePreset" :  "l496disco",
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "l496disco",
-            "configurePreset" :  "l496disco",
+            "name"            :  "f429disco",
+            "configurePreset" :  "f429disco",
             "targets"         : ["all","install"]
         },
         {
@@ -57,22 +57,22 @@
             }
         },
         {
-            "name"            : "cortexM",
-            "inherits"        : "common",
-            "hidden"          :  true,
-            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "name"            :  "cortexM",
+            "inherits"        :  "common",
+            "hidden"          :   true,
+            "toolchainFile"   :  "${sourceDir}/cmake/arm-none-eabi.cmake",
             "cacheVariables"  : {"OS":"bare"}
         },
         {
             "name"            :  "cortexM0",
-            "hidden"          :   true,
             "inherits"        :  "cortexM",
+            "hidden"          :   true,
             "cacheVariables"  : {"ARCH":"cortexM0"}
         },
         {
             "name"            :  "cortexM3",
-            "hidden"          :   true,
             "inherits"        :  "cortexM",
+            "hidden"          :   true,
             "cacheVariables"  : {"ARCH":"cortexM3"}
         },
         {
