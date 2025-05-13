@@ -1,5 +1,3 @@
- TARGET  = $(ARCH)-$(OS)-gnu
-RTARGET  = $(ARCH)-unknown-$(OS)-gnu
 APT     += linux-source uclibc-source
 
 LINUX_CFG += $(CWD)/hw/all.linux
@@ -30,8 +28,8 @@ tmp/kernel/.config: $(LINUX_CFG) mk/cross.mk os/linux/linux.mk
 	echo 'CONFIG_LOCALVERSION="-$(HW)"'        >> .config ;\
 	echo 'CONFIG_DEFAULT_HOSTNAME="$(MODULE)"' >> .config
 
-UCLIBC_MK    = $(CWD)/tmp/uClibc-ng-$(UCLIBC_VER)/Makefile
-UCLIBC_MAKE  = $(MAKE) -f $(UCLIBC_MK)
+UCLIBC_MK   = $(CWD)/tmp/uClibc-ng-$(UCLIBC_VER)/Makefile
+UCLIBC_MAKE = $(MAKE) -f $(UCLIBC_MK) CROSS=$(TARGET)-
 UCLIBC_CFG += $(CWD)/hw/all.uclibc
 UCLIBC_CFG += $(CWD)/arch/$(ARCH)/$(ARCH).uclibc
 UCLIBC_CFG += $(CWD)/cpu/$(CPU)/$(CPU).uclibc
@@ -42,7 +40,7 @@ uclibc: $(UCLIBC_MK) $(UCLIBC_CFG) os/linux/linux.mk
 	cat $(UCLIBC_CFG)                              >> .config ;\
 	echo 'KERNEL_HEADERS="$(ROOT)/usr/include"'    >> .config ;\
 	echo 'RUNTIME_PREFIX="$(ROOT)/uclibc/runtime"' >> .config ;\
-	echo 'DEVEL_PREFIX="$(ROOT)/uclibc/devel"'     >> .config ;\
+	echo 'DEVEL_PREFIX="$(ROOT)/usr"'              >> .config ;\
 	echo 'CROSS_COMPILER_PREFIX="$(TARGET)-"'      >> .config ;\
 	$(UCLIBC_MAKE) menuconfig &&\
 	$(UCLIBC_MAKE) -j4 && $(UCLIBC_MAKE) install
