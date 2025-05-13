@@ -10,9 +10,8 @@ static int   act = 0;        ///< ???
 static char* eof = nullptr;  ///< end of file marker
 static char* ts  = nullptr;  ///< token start
 static char* te  = nullptr;  ///< token end
-
-static int  num  =    0;  ///< result number
-static bool sign = true;  ///< +sign flag
+static int  num  =    0;     ///< result number
+static bool sign = true;     ///< +sign flag
 
 static int hex(char* p, char* pe) {
     num = 0; sign = true;
@@ -33,6 +32,8 @@ static int hex(char* p, char* pe) {
         any   => { yyerror("hex");                        };
     *|;
 }%%
+
+int hex(char *s) { return hex(s,s+strlen(s)); }
 
 Hex::Hex(char* s) : Int(hex(s, s + strlen(s))) {}
 
