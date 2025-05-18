@@ -2,9 +2,9 @@
 install: $(WS)_install $(RUSTUP) doc ref gz
 	$(RUSTUP) component add rustfmt
 	$(RUSTUP) target    add $(RTARGET)
+	$(MAKE) update
 # $(CARGO)  install   cargo-binutils
 # $(RUSTUP) component add llvm-tools
-	$(MAKE) update
 update : $(WS)_update $(RUSTUP) $(PIP)
 	$(RUSTUP) self update
 	$(RUSTUP)      update
