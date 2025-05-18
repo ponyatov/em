@@ -8,7 +8,7 @@ HW ?= pc
 # HW ?= l496disco
 # HW ?= f429disco
 # HW ?= pi800
-HW ?= esp8266
+# HW ?= esp8266
 
 ELF = bin/$(BINFILE).elf
 DFU = bin/$(BINFILE).dfu
@@ -28,4 +28,4 @@ $(DFU): $(ELF)
 
 .PHONY: qemu
 qemu: $(ELF)
-	$(QEMU) $(QEMU_CFG) -S -s -kernel $<
+	$(QEMU) $(QEMU_CFG) -gdb tcp::12345 -S -kernel $<
