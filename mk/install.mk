@@ -6,6 +6,8 @@ install: $(WS)_install $(RUSTUP) doc ref gz
 # $(RUSTUP) component add llvm-tools
 	$(MAKE) update
 update : $(WS)_update $(RUSTUP) $(PIP)
+	$(RUSTUP) self update
+	$(RUSTUP)      update
 	$(PIP) install -U -r requirements.txt
 ref    : $(RF)
 gz     : $(GZ)
