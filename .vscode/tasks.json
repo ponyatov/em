@@ -31,7 +31,7 @@
             "label"          : "git: checkout .vscode",
             "type"           : "shell",
             "command"        : "git checkout .vscode/settings.json",
-            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
             "problemMatcher" : []
         },
         {
@@ -47,22 +47,18 @@
         {
             "label"          : "openocd: debug",
             "type"           : "shell",
-            "group"          : {"kind": "build", "isDefault": true},
             "dependsOn"      : "CMake: build",
-            "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset\"",
+            "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true}
         },
         {
             "label"          : "openocd: firmware",
             "type"           : "shell",
-            "group"          : {"kind": "build", "isDefault": true },
             "dependsOn"      : "CMake: build",
-            "command"        : "openocd -f ${workspaceFolder}/hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit \"",
+            "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit\"",
             "problemMatcher" : [],
-            "presentation"   : {
-                "showReuseMessage": false, "focus": true, "close": false
-            }
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
         },
         {
             "label"          : "python: run",
