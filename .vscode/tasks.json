@@ -55,6 +55,7 @@
         {
             "label"          : "openocd: firmware",
             "type"           : "shell",
+            "group"          : {"kind": "build", "isDefault": false },
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit\"",
             "problemMatcher" : [],

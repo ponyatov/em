@@ -1,10 +1,18 @@
 [package]
-name    = "flang"
-version = "0.0.1"
-edition = "2021"
+name        = "flang"
+version     = "0.0.1"
+description = "BareMetal Rusted FORTH"
+authors     = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
+repository  = "https://github.com/ponyatov/flang"
+edition     = "2024"
+
+[[bin]]
+name  = "flang"
+test  = false
+bench = false
 
 [workspace]
-members = ["fortex"]
+members = ["fvm"]
 
 [[bin]]
 path = "src/main.rs"
@@ -15,3 +23,66 @@ name = "F"
 # crate-type = ["cdylib"]
 # name = "vm"
 # # bench = false
+
+[dependencies]
+
+[target.x86_64-unknown-linux-gnu.dependencies]
+
+[target.'cfg(all(target_arch = "arm", target_os = "none"))'.dependencies]
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.5"
+panic-semihosting = "0.6.0"
+
+[features]
+
+# hw
+## hw/x86
+pc              = ["i5"]
+## hw/rpi
+opizero         = ["awh3"]
+rpi3            = ["bcm2837"]
+rpi4            = ["bcm2711"]
+rpi5            = ["bcm2712"]
+opi800          = ["rk3399"]
+## hw/stm32
+netduinoplus2   = ["stm32f405rg"]
+iskra           = ["stm32f405rg"]
+f4disco         = ["stm32f407vg"]
+f429disco       = ["stm32f429zi"]
+pillF103        = ["stm32f103"]
+## hw/esp
+esp8266         = ["xtensa","rtos8266"]
+esp32           = ["xtensa","idf"     ]
+
+# cpu
+## cpu/x86
+i5              = ["x86_64","linux"]
+i486            = ["i386"  ,"bare" ]
+i686            = ["i386"  ,"mingw"]
+## cpu/rpi
+awh3            = ["aarch64"]
+bcm2837         = ["aarch64"]
+bcm2711         = ["aarch64"]
+bcm2712         = ["aarch64"]
+rk3399          = ["aarch64"]
+## cpu/stm32
+stm32f103       = ["stm32f1"]
+stm32f405rg     = ["stm32f4"]
+stm32f407vg     = ["stm32f4"]
+stm32f429zi     = ["stm32f4"]
+# series
+stm32f1         = ["cortexM"]
+stm32f4         = ["cortexM"]
+# arch
+x86_64          = []
+i386            = []
+aarch64         = ["linux"]
+cortexM         = ["bare"]
+xtensa          = []
+
+# os
+linux           = []
+mingw           = []
+bare            = []
+rtos8266        = []
+idf             = []

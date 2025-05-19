@@ -32,6 +32,7 @@
         "serghei-iakovlev.language-lemon",
         // "supremeconset.binpac-vscode-extension",
         // embedded
+        "basdp.language-gas-x86",
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
@@ -45,10 +46,10 @@
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
-        "swellaby.vscode-rust-test-adapter",
         "vadimcn.vscode-lldb",
-        "probe-rs.probe-rs-debugger",
         "marus25.cortex-debug",
+        "swellaby.vscode-rust-test-adapter",
+        "probe-rs.probe-rs-debugger",
         // F#
         // "ionide.ionide-fsharp",
         // "redhat.vscode-xml",

@@ -7,9 +7,9 @@ PEPS    = E26,E302,E305,E401,E402,E701,E702
 BINFILE = $(MODULE)_$(HW)_$(BRANCH)_$(REL)_$(NOW)
 
 ifeq ($(OS),Windows_NT)
-	HOST = $(shell uname -o)
-	EXE  = .exe
+	WS  = $(shell uname -o)
+	EXE = .exe
 else
-	HOST = $(shell lsb_release -si)
-	EXE  =
+	WS  = $(shell lsb_release -si)
+	EXE =
 endif
