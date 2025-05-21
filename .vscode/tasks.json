@@ -35,16 +35,6 @@
             "problemMatcher" : []
         },
         {
-            "type"           : "cmake",
-            "label"          : "cmake: build",
-            "command"        : "build",
-            "targets"        : ["all"],
-            "preset"         : "${command:cmake.activeBuildPresetName}",
-            "group"          : "build",
-            "problemMatcher" : [],
-            "promptOnClose"  : false
-        },
-        {
             "label"          : "openocd: debug",
             "type"           : "shell",
             "dependsOn"      : "CMake: build",
@@ -70,42 +60,24 @@
             "group"          : {"kind": "build","isDefault": true}
         },
         {
-            "label"          :  "cargo: build",
+            "label"          :  "cargo: pillF103",
             "type"           :  "shell",
             "command"        :  "cargo",
-            "args"           : ["build"], //"--target", "thumbv7em-none-eabihf"],
+            "args"           : ["run","--features","pillF103,stm32f103,cortexM3,bare","--target","thumbv7m-none-eabi"],
             "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          :  "cargo: blink (M3)",
+            "label"          :  "cargo: pc",
             "type"           :  "shell",
             "command"        :  "cargo",
-            "args"           : ["run","-p","blink", "--target", "thumbv7m-none-eabi"],
+            "args"           : ["run","--features","pc,i5,x86_64,linux","--target","x86_64-unknown-linux-gnu"],
             "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
             "group"          : {"kind": "build", "isDefault": true}
-        },
-        {
-            "label"          :  "cargo: blink (M4)",
-            "type"           :  "shell",
-            "command"        :  "cargo",
-            "args"           : ["run","-p","blink", "--target", "thumbv7em-none-eabihf"],
-            "options"        : {"cwd": "${workspaceFolder}"},
-            "problemMatcher" : ["$rustc"],
-            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
-            "group"          : {"kind": "build", "isDefault": true}
-        },
-        {
-            "label"          : "zig: build",
-            "type"           : "shell",
-            "command"        : "zig build",
-            "presentation"   : {"focus": true},
-            "problemMatcher" : [],
-            "group"          : { "kind": "build", "isDefault": true }
         },
     ]
 }
