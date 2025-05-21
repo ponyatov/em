@@ -28,8 +28,7 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath": [
-                "${appInclude}",
-                "${crossInclude}", "${libInclude}",
+                "${appInclude}", "${crossInclude}", "${libInclude}",
                 "${usbInclude}"
             ],
             "defines": [

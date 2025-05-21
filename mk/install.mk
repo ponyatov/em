@@ -2,6 +2,7 @@
 install: $(WS)_install $(RUSTUP) doc ref gz
 	$(RUSTUP) component add rustfmt
 	$(RUSTUP) target    add $(RTARGET)
+	$(RUSTUP) component add rust-src --toolchain nightly
 	$(MAKE) update
 # $(CARGO)  install   cargo-binutils
 # $(RUSTUP) component add llvm-tools

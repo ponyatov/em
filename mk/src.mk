@@ -7,7 +7,7 @@ MK += $(wildcard arch/*.mk)
 MK += $(wildcard   os/*.mk)
 
 # cmake files
-CMK += CMake* cmake/*.cmake
+CM += CMake* cmake/*.cmake
 
 # C/C++
 C += $(wildcard src/*.c*)

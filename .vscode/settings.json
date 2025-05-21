@@ -37,6 +37,7 @@
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
         "memory.x": "linkerscript",
+        "*.kernel": "properties",
         "*.service": "systemd-unit-file"
         //
         ".boot*": "javascript", ".prettierrc": "jsonc",

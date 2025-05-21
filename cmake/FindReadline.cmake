@@ -47,3 +47,5 @@ mark_as_advanced(
     Readline_INCLUDE_DIR
     Readline_LIBRARY
 )
+
+# target_link_libraries(${CMAKE_PROJECT_NAME} ${Readline_LIBRARY})
