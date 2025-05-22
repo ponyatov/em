@@ -1,3 +1,5 @@
+# binary files naming by version & git branch/hash
+
 execute_process(
     OUTPUT_VARIABLE REL
     COMMAND git rev-parse --short=4 HEAD
