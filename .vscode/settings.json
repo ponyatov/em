@@ -1,23 +1,4 @@
 {
-    "multiCommand.commands": [
-        { "command": "multiCommand.f11",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} doxy \u000D"}}]},
-        { "command": "multiCommand.f12",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} cpp \u000D"}}]},
-        { "command": "multiCommand.altx",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} run \u000D"}}]},
-        { "command": "multiCommand.alts",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} format \u000D"}}]},
-    ],
-
     // files
     "files.exclude": {
         "doc/html/**": true,

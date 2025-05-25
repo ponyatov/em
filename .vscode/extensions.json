@@ -21,6 +21,7 @@
         // Web
         "esbenp.prettier-vscode",
         "mechatroner.rainbow-csv",
+        "jock.svg",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
@@ -29,7 +30,6 @@
         "daohong-emilio.yash",
         "rreverser.ragel",
         "serghei-iakovlev.language-lemon",
-        // "supremeconset.binpac-vscode-extension",
         // embedded
         "basdp.language-gas-x86",
         "dan-c-underwood.arm",
@@ -58,7 +58,5 @@
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
-        // Zig
-        "ziglang.vscode-zig",
     ]
 }
