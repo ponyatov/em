@@ -15,8 +15,6 @@ message("-- |    linker: " "${LD}")
 message("-- |    binary: " ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
 message("-- |")
 
-include(espruino)       # custom code generation for Espruino
-
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel

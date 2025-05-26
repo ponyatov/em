@@ -1,26 +1,7 @@
 {
-    "multiCommand.commands": [
-        { "command": "multiCommand.f11",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} doxy \u000D"}}]},
-        { "command": "multiCommand.f12",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} cpp \u000D"}}]},
-        { "command": "multiCommand.altx",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} run \u000D"}}]},
-        { "command": "multiCommand.alts",
-            "sequence": [ "workbench.action.files.saveAll",
-                { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make -C ${workspaceFolder} format \u000D"}}]},
-    ],
-
     // files
     "files.exclude": {
-        "doc/html/**": true,
+        "doc/html": true, "node_modules": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true,
         "lib/python*": true, "lib64":true, "include":true,
@@ -29,19 +10,14 @@
         "ref/**": true, "target/**": true, "obj/**": true,
     },
     "files.associations": {
-        "*.mk": "makefile",
-        "*.ini": "flang", "*.f": "flang",
-        "*.ocd": "properties", "*.gdb*": "properties",
-        "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
+        "*.f": "forth", "*.ini": "forth", "*.mk": "makefile",
+        "*.ld*": "linkerscript", "*.s": "arm", "memory.x": "linkerscript",
+        "*.ocd": "properties", "*.gdb": "properties",
         "*.ioc": "properties", "*.config": "properties",
-        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "requirements.*": "properties",
-        "memory.x": "linkerscript",
         "*.kernel": "properties",
-        "*.service": "systemd-unit-file"
-        //
-        ".boot*": "javascript", ".prettierrc": "jsonc",
-        "*.*proj": "xml",
+        "*.service": "systemd-unit-file",
+        "requirements.*": "properties",
+        ".boot*": "javascript",
     },
 
     // editor
@@ -138,7 +114,6 @@
     "[fsharp]": {
         "editor.defaultFormatter": "Ionide.Ionide-fsharp",
         "editor.formatOnSave"    :  true
-        // "diffEditor.ignoreTrimWhitespace": false
     },
 
     // MinGW/MSYS2
