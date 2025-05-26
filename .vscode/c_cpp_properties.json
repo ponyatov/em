@@ -13,13 +13,8 @@
             "${workspaceFolder}/os/inc/**"
         ],
         "libInclude": [
-            "${workspaceFolder}/lib/c/inc/**",
             "${workspaceFolder}/lib/core/inc/**",
             "${workspaceFolder}/lib/cli/inc/**"
-        ],
-        "usbInclude": [
-            "${workspaceFolder}/hw/f4disco/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
-            "${workspaceFolder}/hw/f4disco/USB_DEVICE/App"
         ]
     },
     "configurations": [
@@ -28,15 +23,10 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath": [
-                "${appInclude}", "${crossInclude}"
+                "${appInclude}", "${crossInclude}", "${libInclude}"
             ],
             "defines": [
-                "PC", "I5", "X86_64", "LINUX",
-                "F4DISCO"  , "STM32F407xx", "STM32F4",
-                "L496DISCO", "STM32L496xx", "STM32L4",
-                "ISKRAJS"  , "STM32F405xx", "STM32F4",
-                "__FPU_PRESENT", "__FPU_USED",
-                "HAVE_INITFINI_ARRAY", "HAVE_INIT_FINI"
+                "PC", "I5", "X86_64", "LINUX"
             ]
         }
     ]
