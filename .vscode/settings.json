@@ -11,7 +11,7 @@
     },
     "files.associations": {
         "*.mk": "makefile",
-        "*.ini": "flang", "*.f": "flang",
+        "*.ini": "forth", "*.f": "forth",
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
@@ -39,25 +39,23 @@
     "explorer.autoReveal": false,
     "git.enabled": false,
     "terminal.integrated.copyOnSelection": true,
+    "editor.formatOnSave"      :  false,
 
     // terminal
-    "SerialTerminal.serial port.configurations": ["115200n1","9600n1"],
+    "SerialTerminal.serial port.configurations": ["115200n1"],
 
     // JavaScript
     "prettier.configPath"         : ".prettierrc",
     "prettier.requireConfig"      :  true,
     "json.format.enable"          :  true,
     "[javascript]": {
-        "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave"     :  false
+        "editor.defaultFormatter" : "esbenp.prettier-vscode"
     },
     "[json]": {
-        "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave"     :  false
+        "editor.defaultFormatter" : "esbenp.prettier-vscode"
     },
     "[jsonc]": {
-        "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave"     :  false
+        "editor.defaultFormatter" : "esbenp.prettier-vscode"
     },
 
     // clang-format
@@ -67,12 +65,10 @@
 
     // C++
     "[c]": {
-        "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave"     :  false
+        "editor.defaultFormatter" : "xaver.clang-format"
     },
     "[cpp]": {
-        "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave"     :  false
+        "editor.defaultFormatter" : "xaver.clang-format"
     },
     // "C_Cpp.intelliSenseEngine": "Tag Parser",
     // "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
@@ -95,9 +91,9 @@
     "python.defaultInterpreterPath":  "python3",
     "autopep8.path"                : ["autopep8"],
     "autopep8.args"                : ["--ignore","E26,E302,E305,E401,E402,E701,E702"],
+    "python.analysis.extraPaths"   : ["${workspaceFolder}/src"],
     "[python]": {
-        "editor.defaultFormatter"  : "ms-python.autopep8",
-        "editor.formatOnSave"      :  false
+        "editor.defaultFormatter"  : "ms-python.autopep8"
     },
 
     // Rust

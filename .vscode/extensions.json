@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "stkb.rewrap",
-        // "ryuta46.multi-command",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
         // formatters

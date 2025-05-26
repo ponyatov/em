@@ -1,4 +1,4 @@
-OS     ?= linux
- TARGET = $(ARCH)-unknown-$(OS)-gnu
-RTARGET = $(ARCH)-unknown-$(OS)-gnu
-QEMU    = qemu-system-$(ARCH)
+OS      = linux
+ TARGET = x86_64-linux-gnu
+RTARGET = x86_64-unknown-linux-gnu
+QEMU    = qemu-system-x86_64

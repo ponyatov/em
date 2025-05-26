@@ -18,7 +18,7 @@
         {
             "label"          : "git: whoami",
             "type"           : "shell",
-            "command"        : "make `whoami`",
+            "command"        : "make whoami",
             "problemMatcher" : []
         },
         {
@@ -55,7 +55,7 @@
         {
             "label"          : "python: run",
             "type"           : "shell",
-            "command"        : "python3 ${file}",
+            "command"        : "bin/python3 src/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
