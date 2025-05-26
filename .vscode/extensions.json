@@ -57,5 +57,9 @@
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
+        // Langium
+        "langium.langium-vscode",
+        "vitest.explorer",
+        "kingwl.vscode-vitest-runner"
     ]
 }

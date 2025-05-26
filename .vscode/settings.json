@@ -1,7 +1,7 @@
 {
     // files
     "files.exclude": {
-        "doc/html/**": true,
+        "doc/html": true, "node_modules": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true,
         "lib/python*": true, "lib64":true, "include":true,
@@ -15,14 +15,10 @@
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
-        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "requirements.*": "properties",
-        "memory.x": "linkerscript",
         "*.kernel": "properties",
-        "*.service": "systemd-unit-file"
-        //
-        ".boot*": "javascript", ".prettierrc": "jsonc",
-        "*.*proj": "xml",
+        "*.service": "systemd-unit-file",
+        "requirements.*": "properties",
+        ".boot*": "javascript",
     },
 
     // editor
@@ -115,7 +111,6 @@
     "[fsharp]": {
         "editor.defaultFormatter": "Ionide.Ionide-fsharp",
         "editor.formatOnSave"    :  true
-        // "diffEditor.ignoreTrimWhitespace": false
     },
 
     // MinGW/MSYS2
