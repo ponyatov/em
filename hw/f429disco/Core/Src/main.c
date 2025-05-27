@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,7 +43,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint8_t hello[] __attribute__((section(".xram"))) = "Hello";
+// uint8_t xram[0x10] __attribute__((section(".xram")));
 
+extern __attribute__((section(".xram"))) uint8_t _sixram, _sxram, _exram;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,7 +57,54 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint8_t CDC_TX[0x10];  ///< USB CDC tx ring
+uint8_t CDC_TX_w = 0;  ///< tx write ring ptr
+uint8_t CDC_TX_t = 0;  ///< tx transmit ptr
 
+bool CDC_TX_empty() {  ///< empty ring
+    return CDC_TX_w == CDC_TX_t;
+}
+
+extern USBD_HandleTypeDef hUsbDeviceHS;
+
+bool CDC_TX_ready() {  /// check USB Tx ready
+    USBD_CDC_HandleTypeDef* hcdc =
+        (USBD_CDC_HandleTypeDef*)hUsbDeviceHS.pClassData;
+    if (hcdc->TxState != 0)
+        return false;
+    else
+        return true;
+}
+
+void CDC_TX_send() {           ///< run USB Tx
+    if (!CDC_TX_empty()) {     ///< check has data
+        if (CDC_TX_ready()) {  ///< check USB ready
+            USBD_CDC_SetTxBuffer(&hUsbDeviceHS, &CDC_TX[CDC_TX_t], 1);
+            USBD_CDC_TransmitPacket(&hUsbDeviceHS);
+            CDC_TX_t = ((CDC_TX_t + 1) & 0x0F);  // step t index
+        }
+    }
+}
+
+void CDC_TX_put(char c) {  ///< put char to buffer & schedule USB TX
+    CDC_TX[CDC_TX_w] = c;
+    CDC_TX_w = ((CDC_TX_w + 1) & 0x0F);  // step w index
+    CDC_TX_send();
+}
+
+// https://community.st.com/t5/stm32-mcus/how-to-redirect-the-printf-function-to-a-uart-for-debug-messages/ta-p/49865
+// https://community.st.com/t5/stm32-mcus-embedded-software/when-is-hal-usb-ready-for-me-to-send/td-p/240978
+
+PUTCHAR_PROTOTYPE {
+    /* Place your implementation of fputc here */
+    /* e.g. write a character to the USART1 and Loop until the end of
+     * transmission */
+    // HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    // CDC_TX_put(ch);
+    while (CDC_Transmit_HS((uint8_t*)&ch, 1) != USBD_OK)
+        HAL_Delay(33);  // blocking send
+    return ch;
+}
 /* USER CODE END 0 */
 
 /**
@@ -92,8 +142,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+    for (int tick = 0;; tick++) {
+        printf("Hello World %.8X\n\r", tick);
+        HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
