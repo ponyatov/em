@@ -1,5 +1,8 @@
 {
     // files
+    "C_Cpp.files.exclude": {
+        "ref":true,
+    },
     "files.exclude": {
         "doc/html": true, "node_modules": true,
         "bin/py*": true, "bin/pip*": true,
@@ -10,8 +13,9 @@
         "ref/**": true, "target/**": true, "obj/**": true,
     },
     "files.associations": {
-        "*.mk": "makefile",
+        "*.mk": "makefile", "*.make": "makefile",
         "*.ini": "forth", "*.f": "forth",
+        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "*.ocd": "properties", "*.gdb*": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
