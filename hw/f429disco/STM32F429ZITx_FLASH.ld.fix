@@ -17,10 +17,10 @@ _Min_Stack_Size = 0x400;          /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH  (rx)      : ORIGIN =  0x8000000, LENGTH = 2048K
-RAM    (xrw)     : ORIGIN = 0x20000000, LENGTH =  192K
-CCMRAM (xrw)     : ORIGIN = 0x10000000, LENGTH =   64K
-XRAM   (xrw)     : ORIGIN = 0x60000000, LENGTH =    8M
+FLASH  (r x)     : ORIGIN =  0x8000000, LENGTH = 2048K
+RAM    (rwx)     : ORIGIN = 0x20000000, LENGTH =  192K
+CCM    (rwx)     : ORIGIN = 0x10000000, LENGTH =   64K
+XRAM   (rwx)     : ORIGIN = 0xD0000000, LENGTH =    8M
 }
 
 /* Define output sections */
@@ -103,7 +103,7 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
   } >RAM AT> FLASH
 
-  _siccmram = LOADADDR(.ccmram);
+  _siccm = LOADADDR(.ccm);
 
   /* CCM-RAM section 
   * 
@@ -111,16 +111,16 @@ SECTIONS
   * If initialized variables will be placed in this section,
   * the startup code needs to be modified to copy the init-values.  
   */
-  .ccmram :
+  .ccm :
   {
     . = ALIGN(4);
-    _sccmram = .;       /* create a global symbol at ccmram start */
-    *(.ccmram)
-    *(.ccmram*)
+    _sccm = .;       /* create a global symbol at ccmram start */
+    *(.ccm)
+    *(.ccm*)
     
     . = ALIGN(4);
-    _eccmram = .;       /* create a global symbol at ccmram end */
-  } >CCMRAM AT> FLASH
+    _eccm = .;       /* create a global symbol at ccmram end */
+  } >CCM AT> FLASH
   
   /* Uninitialized data section */
   . = ALIGN(4);
@@ -152,13 +152,11 @@ SECTIONS
   _sixram = LOADADDR(.xram);
 
   /* External RAM section */
-  .xram (NOLOAD) :
+  .xram :
   {
     . = ALIGN(0x10);
     _sxram = .;       /* create a global symbol at xram start */
-    *(.xram)
-    *(.xram*)
-
+    KEEP (*(.xram*))
     . = ALIGN(0x10);
     _exram = .;       /* create a global symbol at xram end */
   } >XRAM AT> FLASH

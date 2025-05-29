@@ -1,7 +1,6 @@
-/// https://en.radzio.dxp.pl/stm32f429idiscovery/sdram.html
-
 #include "sdram.h"
 
+/// https://en.radzio.dxp.pl/stm32f429idiscovery/sdram.html
 void SDRAM_Init() {
     // Enable clock for FMC
     RCC->AHB3ENR |= RCC_AHB3ENR_FMCEN;
@@ -38,4 +37,10 @@ void SDRAM_Init() {
     FMC_Bank5_6->SDRTR |= (683 << 1);
     while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
         ;
+
+    uint8_t* s = &_sxram;
+    uint8_t* e = &_exram;
+    size_t l = e - s;
+    uint8_t* x = &_sixram;
+    memcpy(s, x, l);
 }
