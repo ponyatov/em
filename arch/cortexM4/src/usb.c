@@ -1,4 +1,4 @@
-#include "usbd_cdc_if.h"
+#include "usb.h"
 
 // https://community.st.com/t5/stm32-mcus/how-to-redirect-the-printf-function-to-a-uart-for-debug-messages/ta-p/49865
 // https://community.st.com/t5/stm32-mcus-embedded-software/when-is-hal-usb-ready-for-me-to-send/td-p/240978
@@ -13,3 +13,14 @@ int __io_putchar(int ch) {
         HAL_Delay(11);  // blocking send
     return ch;
 }
+
+// bool CDC_TX_ready() {  /// check USB Tx ready
+//     USBD_CDC_HandleTypeDef* hcdc =
+//         (USBD_CDC_HandleTypeDef*)hUsbDeviceHS.pClassData;
+//     if (hcdc->TxState != 0)
+//         return false;
+//     else
+//         return true;
+//             USBD_CDC_SetTxBuffer(&hUsbDeviceHS, &CDC_TX[CDC_TX_t], 1);
+//             USBD_CDC_TransmitPacket(&hUsbDeviceHS);
+// }
