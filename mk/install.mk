@@ -4,9 +4,7 @@ install: $(WS)_install $(RUSTUP) $(PIP) doc ref gz
 	$(RUSTUP) target    add $(RTARGET)
 	$(RUSTUP) component add rust-src --toolchain nightly
 	$(MAKE) update
-# $(CARGO)  install   cargo-binutils
-# $(RUSTUP) component add llvm-tools
-update : $(WS)_update $(RUSTUP) $(PIP)
+update : $(WS)_update $(RUSTUP) $(PIP) $(NPM) $(TSC) $(YO)
 	$(RUSTUP) self update
 	$(RUSTUP)      update
 	$(PIP) install -U -r requirements.txt

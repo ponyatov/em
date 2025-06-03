@@ -35,6 +35,14 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "ts: build",
+            "type"           : "shell",
+            "command"        : "tsc src/${workspaceFolderBasename}.ts",
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "openocd: debug",
             "type"           : "shell",
             "group"          : {"kind": "build", "isDefault": false },
