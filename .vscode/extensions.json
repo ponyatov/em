@@ -27,6 +27,7 @@
         // JS
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
