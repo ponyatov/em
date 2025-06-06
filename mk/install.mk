@@ -20,6 +20,3 @@ Msys_install: doc ref gz
 	pacman -Suy
 Msys_update:
 	pacman -S $(shell cat apt.$(WS) | tr '\n' ' ') $(MSYS)
-
-$(PY) $(PIP):
-	python3 -m venv .

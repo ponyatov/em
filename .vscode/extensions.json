@@ -5,8 +5,9 @@
         "IBM.output-colorizer",
         // GPT
         "AmazonWebServices.aws-toolkit-vscode",
-        "aleksandardev.vscode-sequence-diagrams",
         "jebbs.plantuml",
+        "bierner.markdown-mermaid"
+        // "aleksandardev.vscode-sequence-diagrams",
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",

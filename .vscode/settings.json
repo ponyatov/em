@@ -4,12 +4,13 @@
         "ref":true,
     },
     "files.exclude": {
-        "doc/html": true, "node_modules": true,
+        "doc/html": true, "**/node_modules/**": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true,
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
+        "**/bin/**": true, "**/tmp/**": true,
         "ref/**": true, "target/**": true, "obj/**": true,
     },
     "files.associations": {
@@ -39,7 +40,7 @@
     "explorer.autoReveal": false,
     "git.enabled": false,
     "terminal.integrated.copyOnSelection": true,
-    "editor.formatOnSave"      :  false,
+    "editor.formatOnSave": false,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],
@@ -89,14 +90,14 @@
     "[python]": { "editor.defaultFormatter"  : "ms-python.autopep8" },
 
     // Rust
-    "rust-analyzer.checkOnSave"     : false,
-    "rust-analyzer.check.allTargets": false,
-    // "rust-analyzer.cargo.target"    : "x86_64-unknown-linux-gnu",
-    // "rust-analyzer.cargo.target"    : "aarch64-unknown-linux-gnu",
-    // "rust-analyzer.cargo.target"    : "wasm32-unknown-unknown",
-    "rust-analyzer.cargo.target"    : "thumbv7m-none-eabihf",
-    // "rust-analyzer.cargo.target"    : "thumbv7em-none-eabihf",
-    // "rust-analyzer.cargo.target"    : "i686-pc-windows-gnu",
+    "rust-analyzer.checkOnSave"          : false,
+    "rust-analyzer.check.allTargets"     : false,
+    "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
+    // "rust-analyzer.cargo.target"      : "aarch64-unknown-linux-gnu",
+    // "rust-analyzer.cargo.target"      : "wasm32-unknown-unknown",
+    // "rust-analyzer.cargo.target"      : "thumbv7m-none-eabihf",
+    // "rust-analyzer.cargo.target"      : "thumbv7em-none-eabihf",
+    // "rust-analyzer.cargo.target"      : "i686-pc-windows-gnu",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
     // F#
