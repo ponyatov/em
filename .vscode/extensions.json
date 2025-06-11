@@ -6,7 +6,7 @@
         // GPT
         "AmazonWebServices.aws-toolkit-vscode",
         "jebbs.plantuml",
-        "bierner.markdown-mermaid"
+        "bierner.markdown-mermaid",
         // "aleksandardev.vscode-sequence-diagrams",
         // formatters
         "xaver.clang-format",
@@ -37,6 +37,7 @@
         "daohong-emilio.yash",
         "rreverser.ragel",
         "serghei-iakovlev.language-lemon",
+        "AlecGhost.tree-sitter-vscode",
         // embedded
         "basdp.language-gas-x86",
         "dan-c-underwood.arm",
@@ -57,8 +58,9 @@
         "swellaby.vscode-rust-test-adapter",
         "probe-rs.probe-rs-debugger",
         // F#
-        // "ionide.ionide-fsharp",
-        // "redhat.vscode-xml",
+        "ionide.ionide-fsharp",
+        "redhat.vscode-xml",
+        "mnxn.fsharp-fsl-fsy",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
         // "mnxn.fsharp-fsl-fsy",

@@ -1,13 +1,17 @@
+[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+
 [build]
 target = "x86_64-unknown-linux-gnu"
 
 [target.x86_64-unknown-linux-gnu]
 linker = "x86_64-linux-gnu-gcc"
-runner = 'arch/x86_64/x86_64.runner'
 
 [target.aarch64-unknown-linux-gnu]
 linker = "aarch64-linux-gnu-gcc"
-runner = 'arch/aarch64/aarch64.runner'
 
 [target.thumbv7m-none-eabi]
 linker = "arm-none-eabi-gcc"
@@ -40,4 +44,3 @@ linker = "rust-lld"
 
 [target.i686-pc-windows-gnu]
 linker = "i686-w64-mingw32-gcc"
-runner = 'os/mingw/mingw.runner'

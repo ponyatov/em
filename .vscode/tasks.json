@@ -35,6 +35,15 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "cargo: run",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["run"],
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "ts: build",
             "type"           : "shell",
             "command"        : "tsc src/${workspaceFolderBasename}.ts",
