@@ -3,6 +3,8 @@ replace-with = 'ustc'
 
 [source.ustc]
 registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+[source.tsinghua]
+registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
 
 [build]
 target = "x86_64-unknown-linux-gnu"
