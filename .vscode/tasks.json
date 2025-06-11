@@ -39,7 +39,18 @@
             "type"           : "shell",
             "command"        : "cargo",
             "args"           : ["run"],
-            "problemMatcher" : [],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "cargo: test",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["test"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
