@@ -69,7 +69,7 @@
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd",
             "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true}
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": true}
         },
         {
             "label"          : "openocd: firmware",
