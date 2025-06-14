@@ -12,13 +12,33 @@
                     "--target=x86_64-unknown-linux-gnu",
                     "--bin=${workspaceFolderBasename}",
                     "--package=${workspaceFolderBasename}"
+                ]
+            },
+            "args": ["1024", "768"],
+            "cwd": "${workspaceFolder}",
+            // "stopOnEntry": true,
+            "preLaunchTask": "cargo: build",
+            "preRunCommands": [
+                "process launch --stop-at-entry"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "rust:tests",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=${workspaceFolderBasename}"
                 ],
                 "filter": {
                     "name": "${workspaceFolderBasename}",
-                    "kind": "bin"
+                    "kind": "lib"
                 }
             },
-            "args": ["1024", "578"],
+            "args": [],
             "cwd": "${workspaceFolder}"
         },
         {

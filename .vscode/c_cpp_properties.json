@@ -15,7 +15,7 @@
         "libInclude": [
             "${workspaceFolder}/lib/core/inc/**",
             "${workspaceFolder}/lib/cli/inc/**"
-        ]
+        ],
     },
     "configurations": [
         {
@@ -23,7 +23,7 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath": [
-                "${appInclude}", "${crossInclude}", "${libInclude}"
+                "${appInclude}",
             ],
             "defines": [
                 "PC", "I5", "X86_64", "LINUX"

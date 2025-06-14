@@ -27,8 +27,8 @@
         "jock.svg",
         // JS
         "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
         "denoland.vscode-deno",
+        "dbaeumer.vscode-eslint",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
