@@ -17,7 +17,7 @@
         "*.mk": "makefile", "*.make": "makefile",
         "*.ini": "forth", "*.f": "forth",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "*.ocd": "properties", "*.gdb*": "properties",
+        "*.ocd": "properties", "*.gdb": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.config": "properties",
         "*.kernel": "properties",
