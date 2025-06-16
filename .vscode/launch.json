@@ -42,25 +42,26 @@
             "cwd": "${workspaceFolder}"
         },
         {
-            "name"         : "lm3s6",
-            "type"         : "cortex-debug",
-            "request"      : "launch",
-            "executable": "target/thumbv7m-none-eabi/debug/fortex",
-            "cwd"       : "${workspaceFolder}/fortex",
+            "name"              : "pillf103",
+            "type"              : "cortex-debug",
+            "request"           : "launch",
+            "executable"        : "target/thumbv7m-none-eabi/debug/em",
+            "cwd"               : "${workspaceFolder}",
             "servertype"        : "qemu",
+            "machine"           : "netduino2",
             "cpu"               : "cortex-m3",
-            "machine"           : "lm3s6965evb",
             // "gdbTarget": ":12345",
-            "preLaunchTask"     : "cargo: fortex",
+            "preLaunchTask"     : "cargo: pillf103",
+            "gdbPath"           : "gdb-multiarch",
             // "runToEntryPoint"   : "DefaultPreInit",
             "runToEntryPoint"   : "main",
-            "preRestartCommands": [
-                "load",
-                // "break DefaultPreInit",
-                "break Reset",
-                "break ResetHandler",
-                "break DefaultHandler",
-            ]
+            // "preRestartCommands": [
+            //     "load",
+            //     // "break DefaultPreInit",
+            //     "break Reset",
+            //     "break ResetHandler",
+            //     "break DefaultHandler",
+            // ]
         },
         {
             "name"          : "cortex",

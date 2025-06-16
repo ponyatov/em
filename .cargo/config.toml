@@ -1,16 +1,16 @@
-[source.crates-io]
-replace-with = 'ustc'
-
-[source.ustc]
-registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
-[source.tsinghua]
-registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
-
 [build]
-target = "x86_64-unknown-linux-gnu"
+# target = "x86_64-unknown-linux-gnu"
+target   = "thumbv7m-none-eabi"
+# features = ["pillf103"]
 
 [target.x86_64-unknown-linux-gnu]
 linker = "x86_64-linux-gnu-gcc"
+
+[target.wasm32-unknown-unknown]
+linker = "rust-lld"
+
+[target.i686-pc-windows-gnu]
+linker = "i686-w64-mingw32-gcc"
 
 [target.aarch64-unknown-linux-gnu]
 linker = "aarch64-linux-gnu-gcc"
@@ -21,7 +21,7 @@ runner = [
     'qemu-system-arm',
     '-machine','netduino2','-cpu','cortex-m3',
     '-nographic','-semihosting-config','enable=on,target=native',
-    '-kernel'
+    '-s','-S','-kernel'
 ]
 rustflags = [
     "-C", "link-arg=-Tlink.x",
@@ -34,15 +34,17 @@ runner = [
     'qemu-system-arm',
     '-machine','netduinoplus2','-cpu','cortex-m4',
     '-nographic','-semihosting-config','enable=on,target=native',
-    '-kernel'
+    '-s','-S','-kernel'
 ]
 rustflags = [
     "-C", "link-arg=-Tlink.x",
     "-C", "link-arg=-nostartfiles",
 ]
 
-[target.wasm32-unknown-unknown]
-linker = "rust-lld"
+[source.crates-io]
+replace-with = 'ustc'
 
-[target.i686-pc-windows-gnu]
-linker = "i686-w64-mingw32-gcc"
+[source.ustc]
+registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+[source.tsinghua]
+registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"

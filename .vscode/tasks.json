@@ -55,6 +55,26 @@
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
         {
+            "label"          : "cargo: pillf103",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["build","--features","pillf103","--target","thumbv7m-none-eabi"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "cargo: f429disco",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["build","--features","f429disco","--target","thumbv7em-none-eabihf"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "ts: build",
             "type"           : "shell",
             "command"        : "tsc src/${workspaceFolderBasename}.ts",
@@ -87,26 +107,6 @@
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
-        },
-        {
-            "label"          :  "cargo: pillF103",
-            "type"           :  "shell",
-            "command"        :  "cargo",
-            "args"           : ["run","--features","pillF103,stm32f103,cortexM3,bare","--target","thumbv7m-none-eabi"],
-            "options"        : {"cwd": "${workspaceFolder}"},
-            "problemMatcher" : ["$rustc"],
-            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
-            "group"          : {"kind": "build", "isDefault": true}
-        },
-        {
-            "label"          :  "cargo: pc",
-            "type"           :  "shell",
-            "command"        :  "cargo",
-            "args"           : ["run","--features","pc,i5,x86_64,linux","--target","x86_64-unknown-linux-gnu"],
-            "options"        : {"cwd": "${workspaceFolder}"},
-            "problemMatcher" : ["$rustc"],
-            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent"},
-            "group"          : {"kind": "build", "isDefault": true}
         },
     ]
 }

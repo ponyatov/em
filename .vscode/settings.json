@@ -15,7 +15,6 @@
     },
     "files.associations": {
         "*.mk": "makefile", "*.make": "makefile",
-        "*.ini": "forth", "*.f": "forth",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "*.ocd": "properties", "*.gdb": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
@@ -23,6 +22,7 @@
         "*.kernel": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
+        "*.ini": "forth", "*.f": "forth",
         ".boot*": "javascript",
     },
 
@@ -92,12 +92,14 @@
     // Rust
     "rust-analyzer.checkOnSave"          : false,
     "rust-analyzer.check.allTargets"     : false,
-    "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
-    // "rust-analyzer.cargo.target"      : "aarch64-unknown-linux-gnu",
-    // "rust-analyzer.cargo.target"      : "wasm32-unknown-unknown",
-    // "rust-analyzer.cargo.target"      : "thumbv7m-none-eabihf",
-    // "rust-analyzer.cargo.target"      : "thumbv7em-none-eabihf",
-    // "rust-analyzer.cargo.target"      : "i686-pc-windows-gnu",
+    // "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
+    // "rust-analyzer.cargo.target"         : "aarch64-unknown-linux-gnu",
+    // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
+    "rust-analyzer.cargo.target"         : "thumbv7m-none-eabihf",
+    "rust-analyzer.cargo.features"       : ["cortex","stm32f1"],
+    // "rust-analyzer.cargo.target"         : "thumbv7em-none-eabihf",
+    // "rust-analyzer.cargo.features"       : ["cortex","stm32f4"],
+    // "rust-analyzer.cargo.target"         : "i686-pc-windows-gnu",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
     // F#
