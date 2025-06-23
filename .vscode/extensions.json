@@ -36,7 +36,7 @@
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
-        "serghei-iakovlev.language-lemon",
+        // "serghei-iakovlev.language-lemon",
         // "AlecGhost.tree-sitter-vscode",
         // embedded
         "basdp.language-gas-x86",

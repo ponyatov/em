@@ -108,5 +108,21 @@
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
         },
+        {
+            "label"          : "F#: fsi",
+            "type"           : "shell",
+            "command"        : "fsi",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
+            "group"          : {"kind": "build","isDefault": true}
+        },
+        {
+            "label"          : "F#: build",
+            "type"           : "shell",
+            "command"        : "dotnet build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
+            "group"          : {"kind": "build","isDefault": true}
+        },
     ]
 }

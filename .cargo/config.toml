@@ -1,19 +1,29 @@
 [build]
-# target = "x86_64-unknown-linux-gnu"
-target   = "thumbv7m-none-eabi"
-# features = ["pillf103"]
+target   = "x86_64-unknown-linux-gnu"
+features = ["pc","i5","x86_64","linux"]
+# target   = "aarch64-linux-gnu-gcc"
+# features = ["pi800","rk3399","aarch64","linux"]
+# target   = "thumbv7em-none-eabihf"
+
+[profile.dev]
+codegen-units = 1
+# panic = "abort"
 
 [target.x86_64-unknown-linux-gnu]
-linker = "x86_64-linux-gnu-gcc"
+linker    = "x86_64-linux-gnu-gcc"
+# rustflags = ["-C", "link-arg=-nostartfiles"]
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+
+[target.armv7-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
 
 [target.wasm32-unknown-unknown]
 linker = "rust-lld"
 
 [target.i686-pc-windows-gnu]
 linker = "i686-w64-mingw32-gcc"
-
-[target.aarch64-unknown-linux-gnu]
-linker = "aarch64-linux-gnu-gcc"
 
 [target.thumbv7m-none-eabi]
 linker = "arm-none-eabi-gcc"

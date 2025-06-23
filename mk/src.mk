@@ -41,4 +41,6 @@ P += $(wildcard django/tracker/settings.py)
 P += $(wildcard django/task/*.py)
 
 # Rust
-R += $(wildcard src/*.rs)
+R += $(wildcard      ./src/*.rs)      ./Cargo.toml
+R += $(wildcard config/src/*.rs) config/Cargo.toml
+R += $(wildcard server/src/*.rs) server/Cargo.toml
