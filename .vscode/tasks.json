@@ -111,7 +111,7 @@
         {
             "label"          : "F#: fsi",
             "type"           : "shell",
-            "command"        : "fsi",
+            "command"        : "dotnet fsi",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
