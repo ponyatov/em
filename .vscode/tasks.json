@@ -35,6 +35,14 @@
             "problemMatcher" : []
         },
         {
+            "label"          : "AI: context",
+            "type"           : "shell",
+            "command"        : "make ai",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
             "label"          : "cargo: run",
             "type"           : "shell",
             "command"        : "cargo",
@@ -85,11 +93,11 @@
         {
             "label"          : "openocd: debug",
             "type"           : "shell",
-            "group"          : {"kind": "build", "isDefault": false },
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd",
             "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": true}
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
+            "group"          : {"kind": "build", "isDefault": false }
         },
         {
             "label"          : "openocd: firmware",
