@@ -56,6 +56,8 @@
     //   "typescript.updateImportsOnFileMove.enabled": "always",
     //   "javascript.updateImportsOnFileMove.enabled": "always",
 
+    // Go
+
     // clang-format
     "clang-format.executable"     : "clang-format",
     "clang-format.fallbackStyle"  : "Google",
@@ -64,8 +66,8 @@
     // C++
     "[c]"  : { "editor.defaultFormatter" : "xaver.clang-format" },
     "[cpp]": { "editor.defaultFormatter" : "xaver.clang-format" },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     // "C_Cpp.intelliSenseEngine": "Tag Parser",
-    // "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
 
     // CMake
     "cmake.sourceDirectory" : "${workspaceFolder}",

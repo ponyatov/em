@@ -29,6 +29,8 @@
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "denoland.vscode-deno",
+        // Go
+        "golang.go",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",

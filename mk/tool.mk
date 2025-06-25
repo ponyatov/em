@@ -6,6 +6,9 @@ PY     = $(CWD)/bin/python3
 PIP    = $(CWD)/bin/pip3
 RUSTUP = $(CAR)/bin/rustup
 CARGO  = $(CAR)/bin/cargo
+#
+GO     = /usr/local/go/bin/go
+GOPLS  = $(GOPATH)/bin/gopls
 NPM    = /usr/bin/npm
 TSC    = $(HOME)/.npm/bin/tsc
 YO     = $(HOME)/.npm/bin/yo
