@@ -9,7 +9,7 @@ HW ?= pc
 # HW ?= l496disco
 # HW ?= f429disco
 # HW ?= pi800
-# HW ?= esp8266
+# HW ?= esp32
 
 include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk

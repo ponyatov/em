@@ -28,7 +28,7 @@ C += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
 H += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 
 # ini
-F += $(wildcard lib/*.ini) $(wildcard lib/*.f)
+S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # JavaScript
 J += $(wildcard src/*.js)
@@ -41,4 +41,9 @@ P += $(wildcard django/tracker/settings.py)
 P += $(wildcard django/task/*.py)
 
 # Rust
-R += $(wildcard src/*.rs)
+R += $(wildcard      ./src/*.rs)      ./Cargo.toml
+R += $(wildcard config/src/*.rs) config/Cargo.toml
+R += $(wildcard server/src/*.rs) server/Cargo.toml
+
+# F#
+F += $(wildcard fs/*.fs*)

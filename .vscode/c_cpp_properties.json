@@ -23,7 +23,7 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath": [
-                "${appInclude}",
+                "${appInclude}"
             ],
             "defines": [
                 "PC", "I5", "X86_64", "LINUX"
