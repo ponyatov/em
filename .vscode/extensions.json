@@ -66,7 +66,6 @@
         "mnxn.fsharp-fsl-fsy",
         // "tintoy.msbuild-project-tools",
         // "ms-dotnettools.csdevkit",
-        // "mnxn.fsharp-fsl-fsy",
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
