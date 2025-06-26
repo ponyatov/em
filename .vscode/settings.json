@@ -22,7 +22,7 @@
         "*.kernel": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
-        "*.ini": "python", "*.f": "python",
+        "*.ini": "properties", "*.f": "properties",
     },
 
     // editor
