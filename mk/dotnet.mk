@@ -1,3 +1,6 @@
+MS_URL      = http://packages.microsoft.com
+DOTNET_VER ?= 9.0
+
 .PHONY: dotnet
 dotnet: \
 	/etc/apt/trusted.gpg.d/microsoft.asc \
