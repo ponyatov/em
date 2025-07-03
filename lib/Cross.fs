@@ -103,3 +103,6 @@ let cross: unit = //
     cpu
     arch
     os
+
+cross
+COMMIT

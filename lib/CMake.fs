@@ -142,31 +142,49 @@ add_link_options()
 """
     )
 
+let install: unit = //
+    File.WriteAllText(
+        "cmake/install.cmake",
+        """# target install
+
+set_target_properties(${CMAKE_PROJECT_NAME}
+    PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
+install(TARGETS ${CMAKE_PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_PREFIX})
+file(CREATE_LINK ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
+    ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME} SYMBOLIC)
+""")
+
+let cmakes =     [
+    "any_toolchain";
+        "x86_64-linux-gnu";
+        "aarch64-linux-gnu";
+        "arm-none-eabi";
+        "xtensa-lx106-elf";
+        "i686-w64-mingw32";
+        "syntax";
+        "FindLEMON";
+        "FindReadline";
+        "FindRAGEL";
+        "clean";
+        "src";
+        "version";
+        "cross";
+        "install" ]
+
 let cmake: unit = //
     mkdir "cmake"
     CMakeLists
     CMakePresets
 
-    for cm in
-        [ "any_toolchain"
-          "x86_64-linux-gnu"
-          "aarch64-linux-gnu"
-          "arm-none-eabi"
-          "xtensa-lx106-elf"
-          "i686-w64-mingw32"
-          "syntax"
-          "FindLEMON"
-          "FindReadline"
-          "FindRAGEL"
-          "clean"
-          "src"
-          "version"
-          "cross"
-          "install" ] do
+    for cm in cmakes do
         touch $"cmake/{cm}.cmake"
 
     cmsrc
     x86_64_linux_gnu
+    install
+
+    let Find = $"cp ~/em/cmake/Find* cmake/"
 
 cmake
 COMMIT
