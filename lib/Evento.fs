@@ -6,6 +6,7 @@ open System.IO
 // project metainfo
 let APP = "Evento"
 let TITLE = "Embedded Programming Language Prototype"
+
 let ABOUT =
     "
 - smart vehicles, industrial automation & IIoT
@@ -38,7 +39,7 @@ let GITFLIC = $"git remote add flic git@gitflic.ru:dponyatov/evento.git"
 let CHECKOUT = $"git checkout --orphan {USER}"
 let RC = "ln -fs ../rc rc"
 
-let README:unit =
+let README: unit =
     File.WriteAllText(
         "README.md",
         $"\
@@ -50,10 +51,9 @@ let README:unit =
 github: {GITHUB}/{APP}
 {ABOUT}"
     )
-    
+
 let COMMIT = "git add -A ; git commit -am \".\""
 let PUSH = $"git push -uv gh {USER}"
 
 let GITGUI = $"git gui &"
 let CODE = $"excode {HOME}/{APP}"
-
