@@ -204,7 +204,7 @@ let doc:unit =
 let lib:unit = 
     Directory.CreateDirectory("lib") |> ignore
     File.WriteAllText("lib/.gitignore","!.gitignore\n")
-    File.WriteAllText($"lib/{APP}.fs","")
+    File.WriteAllText($"lib/{APP}.ini","# line comment\n")
 
 let inc:unit = 
     Directory.CreateDirectory("inc") |> ignore
@@ -287,9 +287,17 @@ let files:unit =
     apt
     mk
     cmake
-    
+
+let fs:unit =
+    File.WriteAllText($"lib/{APP}.fs","")
+    File.WriteAllText($"lib/VSCode.fs","")
+    File.WriteAllText($"lib/Make.fs","")
+    File.WriteAllText($"lib/CMake.fs","")
+    File.WriteAllText($"{APP}.fsproj","")
+
 let project: unit =
     dirs
     files
+    fs
 
 COMMIT
