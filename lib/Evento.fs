@@ -4,7 +4,7 @@
 let APP = "Evento"
 let TITLE = "Embedded Programming Language Prototype"
 
-let ABOUT =
+let ABOUT = //
     "
 - smart vehicles, industrial automation & IIoT
 - targets microcontrollers & embedded Linux
@@ -31,27 +31,34 @@ let touch (path: string) : unit =
 let mkdir (path: string) : unit =
     if not (Directory.Exists(path)) then
         Directory.CreateDirectory(path) |> ignore
-
     let giti = Path.Combine(path, ".gitignore")
-
     if not (File.Exists(giti)) then
-        File.WriteAllText(giti, "!.gitignore\n")
+        File.WriteAllText(giti,"!.gitignore\n")
 
 // env
 let USER = Environment.UserName
 let HOME = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
 
-// github repo
-let CLONE = $"git clone -o gh git@github.com:ponyatov/{APP}.git {HOME}/{APP}"
-
+// empty repo
+mkdir $"{HOME}/{APP}"
 Directory.SetCurrentDirectory($"{HOME}/{APP}")
-
 let CWD = Environment.CurrentDirectory
 
-let GITFLIC = $"git remote add flic git@gitflic.ru:dponyatov/evento.git"
+let lib: unit =
+    mkdir "lib"
+    File.WriteAllText($"lib/{APP}.ini", "# line comment\n")
+    let CP = $"cp ~/em/lib/*.fs lib/"
 
-let CHECKOUT = $"git checkout --orphan {USER}"
 let RC = "ln -fs ../rc rc"
+let CODE = $"excode ."
+
+// github repo
+let INIT = "git init"
+// let CLONE = $"git clone -o gh git@github.com:ponyatov/{APP}.git {HOME}/{APP}"
+let GH   = $"git remote add gh git@github.com:ponyatov/{APP}.git"
+let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{APP}.git"
+let CHECKOUT = $"git checkout --orphan {USER}"
+let GITGUI = $"git gui &"
 
 let README: unit =
     File.WriteAllText(
@@ -66,33 +73,18 @@ github: {GITHUB}/{APP}
 {ABOUT}"
     )
 
-let COMMIT = "git add -A ; git commit -am \".\""
-let PUSH = $"git push -uv gh {USER}"
-
-let GITGUI = $"git gui &"
-let CODE = $"excode {HOME}/{APP}"
-
-let bin: unit =
-    mkdir "bin"
-    File.WriteAllText("bin/.gitignore", "*\n!.gitignore\n")
-
 let doc: unit =
     mkdir "doc"
     File.WriteAllText("doc/.gitignore", "html/\n!.gitignore\n")
 
-let lib: unit =
-    mkdir "lib"
-    File.WriteAllText($"lib/{APP}.ini", "# line comment\n")
+let LOGO = "cp ~/icons/control64.png doc/logo.png"
+let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
 
-let inc: unit = mkdir "inc"
+let COMMIT = $"git add -A ; git commit -am \".\" ; git push -uv gh {USER}"
 
-let src: unit =
-    Directory.CreateDirectory("src") |> ignore
-    File.WriteAllText("src/.gitignore", "!.gitignore\n")
-    hpp
-    cpp
-    lex
-    yacc
+let bin: unit =
+    mkdir "bin"
+    File.WriteAllText("bin/.gitignore", "*\n!.gitignore\n")
 
 let tmp: unit =
     Directory.CreateDirectory("tmp") |> ignore
@@ -102,16 +94,14 @@ let ref: unit =
     Directory.CreateDirectory("ref") |> ignore
     File.WriteAllText("ref/.gitignore", "*\n!.gitignore\n")
 
-
 let dirs: unit =
-    vscode
     bin
     doc
     lib
-    inc
-    src
     tmp
     ref
+    vscode // VSCode.fs
+    src    // Cpp.fs
 
 let giti: unit =
     File.WriteAllText(".gitignore", "~\n*.swp\n*.log\n*.exe\n*.o\ntarget/\nobj/\n!.gitignore\n")
@@ -133,15 +123,16 @@ qemu-system-x86
 """
     )
 
-let doxygen: unit = File.WriteAllText(".doxygen", "")
+let doxygen: unit = //
+    File.WriteAllText(".doxygen", "")
 
 let files: unit =
     giti
-    format
     doxygen
     apt
-    mk
-    cmake
+    format // Format.fs
+    mk     // Make.fs
+    cmake  // CMake.fs
 
 let fsharp: unit =
     touch $"lib/{APP}.fs"

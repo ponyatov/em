@@ -1,5 +1,13 @@
 module VSCode
 
+let vscode: unit =
+    mkdir ".vscode"
+    c_cpp_properties
+    extensions
+    tasks
+    launch
+    settings
+
 let c_cpp_properties: unit =
     File.WriteAllText(
         ".vscode/c_cpp_properties.json",
@@ -151,11 +159,3 @@ let settings: unit =
 }
 """
     )
-
-let vscode: unit =
-    mkdir ".vscode"
-    c_cpp_properties
-    extensions
-    tasks
-    launch
-    settings
