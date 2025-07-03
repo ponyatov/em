@@ -77,7 +77,7 @@ let CMakePresets: unit = //
 """
     )
 
-let src: unit = //
+let cmsrc: unit = //
     File.WriteAllText(
         "cmake/src.cmake",
         """# scan project for source code files
@@ -163,7 +163,10 @@ let cmake: unit = //
           "version"
           "cross"
           "install" ] do
-        File.WriteAllText($"cmake/{cm}.cmake", "")
+        touch $"cmake/{cm}.cmake"
 
-    src
+    cmsrc
     x86_64_linux_gnu
+
+cmake
+COMMIT

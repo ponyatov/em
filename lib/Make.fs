@@ -1,4 +1,16 @@
-let makefile: unit = File.WriteAllText("Makefile")
+let makes =
+    [ "var"
+      "version"
+      "dir"
+      "tool"
+      "src"
+      "cfg"
+      "all"
+      "format"
+      "rule"
+      "doc"
+      "install"
+      "merge" ]
 
 let var: unit = //
     File.WriteAllText(
@@ -88,28 +100,11 @@ Msys_update:
 "
     )
 
-
-
 let mk: unit =
-    Directory.CreateDirectory("mk") |> ignore
-    File.WriteAllText("mk/.gitignore", "!.gitignore\n")
-
-    let makes =
-        [ "var"
-          "version"
-          "dir"
-          "tool"
-          "src"
-          "cfg"
-          "all"
-          "format"
-          "rule"
-          "doc"
-          "install"
-          "merge" ]
+    mkdir "mk"
 
     for mk in makes do
-        File.WriteAllText($"mk/{mk}.mk", "")
+        touch $"mk/{mk}.mk"
 
     File.WriteAllText(
         $"Makefile",
@@ -124,3 +119,6 @@ let mk: unit =
     tool
     all
     install
+
+mk
+COMMIT
