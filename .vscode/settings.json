@@ -37,9 +37,9 @@
     "workbench.tree.indent": 24,
     "editor.fontSize": 14,
     "explorer.autoReveal": false,
-    "git.enabled": false,
     "terminal.integrated.copyOnSelection": true,
-    "editor.formatOnSave": false,
+    "editor.formatOnSave":  false,
+    "git.enabled": false,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],
