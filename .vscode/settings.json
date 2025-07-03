@@ -100,7 +100,7 @@
     // "rust-analyzer.cargo.target"         : "thumbv7m-none-eabihf",
     // "rust-analyzer.cargo.features"       : ["pillf103","stm32f1","cortex","cortexm3"],
     // "rust-analyzer.cargo.target"         : "thumbv7em-none-eabihf",
-    // "rust-analyzer.cargo.features"       : ["cortex","stm32f4"],
+    // "rust-analyzer.cargo.features"       : ["f429disco","cortex","stm32f4"],
     // "rust-analyzer.cargo.target"         : "i686-pc-windows-gnu",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
