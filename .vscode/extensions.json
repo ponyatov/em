@@ -28,8 +28,8 @@
         "jock.svg",
         // JS
         "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
         "denoland.vscode-deno",
+        // "dbaeumer.vscode-eslint",
         // Go
         "golang.go",
         // C++

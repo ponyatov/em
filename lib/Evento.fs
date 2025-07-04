@@ -347,4 +347,21 @@ let files :unit = //
     apt
     format
 
+let package:unit = //
+    touch $"src/{APP}.js"
+    File.WriteAllText ("package.json",$"{{
+    \"name\"        : \"{app}\",
+    \"version\"     : \"{VERSION}\",
+    \"description\" : \"{TITLE}\",
+    \"main\"        : \"src/{APP}.js\",
+    \"directories\" : {{ \"doc\": \"doc\", \"src\": \"src\" }},
+    \"scripts\": {{
+        \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"
+    }},
+    \"author\": \"{AUTHOR} <{EMAIL}>\",
+    \"license\": \"{LICENSE}\"
+}}
+")
+    // npm -g deno
+
 COMMIT
