@@ -2,6 +2,7 @@ RTARGET = x86_64-unknown-linux-gnu
 # RTARGET = thumbv7m-none-eabi
 # RTARGET = thumbv7em-none-eabihf
 # RTARGET = aarch64-unknown-linux-gnu
+# RTARGET = x86_64-pc-windows-gnu
 # RTARGET = i686-pc-windows-gnu
 # RTARGET = wasm32-unknown-unknown
 # RTARGET = aarch64-linux-android
@@ -13,6 +14,7 @@ $(RUSTUP) $(CARGO):
 # rustup target add thumbv7m-none-eabi
 # rustup target add thumbv7em-none-eabihf
 # rustup target add aarch64-unknown-linux-gnu
+# rustup target add x86_64-pc-windows-gnu
 # rustup target add i686-pc-windows-gnu
 # rustup target add wasm32-unknown-unknown
 # rustup target add aarch64-linux-android

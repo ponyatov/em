@@ -83,6 +83,41 @@
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
         {
+            "label"          : "deno: watch",
+            "type"           : "shell",
+            "command"        : "deno --watch src/${workspaceFolderBasename}.js",
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "cargo: x86_64/linux",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["watch","-x","build --target x86_64-unknown-linux-gnu"],
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "cargo: x86_64/win64",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["build","--target","x86_64-pc-windows-gnu"],
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "cargo: x86_64/mingw32",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["build","--target","i686-pc-windows-gnu"],
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "ts: build",
             "type"           : "shell",
             "command"        : "tsc src/${workspaceFolderBasename}.ts",

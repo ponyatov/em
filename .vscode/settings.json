@@ -101,6 +101,7 @@
     // "rust-analyzer.cargo.features"       : ["f429disco","stm32f4","cortex","cortexm4"],
     // "rust-analyzer.cargo.target"         : "aarch64-unknown-linux-gnu",
     // "rust-analyzer.cargo.target"         : "i686-pc-windows-gnu",
+    // "rust-analyzer.cargo.target"         : "x86_64-pc-windows-gnu",
     // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
