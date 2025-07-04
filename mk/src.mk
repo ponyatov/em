@@ -46,4 +46,4 @@ R += $(wildcard config/src/*.rs) config/Cargo.toml
 R += $(wildcard server/src/*.rs) server/Cargo.toml
 
 # F#
-F += $(wildcard fs/*.fs*)
+F += $(wildcard lib/*.fs*)

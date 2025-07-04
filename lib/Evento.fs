@@ -65,7 +65,7 @@ let GITGUI = $"git gui &"
 let CODE = $"code -r {CWD} ; code {HOME}/em/lib/Evento.fs"
 let RC = "ln -fs ../rc rc"
 
-let COMMIT = $"git add -A ; git commit -am \".\""
+let COMMIT = $"git add -A ; git commit -am \".\" ; pp"
 let PUSH = $"git push -v -u gh {USER}"
 
 let bin:unit = //
@@ -121,6 +121,8 @@ const_format = \"0.2\"
 
 let html:unit = //
     mkdir "static"
+    mkdir "static/cdn"
+    File.WriteAllText ("static/cdn/.gitignore","*\n!.gitignore\n")
     touch "static/index.html"
     touch "static/css.css"
     touch "static/js.js"
@@ -142,7 +144,10 @@ let hw:unit = //
 
     for hw,cpu in [
         ("qemu386","i486"); ("retro","i686"); ("pc","i5");
-        ("pillf103","stm32f103c8t6"); ("f429disco","stm32f429zit6");
+        ("rpi3","bcm2837"); ("rpi4","bcm2711"); ("rpi5","bcm2712"); ("opi800","rk3399");
+        ("pillf103","stm32f103c8"); ("f429disco","stm32f429zi");
+        ("netduinoplus2","stm32f405rg");
+        ("iskra","stm32f405rg"); ("f4disco","stm32f407vg");
         ("esp8266","lx106"); ("esp32","lx106");
         ] do
             mkdir $"hw/{hw}"
@@ -157,8 +162,9 @@ let cpu:unit = //
     cross_ "cpu"
 
     for cpu,arch in [
-        ("i486","i386"); ("i686","i386"); ("i5","x86_64");
-        ("stm32f103c8t6","cortexm3"); ("stm32f429zit6","cortexm4");
+        ("i5","x86_64"); ("i486","i386"); ("i686","i386");
+        ("stm32f103c8","cortexm3"); ("stm32f429zi","cortexm4");
+        ("stm32f405rg","cortexm4"); ("stm32f407vg","cortexm4");
         ("lx106","xtensa");
         ] do
             mkdir $"cpu/{cpu}"
@@ -173,7 +179,8 @@ let arch:unit = //
     cross_ "arch"
 
     for arch in [
-        "i386"; "x86_64";
+        "x86_64"; "i386";
+        "aarch64";
         "cortexm"; "cortexm3"; "cortexm4"; "xtensa";
         ] do
             mkdir $"arch/{arch}"
@@ -186,7 +193,7 @@ let arch:unit = //
 
 let os:unit = //
     cross_ "os"
-    for os in ["none";"freertos";"linux";"win32"] do
+    for os in ["linux";"none";"freertos";"win32";"rtos8266";"idf"] do
         mkdir $"os/{os}" ; touch $"os/{os}/{os}.mk" ; touch $"os/{os}/{os}.cmake"
         mkdir $"os/{os}/inc" ; mkdir $"os/{os}/src"
         File.WriteAllText ( $"os/{os}/inc/{os}.hpp",$"/// #defgroup {os} {os}\n/// @ingroup os\n")
@@ -220,7 +227,7 @@ let dirs:unit = //
 
 let mk: unit = //
     mkdir "mk"
-    let makes = ["var";"version";"dir";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"install";"ai"]
+    let makes = ["var";"version";"dir";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"gz";"install";"ai"]
     for m in makes do
         touch $"mk/{m}.mk"
     File.WriteAllText("Makefile",
