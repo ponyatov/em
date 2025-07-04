@@ -16,10 +16,9 @@
     "files.associations": {
         "*.mk": "makefile", "*.make": "makefile",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "*.ocd": "properties", "*.gdb": "properties",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
-        "*.ioc": "properties", "*.config": "properties",
-        "*.kernel": "properties",
+        "*.ioc": "properties", "*.ocd": "properties",
+        "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
         "*.ini": "properties", "*.f": "properties",
@@ -34,11 +33,11 @@
     "editor.detectIndentation": false,
     "editor.rulers": [80],
     "editor.lineNumbers": "on",
+    "editor.formatOnSave":  false,
     "workbench.tree.indent": 24,
     "editor.fontSize": 14,
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
-    "editor.formatOnSave":  false,
     "git.enabled": false,
 
     // terminal
@@ -95,13 +94,14 @@
     "rust-analyzer.check.allTargets"     : false,
     "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
     "rust-analyzer.cargo.features"       : ["pc","i5","x86_64","linux"],
-    // "rust-analyzer.cargo.target"         : "aarch64-unknown-linux-gnu",
-    // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
+    // "rust-analyzer.cargo.target"         : "thumbv7m-none-eabi",
     // "rust-analyzer.cargo.target"         : "thumbv7m-none-eabihf",
     // "rust-analyzer.cargo.features"       : ["pillf103","stm32f1","cortex","cortexm3"],
     // "rust-analyzer.cargo.target"         : "thumbv7em-none-eabihf",
-    // "rust-analyzer.cargo.features"       : ["f429disco","cortex","stm32f4"],
+    // "rust-analyzer.cargo.features"       : ["f429disco","stm32f4","cortex","cortexm4"],
+    // "rust-analyzer.cargo.target"         : "aarch64-unknown-linux-gnu",
     // "rust-analyzer.cargo.target"         : "i686-pc-windows-gnu",
+    // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
     // F#
