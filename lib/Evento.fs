@@ -91,13 +91,44 @@ let lib:unit = //
     mkdir "lib"
     File.WriteAllText($"lib/{APP}.ini", "# line comment\n")
 
-let src:unit = //
+let cpp: unit = //
     mkdir "inc"
     touch $"inc/{APP}.hpp"
     mkdir "src"
     touch $"src/{APP}.cpp"
     touch $"src/{APP}.lex"
     touch $"src/{APP}.yacc"
+
+let rust: unit = //
+    mkdir "src"
+    touch "src/lib.rs"
+    File.WriteAllText ( "src/main.rs",
+        "fn main() { println!(\"Hello, world!\"); }\n")
+    File.WriteAllText ( "Cargo.toml", $"\
+[package]
+name        =  \"{app}\"
+version     =  \"{VERSION}\"
+description =  \"{TITLE}\"
+authors     = [\"{AUTHOR} <{EMAIL}>\"]
+license     =  \"{LICENSE}\"
+repository  =  \"{GITHUB}\"
+edition     =  \"2024\"
+
+[dependencies]
+const_format = \"0.2\"
+")
+    touch "src/config.rs" ; touch "src/server.rs"
+
+let html:unit = //
+    mkdir "static"
+    touch "static/index.html"
+    touch "static/css.css"
+    touch "static/js.js"
+
+let src:unit = //
+    cpp
+    rust
+    html
 
 let cross_ name = //
     mkdir $"{name}"

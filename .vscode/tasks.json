@@ -43,10 +43,10 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          : "cargo: run",
+            "label"          : "cargo: watch",
             "type"           : "shell",
             "command"        : "cargo",
-            "args"           : ["run","--target","x86_64-unknown-linux-gnu"],
+            "args"           : ["watch","-x","run"],
             "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "group"          : {"kind": "build", "isDefault": true },
