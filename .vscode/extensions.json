@@ -57,11 +57,11 @@
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
-        "vadimcn.vscode-lldb",
-        "sissel.shopify-liquid",
-        "marus25.cortex-debug",
         "swellaby.vscode-rust-test-adapter",
-        "probe-rs.probe-rs-debugger",
+        "vadimcn.vscode-lldb",
+        // "sissel.shopify-liquid",
+        // "marus25.cortex-debug",
+        // "probe-rs.probe-rs-debugger",
         // FORTH
         "fttx.language-forth",
         // F#
@@ -74,9 +74,9 @@
         "rreverser.llvm",
         "revng.llvm-ir",
         // Langium
-        "langium.langium-vscode",
-        "vitest.explorer",
-        "kingwl.vscode-vitest-runner"
+        // "langium.langium-vscode",
+        // "vitest.explorer",
+        // "kingwl.vscode-vitest-runner"
         // share
         "ms-vsliveshare.vsliveshare",
         "lostintangent.vsls-whiteboard",

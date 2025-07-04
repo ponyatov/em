@@ -23,25 +23,6 @@
             ]
         },
         {
-            "type": "lldb",
-            "request": "launch",
-            "name": "rust:tests",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--lib",
-                    "--package=${workspaceFolderBasename}"
-                ],
-                "filter": {
-                    "name": "${workspaceFolderBasename}",
-                    "kind": "lib"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
-        },
-        {
             "name"              : "pillf103",
             "type"              : "cortex-debug",
             "request"           : "launch",
@@ -64,7 +45,7 @@
             // ]
         },
         {
-            "name"          : "cortex",
+            "name"          : "cmake:cortex",
             "type"          : "cppdbg",
             "request"       : "launch",
             "program"       : "${command:cmake.launchTargetPath}",

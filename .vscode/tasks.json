@@ -56,7 +56,7 @@
             "label"          : "cargo: test",
             "type"           : "shell",
             "command"        : "cargo",
-            "args"           : ["test"],
+            "args"           : ["test","--target","x86_64-unknown-linux-gnu"],
             "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "group"          : {"kind": "build", "isDefault": true },

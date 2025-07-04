@@ -34,6 +34,8 @@ let mkdir (path: string) : unit =
     if not (File.Exists(giti)) then
         File.WriteAllText(giti,"!.gitignore\n")
 
+let NewLines = List.reduce (fun a b -> $"{a}\n{b}")
+
 // env
 let USER = Environment.UserName
 let HOME = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
@@ -62,63 +64,128 @@ let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
 let GITGUI = $"git gui &"
 let CODE = $"code -r {CWD} ; code {HOME}/em/lib/Evento.fs"
 let RC = "ln -fs ../rc rc"
-let PUSH = $"git push -uv gh {USER}"
-let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v"
 
-let files :unit = //
-    dirs
-    mk
-    cmake
-    giti
-    apt
-    format
+let COMMIT = $"git add -A ; git commit -am \".\""
+let PUSH = $"git push -v -u gh {USER}"
+
+let bin:unit = //
+    for d in ["bin"; "tmp"; "ref"] do
+        mkdir d
+        File.WriteAllText($"{d}/.gitignore","*\n!.gitignore\n")
+
+let doxy: unit = //    
+    File.WriteAllText (".doxygen",$"PROJECT_NAME           = \"{APP}\"
+PROJECT_BRIEF          = \"{TITLE}\"
+PROJECT_LOGO           = doc/logo.png
+")
+    // let LOGO = "cp ~/icons/control64.png doc/logo.png"
+    // let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
+    // let DOTX = "meld .doxygen ~/em/.doxygen"
+
+let doc:unit = //
+    mkdir "doc"
+    File.WriteAllText($"doc/.gitignore","html/\n!.gitignore\n")
     doxy
 
-let apt:unit = //
-    File.WriteAllText ("apt.Debian","""git make curl
-code meld doxygen clang-format
-g++ cmake gdb gdb-multiarch
-flex bison libreadline-dev ragel lemon
-python3 python3-venv python3-autopep8 python3-ply
-dotnet-runtime-9.0 dotnet-sdk-9.0
-qemu-system-arm
-    gcc-arm-none-eabi openocd newlib-source dfu-util stlink-tools
-qemu-system-x86
-    g++-mingw-w64-i686
-""")
+let lib:unit = //
+    mkdir "lib"
+    File.WriteAllText($"lib/{APP}.ini", "# line comment\n")
 
-let RTARGETS = [
-    "x86_64-unknown-linux-gnu";
-    "thumbv7m-none-eabi";
-    "thumbv7em-none-eabihf";
-    "aarch64-unknown-linux-gnu";
-    "i686-pc-windows-gnu";
-    "wasm32-unknown-unknown";
-]
+let src:unit = //
+    mkdir "inc"
+    touch $"inc/{APP}.hpp"
+    mkdir "src"
+    touch $"src/{APP}.cpp"
+    touch $"src/{APP}.lex"
+    touch $"src/{APP}.yacc"
 
-let RHOST = RTARGETS[0]
+let cross_ name = //
+    mkdir $"{name}"
+    mkdir $"{name}/inc"
+    mkdir $"{name}/src"
+    File.WriteAllText ($"{name}/inc/{name}.hpp",$"/// @defgroup {name} {name}\n/// @ingroup cross\n")
+    File.WriteAllText ($"{name}/src/{name}.cpp",$"#include \"{name}.hpp\"\n")
 
-let NewLines = List.reduce (fun a b -> $"{a}\n{b}")
+let hw:unit = //
+    cross_ "hw"
 
-let rust:unit = //
-    let commented = 
-        RTARGETS[1..]
-        |> List.map (fun r -> $"# RTARGET = {r}") |> NewLines
-    let rustup = 
-        RTARGETS[1..]
-        |> List.map (fun r -> $"# rustup target add {r}") |> NewLines
+    for hw,cpu in [
+        ("qemu386","i486"); ("retro","i686"); ("pc","i5");
+        ("pillf103","stm32f103c8t6"); ("f429disco","stm32f429zit6");
+        ("esp8266","lx106"); ("esp32","lx106");
+        ] do
+            mkdir $"hw/{hw}"
+            File.WriteAllText ($"hw/{hw}/{hw}.mk",$"CPU = {cpu}")
+            touch $"hw/{hw}/{hw}.cmake"
+            mkdir $"hw/{hw}/inc"
+            mkdir $"hw/{hw}/src"
+            touch $"hw/{hw}/inc/{hw}.hpp"
+            touch $"hw/{hw}/src/{hw}.cpp"
 
-    File.WriteAllText ("mk/rust.mk",$"RTARGET = {RHOST}
-{commented}
+let cpu:unit = //
+    cross_ "cpu"
 
-$(RUSTUP) $(CARGO):
-\tcurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-\trustup target add {rhost}
-{rustup}
-\trustup component add rust-analyzer rustfmt rust-src
-# rustup component add llvm-tools
-\tcargo install cargo-watch cargo-binutils
-")
+    for cpu,arch in [
+        ("i486","i386"); ("i686","i386"); ("i5","x86_64");
+        ("stm32f103c8t6","cortexm3"); ("stm32f429zit6","cortexm4");
+        ("lx106","xtensa");
+        ] do
+            mkdir $"cpu/{cpu}"
+            File.WriteAllText ($"cpu/{cpu}/{cpu}.mk",$"ARCH = {arch}")
+            touch $"cpu/{cpu}/{cpu}.cmake"
+            mkdir $"cpu/{cpu}/inc"
+            mkdir $"cpu/{cpu}/src"
+            File.WriteAllText ( $"cpu/{cpu}/inc/{cpu}.hpp",$"/// #defgroup {cpu} {cpu}\n/// @ingroup cpu\n")
+            File.WriteAllText ( $"cpu/{cpu}/src/{cpu}.cpp",$"#include \"{cpu}.hpp\"\n")
+
+let arch:unit = //
+    cross_ "arch"
+
+    for arch in [
+        "i386"; "x86_64";
+        "cortexm"; "cortexm3"; "cortexm4"; "xtensa";
+        ] do
+            mkdir $"arch/{arch}"
+            touch $"arch/{arch}/{arch}.mk"
+            touch $"arch/{arch}/{arch}.cmake"
+            mkdir $"arch/{arch}/inc"
+            mkdir $"arch/{arch}/src"
+            File.WriteAllText ( $"arch/{arch}/inc/{arch}.hpp",$"/// #defgroup {arch} {arch}\n/// @ingroup arch\n")
+            File.WriteAllText ( $"arch/{arch}/src/{arch}.cpp",$"#include \"{arch}.hpp\"\n")
+
+let os:unit = //
+    cross_ "os"
+    for os in ["none";"freertos";"linux";"win32"] do
+        mkdir $"os/{os}" ; touch $"os/{os}/{os}.mk" ; touch $"os/{os}/{os}.cmake"
+        mkdir $"os/{os}/inc" ; mkdir $"os/{os}/src"
+        File.WriteAllText ( $"os/{os}/inc/{os}.hpp",$"/// #defgroup {os} {os}\n/// @ingroup os\n")
+        File.WriteAllText ( $"os/{os}/src/{os}.cpp",$"#include \"{os}.hpp\"\n")
+
+let cross:unit = //
+    hw
+    cpu
+    arch
+    os
+
+let vscode:unit = //
+    mkdir ".vscode"
+    let jsons = [
+        "c_cpp_properties";
+        "extensions";
+        "launch";
+        "settings";
+        "tasks" ]
+    for j in jsons do
+        File.WriteAllText($".vscode/{j}.json","{\n}\n")
+    // let MELD = "meld .vscode ~/em/.vscode"
+
+let dirs:unit = //
+    bin
+    doc
+    lib
+    src
+    cross
+    vscode
 
 let mk: unit = //
     mkdir "mk"
@@ -126,9 +193,7 @@ let mk: unit = //
     for m in makes do
         touch $"mk/{m}.mk"
     File.WriteAllText("Makefile",
-        makes |> List.map (fun m -> $"include mk/{m}.mk") |> List.reduce (fun a b -> $"{a}\n{b}" )
-    )
-    rust
+        makes |> List.map (fun m -> $"include mk/{m}.mk") |> NewLines)
 
 let cmake: unit = //
     touch "CMakeLists.txt"
@@ -153,155 +218,95 @@ node_modules/
 !.gitignore
 """)
 
-let dirs:unit = //
-    bin
-    doc
-    lib
-    src
-    tmp
-    vscode
-    cross
-
-let bin:unit = //
-    for d in ["bin"; "tmp"; "ref"] do
-        mkdir d
-        File.WriteAllText($"{d}/.gitignore","*\n!.gitignore\n")
-
-let doc:unit = //
-    mkdir "doc"
-    File.WriteAllText($"doc/.gitignore","html/\n!.gitignore\n")
-    doxy
-
-let doxy: unit = //    
-    File.WriteAllText (".doxygen",$"PROJECT_NAME           = \"{APP}\"
-PROJECT_BRIEF          = \"{TITLE}\"
-PROJECT_LOGO           = doc/logo.png
-")
-    let LOGO = "cp ~/icons/control64.png doc/logo.png"
-    let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
-
-let lib:unit = //
-    mkdir "lib"
-    File.WriteAllText($"lib/{APP}.ini", "# line comment\n")
-
-let src:unit = //
-    mkdir "inc"
-    touch $"inc/{APP}.hpp"
-    mkdir "src"
-    touch $"src/{APP}.cpp"
-    touch $"src/{APP}.lex"
-    touch $"src/{APP}.yacc"
-
-let settings:unit = //
-    let rhost = $"\"{RHOST}\""
-    let rother = 
-        RTARGETS[1..]
-        |> List.map (fun r -> $"    // \"rust-analyzer.cargo.target\"         : \"{r}\",")
-        |> NewLines
-    let rust = $"
-    // Rust
-    \"rust-analyzer.checkOnSave\"          : false,
-    \"rust-analyzer.check.allTargets\"     : false,
-    \"rust-analyzer.cargo.target\"         : \"{RHOST}\",
-{rother}
-    \"[rust]\": {{ \"editor.defaultFormatter\": \"rust-lang.rust-analyzer\" }},
-"
-    File.WriteAllText (".vscode/settings.json",$"{{{rust}}}")
-
-let vscode:unit = //
-    mkdir ".vscode"
-    let jsons = [
-        "c_cpp_properties";
-        "extensions";
-        "launch";
-        "settings";
-        "tasks" ]
-    for j in jsons do
-        File.WriteAllText($".vscode/{j}.json","{\n}\n")
-    let MELD = "meld .vscode ~/em/.vscode"
-    settings
+let apt:unit = //
+    File.WriteAllText ("apt.Debian","""git make curl
+code meld doxygen clang-format
+g++ cmake gdb gdb-multiarch
+flex bison libreadline-dev ragel lemon
+python3 python3-venv python3-autopep8 python3-ply
+dotnet-runtime-9.0 dotnet-sdk-9.0
+qemu-system-arm
+    gcc-arm-none-eabi openocd newlib-source dfu-util stlink-tools
+qemu-system-x86
+    g++-mingw-w64-i686
+""")
 
 
-let cross_ name = //
-    mkdir $"{name}"
-    mkdir $"{name}/inc"
-    mkdir $"{name}/src"
-    File.WriteAllText ($"{name}/inc/{name}.hpp",$"/// @defgroup {name} {name}\n/// @ingroup cross\n")
-    File.WriteAllText ($"{name}/src/{name}.cpp",$"#include \"{name}.hpp\"\n")
+let clang_format:unit = //
+    File.WriteAllText (".clang-format","""BasedOnStyle: Google
+IndentWidth:  4
+TabWidth:     4
+UseTab:       Never
+ColumnLimit:  80
+UseCRLF:      false
 
-let cross:unit = //
-    hw
-    cpu
-    arch
-    os
+SortIncludes: false
 
-let hw:unit = //
-    cross_ "hw"
+AllowShortBlocksOnASingleLine: Always
+AllowShortFunctionsOnASingleLine: All
+""")
 
-    for hw,cpu in [
-        ("qemu386","i486");
-        ("retro","i686");
-        ("pc","i5");
-        ("pillf103","stm32f103c8t6");
-        ("f429disco","stm32f429zit6");
-        ("esp8266","lx106");
-        ("esp32","lx106");
-        ] do
-                mkdir $"hw/{hw}"
-                File.WriteAllText ($"hw/{hw}/{hw}.mk",$"CPU = {cpu}")
-                touch $"hw/{hw}/{hw}.cmake"
-                mkdir $"hw/{hw}/inc"
-                mkdir $"hw/{hw}/src"
-                touch $"hw/{hw}/inc/{hw}.hpp"
-                touch $"hw/{hw}/src/{hw}.cpp"
+let prettierrc:unit = //
+    File.WriteAllText (".prettierrc","""{
+    "tabWidth"    : 4,
+    "useTabs"     : false,
+    "endOfLine"   : "lf",
+    "singleQuote" : true,
+    "semi"        : true,
+    "printWidth"  : 80
+}
+""")
 
-let cpu:unit = //
-    cross_ "cpu"
+let editorconfig:unit = //
+    File.WriteAllText (".editorconfig","""# fantomas config
+indent_size = 4
+max_line_length = 80
+end_of_line = lf
+insert_final_newline = true
+""")
 
-    for cpu,arch in [
-        ("i486","i386");
-        ("i686","i386");
-        ("i5","x86_64");
-        ("stm32f103c8t6","cortexm3");
-        ("stm32f429zit6","cortexm4");
-        ("lx106","xtensa");
-        ] do
-                mkdir $"cpu/{cpu}"
-                File.WriteAllText ($"cpu/{cpu}/{cpu}.mk",$"ARCH = {arch}")
-                touch $"cpu/{cpu}/{cpu}.cmake"
-                mkdir $"cpu/{cpu}/inc"
-                mkdir $"cpu/{cpu}/src"
-                File.WriteAllText ( $"cpu/{cpu}/inc/{cpu}.hpp",$"/// #defgroup {cpu} {cpu}\n/// @ingroup cpu\n")
-                File.WriteAllText ( $"cpu/{cpu}/src/{cpu}.cpp",$"#include \"{cpu}.hpp\"\n")
+let gitattributes:unit = //
+    File.WriteAllText (".gitattributes","""* text=auto eol=lf
 
+# All source code in UNIX format
+*.c   text diff=cpp
+*.cpp text diff=cpp
+*.h   text diff=cpp
+*.hpp text diff=cpp
+*.s   text diff=cpp
+*.ld  text diff=cpp
 
-let arch:unit = //
-    cross_ "arch"
+# Binary files
+*.bin  binary
+*.elf  binary
+*.dfu  binary
+*.png  binary
+*.pdf  binary
+*.doc  binary
+*.docx binary
 
-    for arch in [
-        "i386";
-        "x86_64";
-        "cortexm";
-        "cortexm3";
-        "cortexm4";
-        "xtensa";] do
-                mkdir $"arch/{arch}"
-                touch $"arch/{arch}/{arch}.mk"
-                touch $"arch/{arch}/{arch}.cmake"
-                mkdir $"arch/{arch}/inc"
-                mkdir $"arch/{arch}/src"
-                File.WriteAllText ( $"arch/{arch}/inc/{arch}.hpp",$"/// #defgroup {arch} {arch}\n/// @ingroup arch\n")
-                File.WriteAllText ( $"arch/{arch}/src/{arch}.cpp",$"#include \"{arch}.hpp\"\n")
+# Linux
+*.sh      text eol=lf
+*.rc      text eol=lf
+*.service text eol=lf
 
-let os:unit = //
-    cross_ "os"
-    for os in ["none";"freertos";"linux";"win32"] do
-        mkdir $"os/{os}"
-        touch $"os/{os}/{os}.mk"
-        touch $"os/{os}/{os}.cmake"
-        mkdir $"os/{os}/inc"
-        mkdir $"os/{os}/src"
-        File.WriteAllText ( $"os/{os}/inc/{os}.hpp",$"/// #defgroup {os} {os}\n/// @ingroup os\n")
-        File.WriteAllText ( $"os/{os}/src/{os}.cpp",$"#include \"{os}.hpp\"\n")
+# Windows/MSYS
+*.bat text eol=crlf
+*.ps* text eol=crlf
+""")
+
+let format: unit = //
+    clang_format
+    prettierrc
+    editorconfig
+    gitattributes
+
+let files :unit = //
+    dirs
+    mk
+    cmake
+    giti
+    apt
+    format
 
 COMMIT
