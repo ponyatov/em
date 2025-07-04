@@ -58,26 +58,26 @@ github: {GITHUB}
 // github repo
 let INIT = "git init"
 let CHECKOUT = $"git checkout --orphan {USER}"
+let RC = "ln -fs ../rc rc"
 let GH   = $"git remote add gh git@github.com:ponyatov/{app}.git"
 let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
 // let CLONE = $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP}"
 let GITGUI = $"git gui &"
 let CODE = $"code -r {CWD} ; code {HOME}/em/lib/Evento.fs"
-let RC = "ln -fs ../rc rc"
 
-let COMMIT = $"git add -A ; git commit -am \".\" ; pp"
-let PUSH = $"git push -v -u gh {USER}"
+let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER}"
 
 let bin:unit = //
     for d in ["bin"; "tmp"; "ref"] do
         mkdir d
         File.WriteAllText($"{d}/.gitignore","*\n!.gitignore\n")
 
-let doxy: unit = //    
+let doxy: unit = //
     File.WriteAllText (".doxygen",$"PROJECT_NAME           = \"{APP}\"
 PROJECT_BRIEF          = \"{TITLE}\"
 PROJECT_LOGO           = doc/logo.png
 ")
+    mkdir "doc"
     // let LOGO = "cp ~/icons/control64.png doc/logo.png"
     // let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
     // let DOTX = "meld .doxygen ~/em/.doxygen"
