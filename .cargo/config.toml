@@ -1,8 +1,10 @@
 [build]
 target = "x86_64-unknown-linux-gnu"
+jobs = 2
 
 [profile.dev]
-codegen-units = 1
+incremental = true
+# codegen-units = 1
 # panic = "abort"
 
 [target.x86_64-unknown-linux-gnu]

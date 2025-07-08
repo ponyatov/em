@@ -101,6 +101,8 @@ let cpp: unit = //
     touch $"src/{APP}.yacc"
 
 let rust: unit = //
+    mkdir ".cargo"
+    touch ".cargo/config.toml"
     mkdir "src"
     touch "src/lib.rs"
     File.WriteAllText ( "src/main.rs",
@@ -233,6 +235,7 @@ let mk: unit = //
         touch $"mk/{m}.mk"
     File.WriteAllText("Makefile",
         makes |> List.map (fun m -> $"include mk/{m}.mk") |> NewLines)
+    let MK = $"meld mk ~/em/mk"
 
 let cmake: unit = //
     touch "CMakeLists.txt"
