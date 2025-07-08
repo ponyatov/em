@@ -1,7 +1,7 @@
 .PHONY : install update ref gz
-install: $(WS)_install $(RUSTUP) doc ref gz
+install: $(WS)_install $(RUSTUP) $(TSC) doc ref gz
 	$(MAKE) update
-update : $(WS)_update $(RUSTUP)
+update : $(WS)_update $(RUSTUP) $(TSC)
 	$(RUSTUP) self update && $(RUSTUP) update
 	$(PIP) install -U -r requirements.txt
 	$(NPM) update

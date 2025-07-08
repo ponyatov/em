@@ -7,8 +7,10 @@ PIP    = pip3
 RUSTUP = $(CAR)/bin/rustup
 CARGO  = $(CAR)/bin/cargo
 #
-GO     = /usr/local/go/bin/go
-GOPLS  = $(GOPATH)/bin/gopls
 NPM    = /usr/bin/npm
 TSC    = $(HOME)/.npm/bin/tsc
+DENO   = $(HOME)/.npm/bin/deno
+#
+GO     = /usr/local/go/bin/go
+GOPLS  = $(GOPATH)/bin/gopls
 YO     = $(HOME)/.npm/bin/yo

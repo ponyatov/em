@@ -75,7 +75,23 @@
         {
             "label"          : "deno: watch",
             "type"           : "shell",
-            "command"        : "deno --watch src/${workspaceFolderBasename}.js",
+            "command"        : "deno --watch src/${workspaceFolderBasename}.ts",
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "ts: watch",
+            "type"           : "shell",
+            "command"        : "tsc --watch",
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "minify: uglifyjs",
+            "type"           : "shell",
+            "command"        : "uglifyjs static/${workspaceFolderBasename}.js -o static/${workspaceFolderBasename}.min.js",
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
@@ -103,14 +119,6 @@
             "type"           : "shell",
             "command"        : "cargo",
             "args"           : ["build","--target","i686-pc-windows-gnu"],
-            "problemMatcher" : [],
-            "group"          : {"kind": "build", "isDefault": true },
-            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
-        },
-        {
-            "label"          : "ts: build",
-            "type"           : "shell",
-            "command"        : "tsc src/${workspaceFolderBasename}.ts",
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
