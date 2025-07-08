@@ -45,6 +45,7 @@ let app  = APP.ToLower()
 let CWD = $"{HOME}/{APP}"
 mkdir CWD
 Directory.SetCurrentDirectory(CWD)
+let CODE = $"code -r {CWD} ; sleep 5 ; code {HOME}/em/lib/Evento.fs"
 
 let README:unit = //
     File.WriteAllText ("README.md",$"# ![](doc/logo.png) `{APP}` {VERSION}
@@ -61,10 +62,9 @@ let CHECKOUT = $"git checkout --orphan {USER}"
 let RC = "ln -fs ../rc rc"
 let GH   = $"git remote add gh git@github.com:ponyatov/{app}.git"
 let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
-// let CLONE = $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP}"
+let CLONE = $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP}"
 let GITGUI = $"git gui &"
-let CODE = $"code -r {CWD} ; code {HOME}/em/lib/Evento.fs"
-
+let PULL = $"git pull -v gh {USER}"
 let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER}"
 
 let bin:unit = //
@@ -339,6 +339,12 @@ let format: unit = //
     editorconfig
     gitattributes
 
+let fs:unit = //
+    mkdir "lib"
+    for f in ["Evento";"Sestoft";"Parser"] do
+        touch $"lib/{f}.fs"
+    touch "Evento.fsproj"
+
 let files :unit = //
     dirs
     mk
@@ -346,6 +352,7 @@ let files :unit = //
     giti
     apt
     format
+    fs
 
 let package:unit = //
     touch $"src/{APP}.js"
