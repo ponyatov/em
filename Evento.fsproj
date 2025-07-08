@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>Evento</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="lib/AST.fs" />
+        <Compile Include="lib/Parser.fs" />
+        <Compile Include="lib/Project.fs" />
+    </ItemGroup>
+
+</Project>

@@ -45,6 +45,7 @@ let app  = APP.ToLower()
 let CWD = $"{HOME}/{APP}"
 mkdir CWD
 Directory.SetCurrentDirectory(CWD)
+let CODE = $"code -r {CWD} ; sleep 5 ; code {HOME}/em/lib/Evento.fs"
 
 let README:unit = //
     File.WriteAllText ("README.md",$"# ![](doc/logo.png) `{APP}` {VERSION}
@@ -56,6 +57,7 @@ github: {GITHUB}
 {ABOUT}")
 
 // github repo
+let SHELL = $"cd {CWD}"
 let INIT = "git init"
 let CHECKOUT = $"git checkout --orphan {USER}"
 let RC = "ln -fs ../rc rc"
@@ -63,8 +65,7 @@ let GH   = $"git remote add gh git@github.com:ponyatov/{app}.git"
 let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
 // let CLONE = $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP}"
 let GITGUI = $"git gui &"
-let CODE = $"code -r {CWD} ; code {HOME}/em/lib/Evento.fs"
-
+let PULL = $"git pull -v gh {USER}"
 let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER}"
 
 let bin:unit = //
@@ -72,20 +73,20 @@ let bin:unit = //
         mkdir d
         File.WriteAllText($"{d}/.gitignore","*\n!.gitignore\n")
 
-let doxy: unit = //
-    File.WriteAllText (".doxygen",$"PROJECT_NAME           = \"{APP}\"
-PROJECT_BRIEF          = \"{TITLE}\"
-PROJECT_LOGO           = doc/logo.png
-")
-    mkdir "doc"
-    // let LOGO = "cp ~/icons/control64.png doc/logo.png"
-    // let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
-    // let DOTX = "meld .doxygen ~/em/.doxygen"
-
 let doc:unit = //
     mkdir "doc"
     File.WriteAllText($"doc/.gitignore","html/\n!.gitignore\n")
     doxy
+
+let doxy: unit = //
+    mkdir "doc"
+    File.WriteAllText (".doxygen",$"PROJECT_NAME           = \"{APP}\"
+PROJECT_BRIEF          = \"{TITLE}\"
+PROJECT_LOGO           = doc/logo.png
+")
+    let LOGO = "cp ~/icons/control64.png doc/logo.png"
+    let DOXY = "doxygen -l ; mv DoxygenLayout.xml doc/"
+    let DOTX = "meld .doxygen ~/em/.doxygen"
 
 let lib:unit = //
     mkdir "lib"
@@ -210,12 +211,12 @@ let vscode:unit = //
     let jsons = [
         "c_cpp_properties";
         "extensions";
-        "launch";
+    "launch";
         "settings";
         "tasks" ]
     for j in jsons do
         File.WriteAllText($".vscode/{j}.json","{\n}\n")
-    // let MELD = "meld .vscode ~/em/.vscode"
+    let MELD = "meld .vscode ~/em/.vscode"
 
 let dirs:unit = //
     bin
@@ -339,6 +340,12 @@ let format: unit = //
     editorconfig
     gitattributes
 
+let fs:unit = //
+    mkdir "lib"
+    for f in ["Evento";"Sestoft";"Parser";"AST"] do
+        touch $"lib/{f}.fs"
+    touch "Evento.fsproj"
+
 let files :unit = //
     dirs
     mk
@@ -346,6 +353,7 @@ let files :unit = //
     giti
     apt
     format
+    fs
 
 let package:unit = //
     touch $"src/{APP}.js"

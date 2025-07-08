@@ -43,16 +43,6 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          : "cargo: watch",
-            "type"           : "shell",
-            "command"        : "cargo",
-            "args"           : ["watch","-x","run"],
-            "options"        : {"cwd": "${workspaceFolder}"},
-            "problemMatcher" : ["$rustc"],
-            "group"          : {"kind": "build", "isDefault": true },
-            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
-        },
-        {
             "label"          : "cargo: test",
             "type"           : "shell",
             "command"        : "cargo",
@@ -94,7 +84,7 @@
             "label"          : "cargo: x86_64/linux",
             "type"           : "shell",
             "command"        : "cargo",
-            "args"           : ["watch","-x","build --target x86_64-unknown-linux-gnu"],
+            "args"           : ["watch","-x","run --target x86_64-unknown-linux-gnu"],
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
