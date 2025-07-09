@@ -247,7 +247,7 @@ let vscode:unit = //
     let jsons = [
         "c_cpp_properties";
         "extensions";
-    "launch";
+        "launch";
         "settings";
         "tasks" ]
     for j in jsons do

@@ -38,7 +38,7 @@
     "editor.fontSize": 14,
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
-    "git.enabled": false,
+    // "git.enabled": false,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],
@@ -54,8 +54,6 @@
     //   "eslint.validate": ["typescript"],
     //   "typescript.updateImportsOnFileMove.enabled": "always",
     //   "javascript.updateImportsOnFileMove.enabled": "always",
-
-    // Go
 
     // clang-format
     "clang-format.executable"     : "clang-format",
