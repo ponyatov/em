@@ -190,7 +190,8 @@ let cpu:unit = //
     cross_ "cpu"
 
     for cpu,arch in [
-        ("i5","x86_64"); ("i486","i386"); ("i686","i386");
+        ("i5","x86_64");
+        ("i486","i386"); ("i686","i386");
         ("stm32f103c8","cortexm3"); ("stm32f429zi","cortexm4");
         ("stm32f405rg","cortexm4"); ("stm32f407vg","cortexm4");
         ("lx106","xtensa");
@@ -207,7 +208,8 @@ let arch:unit = //
     cross_ "arch"
 
     for arch in [
-        "x86_64"; "i386";
+        "x86_64";
+        "i386";
         "aarch64";
         "cortexm"; "cortexm3"; "cortexm4"; "xtensa";
         ] do
