@@ -12,12 +12,13 @@ let ABOUT = "
 "
 
 // mostly constant metainfo
+let app = APP.ToLower()
 let VERSION = "0.0.1"
 let AUTHOR = "Dmitry Ponyatov"
 let EMAIL = "dponyatov@gmail.com"
 let YEAR = 2025
 let LICENSE = "MIT"
-let GITHUB = $"https://github.com/ponyatov/{APP}"
+let GITHUB = $"https://github.com/ponyatov/{app}"
 
 // file generation
 open System
@@ -41,8 +42,7 @@ let USER = Environment.UserName
 let HOME = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
 
 // project dir
-let app  = APP.ToLower()
-let CWD = $"{HOME}/{APP}"
+let CWD = $"{HOME}/{app}"
 mkdir CWD
 Directory.SetCurrentDirectory(CWD)
 let CODE = $"code -r {CWD} ; sleep 5 ; code {HOME}/em/lib/Evento.fs"
@@ -170,7 +170,8 @@ let hw:unit = //
     cross_ "hw"
 
     for hw,cpu in [
-        ("qemu386","i486"); ("retro","i686"); ("pc","i5");
+        ("pc","i5");
+        ("qemu386","i486"); ("retro","i686");
         ("rpi3","bcm2837"); ("rpi4","bcm2711"); ("rpi5","bcm2712"); ("opi800","rk3399");
         ("pillf103","stm32f103c8"); ("f429disco","stm32f429zi");
         ("netduinoplus2","stm32f405rg");
