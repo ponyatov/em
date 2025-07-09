@@ -223,7 +223,14 @@ let arch:unit = //
 
 let os:unit = //
     cross_ "os"
-    for os in ["linux";"none";"freertos";"win32";"rtos8266";"idf"] do
+    for os in [
+        "linux";
+        "none";
+        "freertos";
+        "win32";
+        "rtos8266";
+        "idf"
+    ] do
         mkdir $"os/{os}" ; touch $"os/{os}/{os}.mk" ; touch $"os/{os}/{os}.cmake"
         mkdir $"os/{os}/inc" ; mkdir $"os/{os}/src"
         File.WriteAllText ( $"os/{os}/inc/{os}.hpp",$"/// #defgroup {os} {os}\n/// @ingroup os\n")
