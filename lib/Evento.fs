@@ -114,15 +114,15 @@ PROJECT_LOGO           = doc/logo.png
 
 let lib:unit = //
     mkdir "lib"
-    File.WriteAllText($"lib/{APP}.ini", "# line comment\n")
+    File.WriteAllText($"lib/{app}.ini", "# line comment\n")
 
 let cpp: unit = //
     mkdir "inc"
-    touch $"inc/{APP}.hpp"
+    touch $"inc/{app}.hpp"
     mkdir "src"
-    touch $"src/{APP}.cpp"
-    touch $"src/{APP}.lex"
-    touch $"src/{APP}.yacc"
+    touch $"src/{app}.cpp"
+    touch $"src/{app}.lex"
+    touch $"src/{app}.yacc"
 
 let rust: unit = //
     mkdir ".cargo"
@@ -163,7 +163,11 @@ let cross_ name = //
     mkdir $"{name}"
     mkdir $"{name}/inc"
     mkdir $"{name}/src"
-    File.WriteAllText ($"{name}/inc/{name}.hpp",$"/// @defgroup {name} {name}\n/// @ingroup cross\n")
+    let hd = 
+        match name with
+        | s when s="hw" -> "/// @defgroup cross cross\n"
+        | _ -> ""
+    File.WriteAllText ($"{name}/inc/{name}.hpp",$"{hd}/// @defgroup {name} {name}\n/// @ingroup cross\n")
     File.WriteAllText ($"{name}/src/{name}.cpp",$"#include \"{name}.hpp\"\n")
 
 let hw:unit = //
@@ -183,8 +187,8 @@ let hw:unit = //
             touch $"hw/{hw}/{hw}.cmake"
             mkdir $"hw/{hw}/inc"
             mkdir $"hw/{hw}/src"
-            touch $"hw/{hw}/inc/{hw}.hpp"
             touch $"hw/{hw}/src/{hw}.cpp"
+            File.WriteAllText ($"hw/{hw}/inc/{hw}.hpp",$"/// @defgroup {hw} {hw}\n/// @ingroup hw\n")
 
 let cpu:unit = //
     cross_ "cpu"
@@ -201,7 +205,7 @@ let cpu:unit = //
             touch $"cpu/{cpu}/{cpu}.cmake"
             mkdir $"cpu/{cpu}/inc"
             mkdir $"cpu/{cpu}/src"
-            File.WriteAllText ( $"cpu/{cpu}/inc/{cpu}.hpp",$"/// #defgroup {cpu} {cpu}\n/// @ingroup cpu\n")
+            File.WriteAllText ( $"cpu/{cpu}/inc/{cpu}.hpp",$"/// @defgroup {cpu} {cpu}\n/// @ingroup cpu\n")
             File.WriteAllText ( $"cpu/{cpu}/src/{cpu}.cpp",$"#include \"{cpu}.hpp\"\n")
 
 let arch:unit = //
@@ -211,14 +215,15 @@ let arch:unit = //
         "x86_64";
         "i386";
         "aarch64";
-        "cortexm"; "cortexm3"; "cortexm4"; "xtensa";
+        "cortexm"; "cortexm3"; "cortexm4";
+        "xtensa";
         ] do
             mkdir $"arch/{arch}"
             touch $"arch/{arch}/{arch}.mk"
             touch $"arch/{arch}/{arch}.cmake"
             mkdir $"arch/{arch}/inc"
             mkdir $"arch/{arch}/src"
-            File.WriteAllText ( $"arch/{arch}/inc/{arch}.hpp",$"/// #defgroup {arch} {arch}\n/// @ingroup arch\n")
+            File.WriteAllText ( $"arch/{arch}/inc/{arch}.hpp",$"/// @defgroup {arch} {arch}\n/// @ingroup arch\n")
             File.WriteAllText ( $"arch/{arch}/src/{arch}.cpp",$"#include \"{arch}.hpp\"\n")
 
 let os:unit = //
@@ -233,7 +238,7 @@ let os:unit = //
     ] do
         mkdir $"os/{os}" ; touch $"os/{os}/{os}.mk" ; touch $"os/{os}/{os}.cmake"
         mkdir $"os/{os}/inc" ; mkdir $"os/{os}/src"
-        File.WriteAllText ( $"os/{os}/inc/{os}.hpp",$"/// #defgroup {os} {os}\n/// @ingroup os\n")
+        File.WriteAllText ( $"os/{os}/inc/{os}.hpp",$"/// @defgroup {os} {os}\n/// @ingroup os\n")
         File.WriteAllText ( $"os/{os}/src/{os}.cpp",$"#include \"{os}.hpp\"\n")
 
 let cross:unit = //
@@ -264,7 +269,7 @@ let dirs:unit = //
 
 let mk: unit = //
     mkdir "mk"
-    let makes = ["var";"version";"dir";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"gz";"install";"ai"]
+    let makes = ["var";"version";"dir";"cross";"tool";"src";"all";"format";"rule";"doc";"rust";"python";"gz";"install";"merge";"ai"]
     for m in makes do
         touch $"mk/{m}.mk"
     File.WriteAllText("Makefile",
@@ -393,12 +398,12 @@ let files :unit = //
     fs
 
 let package:unit = //
-    touch $"src/{APP}.js"
+    touch $"src/{app}.ts"
     File.WriteAllText ("package.json",$"{{
     \"name\"        : \"{app}\",
     \"version\"     : \"{VERSION}\",
     \"description\" : \"{TITLE}\",
-    \"main\"        : \"src/{APP}.js\",
+    \"main\"        : \"src/{app}.ts\",
     \"directories\" : {{ \"doc\": \"doc\", \"src\": \"src\" }},
     \"scripts\": {{
         \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"
@@ -407,6 +412,6 @@ let package:unit = //
     \"license\": \"{LICENSE}\"
 }}
 ")
-    // npm -g deno
+    // npm i -g deno typescript
 
 COMMIT

@@ -31,6 +31,7 @@ H += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # JavaScript
+T += $(wildcard src/*.ts)
 J += $(wildcard src/*.js)
 
 # Python
