@@ -79,6 +79,17 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ")
 
+let giti:unit = //
+    File.WriteAllText(".gitignore","""*~
+*.swp
+*.log
+*.o
+*.exe
+node_modules/
+/target/
+/obj/
+!.gitignore
+""")
 
 // github repo
 let SHELL = $"cd {CWD}"
@@ -191,6 +202,51 @@ registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
 """)
     let CFG = "meld .cargo/config.toml ~/em/.cargo/config.toml"
 
+let rsbin name = //
+    $"\n[[bin]]\npath = \"src/{name}.rs\"\nname = \"{name}\"\n"
+let rslib name = //
+    $"\n[lib]\npath = \"src/{name}.rs\"\nname = \"{name}\"\n"
+    // crate-type = [\"cdylib\"]\n
+
+let workspace name =
+    mkdir name ; mkdir $"{name}/src"
+    let descr = match name with
+                | "config" -> "shared configuration"
+                | "vm" -> "virtual machine"
+                | "server" -> "local-host backend"
+                | "firmware" -> "MCU firmware"
+                | _ -> ""
+    let libin = match name with
+                | "server" -> rsbin name
+                | _ -> rslib name
+    let deps = match name with 
+                | "config" -> "const_format = \"0.2\"\n"
+                | _ -> "config = {path=\"../config\"}\n"
+    File.WriteAllText ($"{name}/src/{name}.rs",$"//! {descr}\n//\n")
+    File.WriteAllText ( $"{name}/Cargo.toml", $"\
+[package]
+name        =  \"{name}\"
+version     =  \"{VERSION}\"
+description =  \"{TITLE} /{descr}/\"
+authors     = [\"{AUTHOR} <{EMAIL}>\"]
+license     =  \"{LICENSE}\"
+repository  =  \"{GITHUB}\"
+edition     =  \"2024\"
+{libin}
+[dependencies]
+{deps}
+")
+workspace "config"
+
+let config: uint = //
+    workspace "config"
+let server: uint = //
+    workspace "server"
+let firmware: uint = //
+    workspace "firmware"
+let vm: uint = //
+    workspace "vm"
+
 let rust: unit = //
     cargo_config
     mkdir "src"
@@ -207,10 +263,25 @@ license     =  \"{LICENSE}\"
 repository  =  \"{GITHUB}\"
 edition     =  \"2024\"
 
+[workspace]
+members  = [\"config\",\"server\",\"firmware\",\"vm\"]
+resolver = \"2\"
+
 [dependencies]
 const_format = \"0.2\"
+
+[target.'cfg(all(target_os = \"linux\"))'.dependencies]
+libc = \"0.2\"
+
+[target.'cfg(all(target_arch = \"arm\", target_os = \"none\"))'.dependencies]
+cortex-m = \"0.7\"
+cortex-m-rt = \"0.7\"
+panic-semihosting = \"0.6\"
 ")
-    touch "src/config.rs" ; touch "src/server.rs"
+    config
+    server
+    firmware
+    vm
 
 let html:unit = //
     mkdir "static"
@@ -313,6 +384,81 @@ let cross:unit = //
     arch
     os
 
+let settings:unit = //
+    File.WriteAllText ( ".vscode/settings.json","""{
+    "files.exclude": {
+        "doc/html": true, "**/node_modules/**": true,
+    },
+    "files.watcherExclude": {
+        "bin/**": true, "tmp/**": true, "ref/**": true,
+        "target/**": true, "obj/**": true,
+    },
+    "files.associations": {
+        "*.mk": "makefile", "*.make": "makefile",
+        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
+        "*.ioc": "properties", "*.ocd": "properties",
+        "*.kernel": "properties", "*.config": "properties",
+        "*.service": "systemd-unit-file",
+        "requirements.*": "properties",
+        "*.ini": "properties", "*.f": "properties",
+    },
+
+    // editor
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.rulers": [80],
+    "editor.lineNumbers": "on",
+    "editor.formatOnSave":  false,
+    "workbench.tree.indent": 24,
+    "editor.fontSize": 14,
+    "explorer.autoReveal": false,
+    "terminal.integrated.copyOnSelection": true,
+    // "git.enabled": false,
+}
+""")
+
+let tasks:unit = //
+    File.WriteAllText ( ".vscode/tasks.json","""{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label"          : "project: install",
+            "type"           : "shell",
+            "command"        : "make install",
+            "presentation"   : {"focus": true},
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "project: update",
+            "type"           : "shell",
+            "command"        : "make update",
+            "presentation"   : {"focus": true},
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "git: checkout .vscode",
+            "type"           : "shell",
+            "command"        : "git checkout .vscode/settings.json",
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "AI: context",
+            "type"           : "shell",
+            "command"        : "make ai",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+    ]
+}
+""")
+
 let vscode:unit = //
     mkdir ".vscode"
     let jsons = [
@@ -323,6 +469,7 @@ let vscode:unit = //
         "tasks" ]
     for j in jsons do
         File.WriteAllText($".vscode/{j}.json","{\n}\n")
+    settings ; tasks
     let MELD = "meld .vscode ~/em/.vscode"
 
 let dirs:unit = //
@@ -353,17 +500,6 @@ let cmake: unit = //
     for cm in cmakes do
         touch $"cmake/{cm}.cmake"
 
-let giti:unit = //
-    File.WriteAllText(".gitignore","""*~
-*.swp
-*.log
-*.o
-*.exe
-node_modules/
-/target/
-/obj/
-!.gitignore
-""")
 
 let apt:unit = //
     File.WriteAllText ("apt.Debian","""git make curl
