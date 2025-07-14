@@ -13,7 +13,7 @@ test  = false
 bench = false
 
 [workspace]
-members = ["fvm"]
+members = ["config","server","firmware","vm"]
 
 [[bin]]
 path = "src/main.rs"

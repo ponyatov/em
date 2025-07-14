@@ -43,6 +43,15 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
+            "label"          : "cargo: server",
+            "type"           : "shell",
+            "command"        : "make server",
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "cargo: test",
             "type"           : "shell",
             "command"        : "cargo",

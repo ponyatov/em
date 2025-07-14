@@ -1,8 +1,4 @@
 {
-    // files
-    "C_Cpp.files.exclude": {
-        "ref":true,
-    },
     "files.exclude": {
         "doc/html": true, "**/node_modules/**": true,
         "bin/py*": true, "bin/pip*": true,
@@ -10,8 +6,8 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-        "**/bin/**": true, "**/tmp/**": true,
-        "ref/**": true, "target/**": true, "obj/**": true,
+        "bin/**": true, "tmp/**": true, "ref/**": true,
+        "target/**": true, "obj/**": true,
     },
     "files.associations": {
         "*.mk": "makefile", "*.make": "makefile",
@@ -64,6 +60,7 @@
     "[c]"  : { "editor.defaultFormatter" : "xaver.clang-format" },
     "[cpp]": { "editor.defaultFormatter" : "xaver.clang-format" },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.files.exclude": { "ref":true },
     // "C_Cpp.intelliSenseEngine": "Tag Parser",
 
     // CMake

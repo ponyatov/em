@@ -24,3 +24,7 @@ $(RUSTUP) $(CARGO):
 # rustup target add armv7-linux-androideabi
 # rustup component add llvm-tools rust-src
 # curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh
+
+.PHONY: server
+server: $(R)
+	cargo watch -x "run -p server --target x86_64-unknown-linux-gnu"

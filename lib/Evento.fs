@@ -114,7 +114,7 @@ PROJECT_LOGO           = doc/logo.png
 
 let lib:unit = //
     mkdir "lib"
-    File.WriteAllText($"lib/{app}.ini", "# line comment\n")
+    File.WriteAllText($"lib/{app}.ini", "// line comment\n")
 
 let cpp: unit = //
     mkdir "inc"
@@ -124,9 +124,75 @@ let cpp: unit = //
     touch $"src/{app}.lex"
     touch $"src/{app}.yacc"
 
-let rust: unit = //
+let cargo_config:unit = //
     mkdir ".cargo"
-    touch ".cargo/config.toml"
+    File.WriteAllText (".cargo/config.toml","""[build]
+target = "x86_64-unknown-linux-gnu"
+jobs = 2
+
+[profile.dev]
+incremental = true
+
+[target.x86_64-unknown-linux-gnu]
+features = ["pc","i5","x86_64","linux"]
+linker   = "x86_64-linux-gnu-gcc"
+
+[target.aarch64-unknown-linux-gnu]
+features = ["pi800","rk3399","aarch64","linux"]
+linker   = "aarch64-linux-gnu-gcc"
+
+[target.armv7-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
+
+[target.wasm32-unknown-unknown]
+linker = "rust-lld"
+
+[target.i686-pc-windows-gnu]
+features = ["pc","i686","i386","mingw32"]
+linker   = "i686-w64-mingw32-gcc"
+
+[target.x86_64-pc-windows-gnu]
+features = ["pc","i686","i386","win64"]
+linker   = "x86_64-w64-mingw32-gcc"
+
+[target.thumbv7m-none-eabi]
+linker = "arm-none-eabi-gcc"
+runner = [
+    'qemu-system-arm',
+    '-machine','netduino2','-cpu','cortex-m3',
+    '-nographic','-semihosting-config','enable=on,target=native',
+    '-s','-S','-kernel'
+]
+rustflags = [
+    "-C", "link-arg=-Tlink.x",
+    "-C", "link-arg=-nostartfiles",
+]
+
+[target.thumbv7em-none-eabihf]
+linker = "arm-none-eabi-gcc"
+runner = [
+    'qemu-system-arm',
+    '-machine','netduinoplus2','-cpu','cortex-m4',
+    '-nographic','-semihosting-config','enable=on,target=native',
+    '-s','-S','-kernel'
+]
+rustflags = [
+    "-C", "link-arg=-Tlink.x",
+    "-C", "link-arg=-nostartfiles",
+]
+
+[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+[source.tsinghua]
+registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
+""")
+    let CFG = "meld .cargo/config.toml ~/em/.cargo/config.toml"
+
+let rust: unit = //
+    cargo_config
     mkdir "src"
     touch "src/lib.rs"
     File.WriteAllText ( "src/main.rs",
