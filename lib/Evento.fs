@@ -129,11 +129,67 @@ let lib:unit = //
 
 let cpp: unit = //
     mkdir "inc"
-    touch $"inc/{app}.hpp"
+    File.WriteAllText ($"inc/{app}.hpp","""#pragma once
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+
+extern int main(int argc, char *argv[]);
+extern void arg(int argc, char *argv);
+
+extern int yylex();
+extern int yylineno;
+extern char *yytext;
+extern char *yyfile;
+extern FILE *yyin;
+extern int yyparse();
+extern void yyerror(char *msg);
+""")
     mkdir "src"
-    touch $"src/{app}.cpp"
-    touch $"src/{app}.lex"
-    touch $"src/{app}.yacc"
+    let include = $"#include \"{app}.hpp\""
+    File.WriteAllText ($"src/{app}.cpp",include + """
+
+int main(int argc, char *argv[]) {
+    arg(0, argv[0]);
+    for (int i = 1; i < argc; i++) {
+        arg(i, argv[i]);
+        yyfile = argv[i];
+        assert(yyin = fopen(yyfile, "r"));
+        yyparse();
+        fclose(yyin);
+        yyfile = nullptr;
+    }
+    return 0;
+}
+
+void arg(int argc, char *argv) {  //
+    fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
+}
+""")
+    File.WriteAllText ($"src/{app}.lex","%{\n"+include+ """
+char* yyfile = nullptr;
+%}
+
+%option noyywrap yylineno
+
+%%
+. {yyerror("");} // lexer error on any undetected char
+""")
+    File.WriteAllText ($"src/{app}.yacc","%{\n"+include+ """
+%}
+
+%defines %union { char c; char* s; int n; float f; }
+
+%%
+syntax:
+
+%%
+void yyerror(char *msg) {
+    fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
+    exit(-1);
+}
+""")
 
 let cargo_config:unit = //
     mkdir ".cargo"
@@ -312,12 +368,12 @@ let hw:unit = //
 
     for hw,cpu in [
         ("pc","i5");
-        ("qemu386","i486"); ("retro","i686");
-        ("rpi3","bcm2837"); ("rpi4","bcm2711"); ("rpi5","bcm2712"); ("opi800","rk3399");
-        ("pillf103","stm32f103c8"); ("f429disco","stm32f429zi");
-        ("netduinoplus2","stm32f405rg");
-        ("iskra","stm32f405rg"); ("f4disco","stm32f407vg");
-        ("esp8266","lx106"); ("esp32","lx106");
+        // ("qemu386","i486"); ("retro","i686");
+        // ("rpi3","bcm2837"); ("rpi4","bcm2711"); ("rpi5","bcm2712"); ("opi800","rk3399");
+        // ("pillf103","stm32f103c8"); ("f429disco","stm32f429zi");
+        // ("netduinoplus2","stm32f405rg");
+        // ("iskra","stm32f405rg"); ("f4disco","stm32f407vg");
+        // ("esp8266","lx106"); ("esp32","lx106");
         ] do
             mkdir $"hw/{hw}"
             File.WriteAllText ($"hw/{hw}/{hw}.mk",$"CPU = {cpu}")
@@ -332,10 +388,10 @@ let cpu:unit = //
 
     for cpu,arch in [
         ("i5","x86_64");
-        ("i486","i386"); ("i686","i386");
-        ("stm32f103c8","cortexm3"); ("stm32f429zi","cortexm4");
-        ("stm32f405rg","cortexm4"); ("stm32f407vg","cortexm4");
-        ("lx106","xtensa");
+        // ("i486","i386"); ("i686","i386");
+        // ("stm32f103c8","cortexm3"); ("stm32f429zi","cortexm4");
+        // ("stm32f405rg","cortexm4"); ("stm32f407vg","cortexm4");
+        // ("lx106","xtensa");
         ] do
             mkdir $"cpu/{cpu}"
             File.WriteAllText ($"cpu/{cpu}/{cpu}.mk",$"ARCH = {arch}")
@@ -350,10 +406,10 @@ let arch:unit = //
 
     for arch in [
         "x86_64";
-        "i386";
-        "aarch64";
-        "cortexm"; "cortexm3"; "cortexm4";
-        "xtensa";
+        // "i386";
+        // "aarch64";
+        // "cortexm"; "cortexm3"; "cortexm4";
+        // "xtensa";
         ] do
             mkdir $"arch/{arch}"
             touch $"arch/{arch}/{arch}.mk"
@@ -367,11 +423,11 @@ let os:unit = //
     cross_ "os"
     for os in [
         "linux";
-        "none";
-        "freertos";
-        "win32";
-        "rtos8266";
-        "idf"
+        // "none";
+        // "freertos";
+        // "win32";
+        // "rtos8266";
+        // "idf"
     ] do
         mkdir $"os/{os}" ; touch $"os/{os}/{os}.mk" ; touch $"os/{os}/{os}.cmake"
         mkdir $"os/{os}/inc" ; mkdir $"os/{os}/src"
@@ -383,6 +439,18 @@ let cross:unit = //
     cpu
     arch
     os
+
+let vscode:unit = //
+    mkdir ".vscode"
+    let jsons = [
+        "c_cpp_properties";
+        "extensions";
+        "launch";
+        "settings";
+        "tasks" ]
+    for j in jsons do
+        File.WriteAllText($".vscode/{j}.json","{\n}\n")
+    settings ; tasks
 
 let settings:unit = //
     File.WriteAllText ( ".vscode/settings.json","""{
@@ -459,18 +527,7 @@ let tasks:unit = //
 }
 """)
 
-let vscode:unit = //
-    mkdir ".vscode"
-    let jsons = [
-        "c_cpp_properties";
-        "extensions";
-        "launch";
-        "settings";
-        "tasks" ]
-    for j in jsons do
-        File.WriteAllText($".vscode/{j}.json","{\n}\n")
-    settings ; tasks
-    let MELD = "meld .vscode ~/em/.vscode"
+let MELD = "meld .vscode ~/em/.vscode"
 
 let dirs:unit = //
     bin
@@ -499,7 +556,9 @@ let cmake: unit = //
         "version"; "src"; "install"; "cross"; "clean"]
     for cm in cmakes do
         touch $"cmake/{cm}.cmake"
-
+    let TXT = "cp ~/em/CMakeLists.txt CMakeLists.txt"
+    let PRESET = "meld CMakePresets.json ~/em/CMakePresets.json"
+    let CMK = "meld cmake ~/em/cmake"
 
 let apt:unit = //
     File.WriteAllText ("apt.Debian","""git make curl

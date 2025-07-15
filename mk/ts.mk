@@ -1,7 +1,7 @@
+# npm install -g yo generator-code
 $(NPM):
 	sudo apt install -uy npm nodejs
-$(DENO): $(NPM)
-	npm install -g deno
 $(TSC): $(NPM)
 	npm install -g typescript
-# yo generator-langium
+$(DENO): $(NPM)
+	npm install -g deno

@@ -1,3 +1,5 @@
+#include "linux.hpp"
+
 #include "os.hpp"
 #include "cli.hpp"
 
