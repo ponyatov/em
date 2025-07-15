@@ -13,9 +13,9 @@ target_compile_definitions(stm32cubemx INTERFACE
 )
 
 target_include_directories(stm32cubemx INTERFACE
-    ../../Core/Inc
     ../../USB_DEVICE/App
     ../../USB_DEVICE/Target
+    ../../Core/Inc
     ../../Drivers/STM32F4xx_HAL_Driver/Inc
     ../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
     ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc
@@ -26,17 +26,9 @@ target_include_directories(stm32cubemx INTERFACE
 
 target_sources(stm32cubemx INTERFACE
     ../../Core/Src/main.c
-    ../../Core/Src/gpio.c
-    ../../Core/Src/crc.c
-    ../../Core/Src/dma2d.c
-    ../../Core/Src/fmc.c
-    ../../Core/Src/i2c.c
-    ../../Core/Src/ltdc.c
-    ../../Core/Src/spi.c
-    ../../Core/Src/tim.c
-    ../../Core/Src/usart.c
     ../../Core/Src/stm32f4xx_it.c
     ../../Core/Src/stm32f4xx_hal_msp.c
+    ../../Core/Src/stm32f4xx_hal_timebase_tim.c
     ../../USB_DEVICE/App/usb_device.c
     ../../USB_DEVICE/App/usbd_desc.c
     ../../USB_DEVICE/App/usbd_cdc_if.c

@@ -26,9 +26,9 @@ string(TOUPPER ${OS}   OS_  )
 
 add_compile_options(
     -Wall -Wextra               # -Wpedantic
-    -Wno-implicit-fallthrough   # ragel
+    # -Wno-implicit-fallthrough   # ragel
     -Wno-unused-function        # flex
-    -Wno-write-strings          # yacc
+    # -Wno-write-strings          # yacc
     -Wno-unused-parameter       # stm32
     $<$<CONFIG:Debug>:-DDEBUG>
 )
@@ -51,3 +51,5 @@ endif()
 set(CMAKE_EXECUTABLE_SUFFIX_ASM ${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_EXECUTABLE_SUFFIX_C   ${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_EXECUTABLE_SUFFIX_CXX ${CMAKE_EXECUTABLE_SUFFIX})
+
+file(GLOB LD hw/${HW}/*.ld )

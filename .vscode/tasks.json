@@ -135,33 +135,25 @@
         {
             "label"          : "openocd: debug",
             "type"           : "shell",
-            "dependsOn"      : "CMake: build",
+            // "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
-            "group"          : {"kind": "build", "isDefault": false }
+            "group"          : {"kind": "build", "isDefault": true }
         },
         {
             "label"          : "openocd: firmware",
             "type"           : "shell",
-            "group"          : {"kind": "build", "isDefault": false },
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit\"",
             "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
+            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true }
         },
         {
             "label"          : "python: run",
             "type"           : "shell",
             "command"        : "bin/python3 src/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
-            "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
-            "group"          : {"kind": "build","isDefault": true}
-        },
-        {
-            "label"          : "F#: fsi",
-            "type"           : "shell",
-            "command"        : "dotnet fsi",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}

@@ -1,5 +1,5 @@
-#ifndef SDRAM_H_
-#define SDRAM_H_
+#ifndef __SDRAM_H_
+#define __SDRAM_H_
 
 #include "stm32f4xx.h"
 #include <memory.h>
@@ -16,4 +16,4 @@ extern __attribute__((section(".xram"))) uint8_t _sixram, _sxram, _exram;
 
 extern void SDRAM_Init();
 
-#endif  // SDRAM_H_
+#endif  // __SDRAM_H_

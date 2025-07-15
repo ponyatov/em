@@ -156,9 +156,8 @@ SECTIONS
   {
     . = ALIGN(0x10);
     _sxram = .;       /* create a global symbol at xram start */
-    KEEP *(.xram)
-    KEEP *(.xram*)
-
+    KEEP (*(.xram ))
+    KEEP (*(.xram*))
     . = ALIGN(0x10);
     _exram = .;       /* create a global symbol at xram end */
   } > XRAM AT> FLASH

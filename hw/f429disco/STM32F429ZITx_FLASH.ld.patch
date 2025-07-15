@@ -1,5 +1,5 @@
---- STM32F429ZITx_FLASH.ld	2025-05-29 12:51:44.872888594 +0400
-+++ STM32F429ZITx_FLASH.ld.fix	2025-05-29 12:51:44.880888594 +0400
+--- STM32F429ZITx_FLASH.ld	2025-07-15 14:09:39.426749428 +0400
++++ STM32F429ZITx_FLASH.ld.fix	2025-07-15 14:08:48.414751317 +0400
 @@ -1,69 +1,26 @@
  /*
  ******************************************************************************
@@ -71,10 +71,10 @@
 -RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 192K
 -CCMRAM (xrw)      : ORIGIN = 0x10000000, LENGTH = 64K
 -FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 2048K
-+FLASH  (r x)     : ORIGIN =  0x8000000, LENGTH = 2048K
-+RAM    (rwx)     : ORIGIN = 0x20000000, LENGTH =  192K
-+CCM    (rwx)     : ORIGIN = 0x10000000, LENGTH =   64K
-+XRAM   (rwx)     : ORIGIN = 0xD0000000, LENGTH =    8M
++FLASH  (r x) : ORIGIN =  0x8000000, LENGTH =    2M
++RAM    (rwx) : ORIGIN = 0x20000000, LENGTH =  192K
++CCM    (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
++XRAM   (rwx) : ORIGIN = 0xD0000000, LENGTH =    8M
  }
  
  /* Define output sections */
@@ -83,7 +83,7 @@
      . = ALIGN(4);
      _edata = .;        /* define a global symbol at data end */
 -  } > AT> FLASH
-+  } >RAM AT> FLASH
++  } > RAM AT> FLASH
  
 -  _siccmram = LOADADDR(.ccmram);
 +  _siccm = LOADADDR(.ccm);
@@ -119,16 +119,16 @@
      _ebss = .;         /* define a global symbol at bss end */
      __bss_end__ = _ebss;
 -  } >
-+  } >RAM
++  } > RAM
  
    /* User_heap_stack section, used to check that there is enough RAM left */
    ._user_heap_stack :
-@@ -191,18 +147,25 @@
+@@ -191,18 +147,26 @@
      . = . + _Min_Heap_Size;
      . = . + _Min_Stack_Size;
      . = ALIGN(8);
 -  } >
-+  } >RAM
++  } > RAM
  
 -  
 +  _sixram = LOADADDR(.xram);
@@ -138,10 +138,11 @@
 +  {
 +    . = ALIGN(0x10);
 +    _sxram = .;       /* create a global symbol at xram start */
++    KEEP (*(.xram ))
 +    KEEP (*(.xram*))
 +    . = ALIGN(0x10);
 +    _exram = .;       /* create a global symbol at xram end */
-+  } >XRAM AT> FLASH
++  } > XRAM AT> FLASH
  
    /* Remove information from the standard libraries */
    /DISCARD/ :

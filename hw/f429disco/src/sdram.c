@@ -1,7 +1,7 @@
 #include "sdram.h"
 
 /// https://en.radzio.dxp.pl/stm32f429idiscovery/sdram.html
-void SDRAM_Init() {
+void SDRAM_Init(void) {
     // Enable clock for FMC
     RCC->AHB3ENR |= RCC_AHB3ENR_FMCEN;
     // Initialization step 1
