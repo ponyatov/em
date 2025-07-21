@@ -43,6 +43,16 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
+            "label"          : "cargo: watch",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["watch","-x","run --target x86_64-unknown-linux-gnu"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "cargo: server",
             "type"           : "shell",
             "command"        : "make server",
