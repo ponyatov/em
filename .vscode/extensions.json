@@ -57,8 +57,8 @@
         // Rust
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
-        "swellaby.vscode-rust-test-adapter",
         "vadimcn.vscode-lldb",
+        "swellaby.vscode-rust-test-adapter",
         // "sissel.shopify-liquid",
         // "marus25.cortex-debug",
         // "probe-rs.probe-rs-debugger",

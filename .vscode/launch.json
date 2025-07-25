@@ -20,7 +20,7 @@
                     // "--features=pc,i5,x86_64,linux"
                 ]
             },
-            "args": ["240", "320"],
+            "args": ["lib/${workspaceFolderBasename}.ini"],
             "cwd": "${workspaceFolder}"
             "stopOnEntry": true,
             "preLaunchTask": "cargo: build",
