@@ -22,10 +22,11 @@
         // "redhat.vscode-yaml",
         // misc
         "usernamehw.errorlens",
-        "hbenl.vscode-test-explorer",
-        // Web
+        // Web/JS
+        "esbenp.prettier-vscode",
         "mechatroner.rainbow-csv",
         "jock.svg",
+        "dtsvet.vscode-wasm",
         // JS
         "esbenp.prettier-vscode",
         "denoland.vscode-deno",

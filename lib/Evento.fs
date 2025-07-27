@@ -37,6 +37,8 @@ let mkdir (path: string) : unit =
 
 let NewLines = List.reduce (fun a b -> $"{a}\n{b}")
 
+let spawn cmd = cmd;
+
 // env
 let USER = Environment.UserName
 let HOME = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
@@ -45,7 +47,6 @@ let HOME = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
 let CWD = $"{HOME}/{app}"
 mkdir CWD
 Directory.SetCurrentDirectory(CWD)
-let CODE = $"code -r {CWD} ; sleep 5 ; code {HOME}/em/lib/Evento.fs"
 
 let README:unit = //
     File.WriteAllText ("README.md",$"# ![](doc/logo.png) `{APP}` {VERSION}
@@ -101,7 +102,7 @@ let FLIC = $"git remote add flic git@gitflic.ru:dponyatov/{app}.git"
 let CLONE = $"git clone -o gh git@github.com:ponyatov/{app}.git {HOME}/{APP}"
 let GITGUI = $"git gui &"
 let PULL = $"git pull -v gh {USER}"
-let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER}"
+let COMMIT = $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER} ; pp"
 
 let bin:unit = //
     for d in ["bin"; "tmp"; "ref"] do
@@ -341,10 +342,12 @@ panic-semihosting = \"0.6\"
 
 let html:unit = //
     mkdir "static"
+    File.WriteAllText ("static/.gitignore","*.wasm\n!.gitignore\n")
     mkdir "static/cdn"
     File.WriteAllText ("static/cdn/.gitignore","*\n!.gitignore\n")
     touch "static/index.html"
     touch "static/css.css"
+    touch "static/js.js"
     touch $"src/{app}.ts"
 
 let src:unit = //
