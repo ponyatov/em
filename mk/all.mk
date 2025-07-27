@@ -4,3 +4,6 @@ all: $(BIN)/$(BINFILE) $(S)
 run: $(BIN)/$(BINFILE) $(S)
 	$^
 	cargo run -- $(S)
+
+.PHONY: wasm
+wasm: static/$(APP).wasm static/hello.wasm

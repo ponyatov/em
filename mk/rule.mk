@@ -5,3 +5,6 @@ bin/$(BINFILE): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 $(ELF): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 	cmake --fresh --preset ${HW}
 	cmake --build --preset ${HW} -j
+
+static/%.wasm: src/%.wat
+	wat2wasm $< -o $@ && wasm-objdump -x $@
