@@ -1,4 +1,7 @@
-use crate::config;
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
+mod config;
 
 use std::{
     io::{Read, Write},
@@ -105,7 +108,7 @@ fn router(client: &mut TcpStream) {
     }
 }
 
-pub fn run() {
+pub fn main() {
     let listener = TcpListener::bind(config::BIND).unwrap();
     eprintln!("server @ http://{}:{}", config::IP, config::PORT);
     for client in listener.incoming() {
