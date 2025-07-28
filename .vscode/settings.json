@@ -36,7 +36,7 @@
     "terminal.integrated.copyOnSelection": true,
     // "git.enabled": false,
     "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 3333,
+    "files.autoSaveDelay": 2222,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],
@@ -90,7 +90,7 @@
     "rust-analyzer.checkOnSave"          : false,
     "rust-analyzer.check.allTargets"     : false,
     "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
-    "rust-analyzer.cargo.features"       : ["pc","i5","x86_64","linux"],
+    // "rust-analyzer.cargo.features"       : ["pc","i5","x86_64","linux"],
     // "rust-analyzer.cargo.target"         : "thumbv7m-none-eabi",
     // "rust-analyzer.cargo.target"         : "thumbv7m-none-eabihf",
     // "rust-analyzer.cargo.features"       : ["pillf103","stm32f1","cortex","cortexm3"],

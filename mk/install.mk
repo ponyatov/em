@@ -5,7 +5,7 @@ update : $(WS)_update $(RUSTUP) $(TSC)
 	$(RUSTUP) self update && $(RUSTUP) update
 	$(PIP) install -U -r requirements.txt
 	$(NPM) update
-ref    : $(RF)
+ref    : $(REF)
 gz     : $(GZ)
 
 Debian_install:
