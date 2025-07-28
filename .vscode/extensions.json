@@ -3,6 +3,7 @@
         "stkb.rewrap",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        "mechatroner.rainbow-csv",
         // GPT
         "AmazonWebServices.aws-toolkit-vscode",
         "jebbs.plantuml",
@@ -11,8 +12,8 @@
         // "ms-windows-ai-studio.windows-ai-studio",
         // formatters
         "xaver.clang-format",
-        "foxundermoon.shell-format",
         "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
         // Linux
         "ms-vscode-remote.remote-ssh",
         "coolbear.systemd-unit-file",
@@ -22,12 +23,11 @@
         // "redhat.vscode-yaml",
         // misc
         "usernamehw.errorlens",
+        // "hbenl.vscode-test-explorer",
         // Web/JS
         "esbenp.prettier-vscode",
-        "mechatroner.rainbow-csv",
         "jock.svg",
         "dtsvet.vscode-wasm",
-        // JS
         "esbenp.prettier-vscode",
         "denoland.vscode-deno",
         // "dbaeumer.vscode-eslint",
@@ -54,6 +54,7 @@
         // Python
         "ms-python.python",
         "ms-python.autopep8",
+        "charliermarsh.ruff",
         // "batisteo.vscode-django",
         // Rust
         "rust-lang.rust-analyzer",
