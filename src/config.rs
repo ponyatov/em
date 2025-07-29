@@ -25,19 +25,19 @@ pub mod server {
 /// screen width
 pub mod gui {
     /// screen width (mobile phone emulation)
-    pub const width: u16 = 240;
+    pub const width: i16 = 240;
     /// screen height (mobile phone emulation)
-    pub const height: u16 = 320;
-    /// base font size
-    pub const font_size: u16 = height / 4;
+    pub const height: i16 = 320;
     /// large icons (for tiny phone screen)
-    pub const icon_size: u16 = 64;
+    pub const icon_size: i16 = 64;
+    /// base font size
+    pub const font_size: i16 = icon_size / 2;
 
-    // /// root window background
-    pub const root_bg: (u8, u8, u8) = (0x22, 0x22, 0x22);
-    // // status bar background
-    // pub const status_bg: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0x22, 0x11, 0x11);
+    /// root window background
+    pub const root_bg: (u8, u8, u8) = (0x11, 0x22, 0x33);
+    // status bar background
+    pub const status_bg: (u8, u8, u8) = (0x11, 0x33, 0x22);
     // pub const status_clock: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0xAA, 0xBB, 0xCC);
-    // // navigator bar background
-    // pub const navbar_bg: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0x11, 0x22, 0x11);
+    // navigator bar background
+    pub const navbar_bg: (u8, u8, u8) = (0x22, 0x22, 0x11);
 }
