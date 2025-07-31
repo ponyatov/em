@@ -8,15 +8,15 @@ repository  =  "https://github.com/ponyatov/rsvm"
 edition     =  "2024"
 
 [[bin]]
-name = "server"
+name = "rdrsd"
 path = "src/server.rs"
 
 [[bin]]
-name = "main"
+name = "rdrs"
 path = "src/main.rs"
 
 [lib]
-name        =  "vmlib"
+name        =  "librdrs"
 path        =  "src/lib.rs"
 crate-type  = ["cdylib"]
 
@@ -58,7 +58,7 @@ esp8266         = ["xtensa","rtos8266"]
 esp32           = ["xtensa","idf"]
 # cpu
 ## x86
-i5              = ["x86_64","linux"]
+i5              = ["x86_64"]
 i486            = ["i386"  ,"none" ]
 i686            = ["i386"  ,"win32"]
 ## aarch64
@@ -84,7 +84,7 @@ cortexm3        = ["cortexm"]
 cortexm4        = ["cortexm"]
 xtensa          = ["lx106"]
 # os
-linux           = ["sdl"]
+linux           = []
 win32           = []
 none            = []
 rtos8266        = []

@@ -11,7 +11,7 @@ RTARGET = x86_64-unknown-linux-gnu
 $(RUSTUP) $(CARGO):
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	rustup target add x86_64-unknown-linux-gnu
-        rustup target add wasm32-unknown-unknown
+	rustup target add wasm32-unknown-unknown
 	rustup component add rust-analyzer rustfmt
 	cargo install cargo-watch cargo-binutils
 # rustup target add x86_64-unknown-linux-gnu
@@ -32,4 +32,4 @@ server: $(R)
 
 .PHONY: main
 main: $(R)
-	cargo watch -x "run --bin $@ --target $(RTARGET) -gnu -- $(S)"
+	cargo watch -x "run --bin $@ --target $(RTARGET) -- $(S)"
