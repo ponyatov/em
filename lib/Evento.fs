@@ -218,9 +218,6 @@ let cargo_config:unit = //
 target = "x86_64-unknown-linux-gnu"
 jobs = 2
 
-[profile.dev]
-incremental = true
-
 [target.x86_64-unknown-linux-gnu]
 # features = ["pc","i5","x86_64","linux"]
 linker   = "x86_64-linux-gnu-gcc"
@@ -696,6 +693,6 @@ let package:unit = //
     \"license\": \"{LICENSE}\"
 }}
 ")
-    // npm i -g deno typescript
+    spawn "npm i -g deno typescript"
 
 spawn COMMIT
