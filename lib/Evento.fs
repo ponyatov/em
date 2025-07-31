@@ -102,6 +102,7 @@ spawn $"git checkout --orphan {USER}"
 spawn "ln -fs ../rc rc"
 spawn $"git gui &"
 spawn $"git add -A ; git commit -am \".\" ; git push -v -u gh {USER} ; pp"
+let COMMIT = "git add -A ; git commit -am \".\" ; pp"
 
 let bin:unit = //
     for d in ["bin"; "tmp"; "ref"] do
@@ -697,4 +698,4 @@ let package:unit = //
 ")
     // npm i -g deno typescript
 
-COMMIT
+spawn COMMIT
