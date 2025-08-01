@@ -60,7 +60,7 @@
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
         "vadimcn.vscode-lldb",
-        "swellaby.vscode-rust-test-adapter",
+        // "swellaby.vscode-rust-test-adapter",
         // "sissel.shopify-liquid",
         // "marus25.cortex-debug",
         // "probe-rs.probe-rs-debugger",
