@@ -53,7 +53,7 @@ let README:unit = //
     File.WriteAllText ("README.md",$"# ![](doc/logo.png) `{APP}` {VERSION}
 ## {TITLE}
 
-(c) {AUTHOR} <{EMAIL}> {YEAR} {LICENSE}
+(c) {AUTHOR} <<{EMAIL}>> {YEAR} {LICENSE}
 
 github: {GITHUB}
 {ABOUT}")
@@ -89,7 +89,6 @@ let giti:unit = //
 *.exe
 node_modules/
 /target/
-/obj/
 !.gitignore
 """)
 
@@ -140,7 +139,7 @@ let lib:unit = //
     jmp init
     call forward
 
-forward:
+:forward
     ret
 
 # booleans
@@ -151,7 +150,7 @@ let cpp: unit = //
     mkdir "inc" ; touch $"inc/{app}.hpp"
     mkdir "src" ; File.WriteAllText ($"src/{app}.cpp",$"#include \"{app}.hpp\"\n")
     // 
-    File.WriteAllText ($"inc/{app}.hpp","""#pragma once
+    File.WriteAllText ($"inc/{app}.hpp",$"#pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -166,8 +165,10 @@ extern char *yytext;
 extern char *yyfile;
 extern FILE *yyin;
 extern int yyparse();
-extern void yyerror(char *msg);
-""")
+extern void yyerror(const char *msg);
+#include \"{app}.yacc.hpp\"
+")
+    mkdir "src"
     let include = $"#include \"{app}.hpp\""
     File.WriteAllText ($"src/{app}.cpp",include + """
 
@@ -206,7 +207,7 @@ char* yyfile = nullptr;
 syntax:
 
 %%
-void yyerror(char *msg) {
+void yyerror(const char *msg) {
     fprintf(stderr, "\n\n%s:%i %s [%s]\n\n", yyfile, yylineno, msg, yytext);
     exit(-1);
 }
