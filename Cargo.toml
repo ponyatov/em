@@ -1,35 +1,33 @@
 [package]
-name        =  "evento"
+name        =  "rsvm"
 version     =  "0.0.1"
-description =  "Embedded Programming Language Prototype"
+description =  "Rust Virtual Machine"
 authors     = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
 license     =  "MIT"
-repository  =  "https://github.com/ponyatov/Evento"
+repository  =  "https://github.com/ponyatov/rsvm"
 edition     =  "2024"
 
 [[bin]]
-name  = "flang"
-test  = false
-bench = false
-
-[workspace]
-members = ["config","server","firmware","vm"]
+name = "rdrsd"
+path = "src/server.rs"
 
 [[bin]]
+name = "rdrs"
 path = "src/main.rs"
-name = "F"
 
-# [lib]
-# path = "src/vm.rs"
-# crate-type = ["cdylib"]
-# name = "vm"
-# # bench = false
+[lib]
+name        =  "librdrs"
+path        =  "src/lib.rs"
+crate-type  = ["cdylib"]
 
 [dependencies]
 const_format = "0.2"
+nom          = "8.0"
 
 [target.'cfg(all(target_os = "linux"))'.dependencies]
-libc = "0.2"
+libc    = "0.2"
+memmap2 = "0.9"
+sdl2    = {version = "0.38", features = ["ttf","image"], optional = true}
 
 [target.x86_64-unknown-linux-gnu.dependencies]
 xdpilone = "1.2"
@@ -60,7 +58,7 @@ esp8266         = ["xtensa","rtos8266"]
 esp32           = ["xtensa","idf"]
 # cpu
 ## x86
-i5              = ["x86_64","linux"]
+i5              = ["x86_64"]
 i486            = ["i386"  ,"none" ]
 i686            = ["i386"  ,"win32"]
 ## aarch64
@@ -91,3 +89,5 @@ win32           = []
 none            = []
 rtos8266        = []
 idf             = []
+# gui variant
+sdl             = ["dep:sdl2"]
