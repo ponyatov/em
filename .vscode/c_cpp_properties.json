@@ -7,10 +7,10 @@
             "${workspaceFolder}/src/**"
         ],
         "crossInclude": [
-            "${workspaceFolder}/hw/inc/**",
-            "${workspaceFolder}/cpu/inc/**",
-            "${workspaceFolder}/arch/inc/**",
-            "${workspaceFolder}/os/inc/**"
+            "${workspaceFolder}/hw/inc/**"  ,"${workspaceFolder}/hw/*/inc/**"  ,
+            "${workspaceFolder}/cpu/inc/**" ,"${workspaceFolder}/cpu/*/inc/**" ,
+            "${workspaceFolder}/arch/inc/**","${workspaceFolder}/arch/*/inc/**",
+            "${workspaceFolder}/os/inc/**"  ,"${workspaceFolder}/os/*/inc/**"
         ]
     },
     "configurations": [

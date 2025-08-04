@@ -1,18 +1,25 @@
 # .mk files
 MK += Makefile
-MK += $(wildcard   mk/*.mk)
-MK += $(wildcard   hw/*.mk)
-MK += $(wildcard  cpu/*.mk)
-MK += $(wildcard arch/*.mk)
-MK += $(wildcard   os/*.mk)
+MK += $(wildcard     mk/*.mk)
+MK += $(wildcard   hw/*/*.mk)
+MK += $(wildcard  cpu/*/*.mk)
+MK += $(wildcard arch/*/*.mk)
+MK += $(wildcard   os/*/*.mk)
 
 # cmake files
-CM += CMake* cmake/*.cmake
+CM += CMake*
+CM += $(wildcard  cmake/*.cmake)
+CM += $(wildcard   hw/*/*.cmake)
+CM += $(wildcard  cpu/*/*.cmake)
+CM += $(wildcard arch/*/*.cmake)
+CM += $(wildcard   os/*/*.cmake)
 
 # C/C++
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.h*)
-
+# libs
+C += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
+H += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 # cross
 C += $(wildcard   hw/src/*.c*) $(wildcard   hw/*/src/*.c*)
 H += $(wildcard   hw/inc/*.h*) $(wildcard   hw/*/inc/*.h*)
@@ -23,10 +30,6 @@ H += $(wildcard arch/inc/*.h*) $(wildcard arch/*/inc/*.h*)
 C += $(wildcard   os/src/*.c*) $(wildcard   os/*/src/*.c*)
 H += $(wildcard   os/inc/*.h*) $(wildcard   os/*/inc/*.h*)
 
-# libs
-C += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
-H += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
-
 # ini
 S += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
@@ -35,16 +38,10 @@ T += $(wildcard src/*.ts)
 J += $(wildcard src/*.js)
 
 # Python
-P += $(wildcard src/*.py)
-P += $(wildcard meta/*.py)
-P += $(wildcard django/*.py)
-P += $(wildcard django/tracker/settings.py)
-P += $(wildcard django/task/*.py)
+P += $(wildcard src/*.py) $(wildcard scripts/*.py)
 
 # Rust
-R += $(wildcard      ./src/*.rs)      ./Cargo.toml
-R += $(wildcard config/src/*.rs) config/Cargo.toml
-R += $(wildcard server/src/*.rs) server/Cargo.toml
+R += Cargo.toml $(wildcard src/*.rs)
 
 # F#
 F += $(wildcard lib/*.fs*)

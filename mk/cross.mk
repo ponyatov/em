@@ -16,8 +16,6 @@ include  cpu/$(CPU)/$(CPU).mk
 include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
 
-ifeq ($(ARCH),cortexM)
-
 ELF = bin/$(BINFILE).elf
 DFU = bin/$(BINFILE).dfu
 
@@ -33,9 +31,6 @@ $(DFU): $(ELF)
 qemu: $(ELF)
 	$(QEMU) $(QEMU_CFG) -gdb tcp::12345 -S -kernel $<
 
-endif
-
-ifeq ($(ARCH),i386)
 .PHONY: qemu
 qemu: bin/$(BINFILE).iso
 	$(QEMU) $(QEMU_CFG) -gdb tcp::12345 -boot d -cdrom $<
