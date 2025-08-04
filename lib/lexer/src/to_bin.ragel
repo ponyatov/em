@@ -1,0 +1,26 @@
+%%{
+    machine to_bin;
+
+    bin_digits := |*
+        [01] => { result = (result << 1) | (fc - '0'); };
+    *|;
+
+    main := |*
+        '0' => { /* expect b next */ };
+        'b' => { fgoto bin_digits; };
+    *|;
+
+}%%
+
+%%write data;
+
+int to_bin(char *ts, char *te) {
+    char *p = ts, *pe = te, *eof = pe;
+    int cs = to_bin_start; int act;
+    int result = 0;
+    
+    %%write init;
+    %%write exec;
+    
+    return result;
+}

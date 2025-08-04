@@ -1,0 +1,28 @@
+%%{
+    machine to_hex;
+
+    hex_digits := |*
+        [0-9] => { result = (result << 4) | (fc - '0'); };
+        [a-f] => { result = (result << 4) | (fc - 'a' + 10); };
+        [A-F] => { result = (result << 4) | (fc - 'A' + 10); };
+    *|;
+
+    main := |*
+        '0' => { /* expect x next */ };
+        'x' => { fgoto hex_digits; };
+    *|;
+
+}%%
+
+%%write data;
+
+int to_hex(char *ts, char *te) {
+    char *p = ts, *pe = te, *eof = pe;
+    int cs = to_hex_start; int act;
+    int result = 0;
+    
+    %%write init;
+    %%write exec;
+    
+    return result;
+}

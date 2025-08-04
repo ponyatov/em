@@ -1,0 +1,60 @@
+%%{
+    machine lexer;
+    ws = [ \t\r\n]+;
+
+        main := |*
+            ws => { /* skip */ };
+        *|;
+}%%
+
+// #include "parser.h"
+
+// extern void *ParseAlloc(void *(*mallocProc)(size_t));
+// extern void Parse(void *yyp, int yymajor, Token *yyminor);
+// extern void ParseFree(void *p, void (*freeProc)(void*));
+
+// static Token *make_token(const char *start, const char *end) {
+//     Token *tok = (Token*)malloc(sizeof(Token));
+//     int len = end - start;
+//     tok->value = (char*)malloc(len + 1);
+//     memcpy(tok->value, start, len);
+//     tok->value[len] = '\0';
+//     return tok;
+// }
+
+void lexer(char *p, char *pe) {
+//     char *eof = pe;
+//     int cs;
+//     void *parser = ParseAlloc(malloc);
+    
+//     %%{
+//         number = digit+ ('.' digit+)?;
+//         identifier = alpha (alnum | '_')*;
+        
+//         main := |*
+//             ws => { /* skip */ };
+//             number => { Parse(parser, NUMBER, make_token(ts, te)); };
+//             'var' => { Parse(parser, VAR, NULL); };
+//             'function' => { Parse(parser, FUNCTION, NULL); };
+//             'return' => { Parse(parser, RETURN, NULL); };
+//             identifier => { Parse(parser, ID, make_token(ts, te)); };
+//             '+' => { Parse(parser, ADD, NULL); };
+//             '-' => { Parse(parser, SUB, NULL); };
+//             '*' => { Parse(parser, MUL, NULL); };
+//             '/' => { Parse(parser, DIV, NULL); };
+//             '=' => { Parse(parser, ASSIGN, NULL); };
+//             '(' => { Parse(parser, LPAREN, NULL); };
+//             ')' => { Parse(parser, RPAREN, NULL); };
+//             '{' => { Parse(parser, LBRACE, NULL); };
+//             '}' => { Parse(parser, RBRACE, NULL); };
+//             ';' => { Parse(parser, SEMICOLON, NULL); };
+//         *|;
+        
+        %%write init;
+        %%write exec;
+//     }%%
+    
+//     Parse(parser, 0, NULL);
+//     ParseFree(parser, free);
+//     return 0;
+}

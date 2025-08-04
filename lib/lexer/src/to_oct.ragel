@@ -1,0 +1,26 @@
+%%{
+    machine to_oct;
+
+    oct_digits := |*
+        [0-7] => { result = (result << 3) | (fc - '0'); };
+    *|;
+
+    main := |*
+        '0' => { /* expect x next */ };
+        'x' => { fgoto oct_digits; };
+    *|;
+
+}%%
+
+%%write data;
+
+int to_oct(char *ts, char *te) {
+    char *p = ts, *pe = te, *eof = pe;
+    int cs = to_oct_start; int act;
+    int result = 0;
+    
+    %%write init;
+    %%write exec;
+    
+    return result;
+}

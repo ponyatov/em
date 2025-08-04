@@ -1,0 +1,23 @@
+%%{
+    machine to_int;
+
+    main := |*
+        '+'   => { /* positive sign */ };
+        '-'   => { sign = -1; };
+        digit => { result = result * 10 + (fc - '0'); };
+    *|;
+
+}%%
+
+%%write data;
+
+int to_int(char *ts, char *te) {
+    char *p = ts, *pe = te, *eof = pe;
+    int cs = to_int_start; int act;
+    int sign = 1; int result = 0;
+    
+    %%write init;
+    %%write exec;
+    
+    return sign * result;
+}

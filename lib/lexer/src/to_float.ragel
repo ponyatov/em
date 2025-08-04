@@ -1,0 +1,43 @@
+%%{
+    machine to_float;
+
+    infrac := |*
+        digit => { frac = frac * 10 + (fc - '0'); div *= 10; };
+        [eE]  => { fgoto inexp; };
+    *|;
+
+    inexp := |*
+        '+'   => { /* positive exp sign */ };
+        '-'   => { exp_sign = -1; };
+        digit => { exp = exp * 10 + (fc - '0'); };
+    *|;
+
+    main := |*
+        '+'   => { /* positive sign */ };
+        '-'   => { sign = -1; };
+        digit => { result = result * 10 + (fc - '0'); };
+        '.'   => { fgoto infrac; };
+        [eE]  => { fgoto inexp; };
+    *|;
+
+}%%
+
+%%write data;
+
+float to_float(char *ts, char *te) {
+    char *p = ts, *pe = te, *eof = pe;
+    int cs = to_float_start; int act;
+    float result = 0, sign = 1, frac = 0, div = 1;
+    int exp = 0, exp_sign = 1;
+    
+    %%write init;
+    %%write exec;
+    
+    float base = (result + frac / div) * sign;
+    float multiplier = 1;
+    int final_exp = exp * exp_sign;
+    for (int i = 0; i < (final_exp < 0 ? -final_exp : final_exp); i++) {
+        multiplier *= 10;
+    }
+    return final_exp < 0 ? base / multiplier : base * multiplier;
+}
