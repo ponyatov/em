@@ -1,10 +1,10 @@
 # parser generators (flex,yacc/bison,ragel,lemon,..)
 
-find_package(FLEX     REQUIRED)
-find_package(BISON    REQUIRED)
+# find_package(FLEX     REQUIRED)
+# find_package(BISON    REQUIRED)
 # find_package(Readline REQUIRED)
-# find_package(RAGEL    REQUIRED)
-# find_package(LEMON    REQUIRED)
+find_package(RAGEL    REQUIRED)
+find_package(LEMON    REQUIRED)
 
 file(GLOB L
     RELATIVE ${CMAKE_SOURCE_DIR}
@@ -76,6 +76,7 @@ foreach(RAGEL_FILE ${R})
 endforeach()
 
 foreach(LEMON_FILE ${M})
+    #
     string(REGEX REPLACE ".+\/(.+)\.lemon$" "${CMAKE_BINARY_DIR}/\\1.lemon.cpp"
         LEMON_CPP           ${LEMON_FILE})
     list(APPEND CP          ${LEMON_CPP})
@@ -93,7 +94,7 @@ foreach(LEMON_FILE ${M})
     string(REGEX REPLACE ".+\/(.+)\.lemon$" "${CMAKE_BINARY_DIR}/\\1.out"
         LEMON_O             ${LEMON_FILE})
     add_custom_command(
-        OUTPUT              ${LEMON_C} ${LEMON_H}
+        OUTPUT              ${LEMON_C} ${LEMON_H} ${LEMON_O}
         DEPENDS             ${LEMON_FILE}
         WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
         COMMAND             ${LEMON_EXECUTABLE}

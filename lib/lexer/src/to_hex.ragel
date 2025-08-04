@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 %%{
     machine to_hex;
 
@@ -16,7 +18,7 @@
 
 %%write data;
 
-int to_hex(char *ts, char *te) {
+uint32_t to_hex(char *ts, char *te) {
     char *p = ts, *pe = te, *eof = pe;
     int cs = to_hex_start; int act;
     int result = 0;
