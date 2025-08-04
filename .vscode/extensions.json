@@ -40,7 +40,7 @@
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
-        // "serghei-iakovlev.language-lemon",
+        "serghei-iakovlev.language-lemon",
         // "supremeconset.binpac-vscode-extension",
         // "AlecGhost.tree-sitter-vscode",
         // embedded
