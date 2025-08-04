@@ -7,7 +7,7 @@
 
     main := |*
         '0' => { /* expect x next */ };
-        'x' => { fgoto oct_digits; };
+        'o' => { fgoto oct_digits; };
     *|;
 
 }%%

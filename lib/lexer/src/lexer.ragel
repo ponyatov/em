@@ -19,7 +19,7 @@
     oct     = '0o' [0-7]+;
     bin     = '0b' [01]+;
     float   = sign? digit+ '.' digit+;
-    exp     = (integer|float) [eE] sign? digit+;
+    exp     = (float|integer) [eE] sign? digit+;
 
     main := |*
         '\n'         => { yyline++; };
@@ -27,7 +27,7 @@
         line_comment => {};
         '/*'         => { fgoto block_comment; };
         hex          => { fprintf(stderr,  "hex: %x\n",  to_hex(ts,te)); };
-        oct          => { fprintf(stderr,  "oct: %o\n",  to_oct(ts,te)); };
+        oct          => { fprintf(stderr,  "oct: %x\n",  to_oct(ts,te)); };
         bin          => { fprintf(stderr,  "bin: %d\n",  to_bin(ts,te)); };
         integer      => { fprintf(stderr,  "int: %d\n",  to_int(ts,te)); };
         float        => { fprintf(stderr,"float: %f\n",to_float(ts,te)); };
@@ -41,7 +41,7 @@
 
 %%write data;
 char *yyfile = nullptr;  ///< current file name
-int yyline = 1;          ///< current line number
+size_t yyline = 1;       ///< current line number
 
 void lexer(char *p, char *pe) {
     char *eof = pe;
