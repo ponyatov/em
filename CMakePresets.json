@@ -12,13 +12,13 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "f4disco",
-            "configurePreset" :  "f4disco",
+            "name"            :  "iskra",
+            "configurePreset" :  "iskra",
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "iskra",
-            "configurePreset" :  "iskra",
+            "name"            :  "f4disco",
+            "configurePreset" :  "f4disco",
             "targets"         : ["all","install"]
         },
         {
@@ -57,28 +57,28 @@
             }
         },
         {
-            "name"            :  "cortexm",
-            "inherits"        :  "common",
-            "hidden"          :   true,
-            "toolchainFile"   :  "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "name"            : "cortexm",
+            "inherits"        : "common",
+            "hidden"          : true,
+            "toolchainFile"   : "${sourceDir}/cmake/arm-none-eabi.cmake",
             "cacheVariables"  : {"OS":"none"}
         },
         {
-            "name"            :  "cortexm0",
-            "inherits"        :  "cortexm",
-            "hidden"          :   true,
+            "name"            : "cortexm0",
+            "inherits"        : "cortexm",
+            "hidden"          : true,
             "cacheVariables"  : {"ARCH":"cortexm0"}
         },
         {
-            "name"            :  "cortexm3",
-            "inherits"        :  "cortexm",
-            "hidden"          :   true,
+            "name"            : "cortexm3",
+            "inherits"        : "cortexm",
+            "hidden"          : true,
             "cacheVariables"  : {"ARCH":"cortexm3"}
         },
         {
             "name"            : "cortexm4",
             "inherits"        : "cortexm",
-            "hidden"          :  true,
+            "hidden"          : true,
             "cacheVariables"  : {"ARCH":"cortexm4"}
         },
         {
@@ -96,18 +96,18 @@
                                  "CPU":"stm32f103c8t", "SERIES": "STM32F1"}
         },
         {
-            "name"            :  "f4disco",
-            "inherits"        :  "cortexm4",
-            "cacheVariables"  : {"HW" :"f4disco",
-                                "CPU":"stm32f407vgt", "SERIES": "STM32F4"}
-        },
-        {
             "name"            : "iskra",
             "inherits"        : "cortexm4",
             "cacheVariables"  : {
                 "HW" :"iskra",
                 "CPU":"stm32f405rgt", "SERIES": "STM32F4"
             }
+        },
+        {
+            "name"            : "f4disco",
+            "inherits"        : "cortexm4",
+            "cacheVariables"  : {"HW" :"f4disco",
+                                "CPU":"stm32f407vgt", "SERIES": "STM32F4"}
         },
         {
             "name"            : "l496disco",
@@ -128,7 +128,7 @@
         {
             "name"            : "pc",
             "inherits"        : "common",
-            "hidden"          :  true,
+            "hidden"          : true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {

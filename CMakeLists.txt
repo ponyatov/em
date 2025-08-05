@@ -6,6 +6,8 @@ include(version)        # binary files naming by version & git branch/hash
 include(src)            # scan project for source code files
 include(syntax)         # parser generators (flex,yacc/bison,ragel,lemon,..)
 
+# include(espruino)       # custom code generation for Espruino
+
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
 message("-- |      host: " ${CMAKE_HOST_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_VERSION})
@@ -13,6 +15,10 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
+message("-- |")
+message("-- | C: " ${C})
+message("-- | H: " ${H})
+message("-- | @: " ${INC})
 message("-- |")
 
 add_executable(${CMAKE_PROJECT_NAME}
