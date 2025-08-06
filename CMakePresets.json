@@ -84,46 +84,39 @@
         {
             "name"            : "pillF030",
             "inherits"        : "cortexm0",
-            "cacheVariables"  : {
-                "HW" :"pillF030",
-                "CPU":"stm32f030f4p", "SERIES": "STM32F0"
+            "cacheVariables"  : {"HW" :"pillF030",
+                                "CPU":"stm32f030f4", "SERIES": "STM32F0"
             }
         },
         {
             "name"            :  "pillF103",
             "inherits"        :  "cortexm3",
             "cacheVariables"  : {"HW" :"pillF103",
-                                 "CPU":"stm32f103c8t", "SERIES": "STM32F1"}
+                                "CPU":"stm32f103c8", "SERIES": "STM32F1"}
         },
         {
             "name"            : "iskra",
             "inherits"        : "cortexm4",
-            "cacheVariables"  : {
-                "HW" :"iskra",
-                "CPU":"stm32f405rgt", "SERIES": "STM32F4"
-            }
+            "cacheVariables"  : {"HW" :"iskra",
+                                "CPU":"stm32f405rg", "SERIES": "STM32F4"}
         },
         {
             "name"            : "f4disco",
             "inherits"        : "cortexm4",
             "cacheVariables"  : {"HW" :"f4disco",
-                                "CPU":"stm32f407vgt", "SERIES": "STM32F4"}
+                                "CPU":"stm32f407vg", "SERIES": "STM32F4"}
         },
         {
             "name"            : "l496disco",
             "inherits"        : "cortexm4",
-            "cacheVariables"  : {
-                "HW" :"l496disco",
-                "CPU":"stm32l496agi", "SERIES": "STM32L4"
-            }
+            "cacheVariables"  : {"HW" :"l496disco",
+                                "CPU":"stm32l496ag", "SERIES": "STM32L4"}
         },
         {
             "name"            : "f429disco",
             "inherits"        : "cortexm4",
-            "cacheVariables"  : {
-                "HW" :"f429disco",
-                "CPU":"stm32f429zi", "SERIES": "STM32F4"
-            }
+            "cacheVariables"  : {"HW" :"f429disco",
+                                "CPU":"stm32f429zi", "SERIES": "STM32F4"}
         },
         {
             "name"            : "pc",
@@ -132,27 +125,27 @@
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {
-            "name"          : "mingw32",
-            "inherits"      : "pc",
-            "displayName"   : "i686-w64-mingw32",
-            "description"   : "mingw/32",
-            "toolchainFile" : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
-            "cacheVariables": {"ARCH":"i386","OS":"mingw"}
+            "name"            : "mingw32",
+            "inherits"        : "pc",
+            "displayName"     : "i686-w64-mingw32",
+            "description"     : "mingw/32",
+            "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
+            "cacheVariables"  : {"ARCH":"i386","OS":"mingw"}
         },
         {
-            "name"          : "ucrt",
-            "inherits"      : "pc",
-            "displayName"   : "mingw-w64-ucrt-x86_64",
-            "description"   : "mingw/64",
-            "toolchainFile" : "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
-            "cacheVariables": {"ARCH":"x86_64","OS":"mingw"}
+            "name"            : "ucrt",
+            "inherits"        : "pc",
+            "displayName"     : "mingw-w64-ucrt-x86_64",
+            "description"     : "mingw/64",
+            "toolchainFile"   : "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
+            "cacheVariables"  : {"ARCH":"x86_64","OS":"mingw"}
         },
         {
-            "name"         : "musl",
-            "inherits"     : "linux",
-            "displayName"  : "x86_64-linux-musl",
-            "description"  : "busybox:musl/docker",
-            "toolchainFile": "${sourceDir}/cmake/x86_64-linux-musl.cmake"
+            "name"            : "musl",
+            "inherits"        : "linux",
+            "displayName"     : "x86_64-linux-musl",
+            "description"     : "busybox:musl/docker",
+            "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-musl.cmake"
         },
         {
             "name"            : "linux",
