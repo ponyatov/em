@@ -16,10 +16,6 @@ message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
 message("-- |")
-message("-- | C: " ${C})
-message("-- | H: " ${H})
-message("-- | @: " ${INC})
-message("-- |")
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
