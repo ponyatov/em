@@ -1,8 +1,8 @@
 *~
 *.swp
-*.pyc
 *.log
 /target/
+*.pyc
 lib64
 lib/python*
 bin/pip*

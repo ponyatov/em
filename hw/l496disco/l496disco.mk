@@ -1,1 +1,1 @@
-CPU = stm32l496agi
+CPU = stm32l496ag
