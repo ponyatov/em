@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
-project(${CMAKE_PROJECT_NAME} LANGUAGES C CXX ASM)
+project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 
 include(version)        # binary files naming by version & git branch/hash
 include(src)            # scan project for source code files

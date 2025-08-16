@@ -25,11 +25,11 @@ string(TOUPPER ${ARCH} ARCH_)
 string(TOUPPER ${OS}   OS_  )
 
 add_compile_options(
-    -Wall -Wextra               # -Wpedantic
+    # -Wall -Wextra               # -Wpedantic
     # -Wno-implicit-fallthrough   # ragel
-    -Wno-unused-function        # flex
+    # -Wno-unused-function        # flex
     # -Wno-write-strings          # yacc
-    -Wno-unused-parameter       # stm32
+    # -Wno-unused-parameter       # stm32
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 

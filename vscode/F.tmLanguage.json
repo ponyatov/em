@@ -1,22 +1,61 @@
 {
-    "version": "0.0.1",
-    "scopeName": "source.flang",
+    "$schema"  : "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name"     : "bcx",
+    "version"  : "0.0.1",
+    "scopeName": "source.bcx",
     "fileTypes": [".ini", ".f"],
-    "information_for_contributors": [
-        "CLI/REPL/FORTH"
-    ],
     "patterns": [
         {"include": "#comment"},
+        {"include": "#command"},
+        {"include": "#label"},
+        {"include": "#string"},
         {"include": "#keyword"},
         {"include": "#type"},
         {"include": "#var"},
-        {"include": "#expression"},
-        {"include": "#label"}
+        {"include": "#expression"}
     ],
     "repository": {
         "comment": {
-            "name": "comment.line.flang",
-            "match": "\\s*((#).*)$"
+            "patterns": [
+                {
+                    "name" : "comment.shebang.bcx",
+                    "match": "#!.*"
+                },
+                {
+                    "name" : "comment.line.bcx",
+                    "match": "//.*"
+                },
+                {
+                    "name" : "comment.block.bcx",
+                    "begin": "/[*]",
+                    "end"  : "[*]/"
+                },
+                {
+                    "name" : "comment.stack.bcx",
+                    "begin": "[(]",
+                    "end"  : "[)]"
+                }
+            ]
+        },
+        "command": {
+            "patterns": [
+                {
+                    "name" : "keyword.mnemonic.bcx.assembly",
+                    "match": "\\b(nop|halt|jmp|qjmp)\\b"
+                }
+            ]
+        },
+        "label": {
+            "patterns": [
+                {
+                    "name": "variable.label.bcx.public",
+                    "match": "^:\\s*[a-z]+"
+                },
+                {
+                    "name": "string.label.bcx.local",
+                    "match": "^[a-z]+:"
+                }
+            ]
         },
         "keyword": {
             "name": "keyword.control.flang",
