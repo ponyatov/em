@@ -4,26 +4,38 @@
         "appInclude": [
             "${workspaceFolder}/inc/**",
             "${workspaceFolder}/tmp/**",
-            "${workspaceFolder}/src/**"
+            "${workspaceFolder}/src/**",
+            "${workspaceFolder}/lib/inc/**" ,"${workspaceFolder}/lib/*/inc/**"
         ],
         "crossInclude": [
-            "${workspaceFolder}/hw/inc/**",
-            "${workspaceFolder}/cpu/inc/**",
-            "${workspaceFolder}/arch/inc/**",
-            "${workspaceFolder}/os/inc/**"
+            "${workspaceFolder}/hw/inc/**"  ,"${workspaceFolder}/hw/*/inc/**"  ,
+            "${workspaceFolder}/cpu/inc/**" ,"${workspaceFolder}/cpu/*/inc/**" ,
+            "${workspaceFolder}/arch/inc/**","${workspaceFolder}/arch/*/inc/**",
+            "${workspaceFolder}/os/inc/**"  ,"${workspaceFolder}/os/*/inc/**"
         ]
     },
     "configurations": [
         {
-            "name"                 : "cmake",
+            "name": "f429disco",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
-            "includePath": [
-                "${appInclude}", "${crossInclude}"
-            ],
-            "defines": [
-                "PC", "I5", "X86_64", "LINUX"
-            ]
+            "includePath"          : ["${appInclude}", "${crossInclude}"],
+            "defines"              : ["F429DISCO", "STM32F429ZI", "CORTEXM4", "BARE"],
+            "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
+            "cStandard"            : "c11",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-arm"
+        },
+        {
+            "name": "linux",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  :  true,
+            "includePath"          : ["${appInclude}", "${crossInclude}"],
+            "defines"              : ["PC", "I5", "X86_64", "LINUX"],
+            "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
+            "cStandard"            : "c11",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-x64"
         }
     ]
 }

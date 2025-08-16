@@ -1,93 +1,102 @@
 [package]
-name        =  "rsvm"
-version     =  "0.0.1"
-description =  "Rust Virtual Machine"
-authors     = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
-license     =  "MIT"
-repository  =  "https://github.com/ponyatov/rsvm"
-edition     =  "2024"
+name                    =  "rsvm"
+version                 =  "0.0.1"
+description             =  "Rust Virtual Machine"
+authors                 = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
+license                 =  "MIT"
+repository              =  "https://github.com/ponyatov/rsvm"
+edition                 =  "2024"
 
 [[bin]]
-name = "rdrsd"
-path = "src/server.rs"
+name                    = "server"
+path                    = "src/server.rs"
 
 [[bin]]
-name = "rdrs"
-path = "src/main.rs"
+name                    = "linux"
+path                    = "src/linux.rs"
+required-features       = ["pc"]
+
+[[bin]]
+name                    = "f429disco"
+path                    = "src/f429disco.rs"
+required-features       = ["f429disco"]
 
 [lib]
-name        =  "librdrs"
-path        =  "src/lib.rs"
-crate-type  = ["cdylib"]
+name                    =  "librdrs"
+path                    =  "src/lib.rs"
+crate-type              = ["cdylib"]
 
 [dependencies]
-const_format = "0.2"
-nom          = "8.0"
+const_format            = "0.2"
+nom                     = { version = "8.0", default-features = false, features = ["alloc"] }
 
 [target.'cfg(all(target_os = "linux"))'.dependencies]
-libc    = "0.2"
-memmap2 = "0.9"
-sdl2    = {version = "0.38", features = ["ttf","image"], optional = true}
+libc                    = "0.2"
+memmap2                 = "0.9"
+sdl2                    = {version = "0.38", features = ["ttf","image"], optional = true}
 
 [target.x86_64-unknown-linux-gnu.dependencies]
-xdpilone = "1.2"
+xdpilone                = "1.2"
 
 [target.'cfg(all(target_arch = "arm", target_os = "none"))'.dependencies]
-cortex-m = "0.7"
-cortex-m-rt = "0.7"
-panic-semihosting = "0.6"
+cortex-m                = "0.7"
+cortex-m-rt             = "0.7"
+cortex-m-semihosting    = "0.5"
+panic-semihosting       = "0.6"
 
 [features]
-
 # hw
 ## x86
-pc              = ["i5"]
+pc                      = ["i5"]
 ## rpi
-rpi3            = ["bcm2837"]
-rpi4            = ["bcm2711"]
-rpi5            = ["bcm2712"]
-opi800          = ["rk3399"]
+rpi3                    = ["bcm2837"]
+rpi4                    = ["bcm2711"]
+rpi5                    = ["bcm2712"]
+opi800                  = ["rk3399"]
 ## stm32
-netduinoplus2   = ["stm32f405rg"]
-iskra           = ["stm32f405rg"]
-f4disco         = ["stm32f407vg"]
-f429disco       = ["stm32f429zi"]
-pillf103        = ["stm32f103c8"]
+netduinoplus2           = ["stm32f405rg"]
+iskra                   = ["stm32f405rg"]
+f4disco                 = ["stm32f407vg"]
+f429disco               = ["stm32f429zi"]
+l496disco               = ["stm32l496ag"]
+pillf103                = ["stm32f103c8"]
 ## esp
-esp8266         = ["xtensa","rtos8266"]
-esp32           = ["xtensa","idf"]
+esp8266                 = ["xtensa","rtos8266"]
+esp32                   = ["xtensa","idf"]
 # cpu
 ## x86
-i5              = ["x86_64"]
-i486            = ["i386"  ,"none" ]
-i686            = ["i386"  ,"win32"]
+i5                      = ["x86_64"]
+i486                    = ["i386","none" ]
+i686                    = ["i386","win32"]
 ## aarch64
-bcm2837         = ["aarch64"]
-bcm2711         = ["aarch64"]
-bcm2712         = ["aarch64"]
-rk3399          = ["aarch64"]
+bcm2837                 = ["aarch64"]
+bcm2711                 = ["aarch64"]
+bcm2712                 = ["aarch64"]
+rk3399                  = ["aarch64"]
 ## cortex
-stm32f103c8     = ["stm32f1"]
-stm32f405rg     = ["stm32f4"]
-stm32f407vg     = ["stm32f4"]
-stm32f429zi     = ["stm32f4"]
-lx106           = []
+stm32f103c8             = ["stm32f1"]
+stm32f405rg             = ["stm32f4"]
+stm32f407vg             = ["stm32f4"]
+stm32f429zi             = ["stm32f4"]
+stm32l496ag             = ["stm32l4"]
+lx106                   = []
 # series
-stm32f1         = ["cortexm3"]
-stm32f4         = ["cortexm4"]
+stm32f1                 = ["cortexm3"]
+stm32f4                 = ["cortexm4"]
+stm32l4                 = ["cortexm4"]
 # arch
-x86_64          = ["linux"]
-i386            = ["linux"]
-aarch64         = ["linux"]
-cortexm         = ["none"]
-cortexm3        = ["cortexm"]
-cortexm4        = ["cortexm"]
-xtensa          = ["lx106"]
+x86_64                  = ["linux"]
+i386                    = ["linux"]
+aarch64                 = ["linux"]
+cortexm                 = ["none"]
+cortexm3                = ["cortexm"]
+cortexm4                = ["cortexm"]
+xtensa                  = ["lx106"]
 # os
-linux           = []
-win32           = []
-none            = []
-rtos8266        = []
-idf             = []
+linux                   = []
+win32                   = []
+none                    = []
+rtos8266                = []
+idf                     = []
 # gui variant
-sdl             = ["dep:sdl2"]
+sdl                     = ["dep:sdl2"]

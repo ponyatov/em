@@ -1,5 +1,5 @@
 # CMakeLists.txt fragment for linker script generation
-set(LD "${CMAKE_BINARY_DIR}/${HW}.ld")
+# set(LD "${CMAKE_BINARY_DIR}/${HW}.ld")
 
 string(TOUPPER ${HW} BOARD)
 

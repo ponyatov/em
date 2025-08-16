@@ -1,0 +1,30 @@
+%include {
+#include "os.hpp"
+#include "vm.hpp"
+#include "lexer.hpp"
+}
+
+%token_type {cell}
+%default_type {cell}
+
+%type program {cell}
+%type expr {cell}
+%type number {cell}
+
+program ::= expr(A). { printf("program: %d\n", A.n); }
+
+expr(A) ::= number(B). { A = B; }
+
+number(A) ::= HEX(B). { A.h = B.h; }
+number(A) ::= OCT(B). { A.o = B.o; }
+number(A) ::= BIN(B). { A.i = B.i; }
+number(A) ::= INTEGER(B). { A.n = B.n; }
+number(A) ::= FLOAT(B). { A.f = B.f; }
+
+%syntax_error {
+    fprintf(stderr, "\n\n%s:%d Syntax error\n\n",yyfile,yyline);
+}
+
+%parse_failure {
+    fprintf(stderr, "\n\n%s:%d Parse failure\n\n",yyfile,yyline);
+}

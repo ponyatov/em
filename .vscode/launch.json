@@ -86,19 +86,18 @@
             ],
         },
         {
-            "name"         : "cmake:linux",
-            "type"         : "cppdbg",
-            "request"      : "launch",
-            "program"      : "${command:cmake.launchTargetPath}",
-            "preLaunchTask": "CMake: build",
-            "cwd"          : "${workspaceFolder}",
-            "MIMode"       : "gdb",
-            "setupCommands": [
-                {"text": "-enable-pretty-printing", "ignoreFailures": true}
-            ],
-            "args": ["${workspaceFolder}/lib/${workspaceFolderBasename}.ini"],
-            "externalConsole": false,
-            "stopAtEntry": true,
+            "name"            : "cmake:linux",
+            "type"            : "cppdbg",
+            "request"         : "launch",
+            "cwd"             : "${workspaceFolder}",
+            "program"         : "${command:cmake.launchTargetPath}",
+            "args"            : ["lib/${workspaceFolderBasename}.ini"],
+            "environment"     : [],
+            "preLaunchTask"   : "CMake: build",
+            "stopAtEntry"     : true,
+            "externalConsole" : false,
+            "MIMode"          : "gdb",
+            "setupCommands"   : [{"text": "-enable-pretty-printing","ignoreFailures": true}]
         }
     ]
 }

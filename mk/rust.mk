@@ -28,8 +28,8 @@ $(RUSTUP) $(CARGO):
 
 .PHONY: server
 server: $(R)
-	cargo watch -x "run --bin $@ --target $(RTARGET) -- $(S)"
+	cargo watch -x "run --bin $@ --features=pc --target x86_64-unknown-linux-gnu -- $(S)"
 
 .PHONY: main
 main: $(R)
-	cargo watch -x "run --bin $@ --target $(RTARGET) -- $(S)"
+	cargo watch -x "run --bin $@ --features=pc --target x86_64-unknown-linux-gnu -- $(S)"
