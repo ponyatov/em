@@ -1,27 +1,27 @@
 {
-    "name":        "flang",
-    "displayName": "F",
-    "description": "F.lang script engine",
-    "version":     "0.0.1",
-    "icon":        "logo.png",
-    "publisher":   "dponyatov",
-    "license":     "MIT",
+    "name"       : "bcx",
+    "displayName": "bcx",
+    "description": "bytecode compiler",
+    "version"    : "0.0.1",
+    "icon"       : "logo.png",
+    "publisher"  : "dponyatov",
+    "license"    : "MIT",
     "engines": {
-        "vscode": "^1.75.0"
+        "vscode": "^1.90.0"
     },
     "categories": [
         "Programming Languages", "Debuggers"
     ],
     "keywords": [
-        "CLI", "FORTH", "REPL", "OS", "script", "interpreter"
+        "bytecode", "FORTH", "CLI", "REPL", "script", "interpreter"
     ],
     "bugs": {
-        "url": "https://github.com/ponyatov/F/issue"
+        "url": "https://github.com/ponyatov/bcx/issue"
     },
-    "homepage": "https://github.com/ponyatov/F",
+    "homepage": "https://github.com/ponyatov/bcx",
     "repository": {
         "type": "git",
-        "url" : "https://github.com/ponyatov/F/tree/dponyatov/vscode"
+        "url" : "https://github.com/ponyatov/bcx/tree/dponyatov/vscode"
     },
     "activationEvents": [
         "workspaceContains:lib/*.ini",
@@ -29,17 +29,17 @@
     ],
     "extensionDependencies": [
     ],
-    "main": "./extension.js",
+    "main": "extension.js",
     "contributes": {
-        "grammars": [{
-            "language": "flang",
-            "scopeName": "source.flang",
-            "path": "./F.tmLanguage.json"
-        }],
         "languages": [{
-            "id": "flang",
-            "extensions": [".ini", ".f"],
-            "configuration": "./F.languageConfiguration.json"
+            "id"           :  "bcx",
+            "extensions"   : [".ini", ".f"],
+            "configuration":  "languageConfiguration.json"
+        }],
+        "grammars": [{
+            "language" : "bcx",
+            "scopeName": "source.bcx",
+            "path"     : "tmLanguage.json"
         }]
     }
 }

@@ -1,0 +1,44 @@
+{
+    "$schema"  : "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name"     : "bcx",
+    "version"  : "0.0.1",
+    "scopeName": "source.bcx",
+    "fileTypes": [".ini", ".f"],
+    "patterns": [
+        {"include": "#comment"},
+        {"include": "#command"},
+        {"include": "#label"},
+        {"include": "#string"},
+        {"include": "#keyword"},
+        {"include": "#type"},
+        {"include": "#var"},
+        {"include": "#expression"}
+    ],
+    "repository": {
+        "comment": {
+            "patterns": [
+                {
+                    "name" : "comment.shebang.bcx",
+                    "match": "#!.*"
+                },
+                {
+                    "name" : "comment.line.bcx",
+                    "match": "//.*"
+                },
+                {
+                    "name" : "comment.block.bcx",
+                    "begin": "/[*]",
+                    "end"  : "[*]/"
+                }
+            ]
+        },
+        "command": {
+            "patterns": [
+                {
+                    "name" : "keyword.mnemonic.bcx.assembly",
+                    "match": "\\b(nop|halt|jmp|qjmp)\\b"
+                }
+            ]
+        }
+    }
+}

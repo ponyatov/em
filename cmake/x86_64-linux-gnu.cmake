@@ -5,6 +5,6 @@ set(CMAKE_EXECUTABLE_SUFFIX "")
 
 include(any_toolchain)
 
-add_compile_definitions()
-add_compile_options()
+add_compile_definitions(X86_64 LINUX)
+add_compile_options(-mtune=native)
 add_link_options()
