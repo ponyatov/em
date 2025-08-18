@@ -1,5 +1,10 @@
 HW ?= pc
 # HW ?= qemu386
+# HW ?= a7n8x
+# HW ?= rpi3
+# HW ?= rpi4
+# HW ?= rpi5
+# HW ?= opi800
 # HW ?= mega2560
 # HW ?= lm3s6
 # HW ?= pillf030
@@ -8,13 +13,16 @@ HW ?= pc
 # HW ?= iskra
 # HW ?= l496disco
 # HW ?= f429disco
-# HW ?= pi800
 # HW ?= esp32
 
 include   hw/$(HW)/$(HW).mk
 include  cpu/$(CPU)/$(CPU).mk
 include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
+
+.PHONY: qemu
+qemu: bin/$(BINFILE).iso
+	$(QEMU) $(QEMU_CFG) -boot d -cdrom $<
 
 ELF = bin/$(BINFILE).elf
 DFU = bin/$(BINFILE).dfu
@@ -29,9 +37,4 @@ $(DFU): $(ELF)
 
 .PHONY: qemu
 qemu: $(ELF)
-	$(QEMU) $(QEMU_CFG) -gdb tcp::12345 -S -kernel $<
-
-.PHONY: qemu
-qemu: bin/$(BINFILE).iso
-	$(QEMU) $(QEMU_CFG) -gdb tcp::12345 -boot d -cdrom $<
-endif
+	$(QEMU) $(QEMU_CFG) -gdb tcp::3333 -S -kernel $<

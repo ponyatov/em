@@ -1,8 +1,5 @@
 #include "linux.hpp"
 
-#include "os.hpp"
-#include "cli.hpp"
-
 void cli(char* filename) {
     yyfile = filename;
     yylineno = 0;

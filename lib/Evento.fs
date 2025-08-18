@@ -386,14 +386,16 @@ let hw:unit = //
 
     for hw,cpu in [
         ("pc","i5");
-        // ("qemu386","i486"); ("retro","i686");
-        // ("rpi3","bcm2837"); ("rpi4","bcm2711"); ("rpi5","bcm2712"); ("opi800","rk3399");
+        ("qemu386","i486"); ("retro","i686");
+        ("rpi3","bcm2837"); ("rpi4","bcm2711"); ("rpi5","bcm2712"); ("opi800","rk3399");
+        ("a7n8x","athlon")
         // ("pillf103","stm32f103c8"); ("f429disco","stm32f429zi");
         // ("netduinoplus2","stm32f405rg");
         // ("iskra","stm32f405rg"); ("f4disco","stm32f407vg");
         // ("esp8266","lx106"); ("esp32","lx106");
         ] do
             mkdir $"hw/{hw}"
+            touch $"hw/{hw}/{hw}.kernel"
             File.WriteAllText ($"hw/{hw}/{hw}.mk",$"CPU = {cpu}\n")
             touch $"hw/{hw}/{hw}.cmake"
             mkdir $"hw/{hw}/inc"
@@ -406,12 +408,15 @@ let cpu:unit = //
 
     for cpu,arch in [
         ("i5","x86_64");
-        // ("i486","i386"); ("i686","i386");
+        ("i486","i386"); ("i686","i386");
+        ("athlon","i386");
+        ("bcm2837","aarch64"); ("bcm2711","aarch64"); ("bcm2712","aarch64"); ("rk3399","aarch64");
         // ("stm32f103c8","cortexm3"); ("stm32f429zi","cortexm4");
         // ("stm32f405rg","cortexm4"); ("stm32f407vg","cortexm4");
         // ("lx106","xtensa");
         ] do
             mkdir $"cpu/{cpu}"
+            touch $"cpu/{cpu}/{cpu}.kernel"
             File.WriteAllText ($"cpu/{cpu}/{cpu}.mk",$"ARCH = {arch}\n")
             touch $"cpu/{cpu}/{cpu}.cmake"
             mkdir $"cpu/{cpu}/inc"
@@ -424,12 +429,14 @@ let arch:unit = //
 
     for arch in [
         "x86_64";
-        // "i386";
-        // "aarch64";
+        "i386";
+        "aarch64";
         // "cortexm"; "cortexm3"; "cortexm4";
         // "xtensa";
         ] do
             mkdir $"arch/{arch}"
+            touch $"arch/{arch}/{arch}.kernel"
+            touch $"arch/{arch}/{arch}.uclibc"
             touch $"arch/{arch}/{arch}.mk"
             touch $"arch/{arch}/{arch}.cmake"
             mkdir $"arch/{arch}/inc"
@@ -439,6 +446,7 @@ let arch:unit = //
 
 let os:unit = //
     cross_ "os"
+    touch "os/linux/all.kernel"
     for os in [
         "linux";
         // "none";
@@ -488,7 +496,7 @@ let settings:unit = //
         "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
-        "*.ini": "properties", "*.f": "properties",
+        "*.ini": "bcx", "*.f": "bcx",
     },
 
     // editor
@@ -580,6 +588,19 @@ let cmake: unit = //
     let TXT = "cp ~/em/CMakeLists.txt CMakeLists.txt"
     let PRESET = "meld CMakePresets.json ~/em/CMakePresets.json"
     meld "cmake"
+
+let linux_ver = "6.12.41"
+let linux:unit = //
+    mkdir "root"
+    for d in ["boot";"isolinux"] do
+        mkdir $"root/{d}"
+    File.WriteAllText ("root/isolinux/isolinux.cfg",$"""\
+default boot
+timeout 1
+label boot
+kernel /boot/vmlinuz-{linux_ver}-qemu386
+append root=LABEL=qemu386 vga=0x312
+""")
 
 let apt:unit = //
     File.WriteAllText ("apt.Debian","""git make curl
