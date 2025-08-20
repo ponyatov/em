@@ -119,7 +119,7 @@
             "label"          : "cargo: x86_64/linux",
             "type"           : "shell",
             "command"        : "cargo",
-            "args"           : ["watch","-x","run --target x86_64-unknown-linux-gnu"],
+            "args"           : ["watch","-x","run --bin linux --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
@@ -175,6 +175,26 @@
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent"},
             "group"          : {"kind": "build","isDefault": true}
+        },
+        {
+            "label"          : "cargo: send",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["watch","-x","run --bin send --features=pc --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "cargo: recv",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["watch","-x","run --bin recv --features=pc --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
         {
             "label"          : "doxy: gen",

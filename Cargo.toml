@@ -14,12 +14,10 @@ path                    = "src/server.rs"
 [[bin]]
 name                    = "linux"
 path                    = "src/linux.rs"
-required-features       = ["pc"]
 
 [[bin]]
 name                    = "f429disco"
 path                    = "src/f429disco.rs"
-required-features       = ["f429disco"]
 
 [lib]
 name                    =  "librdrs"
@@ -28,21 +26,29 @@ crate-type              = ["cdylib"]
 
 [dependencies]
 const_format            = "0.2"
-nom                     = { version = "8.0", default-features = false, features = ["alloc"] }
+nom                     = { version = "8.0", default-features = false}#, features = ["alloc"] }
 
-[target.'cfg(all(target_os = "linux"))'.dependencies]
+[target.'cfg(target_os = "linux")'.dependencies]
 libc                    = "0.2"
 memmap2                 = "0.9"
 sdl2                    = {version = "0.38", features = ["ttf","image"], optional = true}
 
 [target.x86_64-unknown-linux-gnu.dependencies]
-xdpilone                = "1.2"
+#xdpilone                = "1.2"
 
-[target.'cfg(all(target_arch = "arm", target_os = "none"))'.dependencies]
+[target.'cfg(target_arch = "arm")'.dependencies]
 cortex-m                = "0.7"
 cortex-m-rt             = "0.7"
 cortex-m-semihosting    = "0.5"
 panic-semihosting       = "0.6"
+# panic-halt            = "1.0"
+
+stm32f1                 = {version="0.16",optional = true}
+stm32f1xx-hal           = {version="0.10",optional = true}
+stm32f4                 = {version="0.16",optional = true}
+stm32f4xx-hal           = {version="0.22",optional = true}
+stm32l4                 = {version="0.16",optional = true}
+stm32l4xx-hal           = {version="0.7" ,optional = true}
 
 [features]
 # hw
@@ -53,13 +59,14 @@ rpi3                    = ["bcm2837"]
 rpi4                    = ["bcm2711"]
 rpi5                    = ["bcm2712"]
 opi800                  = ["rk3399"]
-## stm32
+## cortexM
+netduino2               = ["stm32f103c8"]
+pillf103                = ["stm32f103c8"]
 netduinoplus2           = ["stm32f405rg"]
 iskra                   = ["stm32f405rg"]
 f4disco                 = ["stm32f407vg"]
 f429disco               = ["stm32f429zi"]
 l496disco               = ["stm32l496ag"]
-pillf103                = ["stm32f103c8"]
 ## esp
 esp8266                 = ["xtensa","rtos8266"]
 esp32                   = ["xtensa","idf"]
@@ -73,7 +80,7 @@ bcm2837                 = ["aarch64"]
 bcm2711                 = ["aarch64"]
 bcm2712                 = ["aarch64"]
 rk3399                  = ["aarch64"]
-## cortex
+## cortexM
 stm32f103c8             = ["stm32f1"]
 stm32f405rg             = ["stm32f4"]
 stm32f407vg             = ["stm32f4"]
@@ -81,9 +88,9 @@ stm32f429zi             = ["stm32f4"]
 stm32l496ag             = ["stm32l4"]
 lx106                   = []
 # series
-stm32f1                 = ["cortexm3"]
-stm32f4                 = ["cortexm4"]
-stm32l4                 = ["cortexm4"]
+stm32f1                 = ["cortexm3","dep:stm32f1","dep:stm32f1xx-hal"]
+stm32f4                 = ["cortexm4","dep:stm32f4","dep:stm32f4xx-hal"]
+stm32l4                 = ["cortexm4","dep:stm32l4","dep:stm32l4xx-hal"]
 # arch
 x86_64                  = ["linux"]
 i386                    = ["linux"]
@@ -94,8 +101,8 @@ cortexm4                = ["cortexm"]
 xtensa                  = ["lx106"]
 # os
 linux                   = []
-win32                   = []
 none                    = []
+win32                   = []
 rtos8266                = []
 idf                     = []
 # gui variant

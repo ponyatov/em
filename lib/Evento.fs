@@ -216,34 +216,35 @@ void yyerror(const char *msg) {
 let cargo_config:unit = //
     mkdir ".cargo"
     File.WriteAllText (".cargo/config.toml","""[build]
-target = "x86_64-unknown-linux-gnu"
-jobs = 2
+target    = "x86_64-unknown-linux-gnu"
+jobs      = 2
 
 [target.x86_64-unknown-linux-gnu]
-# features = ["pc","i5","x86_64","linux"]
-linker   = "x86_64-linux-gnu-gcc"
+rustflags = ["--cfg", "feature=\"pc,linux\""]
+linker    = "x86_64-linux-gnu-gcc"
 
 [target.aarch64-unknown-linux-gnu]
-# features = ["pi800","rk3399","aarch64","linux"]
-linker   = "aarch64-linux-gnu-gcc"
+rustflags = ["--cfg", "feature=\"opi800,linux\""]
+linker    = "aarch64-linux-gnu-gcc"
 
 [target.armv7-unknown-linux-gnueabihf]
-linker = "arm-linux-gnueabihf-gcc"
+linker    = "arm-linux-gnueabihf-gcc"
 
 [target.wasm32-unknown-unknown]
-linker = "rust-lld"
+linker    = "rust-lld"
 
 [target.i686-pc-windows-gnu]
-features = ["pc","i686","i386","mingw32"]
-linker   = "i686-w64-mingw32-gcc"
+rustflags = ["--cfg", "feature=\"pc,i686,mingw32\""]
+linker    = "i686-w64-mingw32-gcc"
 
 [target.x86_64-pc-windows-gnu]
-features = ["pc","i686","i386","win64"]
-linker   = "x86_64-w64-mingw32-gcc"
+rustflags = ["--cfg", "feature=\"pc,i5,win64\""]
+linker    = "x86_64-w64-mingw32-gcc"
 
 [target.thumbv7m-none-eabi]
-linker = "arm-none-eabi-gcc"
-runner = [
+rustflags = ["--cfg", "feature=\"cortexm3\""]
+linker    = "arm-none-eabi-gcc"
+runner    = [
     'qemu-system-arm',
     '-machine','netduino2','-cpu','cortex-m3',
     '-nographic','-semihosting-config','enable=on,target=native',
@@ -255,8 +256,9 @@ rustflags = [
 ]
 
 [target.thumbv7em-none-eabihf]
-linker = "arm-none-eabi-gcc"
-runner = [
+rustflags = ["--cfg", "feature=\"cortexm4\""]
+linker    = "arm-none-eabi-gcc"
+runner    = [
     'qemu-system-arm',
     '-machine','netduinoplus2','-cpu','cortex-m4',
     '-nographic','-semihosting-config','enable=on,target=native',
@@ -272,7 +274,7 @@ replace-with = 'ustc'
 
 [source.ustc]
 registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
-[source.tsinghua]
+[source.tuna]
 registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
 """)
     meld ".cargo/config.toml"
@@ -306,21 +308,21 @@ let rust: unit = //
     cargo_config
     File.WriteAllText ( "Cargo.toml", $"\
 [package]
-name        =  \"{app}\"
-version     =  \"{VERSION}\"
-description =  \"{TITLE}\"
-authors     = [\"{AUTHOR} <{EMAIL}>\"]
-license     =  \"{LICENSE}\"
-repository  =  \"{GITHUB}\"
-edition     =  \"2024\"
+name                    =  \"{app}\"
+version                 =  \"{VERSION}\"
+description             =  \"{TITLE}\"
+authors                 = [\"{AUTHOR} <{EMAIL}>\"]
+license                 =  \"{LICENSE}\"
+repository              =  \"{GITHUB}\"
+edition                 =  \"2024\"
 
 [[bin]]
-name = \"server\"
-path = \"src/server.rs\"
+name                    = \"server\"
+path                    = \"src/server.rs\"
 
 [[bin]]
-name = \"main\"
-path = \"src/main.rs\"
+name                    = \"main\"
+path                    = \"src/main.rs\"
 
 [lib]
 name        =  \"lib{app}\"
@@ -328,18 +330,13 @@ path        =  \"src/lib.rs\"
 crate-type  = [\"cdylib\"]
 
 [dependencies]
-const_format = \"0.2\"
-nom          = \"8.0\"
+const_format            = \"0.2\"
+nom                     = \"8.0\"
 
 [target.'cfg(all(target_os = \"linux\"))'.dependencies]
 libc    = \"0.2\"
 memmap2 = \"0.9\"
 sdl2    = {version = \"0.38\", features = [\"ttf\",\"image\"], optional = true}
-
-[target.'cfg(all(target_arch = \"arm\", target_os = \"none\"))'.dependencies]
-cortex-m          = \"0.7\"
-cortex-m-rt       = \"0.7\"
-panic-semihosting = \"0.6\"
 
 [features]
 
@@ -351,9 +348,16 @@ i5              = [\"x86_64\"]
 x86_64          = [\"linux\"]
 # os
 linux           = []
-# gui variant
-sdl             = [\"dep:sdl2\"]
 ")
+
+// sdl2    = {version = \"0.38\", features = [\"ttf\",\"image\"], optional = true}
+
+// [target.'cfg(all(target_arch = \"arm\", target_os = \"none\"))'.dependencies]
+// cortex-m          = \"0.7\"
+// cortex-m-rt       = \"0.7\"
+// panic-semihosting = \"0.6\"
+
+// ")
     meld "Cargo.toml"
 
 let html:unit = //
@@ -516,6 +520,55 @@ let settings:unit = //
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
     // "git.enabled": false,
+
+    // JavaScript
+    "prettier.configPath"         : ".prettierrc",
+    "prettier.requireConfig"      :  true,
+    "json.format.enable"          :  true,
+
+    // clang-format
+    "clang-format.executable"     : "clang-format",
+    "clang-format.fallbackStyle"  : "Google",
+    "clang-format.style"          : "file",
+
+}
+""")
+
+let extensions:unit = //
+    File.WriteAllText ( ".vscode/extensions.json","""{
+    "recommendations": [
+        "stkb.rewrap",
+        "ms-vscode.makefile-tools",
+        "IBM.output-colorizer",
+        // formatters
+        "xaver.clang-format",
+        "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
+        // Linux
+        "ms-vscode-remote.remote-ssh",
+        "coolbear.systemd-unit-file",
+        // misc
+        "usernamehw.errorlens",
+        // C++
+        "ms-vscode.cpptools",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-vscode.cmake-tools",
+        // parser
+        "rreverser.ragel",
+        "serghei-iakovlev.language-lemon",
+        "daohong-emilio.yash",
+        // embedded
+        "basdp.language-gas-x86",
+        "dan-c-underwood.arm",
+        "zixuanwang.linkerscript",
+        "ms-vscode.vscode-serial-monitor",
+        // Python
+        "ms-python.python",
+        "ms-python.autopep8",
+        // Rust
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "vadimcn.vscode-lldb",
 }
 """)
 
@@ -716,5 +769,12 @@ let package:unit = //
 }}
 ")
     spawn "npm i -g deno typescript"
+
+let requirements:unit = //
+    touch $"src/{app}.ts"
+    File.WriteAllText ("requirements.txt",$"
+autopep8 ply
+")
+    meld "requirements.txt"
 
 spawn COMMIT

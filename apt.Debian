@@ -11,5 +11,4 @@ qemu-system-arm
 qemu-system-x86
     g++-mingw-w64-i686
 wireshark
-npm nodejs
-wabt
+npm nodejs wabt

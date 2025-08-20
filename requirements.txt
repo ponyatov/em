@@ -1,3 +1,2 @@
+autopep8 ply
 Django==4.2.19
-autopep8
-ply
