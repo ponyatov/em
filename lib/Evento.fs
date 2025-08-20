@@ -89,6 +89,8 @@ let giti:unit = //
 *.exe
 node_modules/
 /target/
+*.pyc
+lib64
 !.gitignore
 """)
 
@@ -126,6 +128,7 @@ PROJECT_LOGO           = doc/logo.png
 
 let lib:unit = //
     mkdir "lib"
+    File.WriteAllText($"lib/.gitignore", "python*/\n!.gitignore\n")
     File.WriteAllText($"lib/{app}.ini", """#!/usr/bin/env shebang
 
 # line comment
@@ -323,6 +326,14 @@ path                    = \"src/server.rs\"
 [[bin]]
 name                    = \"main\"
 path                    = \"src/main.rs\"
+
+[[bin]]
+name                    = \"recv\"
+path                    = \"src/recv.rs\"
+
+[[bin]]
+name                    = \"send\"
+path                    = \"src/send.rs\"
 
 [lib]
 name        =  \"lib{app}\"
