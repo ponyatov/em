@@ -1,4 +1,4 @@
-#include "fake.hpp"
+#include "cli.hpp"
 
 %%machine bin;
 %%write  data;
@@ -8,26 +8,37 @@ static int   act = 0;        ///< ???
 static char* eof = nullptr;  ///< end of file marker
 static char* ts  = nullptr;  ///< token start
 static char* te  = nullptr;  ///< token end
-static int  num  =    0;     ///< result number
+// static int   top = 0;     ///< stack top
+// static int stack[4];      ///< call stack
+
+static int  resn =    0;     ///< result number
 static bool sign = true;     ///< +sign flag
 
 static int bin(char* p, char* pe) {
-    num = 0; sign = true;
-    eof = pe; cs = act = 0; ts = te = nullptr;
+    eof = pe; resn = 0; sign = true;
     %%write init;
     %%write exec;
-    if (sign) return +num; else return -num;
+    if (sign) return +resn; else return -resn;
 }
+
+int bin(char *s) { return bin(s,s+strlen(s)); }
 
 %%{
     bin := |*
-        'b'   => {                                        };
-        '+'   => { sign =  true;                          };
-        '-'   => { sign = false;                          };
-        '0'   => { number = number << 1 | 0;              };
-        '1'   => { number = number << 1 | 1;              };
-        any   => { yyerror("bin");                        };
+        [_]   => {};
+        [01]  => { resn = resn << 1 | (ts[0] - '0' + 0x0); };
+        any   => { yyerror("bin:bin"); };
+    *|;
+
+    pfx := |*
+        "0b"  => { fgoto bin; };
+        any   => { yyerror("bin:pfx"); };
+    *|;
+
+    main := |*
+        '+'   => { sign =  true; fgoto pfx; /* optional */ };
+        '-'   => { sign = false; fgoto pfx; /* sign     */ };
+        "0b"  => { fgoto bin; };
+        any   => { yyerror("bin:main"); };
     *|;
 }%%
-
-int bin(char *s) { return bin(s,s+strlen(s)); }

@@ -66,6 +66,8 @@ extern void nop();   ///< `( -- )` do nothing (empty command)
 extern void halt();  ///< `( -- )` stop system
 /// @}
 
+extern bool trace;  ///< tracing mode flag
+
 #endif  // _VM_HPP_
 
 /// @}
