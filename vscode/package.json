@@ -1,7 +1,7 @@
 {
     "name"       : "bcx",
     "displayName": "bcx",
-    "description": "bytecode compiler",
+    "description": "Byte Code eXecution engine",
     "version"    : "0.0.1",
     "icon"       : "logo.png",
     "publisher"  : "dponyatov",

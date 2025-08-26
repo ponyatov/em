@@ -1,13 +1,14 @@
 const vscode = require('vscode');
 
-function hello() {  //
+function hello() {
     vscode.window.showInformationMessage('bcx/hello');
 }
 
 async function activate(context) {
     vscode.window.showInformationMessage('bcx/activate');
-    // context.subscriptions.push(
-    //     vscode.commands.registerCommand('dponyatov.bcx.hello', hello));
+    context.subscriptions.push(
+        vscode.commands.registerCommand('dponyatov.bcx.hello', hello)
+    );
 }
 
 function deactivate() {
@@ -17,5 +18,5 @@ function deactivate() {
 module.exports = {
     activate,
     deactivate,
-    hello
-}
+    hello,
+};
