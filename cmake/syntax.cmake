@@ -136,9 +136,9 @@ endif()
 
 if(BINPAC_EXECUTABLE)
     foreach(BINPAC_FILE ${B})
-        string(REGEX REPLACE ".+\/(.+)\.binpac$" "${CMAKE_BINARY_DIR}/\\1.binpac.cc"
+        string(REGEX REPLACE ".+\/(.+)\.binpac$" "\\1.binpac_pac.cc"
             BINPAC_CC           ${BINPAC_FILE})
-        string(REGEX REPLACE ".+\/(.+)\.binpac$" "${CMAKE_BINARY_DIR}/\\1.binpac.h"
+        string(REGEX REPLACE ".+\/(.+)\.binpac$" "\\1.binpac_pac.h"
             BINPAC_H            ${BINPAC_FILE})
         list(APPEND CP          ${BINPAC_CC})
         list(APPEND HP          ${BINPAC_H})
@@ -146,7 +146,7 @@ if(BINPAC_EXECUTABLE)
             OUTPUT              ${BINPAC_CC} ${BINPAC_H}
             DEPENDS             ${BINPAC_FILE}
             WORKING_DIRECTORY   ${CMAKE_BINARY_DIR}
-            COMMAND             ${BINPAC_EXECUTABLE}
+            COMMAND             ${BINPAC_EXECUTABLE} -d ${CMAKE_BINARY_DIR} && touch binpac.pac
             ARGS                ${CMAKE_SOURCE_DIR}/${BINPAC_FILE}
         )
     endforeach()
