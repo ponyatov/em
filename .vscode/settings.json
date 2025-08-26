@@ -17,7 +17,8 @@
         "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
-        "*.ini": "bcx", "*.f": "bcx",
+        "*.binpac": "binpac",
+        "*.ini": "bcx", "*.f": "bcx"
     },
 
     // editor

@@ -203,7 +203,7 @@
             // "dependsOn"      : "CMake: build",
             "command"        : "make doxy",
             "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": false, "focus": true, "reveal": "silent", "close": false}
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
         },
     ]
 }
