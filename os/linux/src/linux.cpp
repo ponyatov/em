@@ -1,5 +1,7 @@
-#include "linux.hpp"
+#include "cli.hpp"
+#include "os.hpp"
 
+#ifdef LEMON
 void cli(char* filename) {
     yyfile = filename;
     yylineno = 0;
@@ -21,4 +23,27 @@ void cli(char* filename) {
     close(yyin);
     yyfile = nullptr;
     yylineno = 0;
+}
+#else   // flex/bison
+void cli(char* filename) {
+    yyfile = filename;
+    yylineno = 0;
+    assert(yyin = fopen(yyfile, "r"));
+    fclose(yyin);
+    yyfile = nullptr;
+    yylineno = 0;
+}
+#endif  // LEMON
+
+extern int main(int argc, char* argv[]) {  //
+    arg(0, argv[0]);
+    for (int i = 1; i < argc; i++) {  //
+        arg(i, argv[i]);
+        cli(argv[i]);
+    }
+    return 0;
+}
+
+extern void arg(int argc, char* argv) {  //
+    fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
 }

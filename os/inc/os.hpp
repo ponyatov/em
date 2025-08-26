@@ -1,20 +1,15 @@
-#pragma once
 /// @defgroup os os
 /// @ingroup cross
 
-#include "main.hpp"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
-#ifdef POSIX
-#endif  // POSIX
+#ifndef _OS_HPP_
+#define _OS_HPP_
 
 #ifdef LINUX
 #include "linux.hpp"
-#endif
+#endif  // LINUX
 
 #ifdef MINGW
 #include "mingw.hpp"
 #endif
+
+#endif  // _OS_HPP_

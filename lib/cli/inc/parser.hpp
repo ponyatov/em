@@ -8,13 +8,6 @@
 /// @brief parser interface
 /// @{
 
-extern int yylex();              ///< lexer (`flex`)
-extern int yylineno;             ///< current line
-extern char *yytext;             ///< lexeme value
-extern char *yyfile;             ///< current file name
-extern FILE *yyin;               ///< current file handler
-extern int yyparse();            ///< parser (`bison`)
-extern void yyerror(char *msg);  ///< syntax error callback
 
 #include "parser.yacc.hpp"
 

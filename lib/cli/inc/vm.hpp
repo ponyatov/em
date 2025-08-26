@@ -1,6 +1,7 @@
 #pragma once
 
 /// @defgroup vm vm
+/// @brief Virtual Machine (@ref bytecode)
 /// @ingroup cli
 /// @brief tiny stack Virtual Machine
 /// @{
