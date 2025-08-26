@@ -10,6 +10,9 @@ static char* eof = nullptr;     ///< end of file marker
 static char* ts  = nullptr;     ///< token start
 static char* te  = nullptr;     ///< token end
 
+/// @brief interpret memory buffer
+/// @param[in] p  lexer pointer (current position)
+/// @param[in] pe lexer end pointer (end of data)
 void cli(char* p, char* pe) {
     eof = pe; cs = act = 0; ts = te = nullptr;
     %%write init;
