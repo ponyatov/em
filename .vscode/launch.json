@@ -64,7 +64,7 @@
             "MIMode"        : "gdb",
             "miDebuggerPath": "gdb-multiarch",
             "miDebuggerArgs": "--silent",
-            "miDebuggerServerAddress": "localhost:12345",
+            "miDebuggerServerAddress": "localhost:3333",
             "useExtendedRemote": true,
             "setupCommands": [
                 {"text": "-enable-pretty-printing", "ignoreFailures": true}
@@ -73,12 +73,12 @@
             "postRemoteConnectCommands": [
                 {"text": "monitor reset halt"},
                 {"text": "load"},
-                {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/em/ref/newlib-salsa"},
-                // {"text": "b Reset_Handler"},
-                // {"text": "b DefaultHandler"},
-                // {"text": "b SystemInit"},
+                {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/cross/src/newlib-salsa"},
+                {"text": "b Reset_Handler"},
+                {"text": "b DefaultHandler"},
+                {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
-                // {"text": "b main"},
+                {"text": "b main"},
                 // {"text": "b MX_GPIO_Init"},
                 // {"text": "b sbrk"}, {"text": "b _sbrk"},
                 // {"text": "b jsvObjectSetChild"},

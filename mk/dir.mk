@@ -10,7 +10,6 @@ CAR       = $(HOME)/.cargo
 #
 ROOT      = $(CWD)/root
 BOOT      = $(ROOT)/boot
-CROSS     = $(CWD)/cross
 DISTR    ?= $(HOME)/distr/gz
 #
 ESP       = $(HOME)/esp

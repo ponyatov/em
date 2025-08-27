@@ -26,9 +26,8 @@
         // "hbenl.vscode-test-explorer",
         // Web/JS
         "esbenp.prettier-vscode",
-        "jock.svg",
         "dtsvet.vscode-wasm",
-        "esbenp.prettier-vscode",
+        "jock.svg",
         "denoland.vscode-deno",
         // "dbaeumer.vscode-eslint",
         // Go
