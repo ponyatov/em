@@ -1,4 +1,4 @@
-OS     = bare
+OS     = none
 TARGET = arm-none-eabi
 EXE    = .elf
 

@@ -1,6 +1,6 @@
---- STM32L496AGIx_FLASH.ld	2025-02-25 12:27:46.620363628 +0400
-+++ STM32L496AGIx_FLASH.ld.fix	2025-02-25 11:58:53.952359102 +0400
-@@ -1,69 +1,32 @@
+--- STM32L496AGIx_FLASH.ld	2025-08-27 12:49:15.856924803 +0400
++++ STM32L496AGIx_FLASH.ld.fix	2025-08-27 12:49:15.860924803 +0400
+@@ -1,69 +1,26 @@
  /*
  ******************************************************************************
 -**
@@ -58,7 +58,7 @@
  
  /* Highest address of the user mode stack */
 -_estack = ORIGIN() + LENGTH();    /* end of RAM */
-+_estack = ORIGIN(CCMRAM) + LENGTH(CCMRAM);   /* end of CCMRAM */
++_estack = ORIGIN(RAM) + LENGTH(RAM);            /* end of RAM */
  /* Generate a link error if heap and stack don't fit into RAM */
 -_Min_Heap_Size = 0x200;      /* required amount of heap  */
 -_Min_Stack_Size = 0x400; /* required amount of stack */
@@ -71,20 +71,14 @@
 -RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 256K
 -RAM2 (xrw)      : ORIGIN = 0x10000000, LENGTH = 64K
 -FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 1024K
-+FLASH  (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
-+RAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 320K
-+SRAM1  (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
-+SRAM2  (rwx) : ORIGIN = ORIGIN(SRAM1) + LENGTH(SRAM1), LENGTH = 64K /* CCM mapped */
-+CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH = 64K
-+XRAM   (rwx) : ORIGIN = 0x60000000, LENGTH = 64M        /* bank 2 rw SDRAM  */
-+FMC3   (rwx) : ORIGIN = 0x80000000, LENGTH = 0K         /* bank 3  */
-+QSPI   (rwx) : ORIGIN = 0x90000000, LENGTH = 0K         /* QUADSPI */
-+FMCrg  (rw ) : ORIGIN = 0xA0000000, LENGTH = 0x1000     /* FMC registers  */
-+QSPIrg (rw ) : ORIGIN = 0xA0001000, LENGTH = 0x1400     /* QSPI registers */
++    FLASH (r x) : ORIGIN = 0x8000000 , LENGTH = 1024K
++    RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  256K
++    CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
++    XRAM  (rwx) : ORIGIN = 0x60000000, LENGTH =    8M   /* bank 2 rw SDRAM  */
  }
  
  /* Define output sections */
-@@ -103,8 +66,8 @@
+@@ -103,8 +60,8 @@
      . = ALIGN(8);
    } >FLASH
  
@@ -95,7 +89,7 @@
    . = ALIGN(8);
    *(.ARM.extab* .gnu.linkonce.armextab.*)
    . = ALIGN(8);
-@@ -125,7 +88,7 @@
+@@ -125,7 +82,7 @@
      PROVIDE_HIDDEN (__preinit_array_end = .);
  	. = ALIGN(8);
    } >FLASH
@@ -104,7 +98,7 @@
    .init_array :
    {
  	. = ALIGN(8);
-@@ -135,6 +98,7 @@
+@@ -135,6 +92,7 @@
      PROVIDE_HIDDEN (__init_array_end = .);
  	. = ALIGN(8);
    } >FLASH
@@ -112,23 +106,7 @@
    .fini_array :
    {
  	. = ALIGN(8);
-@@ -145,23 +109,49 @@
- 	. = ALIGN(8);
-   } >FLASH
- 
-+  /* hold FMC configuration in static segment, memcpy from startup_ */
-+  _sifmcrg = LOADADDR(.fmcrg);
-+  .fmcrg : {
-+    . = ALIGN(8);
-+    _sfmcrg = .;
-+    *(.fmcrg)
-+    *(.fmcrg*)
-+    KEEP (*(.fmcrg*))
-+    . = ALIGN(8);
-+    _efmcrg = .;
-+  } >FMCrg AT>FLASH
-+
-   /* used by the startup to initialize data */
+@@ -149,19 +107,33 @@
    _sidata = LOADADDR(.data);
  
    /* Initialized data sections goes into RAM, load LMA copy after code */
@@ -144,7 +122,7 @@
      . = ALIGN(8);
      _edata = .;        /* define a global symbol at data end */
 -  } > AT> FLASH
-+  } >RAM AT>FLASH
++  } > RAM AT> FLASH
 +
 +  /* used by the startup to initialize CCMRAM */
 +  _siccm = LOADADDR(.ccm);
@@ -156,36 +134,36 @@
 +    _sccm = .;        /* create a global symbol at ccm start */
 +    *(.ccm)           /* .ccm  sections */
 +    *(.ccm*)          /* .ccm* sections */
-+
-+    . = ALIGN(8);
-+    _eccm = .;        /* define a global symbol at ccm end */
-+  } >CCMRAM AT>FLASH
  
 -  
 -  /* Uninitialized data section */
++    . = ALIGN(8);
++    _eccm = .;        /* define a global symbol at ccm end */
++  } > CCM AT> FLASH
++
 +/* Uninitialized data section */
    . = ALIGN(4);
    .bss :
    {
-@@ -175,7 +165,7 @@
+@@ -175,7 +147,7 @@
      . = ALIGN(4);
      _ebss = .;         /* define a global symbol at bss end */
      __bss_end__ = _ebss;
 -  } >
-+  } >RAM
++  } > RAM
  
    /* User_heap_stack section, used to check that there is enough RAM left */
    ._user_heap_stack :
-@@ -186,18 +176,29 @@
+@@ -186,18 +158,29 @@
      . = . + _Min_Heap_Size;
      . = . + _Min_Stack_Size;
      . = ALIGN(8);
 -  } >
-+  } >RAM
++  } > RAM
  
 -  
 +  /* EXTRAM (bank1) section, code must be located here explicitly        */
-+  /* Example: extern int foo(void) __attribute__ ((section (".xtext"))); */
++  /* Example: extern int foo(void) __attribute__ ((section (".xram"))); */
 +  _sixram = LOADADDR(.xram);
 +  .xram :
 +  {
@@ -198,7 +176,7 @@
 +    *(.xram*)
 +    . = ALIGN(8);
 +    _exram = .;
-+  } >XRAM AT>FLASH
++  } > XRAM AT> FLASH
  
    /* Remove information from the standard libraries */
    /DISCARD/ :

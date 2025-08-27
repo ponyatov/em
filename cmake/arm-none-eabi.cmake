@@ -6,9 +6,7 @@ set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 include(any_toolchain)
 
-add_compile_definitions(
-    CORTEX ${SERIES}
-)
+add_compile_definitions(CORTEX)
 
 add_compile_options(
     -mthumb
@@ -23,7 +21,7 @@ add_compile_options(
 )
 
 # set(LD ${CMAKE_BINARY_DIR}/${HW}.ld)
-# set(LD ${CMAKE_BINARY_DIR}/${HW}.ld) # Espruino
+# set(LD ${CMAKE_SOURCE_DIR}/get/linker.ld) # Espruino
 # set(LD ${CMAKE_SOURCE_DIR}/hw/${HW}/${CPU_}x_FLASH.ld)
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)

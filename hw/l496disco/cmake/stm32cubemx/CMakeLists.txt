@@ -27,9 +27,16 @@ target_include_directories(stm32cubemx INTERFACE
 target_sources(stm32cubemx INTERFACE
     ../../Core/Src/main.c
     ../../Core/Src/gpio.c
+    ../../Core/Src/adc.c
+    ../../Core/Src/dcmi.c
+    ../../Core/Src/dfsdm.c
     ../../Core/Src/fmc.c
+    ../../Core/Src/i2c.c
+    ../../Core/Src/usart.c
     ../../Core/Src/quadspi.c
+    ../../Core/Src/sai.c
     ../../Core/Src/sdmmc.c
+    ../../Core/Src/spi.c
     ../../Core/Src/stm32l4xx_it.c
     ../../Core/Src/stm32l4xx_hal_msp.c
     ../../USB_DEVICE/App/usb_device.c
@@ -54,12 +61,22 @@ target_sources(stm32cubemx INTERFACE
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_adc.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_adc_ex.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dcmi.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dfsdm.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_fmc.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_sram.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_qspi.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_sai.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_sai_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_sdmmc.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_sd.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_sd_ex.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c
     ../../Core/Src/system_stm32l4xx.c

@@ -21,7 +21,7 @@ defined in linker script */
 .word	_sdata
 /* end address for the .data section. defined in linker script */
 .word	_edata
-/* CCMRAM addresses */
+/* CCM addresses */
 .word	_siccm
 .word	_sccm
 .word	_eccm
@@ -545,4 +545,4 @@ g_pfnVectors:
 	.thumb_set CAN2_SCE_IRQHandler,Default_Handler 
 	
 	.weak	DMA2D_IRQHandler
-	.thumb_set FPU_IRQHandler,Default_Handler    
+	.thumb_set FPU_IRQHandler,Default_Handler

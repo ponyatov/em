@@ -1,2 +1,2 @@
 RTARGET = thumbv7em-none-eabihf
-include arch/cortexM/cortexM.mk
+include arch/cortexm/cortexm.mk

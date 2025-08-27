@@ -1,3 +1,4 @@
-/// @defgroup cross cross
 /// @defgroup hw hw
 /// @ingroup cross
+/// @defgroup libhw hw
+/// @ingroup lib

@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 /// @defgroup main main
-/// @ingroup core
+/// @ingroup linux
 /// @{
 
 #ifdef POSIX

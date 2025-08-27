@@ -1,5 +1,5 @@
---- startup_stm32l496xx.s	2025-02-25 12:27:46.620363628 +0400
-+++ startup_stm32l496xx.s.fix	2025-02-19 13:23:21.196891240 +0400
+--- startup_stm32l496xx.s	2025-08-27 13:01:25.856908515 +0400
++++ startup_stm32l496xx.s.fix	2025-08-27 13:01:25.856908515 +0400
 @@ -3,25 +3,6 @@
    * @file      startup_stm32l496xx.s
    * @author    MCD Application Team
@@ -30,7 +30,7 @@
  .word	_sdata
  /* end address for the .data section. defined in linker script */
  .word	_edata
-+/* CCMRAM addresses */
++/* CCM addresses */
 +.word	_siccm
 +.word	_sccm
 +.word	_eccm
@@ -63,8 +63,10 @@
  /* Zero fill the bss segment. */
    ldr r2, =_sbss
    ldr r4, =_ebss
-@@ -544,4 +546,3 @@
+@@ -543,5 +545,4 @@
+ 	.thumb_set CAN2_SCE_IRQHandler,Default_Handler 
  	
  	.weak	DMA2D_IRQHandler
- 	.thumb_set FPU_IRQHandler,Default_Handler    
+-	.thumb_set FPU_IRQHandler,Default_Handler    
 -
++	.thumb_set FPU_IRQHandler,Default_Handler

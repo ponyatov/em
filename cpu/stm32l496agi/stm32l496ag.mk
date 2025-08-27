@@ -1,0 +1,2 @@
+ARCH   = cortexm4
+SERIES = STM32L4

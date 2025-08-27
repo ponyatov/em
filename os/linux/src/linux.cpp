@@ -27,20 +27,23 @@ void cli(char* filename) {
 #else   // flex/bison
 void cli(char* filename) {
     yyfile = filename;
-    yylineno = 0;
+    yylineno = 1;
     assert(yyin = fopen(yyfile, "r"));
+    yyparse();
     fclose(yyin);
     yyfile = nullptr;
     yylineno = 0;
 }
 #endif  // LEMON
 
-extern int main(int argc, char* argv[]) {  //
+extern int main(int argc, char* argv[]) {
     arg(0, argv[0]);
-    for (int i = 1; i < argc; i++) {  //
+    init();
+    for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);
         cli(argv[i]);
     }
+    save();
     return 0;
 }
 
