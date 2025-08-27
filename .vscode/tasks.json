@@ -35,14 +35,6 @@
             "problemMatcher" : []
         },
         {
-            "label"          : "AI: context",
-            "type"           : "shell",
-            "command"        : "make ai",
-            "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
-            "group"          : {"kind": "build", "isDefault": true}
-        },
-        {
             "label"          : "cargo: main",
             "type"           : "shell",
             "command"        : "cargo",
@@ -195,6 +187,14 @@
             "problemMatcher" : ["$rustc"],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+         {
+            "label"          : "AI: context",
+            "type"           : "shell",
+            "command"        : "make ai",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
         },
         {
             "label"          : "doxy: gen",
