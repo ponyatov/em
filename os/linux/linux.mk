@@ -1,5 +1,8 @@
+APT += binutils-source gcc-12-source gdb-source
+APT += libgmp-dev libmpfr-dev libmpc-dev
+APT += linux-source
+
 ifeq ($(ARCH),i386)
-APT += linux-source gcc-12-source
 
 GZ += ref/uclibc-$(UCLIBC_VER)/README
 ref/uclibc-$(UCLIBC_VER)/README:
