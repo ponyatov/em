@@ -20,10 +20,6 @@ include  cpu/$(CPU)/$(CPU).mk
 include arch/$(ARCH)/$(ARCH).mk
 include   os/$(OS)/$(OS).mk
 
-.PHONY: qemu
-qemu: bin/$(BINFILE).iso
-	$(QEMU) $(QEMU_CFG) -boot d -cdrom $<
-
 ELF = bin/$(BINFILE).elf
 DFU = bin/$(BINFILE).dfu
 
@@ -43,7 +39,7 @@ XPATH = PATH=$(CROSS)/bin:$(PATH)
 CFG   = configure --prefix=$(CROSS)
 
 .PHONY: cross
-cross: $(CROSS)/.gitignore $(ROOT)/.gitignore binutils
+cross: $(CROSS)/.gitignore $(ROOT)/.gitignore binutils gcc0
 $(CROSS)/.gitignore: bin/.gitignore
 	mkdir -p $(dir $@) ; cp $< $@
 $(ROOT)/.gitignore: bin/.gitignore
@@ -72,5 +68,8 @@ GCC0_CFG += --without-headers --with-newlib
 gcc0: $(TCC)
 $(TCC): $(HOME)/src/$(GCC)/README
 	rm -rf $(TMP)/$(GCC) ; mkdir $(TMP)/$(GCC) ; cd $(TMP)/$(GCC) ;\
-	$(XPATH) $(HOME)/src/$(GCC)/$(CFG) $(GCC0_CFG) &&\
-	$(MAKE) -j$(CORES) all-gcc && $(MAKE) install-gcc
+	$(XPATH) $(HOME)/src/$(GCC)/$(CFG) $(GCC0_CFG)
+	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) -j$(CORES) all-gcc
+# 	cd $(TMP)/$(GCC) ; $(XPATH) $(MAKE) install-gcc
+# 	cd $(TMP)/$(GCC) ; $(MAKE) all-target-libgcc
+# 	cd $(TMP)/$(GCC) ; $(MAKE) install-target-libgcc
