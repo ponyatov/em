@@ -1,6 +1,5 @@
-APT += binutils-source gcc-12-source gdb-source
-APT += libgmp-dev libmpfr-dev libmpc-dev
-APT += linux-source
+APT += libgmp-dev libmpfr-dev libmpc-dev libisl-dev
+APT += syslinux isolinux syslinux-utils
 
 ifeq ($(ARCH),i386)
 

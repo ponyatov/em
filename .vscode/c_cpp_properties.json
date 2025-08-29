@@ -16,15 +16,15 @@
     },
     "configurations": [
         {
-            "name": "f429disco",
+            "name": "cortex",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
-            "defines"              : ["F429DISCO", "STM32F429ZI", "CORTEXM4", "BARE"],
-            "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
-            "cStandard"            : "c11",
-            "cppStandard"          : "c++17",
-            "intelliSenseMode"     : "gcc-arm"
+            "defines"              : ["HAVE_INIT_FINI","HAVE_INITFINI_ARRAY"]
+            // "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
+            // "cStandard"            : "c11",
+            // "cppStandard"          : "c++17",
+            // "intelliSenseMode"     : "gcc-arm"
         },
         {
             "name": "linux",

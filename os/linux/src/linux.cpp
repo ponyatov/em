@@ -36,7 +36,7 @@ void cli(char* filename) {
 }
 #endif  // LEMON
 
-extern int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     arg(0, argv[0]);
     init();
     for (int i = 1; i < argc; i++) {
@@ -47,6 +47,6 @@ extern int main(int argc, char* argv[]) {
     return 0;
 }
 
-extern void arg(int argc, char* argv) {  //
+void arg(int argc, char* argv) {  //
     fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
 }
