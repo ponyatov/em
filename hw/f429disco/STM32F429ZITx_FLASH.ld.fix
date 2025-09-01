@@ -17,10 +17,10 @@ _Min_Stack_Size = 0x400;          /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH  (r x) : ORIGIN =  0x8000000, LENGTH =    2M
-RAM    (rwx) : ORIGIN = 0x20000000, LENGTH =  192K
-CCM    (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
-XRAM   (rwx) : ORIGIN = 0xD0000000, LENGTH =    8M
+    FLASH (r x) : ORIGIN = 0x8000000 , LENGTH =    2M
+    RAM   (rwx) : ORIGIN = 0x20000000, LENGTH =  192K
+    CCM   (rwx) : ORIGIN = 0x10000000, LENGTH =   64K
+    XRAM  (rwx) : ORIGIN = 0xD0000000, LENGTH =    8M
 }
 
 /* Define output sections */
@@ -29,15 +29,15 @@ SECTIONS
   /* The startup code goes first into FLASH */
   .isr_vector :
   {
-    . = ALIGN(4);
+    . = ALIGN(8);
     KEEP(*(.isr_vector)) /* Startup code */
-    . = ALIGN(4);
+    . = ALIGN(8);
   } >FLASH
 
   /* The program code and other data goes into FLASH */
   .text :
   {
-    . = ALIGN(4);
+    . = ALIGN(8);
     *(.text)           /* .text sections (code) */
     *(.text*)          /* .text* sections (code) */
     *(.glue_7)         /* glue arm to thumb code */
@@ -47,62 +47,78 @@ SECTIONS
     KEEP (*(.init))
     KEEP (*(.fini))
 
-    . = ALIGN(4);
+    . = ALIGN(8);
     _etext = .;        /* define a global symbols at end of code */
   } >FLASH
 
   /* Constant data goes into FLASH */
   .rodata :
   {
-    . = ALIGN(4);
+    . = ALIGN(8);
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
-    . = ALIGN(4);
+    . = ALIGN(8);
   } >FLASH
 
-  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
+  .ARM.extab   :
+  {
+  . = ALIGN(8);
+  *(.ARM.extab* .gnu.linkonce.armextab.*)
+  . = ALIGN(8);
+  } >FLASH
   .ARM : {
+	. = ALIGN(8);
     __exidx_start = .;
     *(.ARM.exidx*)
     __exidx_end = .;
+	. = ALIGN(8);
   } >FLASH
 
   .preinit_array     :
   {
+	. = ALIGN(8);
     PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
+	. = ALIGN(8);
   } >FLASH
+
   .init_array :
   {
+	. = ALIGN(8);
     PROVIDE_HIDDEN (__init_array_start = .);
     KEEP (*(SORT(.init_array.*)))
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
+	. = ALIGN(8);
   } >FLASH
+
   .fini_array :
   {
+	. = ALIGN(8);
     PROVIDE_HIDDEN (__fini_array_start = .);
     KEEP (*(SORT(.fini_array.*)))
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
+	. = ALIGN(8);
   } >FLASH
 
   /* used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
   /* Initialized data sections goes into RAM, load LMA copy after code */
-  .data : 
+  .data :
   {
-    . = ALIGN(4);
+    . = ALIGN(8);
     _sdata = .;        /* create a global symbol at data start */
-    *(.data)           /* .data sections */
+    *(.data)           /* .data  sections */
     *(.data*)          /* .data* sections */
 
-    . = ALIGN(4);
+    . = ALIGN(8);
     _edata = .;        /* define a global symbol at data end */
   } > RAM AT> FLASH
 
+  /* used by the startup to initialize CCMRAM */
   _siccm = LOADADDR(.ccm);
 
   /* CCM-RAM section 
@@ -113,15 +129,15 @@ SECTIONS
   */
   .ccm :
   {
-    . = ALIGN(4);
-    _sccm = .;       /* create a global symbol at ccmram start */
-    *(.ccm)
-    *(.ccm*)
-    
-    . = ALIGN(4);
-    _eccm = .;       /* create a global symbol at ccmram end */
-  } >CCM AT> FLASH
-  
+    . = ALIGN(8);
+    _sccm = .;        /* create a global symbol at ccm start */
+    *(.ccm)           /* .ccm  sections */
+    *(.ccm*)          /* .ccm* sections */
+
+    . = ALIGN(8);
+    _eccm = .;        /* define a global symbol at ccm end */
+  } > CCM AT> FLASH
+
   /* Uninitialized data section */
   . = ALIGN(4);
   .bss :
@@ -149,10 +165,10 @@ SECTIONS
     . = ALIGN(8);
   } > RAM
 
+  /* EXTRAM (bank1) section, code must be located here explicitly        */
+  /* Example: extern int foo(void) __attribute__ ((section (".xram"))); */
   _sixram = LOADADDR(.xram);
-
-  /* External RAM section */
-  .xram :
+  .xram (NOLOAD):
   {
     . = ALIGN(0x10);
     _sxram = .;       /* create a global symbol at xram start */

@@ -1,7 +1,7 @@
 /// @defgroup led led
 /// @ingroup libhw
 /// @brief generic LED control
-
+/// @{
 #ifndef _LED_HPP_
 #define _LED_HPP_
 
@@ -13,3 +13,4 @@ class LED {};
 extern void blink();  ///< toggle @ref LED1
 
 #endif  // _LED_HPP_
+/// @}
