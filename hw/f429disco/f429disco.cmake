@@ -1,5 +1,5 @@
 add_compile_definitions(
-    DATA_IN_ExtSDRAM
+    F429DISCO DATA_IN_ExtSDRAM
 )
 
 add_compile_options(
