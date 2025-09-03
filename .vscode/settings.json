@@ -6,7 +6,7 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-        "bin/**": true, "ref/**": true, "tmp/**": true,
+        "bin/**": true, "tmp/**": true, "ref/**": true,
         "target/**": true, "obj/**": true,
     },
     "files.associations": {
@@ -17,8 +17,7 @@
         "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
-        "*.binpac": "binpac",
-        "*.ini": "bcx", "*.f": "bcx"
+        "*.ini": "bcx", "*.f": "bcx",
     },
 
     // editor

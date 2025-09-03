@@ -9,16 +9,20 @@ s [+\-]
 n [0-9]
 
 /* special states for block comments */
-%x STACK
+%x STACK COMMENT
 
 %%
-"#!"[^\n]+  {}                                      // shebang
-"//"[^\n]+  {}                                      // line comment
-[ \t\r\n]+  {}                                      // drop spaces
+\#![^\n]+       {}                                      // shebang
+"//"[^\n]+      {}                                      // line comment
+[ \t\r\n]+      {}                                      // drop spaces
 
-"("         {BEGIN(STACK  );}                       // start stack notation
-<STACK>")"  {BEGIN(INITIAL);}                       // end stack notation
-<STACK>.    {}                                      // ignore any chars
+"/*"            {BEGIN(COMMENT);}                       // start block comment
+<COMMENT>"*/"   {BEGIN(INITIAL);}                       // end stack notation
+<COMMENT>.      {}                                      // ignore any chars
+
+"("             {BEGIN(STACK  );}                       // start stack notation
+<STACK>")"      {BEGIN(INITIAL);}                       // end stack notation
+<STACK>.        {}                                      // ignore any chars
 
 {s}?{n}+[eE]{s}?{n}+    {yylval.f = num(yytext); return NUM;}   // float
 {s}?{n}+\.{n}+          {yylval.f = num(yytext); return NUM;}   // float

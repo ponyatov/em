@@ -133,10 +133,12 @@ void sync_() {
 }
 
 void save() {
-    sync_();
     if (trace) fprintf(stderr, "save\n");
+    sync_();
+#ifdef POSIX
     FILE* bc;
     assert(bc = fopen(("tmp/" APP ".bcx"), "wb"));
     fwrite(M, 1, Cp, bc);
     fclose(bc);
+#endif // POSIX
 }

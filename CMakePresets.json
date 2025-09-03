@@ -37,6 +37,11 @@
             "targets"         : ["all","install"]
         },
         {
+            "name"            :  "mingw32",
+            "configurePreset" :  "mingw32",
+            "targets"         : ["all",",nstall"]
+        },
+        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"]
@@ -128,7 +133,7 @@
             "displayName"     : "i686-w64-mingw32",
             "description"     : "mingw/32",
             "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
-            "cacheVariables"  : {"ARCH":"i386", "OS":"mingw"}
+            "cacheVariables"  : {"ARCH":"i386", "OS":"win32"}
         },
         {
             "name"            : "ucrt",
@@ -136,7 +141,7 @@
             "displayName"     : "mingw-w64-ucrt-x86_64",
             "description"     : "mingw/64",
             "toolchainFile"   : "${sourceDir}/cmake/mingw-w64-ucrt-x86_64.cmake",
-            "cacheVariables"  : {"ARCH":"x86_64", "OS":"mingw"}
+            "cacheVariables"  : {"ARCH":"x86_64", "OS":"win64"}
         },
         {
             "name"            : "musl",

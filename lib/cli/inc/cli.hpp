@@ -1,8 +1,7 @@
+#pragma once
 /// @defgroup cli cli
 /// @ingroup lib
-
-#ifndef _CLI_HPP_
-#define _CLI_HPP_
+/// @{
 
 #include "os.hpp"
 #include "vm.hpp"
@@ -46,5 +45,3 @@ extern   int oct(char *val);  ///< @returns octal
 extern   int bin(char *val);  ///< @returns binary
 /// @}
 /// @}
-
-#endif  // _CLI_HPP_

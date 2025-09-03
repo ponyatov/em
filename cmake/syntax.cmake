@@ -3,8 +3,6 @@
 find_package(FLEX              REQUIRED)
 find_package(BISON             REQUIRED)
 find_program( RAGEL_EXECUTABLE ragel   )
-find_program( LEMON_EXECUTABLE lemon   )
-find_program(BINPAC_EXECUTABLE binpac  )
 # find_package(Readline REQUIRED)
 
 file(GLOB L
@@ -23,18 +21,6 @@ file(GLOB R
     RELATIVE ${CMAKE_SOURCE_DIR}
     src/*.ragel
     lib/src/*.ragel lib/*/src/*.ragel
-)
-
-file(GLOB M
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.lemon
-    lib/src/*.lemon lib/*/src/*.lemon
-)
-
-file(GLOB B
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.binpac
-    lib/src/*.binpac lib/*/src/*.binpac
 )
 
 foreach(LEX_FILE ${L})
@@ -83,6 +69,21 @@ if(RAGEL_EXECUTABLE)
         )
     endforeach()
 endif()
+
+find_program( LEMON_EXECUTABLE lemon   )
+find_program(BINPAC_EXECUTABLE binpac  )
+
+file(GLOB M
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.lemon
+    lib/src/*.lemon lib/*/src/*.lemon
+)
+
+file(GLOB B
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.binpac
+    lib/src/*.binpac lib/*/src/*.binpac
+)
 
 if(LEMON_EXECUTABLE)
     foreach(LEMON_FILE ${M})

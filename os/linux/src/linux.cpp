@@ -1,5 +1,6 @@
-#include "cli.hpp"
 #include "os.hpp"
+#include "cli.hpp"
+#include "vm.hpp"
 
 #ifdef LEMON
 void cli(char* filename) {

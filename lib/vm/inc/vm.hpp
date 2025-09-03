@@ -1,10 +1,7 @@
+#pragma once
 /// @defgroup vm vm
 /// @brief Virtual Machine (@ref bytecode)
-/// @ingroup cli
 /// @{
-
-#ifndef _VM_HPP_
-#define _VM_HPP_
 
 /// @defgroup config config
 /// @ingroup vm
@@ -146,7 +143,5 @@ extern void dump();  ///< `( -- )` dump @ref vm state
 /// @}
 
 extern bool trace;  ///< tracing mode flag
-
-#endif  // _VM_HPP_
 
 /// @}
