@@ -1,6 +1,6 @@
 {
     "version": 4,
-    "env":{
+    "env": {
         "appInclude": [
             "${workspaceFolder}/inc/**",
             "${workspaceFolder}/tmp/**",
