@@ -2,7 +2,8 @@
     "comments": {
         "shebang"     :  "#!",
         "lineComment" :  "//",
-        "blockComment": ["/*", "*/"]
+        "blockComment": ["/*", "*/"],
+        "stackEffect": ["(", ")"]
     },
     "brackets": [
         ["{", "}"],
