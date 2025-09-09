@@ -188,7 +188,7 @@
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
-         {
+        {
             "label"          : "AI: context",
             "type"           : "shell",
             "command"        : "make ai",
