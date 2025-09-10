@@ -1,7 +1,7 @@
 .PHONY: all run
-all: $(BIN)/$(BINFILE) $(S)
+all: bin/$(BINFILE) $(S)
 	cargo build
-run: $(BIN)/$(BINFILE) $(S)
+run: bin/$(BINFILE) $(S)
 	$^
 	cargo run -- $(S)
 

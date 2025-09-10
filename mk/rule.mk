@@ -1,3 +1,10 @@
+bin/$(BINFILE): $(C) $(H) $(CP) $(HP)
+	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
+tmp/%.yacc.cpp: src/%.yacc
+	bison -o $@ $<
+tmp/%.lex.cpp: src/%.lex
+	flex -o $@ $<
+
 $(CROSS)/src/%/README: $(DISTR)/%.tar.xz
 	cd $(dir $@)/.. ; xzcat $< | tar x && touch $@
 $(CROSS)/src/%/README: $(DISTR)/%.tar.gz

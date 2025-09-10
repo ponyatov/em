@@ -1,4 +1,4 @@
-.PHONY : install update gz ref
+.PHONY : install update ref gz
 #  $(PIP) $(RUSTUP) $(TSC)
 install: $(WS)_install doc gz ref
 	$(MAKE) update
@@ -7,8 +7,8 @@ update : $(WS)_update
 	$(PIP) install -U    pip
 	$(PIP) install -U -r requirements.txt
 	$(NPM) update
-gz     : $(GZ)
 ref    : $(REF)
+gz     : $(GZ)
 
 Debian_install:
 # sudo dpkg --add-architecture i386
