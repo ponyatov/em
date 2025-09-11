@@ -42,6 +42,11 @@
             "targets"         : ["all",",nstall"]
         },
         {
+            "name"            :  "rpi3bp",
+            "configurePreset" :  "rpi3bp",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"]
@@ -120,6 +125,18 @@
             "name"            : "f429disco",
             "inherits"        : "cortexm4",
             "cacheVariables"  : {"HW":"f429disco", "CPU":"stm32f429zi"}
+        },
+        {
+            "name"            : "armv7",
+            "inherits"        : "common",
+            "hidden"          : true,
+            "cacheVariables"  : {"ARCH":"armv7", "OS":"linux"}
+        },
+        {
+            "name"            : "rpi3bp",
+            "inherits"        : "armv7",
+            "hidden"          : false,
+            "cacheVariables"  : {"HW":"rpi3bp", "CPU":"bcm2837"}
         },
         {
             "name"            : "pc",
