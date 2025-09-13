@@ -14,6 +14,6 @@ foreach(BCX_FILE ${B})
         DEPENDS             ${BCX_FILE}
         WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
         COMMAND             objcopy
-        ARGS                -I binary -O ${BCX_O} -B ${BCX_B} --rename-section .data=.data.bcx,alloc,load,data,contents --add-section .note.GNU-stack=/dev/null ${BCX_FILE} ${BCX_OBJECT}
+        ARGS                -I binary -O ${BCX_O} -B ${BCX_B} --rename-section .data=.bcx,alloc,load,data,contents --add-section .note.GNU-stack=/dev/null ${BCX_FILE} ${BCX_OBJECT}
     )
 endforeach()
