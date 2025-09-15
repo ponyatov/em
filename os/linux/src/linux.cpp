@@ -1,5 +1,5 @@
-#include "os.hpp"
 #include "cli.hpp"
+#include "os.hpp"
 #include "vm.hpp"
 
 #ifdef LEMON
@@ -39,12 +39,15 @@ void cli(char* filename) {
 
 __attribute__((weak)) int main(int argc, char* argv[]) {
     arg(0, argv[0]);
-    for (int i = 1; i < argc; i++) {  //
+    nop();
+    for (int i = 1; i < argc; i++) {
         arg(i, argv[i]);
+        cli(argv[i]);
     }
+    halt();
     return 0;
 }
 
-void arg(int argc, char* argv) {  //
+__attribute__((weak)) void arg(int argc, char* argv) {  //
     fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
 }

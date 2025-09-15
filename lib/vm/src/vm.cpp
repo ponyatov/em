@@ -21,10 +21,25 @@ void halt() {
 }
 
 void dump() {
-    if (trace) fprintf(stderr, "dump\n");
-    fprintf(stderr, "\n[ ");
+    if (trace) fprintf(stderr, "dump");
+    fprintf(stderr, "\t[ ");
     for (uint i = 0; i < Dp; i++) fprintf(stderr, "%i ", D[i]);
-    fprintf(stderr, "\t]\n");
+    fprintf(stderr, " ]\n");
+}
+
+void push(cell n) {
+    assert(Dp < Dsz);
+    D[Dp++] = n;
+}
+
+cell pop() {
+    assert(Dp > 0);
+    return D[--Dp];
+}
+
+cell top() {
+    assert(Dp > 0);
+    return D[Dp - 1];
 }
 
 void dot() {
@@ -96,21 +111,6 @@ void pick() {
 void depth() {
     if (trace) fprintf(stderr, "depth\n");
     push(Dp);
-}
-
-void push(cell n) {
-    assert(Dp < Dsz);
-    D[Dp++] = n;
-}
-
-cell pop() {
-    assert(Dp > 0);
-    return D[--Dp];
-}
-
-cell top() {
-    assert(Dp > 0);
-    return D[Dp - 1];
 }
 
 void init() {

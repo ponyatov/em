@@ -119,6 +119,11 @@ extern void lits();  ///< `( -- )`
 extern void litb();  ///< `( -- )`
 
 /// @name data stack ops
+
+extern void push(cell n);  //< `( -- n )`
+extern cell pop();         //< `( n -- )`
+extern cell top();         //< `( n -- n )`
+
 extern void dot();    ///< `( ... -- )` clean @ref D stack
 extern void dup();    ///< `( -- )`
 extern void drop();   ///< `( -- )`
@@ -128,10 +133,6 @@ extern void rot();    ///< `( -- )`
 extern void mrot();   ///< `( -- )`
 extern void pick();   ///< `( -- )`
 extern void depth();  ///< `( -- )`
-
-extern void push(cell n);  //< `( -- n )`
-extern cell pop();         //< `( n -- )`
-extern cell top();         //< `( n -- n )`
 
 /// @name debug
 extern void dump();  ///< `( -- )` dump @ref vm state

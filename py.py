@@ -102,18 +102,45 @@ def hw():
 
 hw()
 
+CPUx86 = ['i5', 'i486', 'i686']
+CPUrpi = ['bcm2837', 'rk3399']
+CPUcm = ['stm32f496zi', 'stm32f405rg',
+         'stm32f103c8t', 'stm32f030f4p', 'stm32f411ceu']
+CPUesp = ['lx106', 'lx107']
+CPU = CPUx86 + CPUrpi + CPUcm + CPUesp
+
 
 def cpu():
     mkdir('cpu')
     mkdir('cpu/inc')
-    touch('cpu/inc/cpu.hpp', f'/// @defgroup cpu cpu\n/// @ingroup cross\n')
+    touch('cpu/inc/cpu.hpp', f'''/// @defgroup cpu cpu
+/// @ingroup cross
+/// @defgroup cpux86 x86
+/// @ingroup cpu
+/// @defgroup cpurpi rpi
+/// @ingroup cpu
+/// @defgroup cpucm cm
+/// @ingroup cpu
+/// @defgroup cpuesp esp
+/// @ingroup cpu
+''')
     mkdir('cpu/src')
-    for c in ['i5', 'i486', 'i686', 'bcm2837', 'rk3399', 'stm32f496zi', 'stm32f405rg', 'stm32f103c8t', 'stm32f030f4p', 'lx106', 'lx107']:
+    for c in CPU:
         mkdir(f'cpu/{c}')
         touch(f'cpu/{c}/{c}.mk')
         touch(f'cpu/{c}/{c}.cmake')
         mkdir(f'cpu/{c}/inc')
-        touch(f'cpu/{c}/inc/{c}.hpp')
+        g = 'cpu'
+        if c in CPUx86:
+            g = 'cpux86'
+        if c in CPUcm:
+            g = 'cpucm'
+        if c in CPUrpi:
+            g = 'cpurpi'
+        if c in CPUesp:
+            g = 'cpuesp'
+        touch(f'cpu/{c}/inc/{c}.hpp',
+              f'/// @defgroup {c} {c}\n/// @ingroup {g}\n')
         mkdir(f'cpu/{c}/src')
         touch(f'cpu/{c}/src/{c}.cpp')
 
@@ -227,6 +254,10 @@ PROJECT_BRIEF          = "{TITLE}"
 PROJECT_LOGO           = vscode/logo.png
 LAYOUT_FILE            = doc/DoxygenLayout.xml
 ''', file=dx)
+    touch(f'doc/{APP}.md')
+    touch('doc/bytecode.md')
+    touch('doc/FORTH.md')
+    touch('doc/cp.md', '# concatenative programming\n')
 
 
 def mk():
@@ -320,5 +351,13 @@ def dots():
 
 
 dots()
+
+
+def apt():
+    touch('apt.Debian')
+
+
+apt()
+meld('apt.Debian')
 
 os.system(f'git add -A ; git commit -am "." ; pp')

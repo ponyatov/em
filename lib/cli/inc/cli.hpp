@@ -13,11 +13,7 @@
 extern int yylex();   ///< lexer (`flex`)
 extern int yylineno;  ///< current line
 extern char *yyfile;  ///< current file name
-#ifdef LEMON
-extern int yyin;      ///< current file handler
-#else
 extern FILE *yyin;    ///< current file handler
-#endif // LEMON
 extern char *yytext;  ///< token lexeme value
 
 /// @name number parsers
@@ -45,6 +41,11 @@ extern int yyparse();                  ///< parser (`bison`)
 extern void yyerror(const char *msg);  ///< syntax error callback
 
 #include "cli.yacc.hpp"
+
 /// @}
+
+/// @brief process script file
+/// @param[in] filename
+extern void cli(char *filename);
 
 /// @}

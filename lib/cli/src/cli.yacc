@@ -6,6 +6,7 @@
 
 %token<n> INT HEX OCT BIN
 %token<f> NUM
+
 %%
 syntax: | syntax ex
 

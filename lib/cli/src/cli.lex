@@ -12,7 +12,7 @@ n [0-9]
 %x STACK COMMENT
 
 %%
-\#![^\n]+       {}                                      // shebang
+"#!"[^\n]+      {}                                      // shebang
 "//"[^\n]+      {}                                      // line comment
 [ \t\r\n]+      {}                                      // drop spaces
 
