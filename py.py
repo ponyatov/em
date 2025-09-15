@@ -70,18 +70,19 @@ github: https://github.com/ponyatov/bcl{APP_}''', file=md)
 
 readme()
 
-HW = ['pc', 'qemu386', 'a7n8x',
-      'rpi3bp', 'rpi4', 'rpi5', 'opi800',
-      'lm3s6', 'pillf030', 'pillf103',
-      'f4disco', 'f429disco', 'l496disco', 'iskra',
-      'esp8266', 'esp32']
+LHW = ['pc', 'qemu386', 'a7n8x',
+       'rpi3bp', 'rpi4', 'rpi5', 'opi800',]
+HW = LHW + [
+    'lm3s6', 'pillf030', 'pillf103',
+    'f4disco', 'f429disco', 'l496disco', 'iskra',
+    'esp8266', 'esp32']
 
 
 def hw():
     mkdir('hw')
     mkdir('hw/inc')
     touch('hw/inc/hw.hpp',
-          f'/// @defgroup cross cross\n/// @defgroup hw hw\n/// @ingroup cross\n')
+          '/// @defgroup cross cross\n/// @defgroup hw hw\n/// @ingroup cross\n')
     mkdir('hw/src')
     for h in HW:
         mkdir(f'hw/{h}')
@@ -95,6 +96,8 @@ def hw():
         if re.match(r'f.+|iskra|pill.+', h):
             touch(f'hw/{h}/{h}.ocd')
             touch(f'hw/{h}/{h}.ioc')
+        if h in LHW:
+            touch(f'hw/{h}/{h}.kernel')
 
 
 hw()
@@ -285,6 +288,7 @@ def cli():
 cli()
 meld('lib/cli')
 
+
 def vm():
     mkdir('lib/vm')
     mkdir('lib/vm/inc')
@@ -308,5 +312,13 @@ def lib():
 
 lib()
 os.system(f'meld lib/{APP}.ini ~/em/lib/em.ini &')
+
+
+def dots():
+    for i in ['.clang-format', '.prettierrc', '.gitattributes']:
+        os.system(f'cp ~/em/{i} {i}')
+
+
+dots()
 
 os.system(f'git add -A ; git commit -am "." ; pp')
