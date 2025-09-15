@@ -1,6 +1,7 @@
 PROJECT_NAME           = "em"
 PROJECT_BRIEF          = "embedded template"
-PROJECT_LOGO           = doc/logo.png
+PROJECT_LOGO           = vscode/logo.png
+LAYOUT_FILE            = doc/DoxygenLayout.xml
 OUTPUT_DIRECTORY       = doc
 HTML_OUTPUT            = html
 INPUT                  = README.md doc lib inc src
@@ -25,7 +26,6 @@ EXTRACT_PACKAGE        = YES
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = YES
 EXTRACT_ANON_NSPACES   = YES
-LAYOUT_FILE            = doc/DoxygenLayout.xml
 SORT_GROUP_NAMES       = YES
 REPEAT_BRIEF           = NO
 CALL_GRAPH             = YES
