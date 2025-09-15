@@ -84,9 +84,10 @@ def arch():
         mkdir(f'arch/{a}')
         if re.match(r'cortex\d', a):
             touch(f'arch/{a}/{a}.mk', 'include arch/cortexm.mk')
+            touch(f'arch/{a}/{a}.cmake', 'include(arch/cortexm.cmake)')
         else:
             touch(f'arch/{a}/{a}.mk')
-        touch(f'arch/{a}/{a}.cmake')
+            touch(f'arch/{a}/{a}.cmake')
         mkdir(f'arch/{a}/inc')
         touch(f'arch/{a}/inc/{a}.hpp')
         mkdir(f'arch/{a}/src')
@@ -101,7 +102,7 @@ def os_():
     mkdir('os/inc')
     touch('os/inc/os.hpp')
     mkdir('os/src')
-    for o in ['linux', 'win32', 'posix', 'none', 'freertos']:
+    for o in ['linux', 'win32', 'none', 'freertos']:
         mkdir(f'os/{o}')
         touch(f'os/{o}/{o}.mk')
         if o in ['linux', 'win32']:

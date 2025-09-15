@@ -1,7 +1,6 @@
+ifeq ($(ARCH),i386)
 APT += libgmp-dev libmpfr-dev libmpc-dev libisl-dev
 APT += syslinux isolinux syslinux-utils
-
-ifeq ($(ARCH),i386)
 
 GZ += ref/uclibc-$(UCLIBC_VER)/README
 ref/uclibc-$(UCLIBC_VER)/README:

@@ -1,18 +1,18 @@
 HW ?= pc
 # HW ?= qemu386
 # HW ?= a7n8x
-# HW ?= rpi3
+# HW ?= rpi3bp
 # HW ?= rpi4
 # HW ?= rpi5
 # HW ?= opi800
-# HW ?= mega2560
 # HW ?= lm3s6
 # HW ?= pillf030
 # HW ?= pillf103
 # HW ?= f4disco
-# HW ?= iskra
-# HW ?= l496disco
 # HW ?= f429disco
+# HW ?= l496disco
+# HW ?= iskra
+# HW ?= esp8266
 # HW ?= esp32
 
 include   hw/$(HW)/$(HW).mk

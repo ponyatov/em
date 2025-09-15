@@ -1,8 +1,7 @@
 /// @defgroup os os
 /// @ingroup cross
 
-#ifndef _OS_HPP_
-#define _OS_HPP_
+#pragma once
 
 #include "libc.hpp"
 
@@ -13,5 +12,3 @@
 #ifdef MINGW
 #include "mingw.hpp"
 #endif
-
-#endif  // _OS_HPP_

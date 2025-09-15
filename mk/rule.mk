@@ -1,15 +1,3 @@
-bin/$(BINFILE): $(C) $(H) $(CP) $(HP)
-	$(CXX) $(CFLAGS) -o $@ $(C) $(CP) $(L)
-tmp/%.yacc.cpp: src/%.yacc
-	bison -o $@ $<
-tmp/%.lex.cpp: src/%.lex
-	flex -o $@ $<
-
-$(CROSS)/src/%/README: $(DISTR)/%.tar.xz
-	cd $(dir $@)/.. ; xzcat $< | tar x && touch $@
-$(CROSS)/src/%/README: $(DISTR)/%.tar.gz
-	cd $(dir $@)/.. ;  zcat $< | tar x && touch $@
-
 bin/$(BINFILE): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 	cmake --fresh --preset linux
 	cmake --build --preset linux -j
@@ -17,6 +5,11 @@ bin/$(BINFILE): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 $(ELF): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 	cmake --fresh --preset ${HW}
 	cmake --build --preset ${HW} -j
+
+$(CROSS)/src/%/README: $(DISTR)/%.tar.xz
+	cd $(dir $@)/.. ; xzcat $< | tar x && touch $@
+$(CROSS)/src/%/README: $(DISTR)/%.tar.gz
+	cd $(dir $@)/.. ;  zcat $< | tar x && touch $@
 
 static/%.wasm: src/%.wat
 	wat2wasm $< -o $@ && wasm-objdump -x $@

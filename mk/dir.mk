@@ -8,9 +8,10 @@ TMP       = $(CWD)/tmp
 REF       = $(CWD)/ref
 CAR       = $(HOME)/.cargo
 #
+CROSS     = $(HOME)/cross
 ROOT      = $(CWD)/root
 BOOT      = $(ROOT)/boot
-DISTR    ?= $(HOME)/distr/gz
+DISTR    ?= $(HOME)/distr
 #
 ESP       = $(HOME)/esp
 IDF_PATH ?= $(ESP)/ESP8266_RTOS_SDK

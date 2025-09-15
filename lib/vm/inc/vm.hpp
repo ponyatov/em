@@ -1,7 +1,9 @@
-#pragma once
 /// @defgroup vm vm
+/// @ingroup cli
 /// @brief Virtual Machine (@ref bytecode)
 /// @{
+
+#pragma once
 
 /// @defgroup config config
 /// @ingroup vm
@@ -56,17 +58,10 @@ extern byte Dp;      ///< @ref D top pointer
 struct bcHeader {
     /// signature
     char magic[4] = "bcx";
-    /// max @ref M size, bytes
-    uint32_t max = Msz;
     /// @ref Cp initial value
     addr Cp = 0;
     /// @brief @ref Ip initial value (entry point)
-    /// @details
     addr Ip = 0;
-    /// @brief max @ref R size (check <= @ref Rp)
-    addr Rmax = 0;
-    /// @brief max @ref D size (check <= @ref Dp)
-    addr Dmax = 0;
     /// @brief LFA of last defined word in FORTH vocabulary
     /// @details =0 in case of no vocabulary compiled
     addr latest = 0;

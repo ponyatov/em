@@ -37,14 +37,11 @@ void cli(char* filename) {
 }
 #endif  // LEMON
 
-int main(int argc, char* argv[]) {
+__attribute__((weak)) int main(int argc, char* argv[]) {
     arg(0, argv[0]);
-    init();
-    for (int i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {  //
         arg(i, argv[i]);
-        cli(argv[i]);
     }
-    save();
     return 0;
 }
 

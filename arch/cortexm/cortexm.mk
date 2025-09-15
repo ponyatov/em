@@ -2,5 +2,7 @@ OS     = none
 TARGET = arm-none-eabi
 EXE    = .elf
 
+GZ += /usr/src/newlib/$(NEWLIB_GZ)
+
 APT   += gcc-arm-none-eabi gdb-multiarch openocd  qemu-system-arm
 APT   += newlib-source stlink-tools dfu-util dos2unix stm32flash

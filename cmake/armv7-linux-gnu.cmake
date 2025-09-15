@@ -9,6 +9,6 @@ set(CMAKE_EXECUTABLE_SUFFIX_CXX "")
 
 include(any_toolchain)
 
-add_compile_definitions(ARMV7 LINUX)
+add_compile_definitions(ARMV7 RPI LINUX)
 add_compile_options()
 add_link_options()

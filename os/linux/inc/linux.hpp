@@ -2,8 +2,7 @@
 /// @ingroup os
 /// @{
 
-#ifndef _LINUX_HPP_
-#define _LINUX_HPP_
+#pragma once
 
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -25,6 +24,4 @@ extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
 
 /// @}
-
-#endif  // _LINUX_HPP_
 /// @}
