@@ -10,14 +10,14 @@
         "target/**": true, "obj/**": true,
     },
     "files.associations": {
+        "*.kernel": "properties", "*.uclibc": "properties",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.ocd": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "*.kernel": "properties", "*.config": "properties",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
-        "*.ini": "bcx", "*.f": "bcx",
+        "*.ini": "bcx", "*.f": "bcx"
     },
 
     // editor

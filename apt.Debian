@@ -1,4 +1,4 @@
-git make curl
+git make curl fzf
 code meld doxygen clang-format
 g++ cmake gdb
 flex bison ragel libreadline-dev

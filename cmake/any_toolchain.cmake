@@ -14,11 +14,13 @@ set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 
+set    (APP ${CMAKE_PROJECT_NAME} )
 include(  os/${OS}/${OS}.cmake    )
 include(arch/${ARCH}/${ARCH}.cmake)
 include( cpu/${CPU}/${CPU}.cmake  )
 include(  hw/${HW}/${HW}.cmake    )
 
+string(TOUPPER ${APP}  APP_ )
 string(TOUPPER ${HW}   HW_  )
 string(TOUPPER ${CPU}  CPU_ )
 string(TOUPPER ${ARCH} ARCH_)
@@ -34,8 +36,8 @@ add_compile_options(
 )
 
 add_compile_definitions(
+    ${APP_} APP="${APP}"
     ${HW_} ${CPU_} ${ARCH_} ${OS_}
-    APP="${CMAKE_PROJECT_NAME}"
 )
 
 add_link_options(

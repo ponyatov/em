@@ -1,7 +1,8 @@
 include(arch/cortexm/cortexm.cmake)
 
-set(MCPU -march=armv7e-m   -mcpu=cortex-m4)
-set(FCPU -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
+set(MCPU -march=armv7-m -mcpu=cortex-m3)
+set(FCPU -mfloat-abi=soft)
 
 add_compile_options(${MCPU} ${MFPU})
+add_compile_definitions()
 add_link_options(${MCPU} ${MFPU})

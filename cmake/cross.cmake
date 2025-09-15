@@ -16,7 +16,7 @@ add_custom_target(firmware DEPENDS ${ELF}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
-# add_custom_target(debug DEPENDS ${ELF}
-#     COMMAND openocd -f hw/${HW}/${HW}.ocd
-#     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-# )
+add_custom_target(debug DEPENDS ${ELF}
+    COMMAND openocd -f hw/${HW}/${HW}.ocd
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
