@@ -1,6 +1,6 @@
-/// @defgroup stm32f030t4p stm32f030t4p
+/// @defgroup stm32f030f4p stm32f030f4p
+/// @ingroup cpucm
 /// @brief @ref pillF030
-/// @ingroup cpu
 /// @details
 /// - flash: 16K (page 1K)
 /// -  sram: 4K
