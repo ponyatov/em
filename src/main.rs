@@ -15,7 +15,7 @@ fn main() {
         arg(argc, argv);
         let file = File::open(Path::new(argv)).unwrap();
         let src = unsafe { Mmap::map(&file).unwrap() };
-        eprintln!("File size: {} bytes", src.len());
+        eprintln!("\tsize: {} bytes", src.len());
         // eprintln!("{:?}", &mmap[..] as &str);
         io::stdout().write_all(&src[..]).unwrap();
     }

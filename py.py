@@ -140,8 +140,8 @@ CPU.gendir(CPU)
 
 class CPUstm32(CPU):
     def __init__(self, name, arch):
-        super().__init__(name,arch)
-        self.series = re.findall(r'stm32..',self.name)[0]
+        super().__init__(name, arch)
+        self.series = re.findall(r'stm32..', self.name)[0]
 
 
 class ARCH(Cross):
@@ -210,7 +210,7 @@ linux = OS('linux').gen()
 win32 = OS('win32').gen()
 freertos = OS('freertos').gen()
 
-OSall = [none,linux,win32,freertos]
+OSall = [none, linux, win32, freertos]
 
 i386 = ARCH('i386', os=linux, target='i686-linux-gnu',
             rtarget='i686-unknown-linux-gnu', qemu=['x86', 'i386']).gen()
@@ -231,7 +231,7 @@ cortexm3 = CM('cortexm3', rtarget='thumbv7m-none-eabi').gen()
 cortexm4 = CM('cortexm4', rtarget='thumbv7em-none-eabi').gen()
 cortexm4f = CM('cortexm4f', rtarget='thumbv7em-none-eabihf').gen()
 
-ARCHcm = [cortexm0,cortexm3,cortexm4,cortexm4f]
+ARCHcm = [cortexm0, cortexm3, cortexm4, cortexm4f]
 
 xtensa = ARCH('xtensa', target='xtensa-lx106-elf',
               rtarget='xtensa-esp8266-none-elf', os=freertos, qemu=['misc', 'xtensa']).gen()
@@ -244,7 +244,7 @@ i486 = CPU('i486', arch=i386).gen()
 i686 = CPU('i686', arch=i386).gen()
 i5 = CPU('i5', arch=x86_64).gen()
 
-CPUx86 = [i486,i686,i5]
+CPUx86 = [i486, i686, i5]
 
 bcm2837 = CPU('bcm2837', arch=armv7).gen()
 rk3399 = CPU('rk3399', arch=aarch64).gen()
@@ -469,7 +469,7 @@ meld('apt.Debian')
 
 
 def rust_main():
-    touch('src/main.rs','''mod config;\nmod vm;\n
+    touch('src/main.rs', '''mod config;\nmod vm;\n
 use memmap2::Mmap;
 use std::fs::File;
 use std::io;
@@ -490,17 +490,19 @@ fn arg(argc: usize, argv: &str) {
     eprintln!("argv[{argc}] = {argv:?}");
 }
 ''')
-    
+
+
 rust_main()
+
 
 def rust():
     mkdir('.cargo')
-    touch('.cargo/config.toml')
+    touch('.cargo/config.toml', '//! shared config\n')
     mkdir('src')
     rust_main()
     touch('src/config.rs')
     touch('src/lib.rs')
-    touch('src/server.rs')
+    touch('src/server.rs', '//! HTTP control server\n')
     touch('src/vm.rs')
     hw = '# hw\n'
     for h in HWall:
