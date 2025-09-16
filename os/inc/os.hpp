@@ -1,6 +1,5 @@
 /// @defgroup os os
 /// @ingroup cross
-
 #pragma once
 
 #include "libc.hpp"
@@ -9,6 +8,6 @@
 #include "linux.hpp"
 #endif  // LINUX
 
-#ifdef MINGW
-#include "mingw.hpp"
+#ifdef WIN32
+#include "win32.hpp"
 #endif
