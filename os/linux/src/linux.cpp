@@ -26,7 +26,7 @@ void cli(char* filename) {
     yylineno = 0;
 }
 #else   // flex/bison
-void cli(char* filename) {
+__attribute__((weak)) void cli(char* filename) {
     yyfile = filename;
     yylineno = 1;
     assert(yyin = fopen(yyfile, "r"));

@@ -50,9 +50,9 @@ def dirs():
     for d in ['.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref']:
         mkdir(d)
         if d in ['doc']:
-            touch(f'{d}/.gitignore', 'html/\n!.gitignore')
+            touch(f'{d}/.gitignore', 'html/\n!.gitignore\n')
         if d in ['bin', 'tmp', 'ref']:
-            touch(f'{d}/.gitignore', '*\n!.gitignore')
+            touch(f'{d}/.gitignore', '*\n!.gitignore\n')
 
 
 dirs()
@@ -70,6 +70,102 @@ github: https://github.com/ponyatov/bcl{APP_}''', file=md)
 
 readme()
 
+
+class Cross:
+    def __init__(self, name): self.name = name
+
+
+class HW(Cross):
+    def __init__(self, name, cpu):
+        super().__init__(self, name)
+        self.cpu = cpu
+
+    def gendir():
+        mkdir('hw')
+        mkdir('hw/inc')
+        mkdir('hw/src')
+
+
+HW.gendir()
+
+
+class CPU(Cross):
+    def __init__(self, name, arch):
+        super().__init__(self, name)
+        self.arch = arch
+    def gendir():
+        mkdir('cpu')
+        mkdir('cpu/inc')
+        mkdir('cpu/src')
+
+
+CPU.gendir()
+
+
+class ARCH(Cross):
+    def __init__(self, V, os):
+        super().__init__(self, V)
+        self.os = os
+
+    def gendir():
+        mkdir('arch')
+        mkdir('arch/inc')
+        mkdir('arch/src')
+
+    def gen(self):
+        mkdir(f'arch/{self.value}')
+        mkdir(f'arch/{self.value}/inc')
+        mkdir(f'arch/{self.value}/src')
+        touch(f'arch/{self.value}/inc/{self.value}.hpp',
+              f'/// @defgroup {self.value} {self.value}\n/// @ingroup arch\n')
+        touch(f'arch/{self.value}/src/{self.value}.cpp')
+        return self
+
+
+ARCH.gendir()
+
+
+class OS(Cross):
+    def gendir():
+        mkdir('os')
+        mkdir('os/inc')
+        mkdir('os/src')
+
+    def gen(self):
+        mkdir(f'os/{self.value}')
+        mkdir(f'os/{self.value}/inc')
+        mkdir(f'os/{self.value}/src')
+        touch(f'os/{self.value}/inc/{self.value}.hpp',
+              f'/// @defgroup {self.value} {self.value}\n/// @ingroup os\n')
+        touch(f'os/{self.value}/src/{self.value}.cpp')
+        return self
+
+
+OS.gendir()
+
+
+none = OS('none').gen()
+linux = OS('linux').gen()
+win32 = OS('win32').gen()
+freertos = OS('freertos').gen()
+
+i386 = ARCH('i386', os=none).gen()
+x86_64 = ARCH('x86_64', os=linux).gen()
+
+i486 = CPU('i486', arch=i386).gen()
+i686 = CPU('i686', arch=i386).gen()
+i5 = CPU('i5', arch=x86_64).gen()
+
+pc = HWx86('pc', cpu=i5)
+qemu386 = HWx86('qemu386', cpu=i486)
+a7n8x = HWx86('qemu386', cpu=i686)
+
+rpi3bp = HWrpi('rpi3bp')
+rpi4 = HWrpi('rpi4')
+rpi5 = HWrpi('rpi5')
+opi800 = HWrpi('opi800')
+
+
 LHW = ['pc', 'qemu386', 'a7n8x',
        'rpi3bp', 'rpi4', 'rpi5', 'opi800',]
 HW = LHW + [
@@ -82,7 +178,18 @@ def hw():
     mkdir('hw')
     mkdir('hw/inc')
     touch('hw/inc/hw.hpp',
-          '/// @defgroup cross cross\n/// @defgroup hw hw\n/// @ingroup cross\n')
+          '''/// @defgroup cross cross
+/// @defgroup hw hw
+/// @ingroup cross
+/// @defgroup hwx86 hwx86
+/// @ingroup hw
+/// @defgroup hwrpi hwrpi
+/// @ingroup hw
+/// @defgroup hwcm hwcm
+/// @ingroup hw
+/// @defgroup hwesp hwesp
+/// @ingroup hw
+''')
     mkdir('hw/src')
     for h in HW:
         mkdir(f'hw/{h}')
