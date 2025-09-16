@@ -89,7 +89,7 @@ class Cross:
 /// @ingroup cross
 ''')
 
-    def gen(self,c):
+    def gen(self, c):
         mkdir(f'{c}/{self.name}')
         mkdir(f'{c}/{self.name}/inc')
         mkdir(f'{c}/{self.name}/src')
@@ -126,6 +126,7 @@ class CPU(Cross):
     def __init__(self, name, arch):
         super().__init__(name)
         self.arch = arch
+        self.series = ''
 
     def gen(self):
         super().gen('cpu')
@@ -137,7 +138,11 @@ class CPU(Cross):
 CPU.gendir(CPU)
 
 
-class CPUcm(CPU): pass
+class CPUstm32(CPU):
+    def __init__(self, name, arch):
+        super().__init__(name,arch)
+        self.series = re.findall(r'stm32..',self.name)[0]
+
 
 class ARCH(Cross):
     def __init__(self, name, os, target, rtarget, qemu, apt=''):
@@ -205,6 +210,8 @@ linux = OS('linux').gen()
 win32 = OS('win32').gen()
 freertos = OS('freertos').gen()
 
+OSall = [none,linux,win32,freertos]
+
 i386 = ARCH('i386', os=linux, target='i686-linux-gnu',
             rtarget='i686-unknown-linux-gnu', qemu=['x86', 'i386']).gen()
 x86_64 = ARCH('x86_64', os=linux, target='x86_64-linux-gnu',
@@ -214,6 +221,9 @@ armv7 = ARCH('armv7', os=linux, target='arm-linux-gnueabihf',
 aarch64 = ARCH('aarch64', os=linux, target='aarch64-linux-gnu',
                rtarget='aarch64-unknown-linux-gnu', qemu=['arm', 'aarch64']).gen()
 
+ARCHx86 = [i386, x86_64]
+ARCHrpi = [armv7, aarch64]
+
 cortexm = ARCH('cortexm', os=none, target='arm-none-eabi', rtarget='thumbv6m-none-eabi',
                qemu=['arm', 'arm'], apt=' openocd stlink-tools dfu-util dos2unix stm32flash').gen()
 cortexm0 = CM('cortexm0', rtarget='thumbv6m-none-eabi').gen()
@@ -221,30 +231,49 @@ cortexm3 = CM('cortexm3', rtarget='thumbv7m-none-eabi').gen()
 cortexm4 = CM('cortexm4', rtarget='thumbv7em-none-eabi').gen()
 cortexm4f = CM('cortexm4f', rtarget='thumbv7em-none-eabihf').gen()
 
+ARCHcm = [cortexm0,cortexm3,cortexm4,cortexm4f]
+
 xtensa = ARCH('xtensa', target='xtensa-lx106-elf',
               rtarget='xtensa-esp8266-none-elf', os=freertos, qemu=['misc', 'xtensa']).gen()
+
+ARCHesp = [xtensa]
+
+ARCHall = ARCHx86 + ARCHrpi + ARCHcm + ARCHesp
 
 i486 = CPU('i486', arch=i386).gen()
 i686 = CPU('i686', arch=i386).gen()
 i5 = CPU('i5', arch=x86_64).gen()
+
+CPUx86 = [i486,i686,i5]
 
 bcm2837 = CPU('bcm2837', arch=armv7).gen()
 rk3399 = CPU('rk3399', arch=aarch64).gen()
 bcm2711 = CPU('bcm2711', arch=aarch64).gen()
 bcm2712 = CPU('bcm2712', arch=aarch64).gen()
 
-stm32f030f4 = CPUcm('stm32f030f4', arch=cortexm0).gen()
-stm32f103c8 = CPUcm('stm32f103c8', arch=cortexm3).gen()
-stm32f405rg = CPUcm('stm32f405rg', arch=cortexm4).gen()
-stm32f407vg = CPUcm('stm32f407vg', arch=cortexm4).gen()
-stm32f429zi = CPUcm('stm32f429zi', arch=cortexm4).gen()
-stm32l496ag = CPUcm('stm32l496ag', arch=cortexm4).gen()
-stm32f411ce = CPUcm('stm32f411ce', arch=cortexm4).gen()
+CPUrpi = [bcm2837, rk3399, bcm2711, bcm2712]
+
+stm32f030f4 = CPUstm32('stm32f030f4', arch=cortexm0).gen()
+stm32f103c8 = CPUstm32('stm32f103c8', arch=cortexm3).gen()
+stm32f405rg = CPUstm32('stm32f405rg', arch=cortexm4).gen()
+stm32f407vg = CPUstm32('stm32f407vg', arch=cortexm4).gen()
+stm32f429zi = CPUstm32('stm32f429zi', arch=cortexm4).gen()
+stm32l496ag = CPUstm32('stm32l496ag', arch=cortexm4).gen()
+stm32f411ce = CPUstm32('stm32f411ce', arch=cortexm4).gen()
 
 lm3s6965 = CPU('lm3s6965', arch=cortexm3).gen()
 
+CPUcm = [
+    stm32f030f4, stm32f103c8, stm32f405rg, stm32f407vg, stm32f429zi,
+    stm32l496ag, stm32f411ce, lm3s6965
+]
+
 lx106 = CPU('lx106', arch=xtensa).gen()
 lx107 = CPU('lx107', arch=xtensa).gen()
+
+CPUesp = [lx106, lx107]
+
+CPUall = CPUx86+CPUrpi+CPUcm+CPUesp
 
 pc = HW('pc', cpu=i5).gen()
 qemu386 = HW('qemu386', cpu=i486).gen()
@@ -262,13 +291,14 @@ HWrpi = [rpi3bp, opi800, rpi4, rpi5]
 pillf030 = HW('pillf030', cpu=stm32f030f4).gen()
 pillf103 = HW('pillf103', cpu=stm32f103c8).gen()
 lm3s6 = HW('lm3s6', cpu=lm3s6965).gen()
+netduino2 = HW('netduino2', cpu=stm32f103c8).gen()
 netduinoplus2 = HW('netduinoplus2', cpu=stm32f405rg).gen()
 iskra = HW('iskra', cpu=stm32f405rg).gen()
 f4disco = HW('f4disco', cpu=stm32f407vg).gen()
 f429disco = HW('f429disco', cpu=stm32f429zi).gen()
 l496disco = HW('l496disco', cpu=stm32l496ag).gen()
 
-HWcm = [pillf030, pillf103, lm3s6, netduinoplus2,
+HWcm = [pillf030, pillf103, lm3s6, netduino2, netduinoplus2,
         iskra, f4disco, f429disco, l496disco]
 
 esp8266 = HW('esp8266', cpu=lx106).gen()
@@ -276,7 +306,7 @@ esp32 = HW('esp32', cpu=lx107).gen()
 
 HWesp = [esp8266, esp32]
 
-HW = HWx86+HWrpi+HWcm+HWesp
+HWall = HWx86+HWrpi+HWcm+HWesp
 
 
 def root():
@@ -448,8 +478,17 @@ def rust():
     touch('src/server.rs')
     touch('src/vm.rs')
     hw = '# hw\n'
-    for h in HW:
-        hw += f'{str(h):<11} = ["{h.cpu}"]\n'
+    for h in HWall:
+        hw += f'{str(h):<23} = ["{h.cpu}"]\n'
+    cpu = '# cpu\n'
+    for h in CPUall:
+        cpu += f'{str(h):<23} = ["{h.series if h.series else h.arch}"]\n'
+    arch = '# arch\n'
+    for h in ARCHall:
+        arch += f'{str(h):<23} = ["{h.os}"]\n'
+    os = '# os\n'
+    for h in OSall:
+        os += f'{str(h):<23} = []\n'
     touch('Cargo.toml', f'''[package]
 name                    =  "{APP_}"
 version                 =  "{VERSION}"
@@ -489,6 +528,9 @@ stm32l4xx-hal           = {{version="0.7" ,optional = true}}
 #
 [features]
 {hw}
+{cpu}
+{arch}
+{os}
 ''')
 
 

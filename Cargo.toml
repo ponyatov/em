@@ -58,55 +58,71 @@ stm32l4xx-hal           = {version="0.7" ,optional = true}
 # hw
 ## x86
 pc                      = ["i5"]
+qemu386                 = ["i486"]
+a7n8x                   = ["i686"]
 ## rpi
-rpi3                    = ["bcm2837"]
+rpi3bp                  = ["bcm2837"]
+opi800                  = ["rk3399"]
 rpi4                    = ["bcm2711"]
 rpi5                    = ["bcm2712"]
-opi800                  = ["rk3399"]
 ## cortexM
-netduino2               = ["stm32f103c8"]
+pillf030                = ["stm32f030f4"]
 pillf103                = ["stm32f103c8"]
+lm3s6                   = ["lm3s6965"]
+netduino2               = ["stm32f103c8"]
 netduinoplus2           = ["stm32f405rg"]
 iskra                   = ["stm32f405rg"]
 f4disco                 = ["stm32f407vg"]
 f429disco               = ["stm32f429zi"]
 l496disco               = ["stm32l496ag"]
 ## esp
-esp8266                 = ["xtensa","rtos8266"]
-esp32                   = ["xtensa","idf"]
+esp8266                 = ["lx106"]
+esp32                   = ["lx107"]
+
 # cpu
 ## x86
+i486                    = ["i386"]
+i686                    = ["i386"]
 i5                      = ["x86_64"]
-i486                    = ["i386","none" ]
-i686                    = ["i386","win32"]
-## aarch64
-bcm2837                 = ["aarch64"]
+## rpi
+bcm2837                 = ["armv7"]
+rk3399                  = ["aarch64"]
 bcm2711                 = ["aarch64"]
 bcm2712                 = ["aarch64"]
-rk3399                  = ["aarch64"]
 ## cortexM
+stm32f030f4             = ["stm32f0"]
 stm32f103c8             = ["stm32f1"]
 stm32f405rg             = ["stm32f4"]
 stm32f407vg             = ["stm32f4"]
 stm32f429zi             = ["stm32f4"]
 stm32l496ag             = ["stm32l4"]
-lx106                   = []
+stm32f411ce             = ["stm32f4"]
+lm3s6965                = ["cortexm3"]
 # series
+stm32f0                 = ["cortexm0","dep:stm32f0","dep:stm32f0xx-hal"]
 stm32f1                 = ["cortexm3","dep:stm32f1","dep:stm32f1xx-hal"]
 stm32f4                 = ["cortexm4","dep:stm32f4","dep:stm32f4xx-hal"]
 stm32l4                 = ["cortexm4","dep:stm32l4","dep:stm32l4xx-hal"]
+## esp
+lx106                   = ["xtensa"]
+lx107                   = ["xtensa"]
+
 # arch
-x86_64                  = ["linux"]
 i386                    = ["linux"]
+x86_64                  = ["linux"]
+armv7                   = ["linux"]
 aarch64                 = ["linux"]
-cortexm                 = ["none"]
-cortexm3                = ["cortexm"]
-cortexm4                = ["cortexm"]
-xtensa                  = ["lx106"]
+cortexm0                = ["none"]
+cortexm3                = ["none"]
+cortexm4                = ["none"]
+cortexm4f               = ["none"]
+xtensa                  = ["freertos"]
+
 # os
-linux                   = []
 none                    = []
+linux                   = []
 win32                   = []
+freertos                = []
 rtos8266                = []
 idf                     = []
 # gui variant
