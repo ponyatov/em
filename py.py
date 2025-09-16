@@ -95,7 +95,7 @@ class HW(Cross):
         touch(f'hw/{self.name}/inc/{self.name}.hpp',
               f'/// @defgroup {self.name} {self.name}\n/// @ingroup hw\n')
         touch(f'hw/{self.name}/src/{self.name}.cpp')
-        touch(f'hw/{self.name}/{self.name}.mk',f'CPU = {self.cpu}\n')
+        touch(f'hw/{self.name}/{self.name}.mk', f'CPU = {self.cpu}\n')
         return self
 
 
@@ -186,6 +186,13 @@ x86_64 = ARCH('x86_64', os=linux).gen()
 armv7 = ARCH('armv7', os=linux).gen()
 aarch64 = ARCH('aarch64', os=linux).gen()
 
+cortexm = ARCH('cortexm', os=none).gen()
+cortexm0 = ARCH('cortexm0', os=none).gen()
+cortexm3 = ARCH('cortexm3', os=none).gen()
+cortexm4 = ARCH('cortexm4', os=none).gen()
+
+xtensa = ARCH('xtensa', os=freertos).gen()
+
 i486 = CPU('i486', arch=i386).gen()
 i686 = CPU('i686', arch=i386).gen()
 i5 = CPU('i5', arch=x86_64).gen()
@@ -195,6 +202,19 @@ rk3399 = CPU('rk3399', arch=aarch64).gen()
 bcm2711 = CPU('bcm2711', arch=aarch64).gen()
 bcm2712 = CPU('bcm2712', arch=aarch64).gen()
 
+stm32f030f4 = CPU('stm32f030f4', arch=cortexm0).gen()
+stm32f103c8 = CPU('stm32f103c8', arch=cortexm3).gen()
+stm32f405rg = CPU('stm32f405rg', arch=cortexm4).gen()
+stm32f407vg = CPU('stm32f407vg', arch=cortexm4).gen()
+stm32f429zi = CPU('stm32f429zi', arch=cortexm4).gen()
+stm32l496ag = CPU('stm32l496ag', arch=cortexm4).gen()
+stm32f411ce = CPU('stm32f411ce', arch=cortexm4).gen()
+
+lm3s6965 = CPU('lm3s6965', arch=cortexm3).gen()
+
+lx106 = CPU('lx106', arch=xtensa).gen()
+lx107 = CPU('lx107', arch=xtensa).gen()
+
 pc = HW('pc', cpu=i5).gen()
 qemu386 = HW('qemu386', cpu=i486).gen()
 a7n8x = HW('a7n8x', cpu=i686).gen()
@@ -202,161 +222,29 @@ a7n8x = HW('a7n8x', cpu=i686).gen()
 rpi3bp = HW('rpi3bp', cpu=bcm2837).gen()
 opi800 = HW('opi800', cpu=rk3399).gen()
 rpi4 = HW('rpi4', cpu=bcm2711).gen()
-rpi5 = HW('rpi5',cpu=bcm2712)
+rpi5 = HW('rpi5', cpu=bcm2712)
 
+pillf030 = HW('pillf030', cpu=stm32f030f4).gen()
+pillf103 = HW('pillf103', cpu=stm32f103c8).gen()
+lm3s6 = HW('lm3s6', cpu=lm3s6965).gen()
+iskra = HW('iskra', cpu=stm32f405rg).gen()
+f4disco = HW('f4disco', cpu=stm32f407vg).gen()
+f429disco = HW('f429disco', cpu=stm32f429zi).gen()
+l496disco = HW('l496disco', cpu=stm32l496ag).gen()
 
-LHW = ['pc', 'qemu386', 'a7n8x',
-       'rpi3bp', 'rpi4', 'rpi5', 'opi800',]
-HW = LHW + [
-    'lm3s6', 'pillf030', 'pillf103',
-    'f4disco', 'f429disco', 'l496disco', 'iskra',
-    'esp8266', 'esp32']
-
-
-def hw():
-    mkdir('hw')
-    mkdir('hw/inc')
-    touch('hw/inc/hw.hpp',
-          '''/// @defgroup cross cross
-/// @defgroup hw hw
-/// @ingroup cross
-/// @defgroup hwx86 hwx86
-/// @ingroup hw
-/// @defgroup hwrpi hwrpi
-/// @ingroup hw
-/// @defgroup hwcm hwcm
-/// @ingroup hw
-/// @defgroup hwesp hwesp
-/// @ingroup hw
-''')
-    mkdir('hw/src')
-    for h in HW:
-        mkdir(f'hw/{h}')
-        touch(f'hw/{h}/{h}.mk')
-        touch(f'hw/{h}/{h}.cmake')
-        mkdir(f'hw/{h}/inc')
-        touch(f'hw/{h}/inc/{h}.hpp',
-              f'/// @defgroup {h} {h}\n/// @ingroup hw\n')
-        mkdir(f'hw/{h}/src')
-        touch(f'hw/{h}/src/{h}.cpp')
-        if re.match(r'f.+|iskra|pill.+', h):
-            touch(f'hw/{h}/{h}.ocd')
-            touch(f'hw/{h}/{h}.ioc')
-        if h in LHW:
-            touch(f'hw/{h}/{h}.kernel')
-
-
-hw()
-
-CPUx86 = ['i5', 'i486', 'i686']
-CPUrpi = ['bcm2837', 'rk3399']
-CPUcm = ['stm32f496zi', 'stm32f405rg',
-         'stm32f103c8t', 'stm32f030f4p', 'stm32f411ceu']
-CPUesp = ['lx106', 'lx107']
-CPU = CPUx86 + CPUrpi + CPUcm + CPUesp
-
-
-def cpu():
-    mkdir('cpu')
-    mkdir('cpu/inc')
-    touch('cpu/inc/cpu.hpp', f'''/// @defgroup cpu cpu
-/// @ingroup cross
-/// @defgroup cpux86 x86
-/// @ingroup cpu
-/// @defgroup cpurpi rpi
-/// @ingroup cpu
-/// @defgroup cpucm cm
-/// @ingroup cpu
-/// @defgroup cpuesp esp
-/// @ingroup cpu
-''')
-    mkdir('cpu/src')
-    for c in CPU:
-        mkdir(f'cpu/{c}')
-        touch(f'cpu/{c}/{c}.mk')
-        touch(f'cpu/{c}/{c}.cmake')
-        mkdir(f'cpu/{c}/inc')
-        g = 'cpu'
-        if c in CPUx86:
-            g = 'cpux86'
-        if c in CPUcm:
-            g = 'cpucm'
-        if c in CPUrpi:
-            g = 'cpurpi'
-        if c in CPUesp:
-            g = 'cpuesp'
-        touch(f'cpu/{c}/inc/{c}.hpp',
-              f'/// @defgroup {c} {c}\n/// @ingroup {g}\n')
-        mkdir(f'cpu/{c}/src')
-        touch(f'cpu/{c}/src/{c}.cpp')
-
-
-cpu()
-
-
-def arch():
-    mkdir('arch')
-    mkdir('arch/inc')
-    touch('arch/inc/arch.hpp', f'/// @defgroup arch arch\n/// @ingroup cross\n')
-    mkdir('arch/src')
-    for a in ['x86_64', 'i386', 'armv7', 'aarch64', 'cortexm', 'cortexm0', 'cortexm3', 'cortexm4', 'xtensa']:
-        mkdir(f'arch/{a}')
-        if re.match(r'cortex\d', a):
-            touch(f'arch/{a}/{a}.mk', 'include arch/cortexm.mk')
-            touch(f'arch/{a}/{a}.cmake', 'include(arch/cortexm.cmake)')
-        else:
-            touch(f'arch/{a}/{a}.mk')
-            touch(f'arch/{a}/{a}.cmake')
-        mkdir(f'arch/{a}/inc')
-        touch(f'arch/{a}/inc/{a}.hpp',
-              f'/// @defgroup {a} {a}\n/// @ingroup arch\n')
-        mkdir(f'arch/{a}/src')
-        touch(f'arch/{a}/src/{a}.cpp')
-        if a in ['x86_64', 'i386', 'armv7', 'aarch64']:
-            touch(f'arch/{a}/{a}.kernel')
-            touch(f'arch/{a}/{a}.uclibc')
-
-
-arch()
-
-
-def os_():
-    mkdir('os')
-    mkdir('os/inc')
-    touch('os/inc/os.hpp', f'/// @defgroup os os\n/// @ingroup cross\n')
-    touch(f'os/inc/libc.hpp')
-    mkdir('os/src')
-    for o in ['linux', 'win32', 'none', 'freertos']:
-        mkdir(f'os/{o}')
-        touch(f'os/{o}/{o}.mk')
-        touch(f'os/{o}/{o}.cmake')
-        mkdir(f'os/{o}/inc')
-        touch(f'os/{o}/inc/{o}.hpp',
-              f'/// @defgroup {o} {o}\n/// @ingroup os\n')
-        mkdir(f'os/{o}/src')
-        touch(f'os/{o}/src/{o}.cpp')
-    touch(f'os/linux/all.kernel')
-    touch(f'os/linux/all.uclibc')
-
-
-os_()
+esp8266 = HW('esp8266', cpu=lx106).gen()
+esp32 = HW('esp32', cpu=lx107).gen()
 
 
 def root():
     mkdir('root')
     mkdir('root/boot')
     mkdir('root/etc')
+    mkdir('root/isolinux')
+    touch('root/isolinux/isolinux.cfg')
 
 
-def cross():
-    hw()
-    cpu()
-    arch()
-    os_()
-    root()
-
-
-cross()
+root()
 
 
 def vsjsons():
