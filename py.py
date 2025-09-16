@@ -136,10 +136,12 @@ CPU.gendir(CPU)
 
 
 class ARCH(Cross):
-    def __init__(self, name, os, qemu):
+    def __init__(self, name, os, target, rtarget, qemu):
         super().__init__(name)
         self.os = os
         self.qemu = qemu
+        self.target = target
+        self.rtarget = rtarget
 
     def gen(self):
         mkdir(f'arch/{self.name}')
@@ -151,13 +153,24 @@ class ARCH(Cross):
         gdb = '' if self.name == 'x86_64' else ' gdb-multiarch'
         touch(f'arch/{self.name}/{self.name}.mk', f'''\
 OS      = {self.os}
-APT    += qemu-system-{self.qemu[0]}{gdb}
+TARGET  = {self.target}
+APT    += qemu-system-{self.qemu[0]} gcc-{self.target}{gdb}
 QEMU    = qemu-system-{self.qemu[1]}
 ''')
         return self
 
 
 ARCH.gendir(ARCH)
+
+
+class CM(ARCH):
+    def __init__(self, name, rtarget):
+        super().__init__(name, os=none, target='arm-none-eabi', rtarget=rtarget, qemu=['arm', 'arm'])
+
+    def gen(self):
+        super().gen()
+        touch(f'arch/{self.name}/{self.name}.mk',
+              f'include arch/cortexm/cortexm.mk\nRTARGET = {self.rtarget}\n')
 
 
 class OS(Cross):
@@ -184,10 +197,12 @@ x86_64 = ARCH('x86_64', os=linux, qemu=['x86', 'x86_64']).gen()
 armv7 = ARCH('armv7', os=linux, qemu=['arm', 'arm']).gen()
 aarch64 = ARCH('aarch64', os=linux, qemu=['arm', 'aarch64']).gen()
 
-cortexm = ARCH('cortexm', os=none).gen()
-cortexm0 = ARCH('cortexm0', os=none).gen()
-cortexm3 = ARCH('cortexm3', os=none).gen()
-cortexm4 = ARCH('cortexm4', os=none).gen()
+cortexm = ARCH('cortexm', os=none, target='arm-none-eabi', rtarget='thumbv6m-none-eabi',
+               qemu=['arm', 'arm']).gen()
+cortexm0 = CM('cortexm0', rtarget='thumbv6m-none-eabi').gen()
+cortexm3 = CM('cortexm3', rtarget='thumbv7m-none-eabi').gen()
+cortexm4 = CM('cortexm4', rtarget='thumbv7em-none-eabi').gen()
+cortexm4f = CM('cortexm4f', rtarget='thumbv7em-none-eabihf').gen()
 
 xtensa = ARCH('xtensa', os=freertos).gen()
 
