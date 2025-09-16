@@ -1,1 +1,4 @@
-APT += qemu-system-arm g++-arm-linux-gnueabihf gdb-multiarch
+OS      = linux
+TARGET  = aarch64-linux-gnu
+APT    += qemu-system-arm gcc-aarch64-linux-gnu gdb-multiarch
+QEMU    = qemu-system-aarch64

@@ -73,47 +73,53 @@ class Cross:
     def __init__(self, name): self.name = name
     def __str__(self): return f'{self.name}'
 
+    def gendir(c):
+        c = c.__name__.lower()
+        mkdir(f'{c}')
+        mkdir(f'{c}/inc')
+        mkdir(f'{c}/src')
+        touch(f'{c}/inc/{c}.hpp', f'''/// @defgroup {c} {c}
+/// @ingroup cross
+''')
+
+    def gen(self):
+        c = self.__class__.__name__.lower()
+        mkdir(f'{c}/{self.name}')
+        mkdir(f'{c}/{self.name}/inc')
+        mkdir(f'{c}/{self.name}/src')
+        touch(f'{c}/{self.name}/inc/{self.name}.hpp',
+              f'/// @defgroup {self.name} {self.name}\n/// @ingroup {c}\n')
+        touch(f'{c}/{self.name}/src/{self.name}.cpp')
+        touch(f'{c}/{self.name}/{self.name}.mk')
+        touch(f'{c}/{self.name}/{self.name}.cmake')
+        return self
+
 
 class HW(Cross):
     def __init__(self, name, cpu):
         super().__init__(name)
         self.cpu = cpu
 
-    def gendir():
-        mkdir('hw')
-        mkdir('hw/inc')
-        mkdir('hw/src')
+    def gendir(c):
+        super().gendir(c)
         touch('hw/inc/hw.hpp', '''/// @defgroup cross cross
 /// @defgroup hw hw
 /// @ingroup cross
 ''')
 
     def gen(self):
-        mkdir(f'hw/{self.name}')
-        mkdir(f'hw/{self.name}/inc')
-        mkdir(f'hw/{self.name}/src')
-        touch(f'hw/{self.name}/inc/{self.name}.hpp',
-              f'/// @defgroup {self.name} {self.name}\n/// @ingroup hw\n')
-        touch(f'hw/{self.name}/src/{self.name}.cpp')
+        super().gen()
         touch(f'hw/{self.name}/{self.name}.mk', f'CPU = {self.cpu}\n')
         return self
 
 
-HW.gendir()
+HW.gendir(HW)
 
 
 class CPU(Cross):
     def __init__(self, name, arch):
         super().__init__(name)
         self.arch = arch
-
-    def gendir():
-        mkdir('cpu')
-        mkdir('cpu/inc')
-        mkdir('cpu/src')
-        touch('cpu/inc/cpu.hpp', '''/// @defgroup cpu cpu
-/// @ingroup cross
-''')
 
     def gen(self):
         mkdir(f'cpu/{self.name}')
@@ -122,24 +128,18 @@ class CPU(Cross):
         touch(f'cpu/{self.name}/inc/{self.name}.hpp',
               f'/// @defgroup {self.name} {self.name}\n/// @ingroup cpu\n')
         touch(f'cpu/{self.name}/src/{self.name}.cpp')
+        touch(f'cpu/{self.name}/{self.name}.mk', f'ARCH = {self.arch}\n')
         return self
 
 
-CPU.gendir()
+CPU.gendir(CPU)
 
 
 class ARCH(Cross):
-    def __init__(self, name, os):
+    def __init__(self, name, os, qemu):
         super().__init__(name)
         self.os = os
-
-    def gendir():
-        mkdir('arch')
-        mkdir('arch/inc')
-        mkdir('arch/src')
-        touch('arch/inc/arch.hpp', '''/// @defgroup arch arch
-/// @ingroup cross
-''')
+        self.qemu = qemu
 
     def gen(self):
         mkdir(f'arch/{self.name}')
@@ -148,21 +148,19 @@ class ARCH(Cross):
         touch(f'arch/{self.name}/inc/{self.name}.hpp',
               f'/// @defgroup {self.name} {self.name}\n/// @ingroup arch\n')
         touch(f'arch/{self.name}/src/{self.name}.cpp')
+        gdb = '' if self.name == 'x86_64' else ' gdb-multiarch'
+        touch(f'arch/{self.name}/{self.name}.mk', f'''\
+OS      = {self.os}
+APT    += qemu-system-{self.qemu[0]}{gdb}
+QEMU    = qemu-system-{self.qemu[1]}
+''')
         return self
 
 
-ARCH.gendir()
+ARCH.gendir(ARCH)
 
 
 class OS(Cross):
-    def gendir():
-        mkdir('os')
-        mkdir('os/inc')
-        mkdir('os/src')
-        touch('os/inc/os.hpp', '''/// @defgroup os os
-/// @ingroup cross
-''')
-
     def gen(self):
         mkdir(f'os/{self.name}')
         mkdir(f'os/{self.name}/inc')
@@ -173,7 +171,7 @@ class OS(Cross):
         return self
 
 
-OS.gendir()
+OS.gendir(OS)
 
 
 none = OS('none').gen()
@@ -181,10 +179,10 @@ linux = OS('linux').gen()
 win32 = OS('win32').gen()
 freertos = OS('freertos').gen()
 
-i386 = ARCH('i386', os=linux).gen()
-x86_64 = ARCH('x86_64', os=linux).gen()
-armv7 = ARCH('armv7', os=linux).gen()
-aarch64 = ARCH('aarch64', os=linux).gen()
+i386 = ARCH('i386', os=linux, qemu=['x86', 'i386']).gen()
+x86_64 = ARCH('x86_64', os=linux, qemu=['x86', 'x86_64']).gen()
+armv7 = ARCH('armv7', os=linux, qemu=['arm', 'arm']).gen()
+aarch64 = ARCH('aarch64', os=linux, qemu=['arm', 'aarch64']).gen()
 
 cortexm = ARCH('cortexm', os=none).gen()
 cortexm0 = ARCH('cortexm0', os=none).gen()
@@ -219,10 +217,14 @@ pc = HW('pc', cpu=i5).gen()
 qemu386 = HW('qemu386', cpu=i486).gen()
 a7n8x = HW('a7n8x', cpu=i686).gen()
 
+HWx86 = [pc, qemu386, a7n8x]
+
 rpi3bp = HW('rpi3bp', cpu=bcm2837).gen()
 opi800 = HW('opi800', cpu=rk3399).gen()
 rpi4 = HW('rpi4', cpu=bcm2711).gen()
 rpi5 = HW('rpi5', cpu=bcm2712)
+
+HWrpi = [rpi3bp, opi800, rpi4, rpi5]
 
 pillf030 = HW('pillf030', cpu=stm32f030f4).gen()
 pillf103 = HW('pillf103', cpu=stm32f103c8).gen()
@@ -232,8 +234,14 @@ f4disco = HW('f4disco', cpu=stm32f407vg).gen()
 f429disco = HW('f429disco', cpu=stm32f429zi).gen()
 l496disco = HW('l496disco', cpu=stm32l496ag).gen()
 
+HWcm = [pillf030, pillf103, lm3s6, iskra, f4disco, f429disco, l496disco]
+
 esp8266 = HW('esp8266', cpu=lx106).gen()
 esp32 = HW('esp32', cpu=lx107).gen()
+
+HWesp = [esp8266, esp32]
+
+HW = HWx86+HWrpi+HWcm+HWesp
 
 
 def root():
