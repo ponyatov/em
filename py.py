@@ -468,11 +468,25 @@ apt()
 meld('apt.Debian')
 
 
+def rust_main():
+    touch('src/main.rs','''
+fn main() {
+    let argv: Vec<String> = std::env::args().collect();
+    let _argc = argv.len();
+
+    for (index, arg) in argv.iter().enumerate() {
+        println!("arg[{}] = <{}>", index, arg);
+    }
+}
+''')
+    
+rust_main()
+
 def rust():
     mkdir('.cargo')
     touch('.cargo/config.toml')
     mkdir('src')
-    touch('src/main.rs')
+    rust_main()
     touch('src/config.rs')
     touch('src/lib.rs')
     touch('src/server.rs')
