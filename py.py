@@ -58,6 +58,13 @@ def dirs():
 dirs()
 
 
+def giti():
+    touch('.gitignore', '''*~\n*.swp\n*.log\ntarget/\n!.gitignore\n''')
+
+
+giti()
+
+
 def readme():
     with open('README.md', 'w') as md:
         print(f'''# ![](vscode/logo.png) `{APP}` {VERSION}
@@ -82,8 +89,7 @@ class Cross:
 /// @ingroup cross
 ''')
 
-    def gen(self):
-        c = self.__class__.__name__.lower()
+    def gen(self,c):
         mkdir(f'{c}/{self.name}')
         mkdir(f'{c}/{self.name}/inc')
         mkdir(f'{c}/{self.name}/src')
@@ -122,12 +128,8 @@ class CPU(Cross):
         self.arch = arch
 
     def gen(self):
-        mkdir(f'cpu/{self.name}')
-        mkdir(f'cpu/{self.name}/inc')
-        mkdir(f'cpu/{self.name}/src')
-        touch(f'cpu/{self.name}/inc/{self.name}.hpp',
-              f'/// @defgroup {self.name} {self.name}\n/// @ingroup cpu\n')
-        touch(f'cpu/{self.name}/src/{self.name}.cpp')
+        super().gen('cpu')
+        # touch(f'cpu/{self.name}/src/{self.name}.cpp')
         touch(f'cpu/{self.name}/{self.name}.mk', f'ARCH = {self.arch}\n')
         return self
 
@@ -135,13 +137,16 @@ class CPU(Cross):
 CPU.gendir(CPU)
 
 
+class CPUcm(CPU): pass
+
 class ARCH(Cross):
-    def __init__(self, name, os, target, rtarget, qemu):
+    def __init__(self, name, os, target, rtarget, qemu, apt=''):
         super().__init__(name)
         self.os = os
         self.qemu = qemu
         self.target = target
         self.rtarget = rtarget
+        self.apt = apt
 
     def gen(self):
         mkdir(f'arch/{self.name}')
@@ -153,8 +158,9 @@ class ARCH(Cross):
         gdb = '' if self.name == 'x86_64' else ' gdb-multiarch'
         touch(f'arch/{self.name}/{self.name}.mk', f'''\
 OS      = {self.os}
-TARGET  = {self.target}
-APT    += qemu-system-{self.qemu[0]} gcc-{self.target}{gdb}
+ TARGET = {self.target}
+RTARGET = {self.rtarget}
+APT    += qemu-system-{self.qemu[0]} gcc-{self.target}{gdb}{self.apt}
 QEMU    = qemu-system-{self.qemu[1]}
 ''')
         return self
@@ -165,12 +171,19 @@ ARCH.gendir(ARCH)
 
 class CM(ARCH):
     def __init__(self, name, rtarget):
-        super().__init__(name, os=none, target='arm-none-eabi', rtarget=rtarget, qemu=['arm', 'arm'])
+        super().__init__(name, os=none, target='arm-none-eabi',
+                         rtarget=rtarget, qemu=['arm', 'arm'])
 
     def gen(self):
         super().gen()
+        touch(f'arch/{self.name}/inc/{self.name}.hpp',
+              f'''/// @defgroup {self.name} {self.name}
+/// @ingroup arch
+#include "cortexm.hpp"
+''')
         touch(f'arch/{self.name}/{self.name}.mk',
               f'include arch/cortexm/cortexm.mk\nRTARGET = {self.rtarget}\n')
+        return self
 
 
 class OS(Cross):
@@ -192,19 +205,24 @@ linux = OS('linux').gen()
 win32 = OS('win32').gen()
 freertos = OS('freertos').gen()
 
-i386 = ARCH('i386', os=linux, qemu=['x86', 'i386']).gen()
-x86_64 = ARCH('x86_64', os=linux, qemu=['x86', 'x86_64']).gen()
-armv7 = ARCH('armv7', os=linux, qemu=['arm', 'arm']).gen()
-aarch64 = ARCH('aarch64', os=linux, qemu=['arm', 'aarch64']).gen()
+i386 = ARCH('i386', os=linux, target='i686-linux-gnu',
+            rtarget='i686-unknown-linux-gnu', qemu=['x86', 'i386']).gen()
+x86_64 = ARCH('x86_64', os=linux, target='x86_64-linux-gnu',
+              rtarget='x86_64-unknown-linux-gnu', qemu=['x86', 'x86_64'], apt=' g++ gdb').gen()
+armv7 = ARCH('armv7', os=linux, target='arm-linux-gnueabihf',
+             rtarget='armv7-unknown-linux-gnueabihf', qemu=['arm', 'arm']).gen()
+aarch64 = ARCH('aarch64', os=linux, target='aarch64-linux-gnu',
+               rtarget='aarch64-unknown-linux-gnu', qemu=['arm', 'aarch64']).gen()
 
 cortexm = ARCH('cortexm', os=none, target='arm-none-eabi', rtarget='thumbv6m-none-eabi',
-               qemu=['arm', 'arm']).gen()
+               qemu=['arm', 'arm'], apt=' openocd stlink-tools dfu-util dos2unix stm32flash').gen()
 cortexm0 = CM('cortexm0', rtarget='thumbv6m-none-eabi').gen()
 cortexm3 = CM('cortexm3', rtarget='thumbv7m-none-eabi').gen()
 cortexm4 = CM('cortexm4', rtarget='thumbv7em-none-eabi').gen()
 cortexm4f = CM('cortexm4f', rtarget='thumbv7em-none-eabihf').gen()
 
-xtensa = ARCH('xtensa', os=freertos).gen()
+xtensa = ARCH('xtensa', target='xtensa-lx106-elf',
+              rtarget='xtensa-esp8266-none-elf', os=freertos, qemu=['misc', 'xtensa']).gen()
 
 i486 = CPU('i486', arch=i386).gen()
 i686 = CPU('i686', arch=i386).gen()
@@ -215,13 +233,13 @@ rk3399 = CPU('rk3399', arch=aarch64).gen()
 bcm2711 = CPU('bcm2711', arch=aarch64).gen()
 bcm2712 = CPU('bcm2712', arch=aarch64).gen()
 
-stm32f030f4 = CPU('stm32f030f4', arch=cortexm0).gen()
-stm32f103c8 = CPU('stm32f103c8', arch=cortexm3).gen()
-stm32f405rg = CPU('stm32f405rg', arch=cortexm4).gen()
-stm32f407vg = CPU('stm32f407vg', arch=cortexm4).gen()
-stm32f429zi = CPU('stm32f429zi', arch=cortexm4).gen()
-stm32l496ag = CPU('stm32l496ag', arch=cortexm4).gen()
-stm32f411ce = CPU('stm32f411ce', arch=cortexm4).gen()
+stm32f030f4 = CPUcm('stm32f030f4', arch=cortexm0).gen()
+stm32f103c8 = CPUcm('stm32f103c8', arch=cortexm3).gen()
+stm32f405rg = CPUcm('stm32f405rg', arch=cortexm4).gen()
+stm32f407vg = CPUcm('stm32f407vg', arch=cortexm4).gen()
+stm32f429zi = CPUcm('stm32f429zi', arch=cortexm4).gen()
+stm32l496ag = CPUcm('stm32l496ag', arch=cortexm4).gen()
+stm32f411ce = CPUcm('stm32f411ce', arch=cortexm4).gen()
 
 lm3s6965 = CPU('lm3s6965', arch=cortexm3).gen()
 
@@ -244,12 +262,14 @@ HWrpi = [rpi3bp, opi800, rpi4, rpi5]
 pillf030 = HW('pillf030', cpu=stm32f030f4).gen()
 pillf103 = HW('pillf103', cpu=stm32f103c8).gen()
 lm3s6 = HW('lm3s6', cpu=lm3s6965).gen()
+netduinoplus2 = HW('netduinoplus2', cpu=stm32f405rg).gen()
 iskra = HW('iskra', cpu=stm32f405rg).gen()
 f4disco = HW('f4disco', cpu=stm32f407vg).gen()
 f429disco = HW('f429disco', cpu=stm32f429zi).gen()
 l496disco = HW('l496disco', cpu=stm32l496ag).gen()
 
-HWcm = [pillf030, pillf103, lm3s6, iskra, f4disco, f429disco, l496disco]
+HWcm = [pillf030, pillf103, lm3s6, netduinoplus2,
+        iskra, f4disco, f429disco, l496disco]
 
 esp8266 = HW('esp8266', cpu=lx106).gen()
 esp32 = HW('esp32', cpu=lx107).gen()
@@ -416,5 +436,62 @@ def apt():
 
 apt()
 meld('apt.Debian')
+
+
+def rust():
+    mkdir('.cargo')
+    touch('.cargo/config.toml')
+    mkdir('src')
+    touch('src/main.rs')
+    touch('src/config.rs')
+    touch('src/lib.rs')
+    touch('src/server.rs')
+    touch('src/vm.rs')
+    hw = '# hw\n'
+    for h in HW:
+        hw += f'{str(h):<11} = ["{h.cpu}"]\n'
+    touch('Cargo.toml', f'''[package]
+name                    =  "{APP_}"
+version                 =  "{VERSION}"
+description             =  "{TITLE}"
+authors                 = ["{AUTHOR} <{EMAIL}>"]
+license                 =  "{LICENSE}"
+repository              =  "https://github.com/ponyatov/{APP_}"
+edition                 =  "2024"
+#
+[[bin]]
+name                    = "main"
+path                    = "src/main.rs"
+#
+[[bin]]
+name                    = "server"
+path                    = "src/server.rs"
+#
+[dependencies]
+const_format            = "0.2"
+#
+[target.'cfg(target_os = "linux")'.dependencies]
+libc                    = "0.2"
+memmap2                 = "0.9"
+#
+[target.'cfg(target_arch = "arm")'.dependencies]
+cortex-m                = "0.7"
+cortex-m-rt             = "0.7"
+cortex-m-semihosting    = "0.5"
+panic-semihosting       = "0.6"
+#
+stm32f1                 = {{version="0.16",optional = true}}
+stm32f1xx-hal           = {{version="0.10",optional = true}}
+stm32f4                 = {{version="0.16",optional = true}}
+stm32f4xx-hal           = {{version="0.22",optional = true}}
+stm32l4                 = {{version="0.16",optional = true}}
+stm32l4xx-hal           = {{version="0.7" ,optional = true}}
+#
+[features]
+{hw}
+''')
+
+
+rust()
 
 os.system(f'git add -A ; git commit -am "." ; pp')
