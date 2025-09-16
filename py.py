@@ -469,14 +469,25 @@ meld('apt.Debian')
 
 
 def rust_main():
-    touch('src/main.rs','''
+    touch('src/main.rs','''mod config;\nmod vm;\n
+use memmap2::Mmap;
+use std::fs::File;
+use std::io;
+use std::io::Write;
+use std::path::Path;\n
 fn main() {
     let argv: Vec<String> = std::env::args().collect();
     let _argc = argv.len();
-
-    for (index, arg) in argv.iter().enumerate() {
-        println!("arg[{}] = <{}>", index, arg);
+    arg(0, &argv[0]);
+    for (argc, argv) in argv.iter().enumerate().skip(1) {
+        arg(argc, argv);
+        let file = File::open(Path::new(argv)).unwrap();
+        let src = unsafe { Mmap::map(&file).unwrap() };
+        eprintln!("\\tsize: {} bytes", src.len());
     }
+}\n
+fn arg(argc: usize, argv: &str) {
+    eprintln!("argv[{argc}] = {argv:?}");
 }
 ''')
     

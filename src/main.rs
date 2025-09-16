@@ -1,17 +1,11 @@
-//! executable file integrates VM components
-//! - parser
-//! - byte-code compiler (in-memory only)
-//! - byte-code interpreter
-
 mod config;
-mod gui;
 mod vm;
 
 use memmap2::Mmap;
 use std::fs::File;
-use std::path::Path;
 use std::io;
 use std::io::Write;
+use std::path::Path;
 
 fn main() {
     let argv: Vec<String> = std::env::args().collect();
