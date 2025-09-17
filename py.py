@@ -3,28 +3,18 @@ import sys
 import os
 import datetime as dt
 
+APP = os.getcwd().split('/')[-1]
+TITLE = 'old-fashioned IDE with minimal CPU/RAM requirements'
+
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
-TITLE = 'bytecode language'
 ABOUT = ''''''
 VERSION = '0.0.1'
 YEAR = dt.date.today().year
 LICENSE = 'MIT'
 
-APP = os.getcwd().split('/')[-1]
 APP_ = APP.lower()
 USER = os.getenv('USER')
-
-
-def git():
-    os.system(f'git remote add flic git@gitflic.ru:dponyatov/{APP_}.git')
-    os.system(f'git remote add gh git@github.com:ponyatov/{APP_}.git')
-    os.system(f'git checkout --orphan {USER}')
-    os.system('ln -fs ../rc rc')
-    os.system(f'git add -A ; git commit -am "." ; git push -uv gh {USER}')
-
-
-git()
 
 
 def touch(name, content=None):
@@ -70,10 +60,26 @@ def readme():
         print(f'''# ![](vscode/logo.png) `{APP}` {VERSION}
 ## {TITLE}\n
 (c) {AUTHOR} <<{EMAIL}>> {YEAR} {LICENSE}\n
-github: https://github.com/ponyatov/bcl{APP_}''', file=md)
+github: https://github.com/ponyatov/{APP_}''', file=md)
 
 
 readme()
+
+def lic():
+    touch('LICENSE',f'{LICENSE}\n\nCopyright (c) {YEAR} {AUTHOR} <{EMAIL}>\n')
+    meld('LICENSE')
+
+lic()
+
+def git():
+    os.system(f'git remote add flic git@gitflic.ru:dponyatov/{APP_}.git')
+    os.system(f'git remote add gh git@github.com:ponyatov/{APP_}.git')
+    os.system(f'git checkout --orphan {USER}')
+    os.system('ln -fs ../rc rc')
+    os.system(f'git add -A ; git commit -am "." ; git push -uv gh {USER}')
+
+
+git()
 
 
 class Cross:
@@ -329,9 +335,9 @@ def vsjsons():
               'settings'
               ]:
         touch(f'.vscode/{j}.json')
+    meld('.vscode')
 
-
-meld('.vscode')
+vsjsons()
 
 
 def vsext():
@@ -344,13 +350,7 @@ def vsext():
         touch(f'vscode/{f}')
     os.system('cp README.md vscode/README.md')
 
-
-def vscode():
-    vsjsons()
-    vsext()
-
-
-vscode()
+vsext()
 
 
 def doxy():
@@ -361,23 +361,25 @@ PROJECT_BRIEF          = "{TITLE}"
 PROJECT_LOGO           = vscode/logo.png
 LAYOUT_FILE            = doc/DoxygenLayout.xml
 ''', file=dx)
-    touch(f'doc/{APP}.md')
-    touch('doc/bytecode.md')
-    touch('doc/FORTH.md')
+    meld('.doxygen')
+    os.system(f'cd doc ; ln -fs ../README.md {APP}.md')
+    touch('doc/bytecode.md','# bytecode\n')
+    touch('doc/FORTH.md','# FORTH\n')
     touch('doc/cp.md', '# concatenative programming\n')
 
+doxy()
 
 def mk():
-    # mkdir('mk')
-    # with open('Makefile', 'w') as mk:
-    #     for m in ['var', 'version', 'dir', 'tool', 'cross', 'pkg', 'src', 'all', 'format', 'rule', 'doc', 'ref', 'gz', 'install', 'ai']:
-    #         touch(f'mk/{m}.mk')
-    #         print(f'include mk/{m}.mk', file=mk)
-    with open('mk/cross.mk', 'w') as c:
-        print(f'HW ?= {HW[0]}', file=c)
-        for h in HW[1:]:
-            print(f'# HW ?= {h}', file=c)
-
+    mkdir('mk')
+    with open('Makefile', 'w') as mk:
+        for m in ['var', 'version', 'dir', 'tool', 'cross', 'pkg', 'src', 'all', 'format', 'rule', 'doc', 'ref', 'gz', 'install', 'ai']:
+            touch(f'mk/{m}.mk')
+            print(f'include mk/{m}.mk', file=mk)
+    meld('mk')
+    # with open('mk/cross.mk', 'w') as c:
+    #     print(f'HW ?= {HW[0]}', file=c)
+    #     for h in HW[1:]:
+    #         print(f'# HW ?= {h}', file=c)
 
 mk()
 

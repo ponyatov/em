@@ -8,10 +8,10 @@
             "args"         : ["--extensionDevelopmentPath=${workspaceFolder}"]
         },
         {
-            "type": "lldb",
+            "type"   : "lldb",
             "request": "launch",
-            "name": "rust:linux",
-            "cargo": {
+            "name"   : "rust:linux",
+            "cargo"  : {
                 "args": [
                     "build",
                     "--bin=${workspaceFolderBasename}",
@@ -25,9 +25,9 @@
                 }
             },
             "args": ["lib/${workspaceFolderBasename}.ini"],
-            "cwd": "${workspaceFolder}"
-            "stopOnEntry": true,
-            "preLaunchTask": "cargo: build",
+            "cwd" : "${workspaceFolder}"
+            "stopOnEntry"   : true,
+            "preLaunchTask" : "cargo: build",
             "preRunCommands": [
                 "process launch --stop-at-entry"
             ]

@@ -28,6 +28,9 @@ H  += $(wildcard arch/inc/*.h*) $(wildcard arch/*/inc/*.h*)
 C  += $(wildcard   os/src/*.c*) $(wildcard   os/*/src/*.c*)
 H  += $(wildcard   os/inc/*.h*) $(wildcard   os/*/inc/*.h*)
 
+# Rust
+R += Cargo.toml $(wildcard src/*.rs)
+
 # ini
 S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
@@ -37,9 +40,6 @@ J += $(wildcard src/*.js)
 
 # Python
 P += $(wildcard src/*.py) $(wildcard scripts/*.py)
-
-# Rust
-R += Cargo.toml $(wildcard src/*.rs)
 
 # F#
 F += $(wildcard lib/*.fs*)
