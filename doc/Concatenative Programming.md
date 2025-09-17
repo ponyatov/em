@@ -1,1 +1,0 @@
-# Concatenative Programming {#cp}

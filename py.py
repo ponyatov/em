@@ -35,6 +35,7 @@ def mkdir(name):
 def meld(name):
     os.system(f'meld {name} ~/em/{name} &')
 
+####################
 
 def dirs():
     for d in ['.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref']:
@@ -363,8 +364,8 @@ LAYOUT_FILE            = doc/DoxygenLayout.xml
 ''', file=dx)
     meld('.doxygen')
     os.system(f'cd doc ; ln -fs ../README.md {APP}.md')
-    touch('doc/bytecode.md','# bytecode\n')
-    touch('doc/FORTH.md','# FORTH\n')
+    touch('doc/bytecode.md','# bytecode {#bc}\n')
+    touch('doc/FORTH.md','# FORTH {#FORTH}\n')
     touch('doc/cp.md', '# concatenative programming\n')
 
 doxy()
@@ -390,8 +391,8 @@ meld('mk')
 
 def cmake():
     mkdir('cmake')
-    # touch('CMakeLists.txt')
-    # touch('CMakePresets.json')
+    touch('CMakeLists.txt')
+    touch('CMakePresets.json')
     for cm in ['any_toolchain',
                'x86_64-linux-gnu',
                'armv7-linux-gnu',
@@ -402,15 +403,11 @@ def cmake():
                'cross', 'clean', 'bytecode', 'src', 'syntax',
                'version', 'install',]:
         touch(f'cmake/{cm}.cmake')
-
+    meld('CMakeLists.txt')
+    meld('CMakePresets.json')
+    meld('cmake')
 
 cmake()
-# meld('CMakeLists.txt')
-# meld('CMakePresets.json')
-meld('cmake')
-
-doxy()
-meld('.doxygen', '~/em/.doxygen')
 
 
 def cli():
@@ -438,14 +435,17 @@ def vm():
 
 
 vm()
-meld('lib/vm')
 
+def ini():
+    mkdir('lib')
+    touch(f'lib/{APP}.ini')
+    os.system(f'meld lib/{APP}.ini ~/em/lib/em.ini')
+
+ini()
 
 def lib():
-    mkdir('lib')
     mkdir('lib/inc')
     touch('lib/inc/lib.hpp', f'/// @defgroup lib lib\n')
-    touch(f'lib/{APP}.ini')
     cli()
     vm()
 
@@ -458,19 +458,18 @@ def dots():
     for i in ['.clang-format', '.prettierrc', '.gitattributes']:
         os.system(f'cp ~/em/{i} {i}')
 
-
 dots()
 
 
 def apt():
     touch('apt.Debian')
-
+    meld('apt.Debian')
 
 apt()
-meld('apt.Debian')
 
 
 def rust_main():
+    mkdir('src')
     touch('src/main.rs', '''mod config;\nmod vm;\n
 use memmap2::Mmap;
 use std::fs::File;
@@ -499,26 +498,24 @@ rust_main()
 
 def rust():
     mkdir('.cargo')
-    touch('.cargo/config.toml', '//! shared config\n')
-    mkdir('src')
-    rust_main()
-    touch('src/config.rs')
+    touch('.cargo/config.toml')
+    touch('src/config.rs', '//! shared config\n')
     touch('src/lib.rs')
     touch('src/server.rs', '//! HTTP control server\n')
     touch('src/vm.rs')
-    hw = '# hw\n'
-    for h in HWall:
-        hw += f'{str(h):<23} = ["{h.cpu}"]\n'
-    cpu = '# cpu\n'
-    for h in CPUall:
-        cpu += f'{str(h):<23} = ["{h.series if h.series else h.arch}"]\n'
-    arch = '# arch\n'
-    for h in ARCHall:
-        arch += f'{str(h):<23} = ["{h.os}"]\n'
-    os = '# os\n'
-    for h in OSall:
-        os += f'{str(h):<23} = []\n'
-    touch('Cargo.toml', f'''[package]
+    # hw = '# hw\n'
+    # for h in HWall:
+    #     hw += f'{str(h):<23} = ["{h.cpu}"]\n'
+    # cpu = '# cpu\n'
+    # for h in CPUall:
+    #     cpu += f'{str(h):<23} = ["{h.series if h.series else h.arch}"]\n'
+    # arch = '# arch\n'
+    # for h in ARCHall:
+    #     arch += f'{str(h):<23} = ["{h.os}"]\n'
+    # os = '# os\n'
+    # for h in OSall:
+    #     os += f'{str(h):<23} = []\n'
+touch('Cargo.toml', f'''[package]
 name                    =  "{APP_}"
 version                 =  "{VERSION}"
 description             =  "{TITLE}"
@@ -526,41 +523,49 @@ authors                 = ["{AUTHOR} <{EMAIL}>"]
 license                 =  "{LICENSE}"
 repository              =  "https://github.com/ponyatov/{APP_}"
 edition                 =  "2024"
-#
+
 [[bin]]
 name                    = "main"
 path                    = "src/main.rs"
-#
+
 [[bin]]
 name                    = "server"
 path                    = "src/server.rs"
-#
+
 [dependencies]
 const_format            = "0.2"
-#
+
 [target.'cfg(target_os = "linux")'.dependencies]
 libc                    = "0.2"
 memmap2                 = "0.9"
-#
-[target.'cfg(target_arch = "arm")'.dependencies]
-cortex-m                = "0.7"
-cortex-m-rt             = "0.7"
-cortex-m-semihosting    = "0.5"
-panic-semihosting       = "0.6"
-#
-stm32f1                 = {{version="0.16",optional = true}}
-stm32f1xx-hal           = {{version="0.10",optional = true}}
-stm32f4                 = {{version="0.16",optional = true}}
-stm32f4xx-hal           = {{version="0.22",optional = true}}
-stm32l4                 = {{version="0.16",optional = true}}
-stm32l4xx-hal           = {{version="0.7" ,optional = true}}
-#
+
 [features]
-{hw}
-{cpu}
-{arch}
-{os}
+
 ''')
+
+meld('Cargo.toml')
+
+# #
+# #
+# [target.'cfg(target_arch = "arm")'.dependencies]
+# cortex-m                = "0.7"
+# cortex-m-rt             = "0.7"
+# cortex-m-semihosting    = "0.5"
+# panic-semihosting       = "0.6"
+# #
+# stm32f1                 = {{version="0.16",optional = true}}
+# stm32f1xx-hal           = {{version="0.10",optional = true}}
+# stm32f4                 = {{version="0.16",optional = true}}
+# stm32f4xx-hal           = {{version="0.22",optional = true}}
+# stm32l4                 = {{version="0.16",optional = true}}
+# stm32l4xx-hal           = {{version="0.7" ,optional = true}}
+# #
+# ''')
+# # {hw}
+# # {cpu}
+# # {arch}
+# # {os}
+# # ''')
 
 
 rust()

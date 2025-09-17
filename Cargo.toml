@@ -6,11 +6,11 @@ authors                 = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
 license                 =  "MIT"
 repository              =  "https://github.com/ponyatov/rsvm"
 edition                 =  "2024"
-#
+
 [[bin]]
 name                    = "main"
 path                    = "src/main.rs"
-#
+
 [[bin]]
 name                    = "server"
 path                    = "src/server.rs"
@@ -27,11 +27,11 @@ path                    = "src/f429disco.rs"
 name                    =  "librdrs"
 path                    =  "src/lib.rs"
 crate-type              = ["cdylib"]
-#
+
 [dependencies]
 const_format            = "0.2"
 nom                     = { version = "8.0", default-features = false}#, features = ["alloc"] }
-#
+
 [target.'cfg(target_os = "linux")'.dependencies]
 libc                    = "0.2"
 memmap2                 = "0.9"

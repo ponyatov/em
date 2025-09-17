@@ -1,3 +1,5 @@
+//! HTTP control server
+
 #![allow(dead_code)]
 #![allow(unused_variables)]
 

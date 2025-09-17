@@ -1,14 +1,15 @@
-//! VM configuration parameters
+//! shared config
+
 #![allow(dead_code)]
-// #![allow(non_camel_case_types)]
 #![allow(non_upper_case_globals)]
 
+/// VM configuration parameters
 pub mod vm {
     /// max VM memory size
     pub const Msz: usize = 0x10000;
     /// return stack size (max call depth)
     pub const Rsz: usize = 0x100;
-    /// data stack size (limited)
+    /// data stack size (limited for MCU use)
     pub const Dsz: usize = 0x10;
 }
 
