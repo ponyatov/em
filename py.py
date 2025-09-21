@@ -4,7 +4,7 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'old-fashioned IDE with minimal CPU/RAM requirements'
+TITLE = 'скриптовый язык общего назначения'
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
@@ -121,7 +121,7 @@ class HW(Cross):
 ''')
 
     def gen(self):
-        super().gen()
+        super().gen('hw')
         touch(f'hw/{self.name}/{self.name}.mk', f'CPU = {self.cpu}\n')
         return self
 
