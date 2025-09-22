@@ -144,7 +144,7 @@
             "group"          : {"kind": "build", "isDefault": true }
         },
         {
-            "label"          : "openocd: firmware",
+            "label"          : "openocd: fw",
             "type"           : "shell",
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit\"",

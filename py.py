@@ -4,7 +4,7 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'old-fashioned IDE with minimal CPU/RAM requirements'
+TITLE = 'programming language prototype'
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
@@ -121,8 +121,9 @@ class HW(Cross):
 ''')
 
     def gen(self):
-        super().gen()
+        super().gen('hw')
         touch(f'hw/{self.name}/{self.name}.mk', f'CPU = {self.cpu}\n')
+        meld(f'hw/{self.name}')
         return self
 
 
@@ -137,8 +138,8 @@ class CPU(Cross):
 
     def gen(self):
         super().gen('cpu')
-        # touch(f'cpu/{self.name}/src/{self.name}.cpp')
         touch(f'cpu/{self.name}/{self.name}.mk', f'ARCH = {self.arch}\n')
+        meld(f'cpu/{self.name}')
         return self
 
 
@@ -168,6 +169,7 @@ class ARCH(Cross):
               f'/// @defgroup {self.name} {self.name}\n/// @ingroup arch\n')
         touch(f'arch/{self.name}/src/{self.name}.cpp')
         gdb = '' if self.name == 'x86_64' else ' gdb-multiarch'
+        touch(f'arch/{self.name}/{self.name}.cmake')
         touch(f'arch/{self.name}/{self.name}.mk', f'''\
 OS      = {self.os}
  TARGET = {self.target}
@@ -175,6 +177,7 @@ RTARGET = {self.rtarget}
 APT    += qemu-system-{self.qemu[0]} gcc-{self.target}{gdb}{self.apt}
 QEMU    = qemu-system-{self.qemu[1]}
 ''')
+        meld(f'arch/{self.name}')
         return self
 
 
@@ -201,19 +204,25 @@ class CM(ARCH):
 class OS(Cross):
     def gen(self):
         mkdir(f'os/{self.name}')
+        touch(f'os/{self.name}/{self.name}.mk')
+        touch(f'os/{self.name}/{self.name}.cmake')
         mkdir(f'os/{self.name}/inc')
         mkdir(f'os/{self.name}/src')
         touch(f'os/{self.name}/inc/{self.name}.hpp',
               f'/// @defgroup {self.name} {self.name}\n/// @ingroup os\n')
         touch(f'os/{self.name}/src/{self.name}.cpp')
+        meld(f'os/{self.name}')
+        if self.name=='linux':
+            touch('os/linux/all.kernel')
+            touch('os/linux/all.uclibc')
         return self
 
 
 OS.gendir(OS)
 
 
-none = OS('none').gen()
 linux = OS('linux').gen()
+none = OS('none').gen()
 win32 = OS('win32').gen()
 freertos = OS('freertos').gen()
 
@@ -350,6 +359,7 @@ def vsext():
               'extension.js',]:
         touch(f'vscode/{f}')
     os.system('cp README.md vscode/README.md')
+    meld('vscode')
 
 vsext()
 
@@ -377,16 +387,8 @@ def mk():
             touch(f'mk/{m}.mk')
             print(f'include mk/{m}.mk', file=mk)
     meld('mk')
-    # with open('mk/cross.mk', 'w') as c:
-    #     print(f'HW ?= {HW[0]}', file=c)
-    #     for h in HW[1:]:
-    #         print(f'# HW ?= {h}', file=c)
 
 mk()
-
-meld('mk/cross.mk')
-
-meld('mk')
 
 
 def cmake():

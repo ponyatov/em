@@ -1,2 +1,2 @@
 /// @defgroup i5 i5
-/// @ingroup cpux86
+/// @ingroup cpu
