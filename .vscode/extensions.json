@@ -43,10 +43,10 @@
         // "supremeconset.binpac-vscode-extension",
         // "AlecGhost.tree-sitter-vscode",
         // embedded
-        "basdp.language-gas-x86",
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
+        // "basdp.language-gas-x86",
         // "espressif.esp-idf-extension",
         // "awsxxf.serialterminal",
         // "ms-vscode.hexeditor",

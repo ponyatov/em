@@ -4,7 +4,7 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'programming language prototype'
+TITLE = 'скриптовый язык общего назначения'
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'

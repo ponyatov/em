@@ -1,9 +1,9 @@
 {
     "comments": {
-        "shebang"     :  "#!",
-        "lineComment" :  "//",
+        "shebang"     : "#!",
+        "lineComment" : "//",
         "blockComment": ["/*", "*/"],
-        "stackEffect": ["(", ")"]
+        "stackEffect" : ["(", ")"]
     },
     "brackets": [
         ["{", "}"],
