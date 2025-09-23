@@ -1,14 +1,15 @@
 import re
-import sys
 import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'скриптовый язык общего назначения'
+TITLE = 'high-load network software pack /Rust/'
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
-ABOUT = ''''''
+ABOUT = '''
+https://www.marvie.ru/\n
+- Melannox NICs up to 100 gbps support'''
 VERSION = '0.0.1'
 YEAR = dt.date.today().year
 LICENSE = 'MIT'
@@ -61,7 +62,8 @@ def readme():
         print(f'''# ![](vscode/logo.png) `{APP}` {VERSION}
 ## {TITLE}\n
 (c) {AUTHOR} <<{EMAIL}>> {YEAR} {LICENSE}\n
-github: https://github.com/ponyatov/{APP_}''', file=md)
+github: https://github.com/ponyatov/{APP_}
+{ABOUT}''', file=md)
 
 
 readme()
@@ -73,8 +75,8 @@ def lic():
 lic()
 
 def git():
-    os.system(f'git remote add flic git@gitflic.ru:dponyatov/{APP_}.git')
     os.system(f'git remote add gh git@github.com:ponyatov/{APP_}.git')
+    os.system(f'git remote add flic git@gitflic.ru:dponyatov/{APP_}.git')
     os.system(f'git checkout --orphan {USER}')
     os.system('ln -fs ../rc rc')
     os.system(f'git add -A ; git commit -am "." ; git push -uv gh {USER}')
@@ -374,9 +376,9 @@ LAYOUT_FILE            = doc/DoxygenLayout.xml
 ''', file=dx)
     meld('.doxygen')
     os.system(f'cd doc ; ln -fs ../README.md {APP}.md')
-    touch('doc/bytecode.md','# bytecode {#bc}\n')
-    touch('doc/FORTH.md','# FORTH {#FORTH}\n')
-    touch('doc/cp.md', '# concatenative programming\n')
+    # touch('doc/bytecode.md','# bytecode {#bc}\n')
+    # touch('doc/FORTH.md','# FORTH {#FORTH}\n')
+    # touch('doc/cp.md', '# concatenative programming\n')
 
 doxy()
 
@@ -469,6 +471,22 @@ def apt():
 
 apt()
 
+def rust_config():
+    mkdir('src')
+    touch('src/config.rs', '''//! shared config\n
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
+#![allow(dead_code)]\n
+pub mod server {
+    pub const ip: &str = "127.0.0.1";
+    // pub const IP: &str = "0.0.0.0";
+    pub const port: u16 = 12345;
+    /// bind address constant
+    pub const bind: &str = const_format::formatcp!(\"{ip}:{port}\");
+}''')
+    meld('src/config.rs')
+
+rust_config()
 
 def rust_main():
     mkdir('src')
@@ -497,11 +515,14 @@ fn arg(argc: usize, argv: &str) {
 
 rust_main()
 
-
-def rust():
+def cargo_config():
     mkdir('.cargo')
     touch('.cargo/config.toml')
-    touch('src/config.rs', '//! shared config\n')
+    meld('.cargo/config.toml')
+
+cargo_config()
+
+def rust():
     touch('src/lib.rs')
     touch('src/server.rs', '//! HTTP control server\n')
     touch('src/vm.rs')
@@ -517,7 +538,9 @@ def rust():
     # os = '# os\n'
     # for h in OSall:
     #     os += f'{str(h):<23} = []\n'
-touch('Cargo.toml', f'''[package]
+
+def cargo_toml():
+    touch('Cargo.toml', f'''[package]
 name                    =  "{APP_}"
 version                 =  "{VERSION}"
 description             =  "{TITLE}"
@@ -525,27 +548,22 @@ authors                 = ["{AUTHOR} <{EMAIL}>"]
 license                 =  "{LICENSE}"
 repository              =  "https://github.com/ponyatov/{APP_}"
 edition                 =  "2024"
-
-[[bin]]
+\n[[bin]]
 name                    = "main"
 path                    = "src/main.rs"
-
-[[bin]]
+\n[[bin]]
 name                    = "server"
 path                    = "src/server.rs"
-
-[dependencies]
+\n[dependencies]
 const_format            = "0.2"
-
-[target.'cfg(target_os = "linux")'.dependencies]
+\n[target.'cfg(target_os = "linux")'.dependencies]
 libc                    = "0.2"
 memmap2                 = "0.9"
-
-[features]
-
+\n[features]
 ''')
+    meld('Cargo.toml')
 
-meld('Cargo.toml')
+cargo_toml()
 
 # #
 # #
@@ -568,8 +586,5 @@ meld('Cargo.toml')
 # # {arch}
 # # {os}
 # # ''')
-
-
-rust()
 
 os.system(f'git add -A ; git commit -am "." ; pp')

@@ -35,7 +35,7 @@
             "problemMatcher" : []
         },
         {
-            "label"          : "cargo: main",
+            "label"          : "cargo: x86_64/main",
             "type"           : "shell",
             "command"        : "cargo",
             "args"           : ["watch","-x","run --bin main --features=pc --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
