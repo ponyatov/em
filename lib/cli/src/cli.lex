@@ -31,4 +31,5 @@ n [0-9]
 0o[0-7]+                {yylval.n = oct(yytext); return OCT;}   // octal
 0b[01]+                 {yylval.n = bin(yytext); return BIN;}   // binary
 
+[ \t\r\n]+      {}                                      // drop spaces
 .               {yyerror("");}                          // any undetected char

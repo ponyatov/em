@@ -3,13 +3,16 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'high-load network software pack /Rust/'
+TITLE = 'micro Programming Language' # μ
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
 ABOUT = '''
-https://www.marvie.ru/\n
-- Melannox NICs up to 100 gbps support'''
+- embedded, industrial automation & IIoT
+- targets microcontrollers & embedded Linux
+- heterogenous distributed systems
+- wireless sensor networks
+'''
 VERSION = '0.0.1'
 YEAR = dt.date.today().year
 LICENSE = 'MIT'
@@ -69,7 +72,7 @@ github: https://github.com/ponyatov/{APP_}
 readme()
 
 def lic():
-    touch('LICENSE',f'{LICENSE}\n\nCopyright (c) {YEAR} {AUTHOR} <{EMAIL}>\n')
+    touch('LICENSE',f'{LICENSE} License\n\nCopyright (c) {YEAR} {AUTHOR} <{EMAIL}>\n')
     meld('LICENSE')
 
 lic()
@@ -260,6 +263,7 @@ ARCHall = ARCHx86 + ARCHrpi + ARCHcm + ARCHesp
 
 i486 = CPU('i486', arch=i386).gen()
 i686 = CPU('i686', arch=i386).gen()
+k7 = CPU('k7', arch=i386).gen()
 i5 = CPU('i5', arch=x86_64).gen()
 
 CPUx86 = [i486, i686, i5]

@@ -3,6 +3,7 @@
         "stkb.rewrap",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        "usernamehw.errorlens",
         "mechatroner.rainbow-csv",
         // GPT
         "AmazonWebServices.aws-toolkit-vscode",
@@ -22,7 +23,6 @@
         // "github.vscode-github-actions",
         // "redhat.vscode-yaml",
         // misc
-        "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",
         // Web/JS
         "esbenp.prettier-vscode",

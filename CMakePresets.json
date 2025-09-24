@@ -37,8 +37,8 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "mingw32",
-            "configurePreset" :  "mingw32",
+            "name"            :  "win32",
+            "configurePreset" :  "win32",
             "targets"         : ["all",",nstall"]
         },
         {
@@ -145,7 +145,7 @@
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {
-            "name"            : "mingw32",
+            "name"            : "win32",
             "inherits"        : "pc",
             "displayName"     : "i686-w64-mingw32",
             "description"     : "mingw/32",
@@ -170,6 +170,7 @@
         {
             "name"            : "linux",
             "inherits"        : "pc",
+            "displayName"     : "x86_64-linux-gnu",
             "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
             "cacheVariables"  : {"OS":"linux"}
         }
