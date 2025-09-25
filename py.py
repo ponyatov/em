@@ -3,15 +3,17 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'micro Programming Language' # μ
+TITLE = 'Legacy Software Analysis Toolset' # μ
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
 ABOUT = '''
-- embedded, industrial automation & IIoT
-- targets microcontrollers & embedded Linux
-- heterogenous distributed systems
-- wireless sensor networks
+- interactive legacy software analysis and reverse engineering
+- semantic & data models recovery based on legacy code
+- source-to-source translation
+- DSL compiler construction
+- target platform: IIoT-like distributed heterogeneous meshes
+  built of nodes with embedded Linux and MCU devices (CortexM, ESP, RiscV)
 '''
 VERSION = '0.0.1'
 YEAR = dt.date.today().year
@@ -220,6 +222,7 @@ class OS(Cross):
         if self.name=='linux':
             touch('os/linux/all.kernel')
             touch('os/linux/all.uclibc')
+        meld('os/inc')
         return self
 
 
@@ -298,7 +301,7 @@ CPUesp = [lx106, lx107]
 CPUall = CPUx86+CPUrpi+CPUcm+CPUesp
 
 pc = HW('pc', cpu=i5).gen()
-qemu386 = HW('qemu386', cpu=i486).gen()
+qemu386 = HW('qemu386', cpu=i686).gen()
 a7n8x = HW('a7n8x', cpu=i686).gen()
 
 HWx86 = [pc, qemu386, a7n8x]

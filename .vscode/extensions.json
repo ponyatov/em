@@ -46,8 +46,8 @@
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
-        // "basdp.language-gas-x86",
         // "espressif.esp-idf-extension",
+        // "basdp.language-gas-x86",
         // "awsxxf.serialterminal",
         // "ms-vscode.hexeditor",
         // Python

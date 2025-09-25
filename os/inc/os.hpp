@@ -3,6 +3,7 @@
 #pragma once
 
 #include "libc.hpp"
+#include "main.hpp"
 
 #ifdef LINUX
 #include "linux.hpp"
