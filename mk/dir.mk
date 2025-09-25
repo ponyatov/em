@@ -7,6 +7,7 @@ SRC       = $(CWD)/src
 TMP       = $(CWD)/tmp
 REF       = $(CWD)/ref
 CAR       = $(HOME)/.cargo
+ODIR      = $(HOME)/.opam/$(OCAML_VER)/bin
 #
 CROSS     = $(HOME)/cross
 ROOT      = $(CWD)/root

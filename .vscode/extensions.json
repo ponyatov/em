@@ -3,6 +3,7 @@
         "stkb.rewrap",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        "usernamehw.errorlens",
         "mechatroner.rainbow-csv",
         // GPT
         "AmazonWebServices.aws-toolkit-vscode",
@@ -22,7 +23,6 @@
         // "github.vscode-github-actions",
         // "redhat.vscode-yaml",
         // misc
-        "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",
         // Web/JS
         "esbenp.prettier-vscode",
@@ -46,14 +46,14 @@
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
-        // "basdp.language-gas-x86",
         // "espressif.esp-idf-extension",
+        // "basdp.language-gas-x86",
         // "awsxxf.serialterminal",
         // "ms-vscode.hexeditor",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
-        "charliermarsh.ruff",
+        // "charliermarsh.ruff",
         // "batisteo.vscode-django",
         // Rust
         "rust-lang.rust-analyzer",

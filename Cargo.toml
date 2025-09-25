@@ -36,17 +36,17 @@ nom                     = { version = "8.0", default-features = false}#, feature
 libc                    = "0.2"
 memmap2                 = "0.9"
 sdl2                    = {version = "0.38", features = ["ttf","image"], optional = true}
-#
+
 [target.x86_64-unknown-linux-gnu.dependencies]
 #xdpilone                = "1.2"
-#
+
 [target.'cfg(target_arch = "arm")'.dependencies]
 cortex-m                = "0.7"
 cortex-m-rt             = "0.7"
 cortex-m-semihosting    = "0.5"
 panic-semihosting       = "0.6"
 # panic-halt            = "1.0"
-#
+
 stm32f0                 = {version="0.16",optional = true}
 stm32f0xx-hal           = {version="0.18",optional = true}
 stm32f1                 = {version="0.16",optional = true}
@@ -55,7 +55,7 @@ stm32f4                 = {version="0.16",optional = true}
 stm32f4xx-hal           = {version="0.22",optional = true}
 stm32l4                 = {version="0.16",optional = true}
 stm32l4xx-hal           = {version="0.7" ,optional = true}
-#
+
 [features]
 # hw
 ## x86

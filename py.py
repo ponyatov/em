@@ -3,11 +3,18 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'скриптовый язык общего назначения'
+TITLE = 'Legacy Software Analysis Toolset' # μ
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
-ABOUT = ''''''
+ABOUT = '''
+- interactive legacy software analysis and reverse engineering
+- semantic & data models recovery based on legacy code
+- source-to-source translation
+- DSL compiler construction
+- target platform: IIoT-like distributed heterogeneous meshes
+  built of nodes with embedded Linux and MCU devices (CortexM, ESP, RiscV)
+'''
 VERSION = '0.0.1'
 YEAR = dt.date.today().year
 LICENSE = 'MIT'
@@ -60,20 +67,21 @@ def readme():
         print(f'''# ![](vscode/logo.png) `{APP}` {VERSION}
 ## {TITLE}\n
 (c) {AUTHOR} <<{EMAIL}>> {YEAR} {LICENSE}\n
-github: https://github.com/ponyatov/{APP_}''', file=md)
+github: https://github.com/ponyatov/{APP_}
+{ABOUT}''', file=md)
 
 
 readme()
 
 def lic():
-    touch('LICENSE',f'{LICENSE}\n\nCopyright (c) {YEAR} {AUTHOR} <{EMAIL}>\n')
+    touch('LICENSE',f'{LICENSE} License\n\nCopyright (c) {YEAR} {AUTHOR} <{EMAIL}>\n')
     meld('LICENSE')
 
 lic()
 
 def git():
-    os.system(f'git remote add flic git@gitflic.ru:dponyatov/{APP_}.git')
     os.system(f'git remote add gh git@github.com:ponyatov/{APP_}.git')
+    os.system(f'git remote add flic git@gitflic.ru:dponyatov/{APP_}.git')
     os.system(f'git checkout --orphan {USER}')
     os.system('ln -fs ../rc rc')
     os.system(f'git add -A ; git commit -am "." ; git push -uv gh {USER}')
@@ -214,6 +222,7 @@ class OS(Cross):
         if self.name=='linux':
             touch('os/linux/all.kernel')
             touch('os/linux/all.uclibc')
+        meld('os/inc')
         return self
 
 
@@ -257,6 +266,7 @@ ARCHall = ARCHx86 + ARCHrpi + ARCHcm + ARCHesp
 
 i486 = CPU('i486', arch=i386).gen()
 i686 = CPU('i686', arch=i386).gen()
+k7 = CPU('k7', arch=i386).gen()
 i5 = CPU('i5', arch=x86_64).gen()
 
 CPUx86 = [i486, i686, i5]
@@ -291,7 +301,7 @@ CPUesp = [lx106, lx107]
 CPUall = CPUx86+CPUrpi+CPUcm+CPUesp
 
 pc = HW('pc', cpu=i5).gen()
-qemu386 = HW('qemu386', cpu=i486).gen()
+qemu386 = HW('qemu386', cpu=i686).gen()
 a7n8x = HW('a7n8x', cpu=i686).gen()
 
 HWx86 = [pc, qemu386, a7n8x]
@@ -372,10 +382,10 @@ PROJECT_LOGO           = vscode/logo.png
 LAYOUT_FILE            = doc/DoxygenLayout.xml
 ''', file=dx)
     meld('.doxygen')
-    os.system(f'cd doc ; ln -fs ../README.md {APP}.md')
-    touch('doc/bytecode.md','# bytecode {#bc}\n')
-    touch('doc/FORTH.md','# FORTH {#FORTH}\n')
-    touch('doc/cp.md', '# concatenative programming\n')
+    os.system(f'cp README.md doc/{APP}.md')
+    # touch('doc/bytecode.md','# bytecode {#bc}\n')
+    # touch('doc/FORTH.md','# FORTH {#FORTH}\n')
+    # touch('doc/cp.md', '# concatenative programming\n')
 
 doxy()
 
@@ -468,6 +478,22 @@ def apt():
 
 apt()
 
+def rust_config():
+    mkdir('src')
+    touch('src/config.rs', '''//! shared config\n
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
+#![allow(dead_code)]\n
+pub mod server {
+    pub const ip: &str = "127.0.0.1";
+    // pub const IP: &str = "0.0.0.0";
+    pub const port: u16 = 12345;
+    /// bind address constant
+    pub const bind: &str = const_format::formatcp!(\"{ip}:{port}\");
+}''')
+    meld('src/config.rs')
+
+rust_config()
 
 def rust_main():
     mkdir('src')
@@ -496,11 +522,14 @@ fn arg(argc: usize, argv: &str) {
 
 rust_main()
 
-
-def rust():
+def cargo_config():
     mkdir('.cargo')
     touch('.cargo/config.toml')
-    touch('src/config.rs', '//! shared config\n')
+    meld('.cargo/config.toml')
+
+cargo_config()
+
+def rust():
     touch('src/lib.rs')
     touch('src/server.rs', '//! HTTP control server\n')
     touch('src/vm.rs')
@@ -516,7 +545,9 @@ def rust():
     # os = '# os\n'
     # for h in OSall:
     #     os += f'{str(h):<23} = []\n'
-touch('Cargo.toml', f'''[package]
+
+def cargo_toml():
+    touch('Cargo.toml', f'''[package]
 name                    =  "{APP_}"
 version                 =  "{VERSION}"
 description             =  "{TITLE}"
@@ -524,27 +555,22 @@ authors                 = ["{AUTHOR} <{EMAIL}>"]
 license                 =  "{LICENSE}"
 repository              =  "https://github.com/ponyatov/{APP_}"
 edition                 =  "2024"
-
-[[bin]]
+\n[[bin]]
 name                    = "main"
 path                    = "src/main.rs"
-
-[[bin]]
+\n[[bin]]
 name                    = "server"
 path                    = "src/server.rs"
-
-[dependencies]
+\n[dependencies]
 const_format            = "0.2"
-
-[target.'cfg(target_os = "linux")'.dependencies]
+\n[target.'cfg(target_os = "linux")'.dependencies]
 libc                    = "0.2"
 memmap2                 = "0.9"
-
-[features]
-
+\n[features]
 ''')
+    meld('Cargo.toml')
 
-meld('Cargo.toml')
+cargo_toml()
 
 # #
 # #
@@ -567,8 +593,5 @@ meld('Cargo.toml')
 # # {arch}
 # # {os}
 # # ''')
-
-
-rust()
 
 os.system(f'git add -A ; git commit -am "." ; pp')

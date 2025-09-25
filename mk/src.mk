@@ -6,7 +6,7 @@ MK += $(wildcard arch/*/*.mk)
 MK += $(wildcard   os/*/*.mk)
 
 # cmake files
-CM += CMake*   $(wildcard cmake/*.cmake)
+CM += CMake* $(wildcard cmake/*.cmake)
 CM += $(wildcard   hw/*/*.cmake)
 CM += $(wildcard  cpu/*/*.cmake)
 CM += $(wildcard arch/*/*.cmake)

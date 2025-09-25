@@ -20,6 +20,7 @@ BB_VER       = 1_36_1
 JQUERY_VER   = 3.7.1
 
 # misc
+OCAML_VER    = 5.3.0
 DOTNET_VER   = 9.0
 GO_VER       = 1.24.4
 ## xtensa

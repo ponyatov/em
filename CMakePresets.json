@@ -37,14 +37,14 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "mingw32",
-            "configurePreset" :  "mingw32",
-            "targets"         : ["all",",nstall"]
-        },
-        {
             "name"            :  "rpi3bp",
             "configurePreset" :  "rpi3bp",
             "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "win32",
+            "configurePreset" :  "win32",
+            "targets"         : ["all",",nstall"]
         },
         {
             "name"            :  "linux",
@@ -145,14 +145,6 @@
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
         },
         {
-            "name"            : "mingw32",
-            "inherits"        : "pc",
-            "displayName"     : "i686-w64-mingw32",
-            "description"     : "mingw/32",
-            "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
-            "cacheVariables"  : {"ARCH":"i386", "OS":"win32"}
-        },
-        {
             "name"            : "ucrt",
             "inherits"        : "pc",
             "displayName"     : "mingw-w64-ucrt-x86_64",
@@ -168,8 +160,16 @@
             "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-musl.cmake"
         },
         {
+            "name"            : "win32",
+            "inherits"        : "pc",
+            "displayName"     : "i686-w64-mingw32",
+            "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
+            "cacheVariables"  : {"ARCH":"i386", "OS":"win32"}
+        },
+        {
             "name"            : "linux",
             "inherits"        : "pc",
+            "displayName"     : "x86_64-linux-gnu",
             "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
             "cacheVariables"  : {"OS":"linux"}
         }
