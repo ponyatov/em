@@ -3,7 +3,7 @@
 #include "vm.hpp"
 
 #ifdef LEMON
-void cli(char* filename) {
+__attribute__((weak)) void arg(int index, char* filename) {
     yyfile = filename;
     yylineno = 0;
     // open
@@ -26,7 +26,7 @@ void cli(char* filename) {
     yylineno = 0;
 }
 #else   // flex/bison
-__attribute__((weak)) void cli(char* filename) {
+__attribute__((weak)) void arg(int index, char* filename) {
     yyfile = filename;
     yylineno = 1;
     assert(yyin = fopen(yyfile, "r"));
@@ -36,18 +36,3 @@ __attribute__((weak)) void cli(char* filename) {
     yylineno = 0;
 }
 #endif  // LEMON
-
-__attribute__((weak)) int main(int argc, char* argv[]) {
-    arg(0, argv[0]);
-    setup();
-    for (int i = 1; i < argc; i++) {  //
-        arg(i, argv[i]);
-        cli(argv[i]);
-    }
-    loop();
-    return 0;
-}
-
-__attribute__((weak)) void arg(int argc, char* argv) {  //
-    fprintf(stderr, "arg[%i] = <%s>\n", argc, argv);
-}

@@ -382,7 +382,7 @@ PROJECT_LOGO           = vscode/logo.png
 LAYOUT_FILE            = doc/DoxygenLayout.xml
 ''', file=dx)
     meld('.doxygen')
-    os.system(f'cd doc ; ln -fs ../README.md {APP}.md')
+    os.system(f'cp README.md doc/{APP}.md')
     # touch('doc/bytecode.md','# bytecode {#bc}\n')
     # touch('doc/FORTH.md','# FORTH {#FORTH}\n')
     # touch('doc/cp.md', '# concatenative programming\n')
