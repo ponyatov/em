@@ -25,7 +25,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${BC}               # precompiled bytecode
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} ${L}) # -static
+target_link_libraries(${CMAKE_PROJECT_NAME} ${A}) # -static
 
 include(install)        # target install
 include(cross)          # cross compiler binaries: elf/dfu

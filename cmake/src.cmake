@@ -43,6 +43,8 @@ file(GLOB H
     hw/${HW}/USB_DEVICE/App/*.h* hw/${HW}/USB_DEVICE/Target/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/*.h*
+    # net
+    lib/pcpp/include/pcapplusplus/*.h*
 )
 
 file(GLOB INC
@@ -64,5 +66,13 @@ file(GLOB INC
     hw/${HW}/USB_DEVICE/App hw/${HW}/USB_DEVICE/Target
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
+    # net
+    lib/pcpp/include/pcapplusplus
 )
 include_directories(${INC})
+
+file(GLOB A
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    # net
+    lib/pcpp/*.a
+)
