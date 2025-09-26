@@ -2,12 +2,13 @@
     #include "cli.hpp"
 %}
 
-%defines %union { char c; std::string* s; int n; float f; Op op; }
+%defines %union { char c; std::string *s; int n; float f; Op op; }
 
 %token<n>  INT HEX OCT BIN
 %token<f>  NUM
 %token     COLON
 %token<s>  ID
+%token<s> INI
 %token<op> CMD0 CMD1
 
 %%

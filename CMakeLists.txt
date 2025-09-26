@@ -6,6 +6,7 @@ include(version)        # binary files naming by version & git branch/hash
 include(src)            # scan project for source code files
 include(syntax)         # parser generators (flex,yacc/bison,ragel,lemon,..)
 include(bytecode)       # precompiled bytecode
+include(net)            # raw packets networking
 
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
@@ -24,7 +25,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${BC}               # precompiled bytecode
 )
 
-# target_link_libraries(${CMAKE_PROJECT_NAME} -static)
+target_link_libraries(${CMAKE_PROJECT_NAME} ${L}) # -static
 
 include(install)        # target install
 include(cross)          # cross compiler binaries: elf/dfu

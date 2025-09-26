@@ -1,12 +1,15 @@
 %{
     #include "cli.hpp"
     char *yyfile = nullptr;
+    #define YY_DO_BEFORE_ACTION {}
+    #define YY_NEW_FILE {}
+    bool yywrap() { return true; }
 %}
 
 %option noyywrap yylineno
 
-s     [+\-]
-n     [0-9]
+sign  [+\-]
+digit [0-9]
 alpha [a-zA-Z_]
 alnum [a-zA-Z_0-9]
 
@@ -16,7 +19,6 @@ alnum [a-zA-Z_0-9]
 %%
 "#!"[^\n]+              {}                              // shebang
 "//"[^\n]+              {}                              // line comment
-[ \t\r\n]+              {}                              // drop spaces
 
 "/*"                    {BEGIN(COMMENT);}               // start block comment
 <COMMENT>"*/"           {BEGIN(INITIAL);}               // end stack notation
@@ -34,7 +36,9 @@ alnum [a-zA-Z_0-9]
 0b[01]+                 {yylval.n = bin(yytext); return BIN;}   // binary
 
 ":"                     {return COLON;}
-{alpha}{alnum}*         {yylval.s = new std::string(yytext); return ID; }
+
+({alnum}+\/)*{alnum}+\.ini  { yylval.s = new std::string(yytext); return INI; }
+{alpha}{alnum}*             { yylval.s = new std::string(yytext); return ID;  }
 
 [ \t\r\n]+              {}                              // drop spaces
 .                       {yyerror("");}                  // any undetected char
