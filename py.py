@@ -3,17 +3,13 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'Legacy Software Analysis Toolset' # μ
+TITLE = 'raw ethernet i/o workbench' # μ
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
 ABOUT = '''
-- interactive legacy software analysis and reverse engineering
-- semantic & data models recovery based on legacy code
-- source-to-source translation
-- DSL compiler construction
-- target platform: IIoT-like distributed heterogeneous meshes
-  built of nodes with embedded Linux and MCU devices (CortexM, ESP, RiscV)
+- veth pair setup with Wireshark
+- raw send/recv in C++ & Rust
 '''
 VERSION = '0.0.1'
 YEAR = dt.date.today().year
