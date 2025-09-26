@@ -7,7 +7,7 @@
     },
     "files.watcherExclude": {
         "bin/**": true, "tmp/**": true, "ref/**": true,
-        "target/**": true,
+        "target/**": true, "_build/**": true,
         "obj/**": true,
     },
     "files.associations": {
