@@ -25,7 +25,13 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${BC}               # precompiled bytecode
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} ${A}) # -static
+target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE lib/pcpp/lib)
+
+find_package(PCAP REQUIRED)
+
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    -Wl,--start-group pcap ${A} -Wl,--end-group
+) # -static
 
 include(install)        # target install
 include(cross)          # cross compiler binaries: elf/dfu
