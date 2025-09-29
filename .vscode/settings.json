@@ -86,7 +86,7 @@
     "autopep8.args"                : ["--ignore","E26,E302,E305,E401,E402,E701,E702"],
     "python.analysis.extraPaths"   : ["${workspaceFolder}/src", "${workspaceFolder}/scripts"],
     "[python]": { "editor.defaultFormatter" : "ms-python.autopep8" },
-    // "ruff.configuration": ".ruff.toml",
+    "ruff.configuration": ".ruff.toml",
 
     // Rust
     "rust-analyzer.checkOnSave"          : false,

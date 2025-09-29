@@ -27,7 +27,7 @@
             // "intelliSenseMode"     : "gcc-arm"
         },
         {
-            "name": "mingw32",
+            "name": "win32",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
@@ -38,7 +38,7 @@
             "intelliSenseMode"     : "gcc-x64"
         },
         {
-            "name": "linux",
+            "name"                 : "linux",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],

@@ -53,7 +53,7 @@
         // Python
         "ms-python.python",
         "ms-python.autopep8",
-        // "charliermarsh.ruff",
+        "charliermarsh.ruff",
         // "batisteo.vscode-django",
         // Rust
         "rust-lang.rust-analyzer",
