@@ -28,6 +28,7 @@
         "workspaceContains:lib/*.f"
     ],
     "extensionDependencies": [
+        "ms-python.python"
     ],
     "main": "extension.js",
     "contributes": {
