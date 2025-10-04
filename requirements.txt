@@ -1,3 +1,7 @@
+ruff
 autopep8
+pytest
 ply
+pygls
+ffmpeg-python
 Django==4.2.19

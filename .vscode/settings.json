@@ -87,6 +87,9 @@
     "python.analysis.extraPaths"   : ["${workspaceFolder}/src", "${workspaceFolder}/lib"],
     "[python]": { "editor.defaultFormatter" : "ms-python.autopep8" },
     "ruff.configuration": ".ruff.toml",
+    // "ruff.interpreter": ["${workspaceFolder}/bin/python3"],
+    "ruff.lint.preview": true,
+    "ruff.format.preview": true,
 
     // Rust
     "rust-analyzer.checkOnSave"          : false,
