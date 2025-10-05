@@ -1,5 +1,3 @@
-# cross compiler binaries: elf/dfu
-
 set(ELF ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.elf)
 set(DFU ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}.dfu)
 

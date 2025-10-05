@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.22)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
 project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 
-include(version)        # binary files naming by version & git branch/hash
-include(src)            # scan project for source code files
-include(syntax)         # parser generators (flex,yacc/bison,ragel,lemon,..)
-include(bytecode)       # precompiled bytecode
-include(net)            # raw packets networking
+include(version)  # binary files naming by version & git branch/hash
+include(src)      # scan project for source code files
+include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
+include(bytecode) # precompiled bytecode
+include(net)      # raw packets networking
 
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
@@ -33,6 +33,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     -Wl,--start-group pcap ${A} -Wl,--end-group
 ) # -static
 
-include(install)        # target install
-include(cross)          # cross compiler binaries: elf/dfu
-include(clean)          # project clean-up (remove generated & temp files)
+include(install) # target install
+include(cross)   # cross compiler binaries: elf/dfu
+include(clean)   # project clean-up (remove generated & temp files)

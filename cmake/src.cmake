@@ -1,5 +1,3 @@
-# scan project for source code files
-
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
 file(GLOB S

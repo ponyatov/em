@@ -164,7 +164,7 @@
             "inherits"        : "pc",
             "displayName"     : "i686-w64-mingw32",
             "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
-            "cacheVariables"  : {"ARCH":"i386", "OS":"win32"}
+            "cacheVariables"  : {"CPU":"i686", "ARCH":"i386", "OS":"win32"}
         },
         {
             "name"            : "linux",
