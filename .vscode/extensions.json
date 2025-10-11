@@ -66,6 +66,8 @@
         // "probe-rs.probe-rs-debugger",
         // FORTH
         "fttx.language-forth",
+        // OCaml
+        "ocamllabs.ocaml-platform",
         // F#
         "ionide.ionide-fsharp",
         "redhat.vscode-xml",
