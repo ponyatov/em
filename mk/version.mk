@@ -19,6 +19,9 @@ BB_VER       = 1_36_1
 # JS/Web
 JQUERY_VER   = 3.7.1
 
+# net
+PCPP_VER = 25.05
+
 # misc
 OCAML_VER    = 5.3.0
 DOTNET_VER   = 9.0
