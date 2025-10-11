@@ -26,6 +26,7 @@ PCPP_VER = 25.05
 OCAML_VER    = 5.3.0
 DOTNET_VER   = 9.0
 GO_VER       = 1.24.4
+
 ## xtensa
 LX106_GCC    = 8_4_0
 LX106_VER    = 2020r3
