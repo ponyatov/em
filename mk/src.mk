@@ -41,5 +41,8 @@ J += $(wildcard src/*.js) $(wildcard static/*.js) $(wildcard templates/*.js)
 # Python
 P += $(wildcard src/*.py) $(wildcard lib/*.py)
 
+# OCaml
+O += $(wildcard lib/*.ml*)
+
 # F#
 F += $(wildcard lib/*.fs*)

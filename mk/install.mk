@@ -1,13 +1,13 @@
 .PHONY : install update ref gz
-#  $(PIP) $(RUSTUP) $(TSC)
-install: $(WS)_install doc gz ref
+#  $(PIP) $(RUSTUP) $(TSC) $(OPAM)
+install: $(WS)_install doc gz ref $(OPAM)
 	$(MAKE) update
 update : $(WS)_update
 	$(RUSTUP) self update && $(RUSTUP) update
 	$(PIP) install -U    pip
 	$(PIP) install -U -r requirements.txt
 	$(NPM) update
-ref    : $(REF)
+ref    : $(RF)
 gz     : $(GZ)
 
 Debian_install:
