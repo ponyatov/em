@@ -7,3 +7,21 @@
     - _Лео Броуди_ [**Начальный курс программирования на языке Форт**](https://nncron.ru/book/sf/)
 - https://thinking-forth.sourceforge.net/
   - [color .pdf](https://www.forth.com/wp-content/uploads/2018/11/thinking-forth-color.pdf)
+
+## Comments
+
+- `#!...` shebang for scripts running
+- `# line comment`
+- `/* block comment */`
+
+## Debug
+
+- `? ( -- )` dump stack content
+
+## Data Stack
+
+- `. ( -- )` clear stack
+
+## Raw Networking
+
+- `list ( -- )` query list of DPDK/PCAP devices & fill vocabulary
