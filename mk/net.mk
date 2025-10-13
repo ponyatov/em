@@ -5,9 +5,17 @@ PCPP_CFG += -DBUILD_SHARED_LIBS=OFF
 PCPP_CFG += -DPCAPPP_USE_DPDK=ON
 PCPP_CFG += -DPCAPPP_USE_XDP=OFF
 PCPP_CFG += -DPCAPPP_BUILD_PCAPPP=ON
+# -msse4.1
+PCPP_CFG += -DCMAKE_C_FLAGS="-march=native"
+PCPP_CFG += -DCMAKE_CXX_FLAGS="-march=native"
 
 .PHONY: pcpp
-pcpp: ref/PcapPlusPlus/README.md
-	cmake $(PCPP_CFG) -S $(dir $<) -B tmp/$@ --install-prefix=$(LIB)/pcpp
-	cmake --build   tmp/$@
-	cmake --install tmp/$@
+pcpp: lib/pcpp/setup_dpdk.py
+# rm -rf lib/pcpp tmp/pcpp ; time make pcpp
+lib/pcpp/setup_dpdk.py: tmp/pcpp/setup_dpdk.py
+	sed '1s/python/python3/' $< > $@ ; chmod +x $@
+tmp/pcpp/setup_dpdk.py: lib/pcpp/lib/libPacket++.a
+lib/pcpp/lib/libPacket++.a: ref/PcapPlusPlus/README.md
+	cmake $(PCPP_CFG) -S $(dir $<) -B tmp/pcpp --install-prefix=$(LIB)/pcpp
+	cmake --build   tmp/pcpp -j
+	cmake --install tmp/pcpp
