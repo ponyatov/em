@@ -110,6 +110,18 @@
     // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
+    // OCaml (cs3110)
+    "[ocaml]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [80],
+        "editor.formatOnSave": true
+    },
+    "[ocaml.interface]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [80],
+        "editor.formatOnSave": true
+    },
+
     // F#
     "[fsharp]": {
         "editor.defaultFormatter": "Ionide.Ionide-fsharp",
