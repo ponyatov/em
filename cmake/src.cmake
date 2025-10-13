@@ -69,8 +69,6 @@ file(GLOB INC
 )
 include_directories(${INC})
 
-file(GLOB A
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    # net
-    lib/pcpp/*.a
-)
+# file(GLOB A
+#     RELATIVE ${CMAKE_SOURCE_DIR}
+# )
