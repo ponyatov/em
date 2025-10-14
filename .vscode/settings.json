@@ -110,6 +110,18 @@
     // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
     "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
 
+    // OCaml (cs3110)
+    "[ocaml]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [80],
+        "editor.formatOnSave": true
+    },
+    "[ocaml.interface]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [80],
+        "editor.formatOnSave": true
+    },
+
     // F#
     "[fsharp]": {
         "editor.defaultFormatter": "Ionide.Ionide-fsharp",
@@ -119,11 +131,11 @@
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows": "UCRT64",
     "terminal.integrated.profiles.windows": {
-      "UCRT64": {
-        "path": "C:\\msys64\\usr\\bin\\bash.exe",
-        "args": ["--login","-i"],
-        "env": {
-          "MSYSTEM": "UCRT64",
-          "CHERE_INVOKING": "1",
-        }}},
+        "UCRT64": {
+            "path": "C:\\msys64\\usr\\bin\\bash.exe",
+            "args": ["--login","-i"],
+            "env": {
+            "MSYSTEM": "UCRT64",
+            "CHERE_INVOKING": "1",
+    }}},
 }
