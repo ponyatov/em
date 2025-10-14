@@ -20,11 +20,11 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
-            "defines"              : ["HAVE_INIT_FINI","HAVE_INITFINI_ARRAY"]
-            // "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
-            // "cStandard"            : "c17",
-            // "cppStandard"          : "c++17",
-            // "intelliSenseMode"     : "gcc-arm"
+            "defines"              : ["F429DISCO", "STM32F429ZI", "CORTEXM4", "NONE", "HAVE_INIT_FINI", "HAVE_INITFINI_ARRAY"],
+            "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
+            "cStandard"            : "c17",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-arm"
         },
         {
             "name": "win32",
