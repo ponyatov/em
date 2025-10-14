@@ -6,7 +6,7 @@ update : $(WS)_update
 	$(RUSTUP) self update && $(RUSTUP) update
 	$(PIP) install -U    pip
 	$(PIP) install -U -r requirements.txt
-	$(OPAM) update
+	opam install -y . --deps-only
 	$(NPM) update
 ref    : $(RF)
 gz     : $(GZ)
