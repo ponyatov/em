@@ -6,7 +6,7 @@ update : $(WS)_update
 	$(RUSTUP) self update && $(RUSTUP) update
 	$(PIP) install -U    pip
 	$(PIP) install -U -r requirements.txt
-	opam install -y . --deps-only
+	opam install -y . --deps-only && dune build
 	$(NPM) update
 ref    : $(RF)
 gz     : $(GZ)
