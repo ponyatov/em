@@ -68,7 +68,3 @@ file(GLOB INC
     lib/pcpp/include/pcapplusplus
 )
 include_directories(${INC})
-
-# file(GLOB A
-#     RELATIVE ${CMAKE_SOURCE_DIR}
-# )

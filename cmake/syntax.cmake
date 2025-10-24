@@ -1,7 +1,7 @@
 find_package(FLEX              REQUIRED)
 find_package(BISON             REQUIRED)
-find_program( RAGEL_EXECUTABLE ragel   )
-# find_package(Readline REQUIRED)
+find_program(RAGEL_EXECUTABLE  ragel   )
+find_package(READLINE          REQUIRED)
 
 file(GLOB L
     RELATIVE ${CMAKE_SOURCE_DIR}

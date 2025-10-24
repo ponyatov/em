@@ -14,8 +14,18 @@ message("-- |      host: " ${CMAKE_HOST_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_VERSION
 message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${OS})
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
-message("-- |    binary: " ${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
+message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 message("-- |  bytecode: " "${B}")
+message("-- |")
+if(PCAP_FOUND)
+message("-- | PCAP: ${PCAP_VERSION}")
+endif()
+if(DPDK_FOUND)
+message("-- | DPDK: ${DPDK_VERSION}")
+endif()
+if(PCPP_FOUND)
+message("-- | PCPP: ${PCPP_VERSION}")
+endif()
 message("-- |")
 
 add_executable(${CMAKE_PROJECT_NAME}
@@ -30,7 +40,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE lib/pcpp/lib)
 find_package(PCAP REQUIRED)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    -Wl,--start-group pcap ${A} -Wl,--end-group
+    -Wl,--start-group ${LIBS} -Wl,--end-group
 ) # -static
 
 include(install) # target install
