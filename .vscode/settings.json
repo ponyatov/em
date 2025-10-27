@@ -30,11 +30,11 @@
     "editor.detectIndentation": false,
     "editor.rulers": [80],
     "editor.lineNumbers": "on",
-    "editor.formatOnSave": false,
     "workbench.tree.indent": 24,
     "editor.fontSize": 14,
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
+    "editor.formatOnSave": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
     // "git.enabled": false,
@@ -60,17 +60,22 @@
     "clang-format.style"          : "file",
 
     // C++
-    "[c]"  : { "editor.defaultFormatter" : "xaver.clang-format" },
-    "[cpp]": { "editor.defaultFormatter" : "xaver.clang-format" },
+    "[c]"  : {
+        "editor.defaultFormatter" : "xaver.clang-format",
+        "editor.formatOnSave": true
+    },
+    "[cpp]": {
+        "editor.defaultFormatter" : "xaver.clang-format",
+        "editor.formatOnSave": true
+    },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.files.exclude": { "ref":true },
-    // "C_Cpp.intelliSenseEngine": "Tag Parser",
 
     // CMake
     "cmake.sourceDirectory" : "${workspaceFolder}",
     "cmake.buildDirectory"  : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"       : "Unix Makefiles",
-    "cmake.parallelJobs"    :  2,
+    "cmake.parallelJobs"    :  4,
     "cmake.useCMakePresets" : "always",
     "cmake.buildBeforeRun"  :  true,
     "cmake.saveBeforeBuild" :  true,
@@ -137,5 +142,5 @@
             "env": {
             "MSYSTEM": "UCRT64",
             "CHERE_INVOKING": "1",
-    }}},
+    }}}
 }
