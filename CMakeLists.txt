@@ -6,6 +6,7 @@ include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
 include(net)      # raw packets networking
+include(qt)       # portable GUI
 
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
@@ -14,8 +15,10 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-message("-- |  bytecode: " "${B}")
 message("-- |")
+if(Qt6_FOUND)
+message("-- | GUI: ${Qt6_} ${Qt6_VERSION}")
+endif()
 if(PCAP_FOUND)
 message("-- | PCAP: ${PCAP_VERSION}")
 endif()

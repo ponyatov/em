@@ -5,8 +5,8 @@ endif()
 set(CMAKE_C_STANDARD   17)
 set(CMAKE_CXX_STANDARD 20)
 
-set(CMAKE_C_COMPILER_FORCED   TRUE)
-set(CMAKE_CXX_COMPILER_FORCED TRUE)
+# set(CMAKE_C_COMPILER_FORCED   TRUE) # breaks Qt
+# set(CMAKE_CXX_COMPILER_FORCED TRUE)
 set(CMAKE_C_COMPILER_ID       GNU)
 set(CMAKE_CXX_COMPILER_ID     GNU)
 
@@ -18,17 +18,17 @@ set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 
-set    (APP ${CMAKE_PROJECT_NAME} )
-include(  os/${OS}/${OS}.cmake    )
-include(arch/${ARCH}/${ARCH}.cmake)
-include( cpu/${CPU}/${CPU}.cmake  )
-include(  hw/${HW}/${HW}.cmake    )
+set   (APP ${CMAKE_PROJECT_NAME})
+string(TOUPPER ${APP} APP_)
 
-string(TOUPPER ${APP}  APP_ )
-string(TOUPPER ${HW}   HW_  )
-string(TOUPPER ${CPU}  CPU_ )
-string(TOUPPER ${ARCH} ARCH_)
-string(TOUPPER ${OS}   OS_  )
+# include(  os/${OS}/${OS}.cmake    )
+# include(arch/${ARCH}/${ARCH}.cmake)
+# include( cpu/${CPU}/${CPU}.cmake  )
+# include(  hw/${HW}/${HW}.cmake    )
+# string(TOUPPER ${HW}   HW_  )
+# string(TOUPPER ${CPU}  CPU_ )
+# string(TOUPPER ${ARCH} ARCH_)
+# string(TOUPPER ${OS}   OS_  )
 
 add_compile_options(
     # -Wall -Wextra               # -Wpedantic
