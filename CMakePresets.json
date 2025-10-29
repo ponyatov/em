@@ -47,9 +47,16 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "linux",
+            "name"            :  "linux/4",
             "configurePreset" :  "linux",
-            "targets"         : ["all","install"]
+            "targets"         : ["all","install"],
+            "jobs"            :   4
+        },
+        {
+            "name"            :  "linux/24",
+            "configurePreset" :  "linux",
+            "targets"         : ["all","install"],
+            "jobs"            :   24
         }
     ],
     "configurePresets": [
