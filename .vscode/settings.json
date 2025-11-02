@@ -6,7 +6,7 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-        "bin/**": true, "tmp/**": true, "ref/**": true,
+        // "bin/**": true, "tmp/**": true, "ref/**": true,
         "target/**": true, "_build/**": true,
         "obj/**": true,
     },
