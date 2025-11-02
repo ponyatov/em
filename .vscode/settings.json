@@ -60,8 +60,12 @@
     "clang-format.style"          : "file",
 
     // C++
-    "[c]"  : { "editor.defaultFormatter" : "xaver.clang-format" },
-    "[cpp]": { "editor.defaultFormatter" : "xaver.clang-format" },
+    "[c]"  : {
+        "editor.defaultFormatter" : "xaver.clang-format",
+        "editor.formatOnSave": true },
+    "[cpp]": {
+        "editor.defaultFormatter" : "xaver.clang-format",
+        "editor.formatOnSave": true },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.files.exclude": { "ref":true },
     // "C_Cpp.intelliSenseEngine": "Tag Parser",

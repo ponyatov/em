@@ -5,7 +5,6 @@ project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
-include(bytecode) # precompiled bytecode
 include(net)      # raw packets networking
 
 message("-- |")
@@ -15,7 +14,6 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-message("-- |  bytecode: " "${B}")
 message("-- |")
 if(PCAP_FOUND)
 message("-- | PCAP: ${PCAP_VERSION}")
@@ -32,12 +30,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
-    ${BC}               # precompiled bytecode
 )
 
-target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE lib/pcpp/lib)
-
-find_package(PCAP REQUIRED)
+target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     -Wl,--start-group ${LIBS} -Wl,--end-group
