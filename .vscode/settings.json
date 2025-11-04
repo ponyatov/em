@@ -11,7 +11,6 @@
         "obj/**": true,
     },
     "files.associations": {
-        "*.ini": "properties", "*.f": "properties",
         "*.kernel": "properties", "*.uclibc": "properties",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
@@ -19,6 +18,7 @@
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "*.service": "systemd-unit-file",
         "requirements.*": "properties",
+        "*.ini": "properties", "*.f": "properties"
     },
 
     // editor
@@ -62,19 +62,10 @@
     // C++
     "[c]"  : {
         "editor.defaultFormatter" : "xaver.clang-format",
-<<<<<<< HEAD
         "editor.formatOnSave": true },
     "[cpp]": {
         "editor.defaultFormatter" : "xaver.clang-format",
         "editor.formatOnSave": true },
-=======
-        "editor.formatOnSave": true
-    },
-    "[cpp]": {
-        "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave": true
-    },
->>>>>>> d1c11ab8391ecb6c0dd0d8035a8f5ef79dc9ca58
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.files.exclude": { "ref":false },
 
@@ -82,10 +73,7 @@
     "cmake.sourceDirectory" : "${workspaceFolder}",
     "cmake.buildDirectory"  : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"       : "Unix Makefiles",
-<<<<<<< HEAD
-=======
     "cmake.parallelJobs"    :  4,
->>>>>>> d1c11ab8391ecb6c0dd0d8035a8f5ef79dc9ca58
     "cmake.useCMakePresets" : "always",
     "cmake.buildBeforeRun"  :  true,
     "cmake.saveBeforeBuild" :  true,
