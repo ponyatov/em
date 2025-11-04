@@ -6,6 +6,7 @@ include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
 include(net)      # raw packets networking
+include(qt)       # portable GUI
 
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
@@ -15,6 +16,9 @@ message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 message("-- |")
+if(Qt6_FOUND)
+message("-- | GUI: ${Qt6_} ${Qt6_VERSION}")
+endif()
 if(PCAP_FOUND)
 message("-- | PCAP: ${PCAP_VERSION}")
 endif()
@@ -32,8 +36,11 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${CP} ${HP}         # parsers
 )
 
+<<<<<<< HEAD
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
+=======
+>>>>>>> d1c11ab8391ecb6c0dd0d8035a8f5ef79dc9ca58
 target_link_libraries(${CMAKE_PROJECT_NAME}
     -Wl,--start-group ${LIBS} -Wl,--end-group
 ) # -static

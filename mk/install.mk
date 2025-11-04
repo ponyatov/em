@@ -1,6 +1,6 @@
 .PHONY : install update ref gz
 #  $(PIP) $(RUSTUP) $(TSC) $(OPAM)
-install: $(WS)_install doc gz ref $(OPAM)
+install: $(WS)_install doc ref gz
 	$(MAKE) update
 update : $(WS)_update
 	$(RUSTUP) self update && $(RUSTUP) update
@@ -13,13 +13,18 @@ gz     : $(GZ)
 
 Debian_install:
 # sudo dpkg --add-architecture i386
-Debian_update:
+Debian_update: apt.Debian
 	sudo apt update
-	sudo apt install -uy `cat apt.$(WS)` $(APT)
+	sudo apt install -uy `cat $<` $(APT)
 	$(PIP) install -U    pip
 	$(PIP) install -U -r requirements.txt
 
-Msys_install: doc ref gz
+Ubuntu_install:
+Ubuntu_update: apt.Ubuntu
+	sudo apt update
+	sudo apt install -uy `cat $<` $(APT)
+
+Msys_install:
 	pacman -Suy
-Msys_update:
-	pacman -S $(shell cat apt.$(WS) | tr '\n' ' ') $(MSYS)
+Msys_update: apt.Msys
+	pacman -S $(shell cat $< | tr '\n' ' ') $(MSYS)

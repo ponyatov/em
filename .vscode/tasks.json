@@ -28,13 +28,6 @@
             "problemMatcher" : []
         },
         {
-            "label"          : "git: checkout .vscode",
-            "type"           : "shell",
-            "command"        : "git checkout .vscode/settings.json",
-            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
-            "problemMatcher" : []
-        },
-        {
             "label"          : "cargo: x86_64/main",
             "type"           : "shell",
             "command"        : "cargo",
@@ -224,6 +217,31 @@
             "label"          : "dune: test",
             "type"           : "shell",
             "command"        : "dune test",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "make: watch",
+            "type"           : "shell",
+            "command"        : "make watch",
+            "dependsOn"      : "CMake: build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "git: checkout .vscode",
+            "type"           : "shell",
+            "command"        : "git checkout .vscode/settings.json",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "make: sync",
+            "type"           : "shell",
+            "command"        : "make sync",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
             "group"          : {"kind": "build", "isDefault": true}
