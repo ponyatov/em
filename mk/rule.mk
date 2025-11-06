@@ -11,9 +11,8 @@ $(CROSS)/src/%/README: $(DISTR)/%.tar.xz
 $(CROSS)/src/%/README: $(DISTR)/%.tar.gz
 	cd $(dir $@)/.. ;  zcat $< | tar x && touch $@
 
-static/%.wasm: src/%.wat
+bin/%.wasm: src/%.wat
 	wat2wasm $< -o $@ && wasm-objdump -x $@
-
 
 RU = pavel
 tmp/slide/%.ru.mp3: tmp/slide/%.ru.md mk/rule.mk

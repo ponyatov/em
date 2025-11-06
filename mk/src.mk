@@ -36,8 +36,9 @@ R += Cargo.toml $(wildcard src/*.rs)
 S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # JavaScript
+J += $(wildcard src/*.js)
+J += $(wildcard static/*.js) $(wildcard templates/*.js)
 T += $(wildcard src/*.ts)
-J += $(wildcard src/*.js) $(wildcard static/*.js) $(wildcard templates/*.js)
 
 # Python
 P += $(wildcard src/*.py) $(wildcard lib/*.py)
