@@ -12,11 +12,11 @@
     },
     "files.associations": {
         "*.kernel": "properties", "*.uclibc": "properties",
+        "*.service": "systemd-unit-file",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.ocd": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
-        "*.service": "systemd-unit-file",
         "requirements.*": "properties",
         "*.ini": "properties", "*.f": "properties"
     },

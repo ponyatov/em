@@ -38,6 +38,17 @@
             "intelliSenseMode"     : "gcc-x64"
         },
         {
+            "name"                 : "rpi3",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  :  true,
+            "includePath"          : ["${appInclude}", "${crossInclude}"],
+            "defines"              : ["RPI3", "BCM2837", "AARCH64", "LINUX"],
+            "compilerPath"         : "/usr/bin/g++-arm-linux-gnueabihf",
+            "cStandard"            : "c17",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-x64"
+        },
+        {
             "name"                 : "linux",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
