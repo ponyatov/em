@@ -247,9 +247,10 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          : "AI: context",
+            "label"          : "make: root",
             "type"           : "shell",
-            "command"        : "make ai",
+            "command"        : "make root",
+            // "dependsOn"      : "CMake: build",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
             "group"          : {"kind": "build", "isDefault": true}
@@ -262,6 +263,14 @@
             "command"        : "make doxy",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "AI: context",
+            "type"           : "shell",
+            "command"        : "make ai",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
         },
     ]
 }
