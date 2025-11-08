@@ -135,14 +135,14 @@
             "cacheVariables"  : {"HW":"f429disco", "CPU":"stm32f429zi"}
         },
         {
-            "name"            : "armv7",
+            "name"            : "aarch64",
             "inherits"        : "common",
             "hidden"          : true,
-            "cacheVariables"  : {"ARCH":"armv7", "OS":"linux"}
+            "cacheVariables"  : {"ARCH":"aarch64", "OS":"linux"}
         },
         {
             "name"            : "rpi3bp",
-            "inherits"        : "armv7",
+            "inherits"        : "aarch64",
             "hidden"          : false,
             "cacheVariables"  : {"HW":"rpi3bp", "CPU":"bcm2837"}
         },

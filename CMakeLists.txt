@@ -36,11 +36,8 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${CP} ${HP}         # parsers
 )
 
-<<<<<<< HEAD
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
-=======
->>>>>>> d1c11ab8391ecb6c0dd0d8035a8f5ef79dc9ca58
 target_link_libraries(${CMAKE_PROJECT_NAME}
     -Wl,--start-group ${LIBS} -Wl,--end-group
 ) # -static

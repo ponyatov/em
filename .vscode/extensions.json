@@ -49,9 +49,9 @@
         "ms-vscode.vscode-serial-monitor",
         // "espressif.esp-idf-extension",
         // "basdp.language-gas-x86",
-        // "awsxxf.serialterminal",
-        // "ms-vscode.hexeditor",
         // "mechatroner.rainbow-csv",
+        // "ms-vscode.hexeditor",
+        // "awsxxf.serialterminal",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
