@@ -103,8 +103,7 @@
             "name"            : "pillF030",
             "inherits"        : "cortexm0",
             "cacheVariables"  : {"HW" :"pillF030",
-                                "CPU":"stm32f030f4", "SERIES": "STM32F0"
-            }
+                                "CPU":"stm32f030f4", "SERIES": "STM32F0"}
         },
         {
             "name"            :  "pillF103",
@@ -141,10 +140,10 @@
             "cacheVariables"  : {"ARCH":"aarch64", "OS":"linux"}
         },
         {
-            "name"            : "rpi3bp",
+            "name"            : "rpi3",
             "inherits"        : "aarch64",
             "hidden"          : false,
-            "cacheVariables"  : {"HW":"rpi3bp", "CPU":"bcm2837"}
+            "cacheVariables"  : {"HW":"rpi3", "CPU":"bcm2837"}
         },
         {
             "name"            : "pc",
