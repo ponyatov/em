@@ -48,7 +48,7 @@ file(GLOB H
 file(GLOB INC
     RELATIVE ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    inc
+    inc src
     # cross
       hw/inc   hw/${HW}/inc
      cpu/inc  cpu/${CPU}/inc
