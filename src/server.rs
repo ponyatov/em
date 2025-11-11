@@ -18,14 +18,11 @@ const HTTP_IMMUTABLE: &[u8] = b"Cache-Control: immutable, max-age=3600\r\n";
 const HTTP_NOCACHE: &[u8] = b"Cache-Control: no-cache\r\n";
 
 // static content
-const INDEX_BODY: &[u8] = include_bytes!("../static/index.html");
 const INDEX_HEAD: &[u8] = include_bytes!("../static/head.html");
+const INDEX_BODY: &[u8] = include_bytes!("../static/index.html");
 const INDEX_FOOT: &[u8] = include_bytes!("../static/foot.html");
 const LOGO_PNG: &[u8] = include_bytes!("../doc/logo.png");
 const CSS_CSS: &[u8] = include_bytes!("../static/css.css");
-
-
-// JavaScript components
 const JS_JS: &[u8] = include_bytes!("../static/js.js");
 // CDN
 const JQUERY_JS: &[u8] = include_bytes!("../static/cdn/jquery.min.js");
@@ -55,7 +52,6 @@ const TEXT_CSS: &[u8] = b"Content-Type: text/css\r\n";
 const TEXT_JS: &[u8] = b"Content-Type: application/javascript\r\n";
 const IMAGE_PNG: &[u8] = b"Content-Type: image/png\r\n";
 const WASM_MODULE: &[u8] = b"Content-Type: application/wasm\r\n";
-
 
 fn error_404(client: &mut TcpStream, request: &[u8]) {
     client.write(&HTTP_404_NOTFOUND).unwrap();
@@ -126,10 +122,10 @@ fn router(client: &mut TcpStream) {
         (b"GET", b"/") | (b"GET", b"/index.html") => html(client, INDEX_BODY),
         (b"GET", b"/favicon.ico") | (b"GET", b"/logo.png") => logo(client),
         (b"GET", b"/css.css") => css(client),
-        (b"GET", b"/jquery.min.js") => js(client, HTTP_IMMUTABLE, JQUERY_MIN_JS),
+        (b"GET", b"/jquery.min.js") => js(client, HTTP_IMMUTABLE, JQUERY_JS),
         (b"GET", b"/config.js") => js(client, HTTP_CACHE, CONFIG_JS),
         (b"GET", b"/js.js") => js(client, HTTP_CACHE, JS_JS),
-        (b"GET", b"/hello.wasm") => wasm(client, HELLO_WASM),
+        (b"GET", b"/wasm.wasm") => wasm(client, APP_WASM),
         _ => error_404(client, &request),
     }
 }
