@@ -5,6 +5,7 @@ project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
+include(wasm)     # WebAssembly WASI runtime
 include(net)      # raw packets networking
 include(qt)       # portable GUI
 
@@ -15,6 +16,7 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
+message("-- |      wasm: " "${WASM}")
 message("-- |")
 if(Qt6_FOUND)
 message("-- | GUI: ${Qt6_} ${Qt6_VERSION}")
@@ -34,6 +36,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
+    ${WASD}             # WASM + dumps
 )
 
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)

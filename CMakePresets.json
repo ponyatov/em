@@ -37,8 +37,8 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "rpi3bp",
-            "configurePreset" :  "rpi3bp",
+            "name"            :  "rpi3",
+            "configurePreset" :  "rpi3",
             "targets"         : ["all","install"]
         },
         {
