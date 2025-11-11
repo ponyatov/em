@@ -18,6 +18,7 @@
         "*.ioc": "properties", "*.ocd": "properties",
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
+        "*.ksy": "yaml",
         "*.ini": "properties", "*.f": "properties"
     },
 
@@ -46,18 +47,18 @@
     "prettier.configPath"         : ".prettierrc",
     "prettier.requireConfig"      :  true,
     "json.format.enable"          :  true,
-    "[javascript]": {
-        "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": true},
     "[json]"      : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": true},
+        "editor.formatOnSave": false},
     "[jsonc]"     : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": true},
+        "editor.formatOnSave": false},
+    "[javascript]": {
+        "editor.defaultFormatter" : "esbenp.prettier-vscode",
+        "editor.formatOnSave": false},
     "[typescript]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": true},
+        "editor.formatOnSave": false},
     //   "eslint.validate": ["typescript"],
     //   "typescript.updateImportsOnFileMove.enabled": "always",
     //   "javascript.updateImportsOnFileMove.enabled": "always",
@@ -75,7 +76,7 @@
         "editor.defaultFormatter" : "xaver.clang-format",
         "editor.formatOnSave": true },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-    "C_Cpp.files.exclude": { "ref":false },
+    "C_Cpp.files.exclude": { "ref": false },
 
     // CMake
     "cmake.sourceDirectory" : "${workspaceFolder}",
@@ -99,11 +100,20 @@
     "python.analysis.extraPaths"   : ["${workspaceFolder}/src", "${workspaceFolder}/lib"],
     "[python]": { "editor.defaultFormatter" : "ms-python.autopep8" },
     "ruff.configuration": ".ruff.toml",
+    // "ruff.interpreter": ["${workspaceFolder}/bin/python3"],
     "ruff.lint.preview": true,
     "ruff.format.preview": true,
     "python.testing.pytestArgs"        : ["lib"],
     "python.testing.unittestEnabled"   : false,
     "python.testing.pytestEnabled"     : true,
+
+    // WASM
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.autoIndent": "advanced",
+        "diffEditor.ignoreTrimWhitespace": false
+    },
 
     // Rust
     "rust-analyzer.checkOnSave"          : false,
