@@ -21,10 +21,10 @@ set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 set   (APP ${CMAKE_PROJECT_NAME})
 string(TOUPPER ${APP} APP_)
 
-include(  os/${OS}/${OS}.cmake    )
-include(arch/${ARCH}/${ARCH}.cmake)
-include( cpu/${CPU}/${CPU}.cmake  )
 include(  hw/${HW}/${HW}.cmake    )
+include( cpu/${CPU}/${CPU}.cmake  )
+include(arch/${ARCH}/${ARCH}.cmake)
+include(  os/${OS}/${OS}.cmake    )
 
 string(TOUPPER ${HW}   HW_  )
 string(TOUPPER ${CPU}  CPU_ )
@@ -41,8 +41,7 @@ add_compile_options(
 )
 
 add_compile_definitions(
-    ${APP_} APP="${APP}"
-    ${HW_} ${CPU_} ${ARCH_} ${OS_}
+    ${APP_} APP="${APP}" ${HW_} ${CPU_} ${ARCH_} ${OS_}
 )
 
 add_link_options(
