@@ -17,15 +17,18 @@ UCLIBC_VER   = 1.0.54
 BB_VER       = 1_36_1
 
 # JS/Web
-JQUERY_VER   = 3.7.1
+NODE_VER   = 18.19.0
+NPM_VER    = 9.2.0
+JQUERY_VER = 3.7.1
 
 # net
 PCPP_VER = 25.05
 
 # misc
-OCAML_VER    = 5.3.0
-DOTNET_VER   = 9.0
-GO_VER       = 1.24.4
+KAITAI_VER = 0.11
+OCAML_VER  = 5.3.0
+DOTNET_VER = 9.0
+GO_VER     = 1.24.4
 
 ## xtensa
 LX106_GCC    = 8_4_0

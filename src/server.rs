@@ -2,6 +2,7 @@
 
 #![allow(dead_code)]
 #![allow(unused_variables)]
+#![allow(unused_imports)]
 
 mod config;
 
@@ -17,17 +18,18 @@ const HTTP_IMMUTABLE: &[u8] = b"Cache-Control: immutable, max-age=3600\r\n";
 const HTTP_NOCACHE: &[u8] = b"Cache-Control: no-cache\r\n";
 
 // static content
-const INDEX_HEAD: &[u8] = include_bytes!("../static/head.html");
 const INDEX_BODY: &[u8] = include_bytes!("../static/index.html");
+const INDEX_HEAD: &[u8] = include_bytes!("../static/head.html");
 const INDEX_FOOT: &[u8] = include_bytes!("../static/foot.html");
 const LOGO_PNG: &[u8] = include_bytes!("../doc/logo.png");
 const CSS_CSS: &[u8] = include_bytes!("../static/css.css");
 
-// CDN
 
 // JavaScript components
 const JS_JS: &[u8] = include_bytes!("../static/js.js");
+// CDN
 const JQUERY_JS: &[u8] = include_bytes!("../static/cdn/jquery.min.js");
+// WASM
 const APP_WASM: &[u8] = include_bytes!("../bin/waf.wasm");
 
 const CONFIG_JS: &[u8] = const_format::formatcp!(
@@ -40,8 +42,7 @@ export const icon_size = {icon_size};
     width = config::gui::width,
     height = config::gui::height,
     icon_size = config::gui::icon_size
-)
-.as_bytes();
+).as_bytes();
 
 // HTTP return codes
 const HTTP_200_OK: &[u8] = b"HTTP/1.1 200 OK\r\n";
