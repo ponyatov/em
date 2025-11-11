@@ -7,7 +7,8 @@
     },
     "files.watcherExclude": {
         // "bin/**": true, "tmp/**": true, "ref/**": true,
-        "target/**": true, "_build/**": true,
+        "target/**": true,
+        "_build/**": true,
         "obj/**": true,
     },
     "files.associations": {
@@ -135,19 +136,11 @@
     "[ocaml]": {
         "editor.tabSize": 2,
         "editor.rulers": [80],
-        "editor.formatOnSave": true
-    },
+        "editor.formatOnSave": true },
     "[ocaml.interface]": {
         "editor.tabSize": 2,
         "editor.rulers": [80],
-        "editor.formatOnSave": true
-    },
-
-    // F#
-    "[fsharp]": {
-        "editor.defaultFormatter": "Ionide.Ionide-fsharp",
-        "editor.formatOnSave"    :  true
-    },
+        "editor.formatOnSave": true },
 
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows": "UCRT64",
