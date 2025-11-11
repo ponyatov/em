@@ -47,6 +47,11 @@
             "targets"         : ["all","install"]
         },
         {
+            "name"            :  "wasm",
+            "configurePreset" :  "linux",
+            "targets"         : ["wasm"]
+        },
+        {
             "name"            :  "linux/24",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"],
@@ -68,7 +73,6 @@
             "cacheVariables"  : {
                 "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
-                "CMAKE_PARALLEL_JOBS"     :  true,
                 "CMAKE_COLOR_DIAGNOSTICS" :  false,
                 "CMAKE_BUILD_TYPE"        : "Debug",
                 "CMAKE_VERBOSE_MAKEFILE"  :  false

@@ -6,13 +6,19 @@ $(ELF): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 	cmake --fresh --preset ${HW}
 	cmake --build --preset ${HW} -j
 
+bin/%.wasm: src/%.wat
+# wat2wasm $< -o $@ && wasm-objdump -x $@
+	cmake --build --preset wasm -j
+tmp/%.wat: bin/%.wasm
+# wasm2wat $< -o $@
+	cmake --build --preset wasm -j
+bin/%.js: src/%.js
+	cp $< $@ ; chmod +x $@
+
 $(CROSS)/src/%/README: $(DISTR)/%.tar.xz
 	cd $(dir $@)/.. ; xzcat $< | tar x && touch $@
 $(CROSS)/src/%/README: $(DISTR)/%.tar.gz
 	cd $(dir $@)/.. ;  zcat $< | tar x && touch $@
-
-bin/%.wasm: src/%.wat
-	wat2wasm $< -o $@ && wasm-objdump -x $@
 
 RU = pavel
 tmp/slide/%.ru.mp3: tmp/slide/%.ru.md mk/rule.mk

@@ -90,7 +90,7 @@
         "cwd" :   "${workspaceFolder}",
         "args": [ "lib/${workspaceFolderBasename}.ini" ] },
     "cmake.allowCommentsInPresetsFile" : true,
-    "cmake.ignoreCMakeListsMissing"    : true,
+    "cmake.ignoreCMakeListsMissing"    : false,
 
     // Python
     // "python.defaultInterpreterPath":  "${workspaceFolder}/bin/python3",

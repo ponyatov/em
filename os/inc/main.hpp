@@ -1,5 +1,6 @@
 #pragma once
-
+/// @file
+/// @brief POSIX `main()`
 #include "os.hpp"
 
 /// @defgroup main main
@@ -20,5 +21,8 @@ extern void setup();
 
 /// @brief application event loop callback
 extern void loop();
+
+/// @brief global flat to stop event @ref loop
+extern bool stop;
 
 /// @}
