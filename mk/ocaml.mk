@@ -12,10 +12,13 @@ $(CAMLP5): $(OPAM) $(OCAMLC)
 	opam install -y camlp5 && touch $@
 
 $(OCAMLC): $(OPAM)
-	opam switch create $(OCAML_VER) && touch $@
+# 	opam switch list-available ; opam switch list
+	opam switch create cs3110 ocaml-base-compiler.$(OCAML_VER) && touch $@
+	opam switch set    cs3110 ; eval $(opam env)
+
 $(OPAM):
 	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
-	opam init
+	opam init -a
 
 .ocamlformat:
 	echo "version = `ocamlformat --version`" > $@
