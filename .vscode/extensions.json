@@ -37,6 +37,7 @@
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
         "ms-vscode.cmake-tools",
+        // "theqtcompany.qt-qml",
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
@@ -70,7 +71,6 @@
         "fttx.language-forth",
         // OCaml
         "ocamllabs.ocaml-platform",
-        // "theqtcompany.qt-qml",
         // F#
         "ionide.ionide-fsharp",
         "redhat.vscode-xml",
