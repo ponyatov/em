@@ -18,6 +18,19 @@ endforeach()
 
 foreach(WASM_FILE ${WASM})
     string(REGEX REPLACE ".+\/(.+)\.wasm$" "${CMAKE_SOURCE_DIR}/tmp/\\1.wat"
+        WASM_WAT            ${WASM_FILE})
+        list(APPEND WASD    ${WASM_WAT})
+    add_custom_command(
+        OUTPUT              ${WASM_WAT}
+        DEPENDS             ${WASM_FILE}
+        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+        COMMAND             wasm2wat
+        ARGS                ${WASM_FILE} -o ${WASM_WAT}
+    )
+endforeach()
+
+foreach(WASM_FILE ${WASM})
+    string(REGEX REPLACE ".+\/(.+)\.wasm$" "${CMAKE_SOURCE_DIR}/tmp/\\1.hex"
         WASM_DUMP           ${WASM_FILE})
         list(APPEND WASD    ${WASM_DUMP})
     add_custom_command(
@@ -28,3 +41,5 @@ foreach(WASM_FILE ${WASM})
         ARGS                ${WASM_FILE} -o ${WASM_DUMP}
     )
 endforeach()
+
+add_custom_target(wasm DEPENDS ${WASD} ${CP} ${HP})

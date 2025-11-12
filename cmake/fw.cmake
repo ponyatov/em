@@ -9,12 +9,12 @@ add_custom_command(
 )
 add_custom_target(dfu DEPENDS ${DFU})
 
-add_custom_target(firmware DEPENDS ${ELF}
-    COMMAND openocd -f hw/${HW}/${HW}.ocd -c "program ${ELF} verify reset exit"
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+# add_custom_target(firmware DEPENDS ${ELF}
+#     COMMAND openocd -f hw/${HW}/${HW}.ocd -c "program ${ELF} verify reset exit"
+#     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+# )
 
-add_custom_target(debug DEPENDS ${ELF}
-    COMMAND openocd -f hw/${HW}/${HW}.ocd
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+# add_custom_target(debug DEPENDS ${ELF}
+#     COMMAND openocd -f hw/${HW}/${HW}.ocd
+#     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+# )
