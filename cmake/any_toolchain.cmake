@@ -1,7 +1,3 @@
-if(NOT DEFINED LIBS)
-    set(LIBS "" CACHE INTERNAL "Global libraries list")
-endif()
-
 set(CMAKE_C_STANDARD   17)
 set(CMAKE_CXX_STANDARD 23)
 

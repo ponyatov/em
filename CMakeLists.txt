@@ -38,6 +38,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
+    ${DATA}             # precompiled binary data
     ${WASD}             # WASM + dumps
 )
 
