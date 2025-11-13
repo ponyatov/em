@@ -239,14 +239,6 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          : "make: sync",
-            "type"           : "shell",
-            "command"        : "make sync",
-            "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
-            "group"          : {"kind": "build", "isDefault": true}
-        },
-        {
             "label"          : "make: root",
             "type"           : "shell",
             "command"        : "make root",
@@ -263,6 +255,15 @@
             "command"        : "make doxy",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "make: sync",
+            "type"           : "shell",
+            "command"        : "make sync",
+            // "dependsOn"      : "CMake: build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
         },
         {
             "label"          : "AI: context",
