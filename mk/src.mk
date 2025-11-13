@@ -44,7 +44,7 @@ T += $(wildcard src/*.ts)
 P += $(wildcard src/*.py) $(wildcard lib/*.py)
 
 # OCaml
-O += $(wildcard lib/*.ml*)
+M += $(wildcard lib/*.ml*)
 
 # F#
 F += $(wildcard lib/*.fs*)
