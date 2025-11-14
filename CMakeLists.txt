@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.25)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
 project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 
@@ -45,7 +45,7 @@ add_executable(${CMAKE_PROJECT_NAME}
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    -Wl,--start-group ${LIBS} -Wl,--end-group
+    -Wl,--start-group ${L} -Wl,--end-group
 ) # -static
 
 include(install) # target install
