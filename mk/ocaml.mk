@@ -1,9 +1,10 @@
 ocaml: $(UTOP) $(DUNE) $(OFMT) $(OLSP) .ocamlformat
 
 $(OPAM):
-# sudo apt install bubblewrap
 	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
-	opam init -a
+$(HOME)/.opam: $(OPAM)
+# sudo apt install -uy bubblewrap | --disable-sandboxing
+	opam init --disable-sandboxing -a
 
 $(OCAMLC): $(OPAM)
 # 	opam switch list-available ; opam switch list
@@ -11,7 +12,7 @@ $(OCAMLC): $(OPAM)
 	opam switch set cs3110 ; eval $(opam env --switch=cs3110)
 
 $(UTOP) $(DUNE) $(OFMT) $(OLSP): $(OCAMLC)
-	opam install -y utop dune ocamlformat ocaml-lsp-server
+	opam install -y utop dune ocamlformat ocaml-lsp-server ppx_string
 
 .ocamlformat: $(OFMT)
 	echo "version = `ocamlformat --version`" > $@

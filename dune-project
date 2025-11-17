@@ -9,8 +9,8 @@
 (license              MIT)
 (source              (github ponyatov/cs3110))
 (package
- (name        cs3110)
- (synopsis    "OCaml Programming: Correct + Efficient + Beautiful")
+ (name               cs3110)
+ (synopsis          "OCaml Programming: Correct + Efficient + Beautiful")
  (description "
  <can be multiline>
  ")
@@ -18,5 +18,6 @@
   (OCaml "programming language"))
  (depends
   (ocaml (>= 5)) dune utop
+  ppx_string
  )
 )
