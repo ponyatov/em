@@ -1,24 +1,19 @@
 ocaml: $(UTOP) $(DUNE) $(OFMT) $(OLSP) .ocamlformat
 
-$(UTOP): $(OPAM) $(OCAMLC)
-	opam install -y utop && touch $@
-$(DUNE): $(OPAM) $(OCAMLC)
-	opam install -y dune && touch $@
-$(OFMT): $(OPAM) $(OCAMLC)
-	opam install -y ocamlformat && touch $@
-$(OLSP): $(OPAM) $(OCAMLC)
-	opam install -y ocaml-lsp-server && touch $@
-$(CAMLP5): $(OPAM) $(OCAMLC)
-	opam install -y camlp5 && touch $@
-
-$(OCAMLC): $(OPAM)
-# 	opam switch list-available ; opam switch list
-	opam switch create cs3110 ocaml-base-compiler.$(OCAML_VER) && touch $@
-	opam switch set    cs3110 ; eval $(opam env)
-
 $(OPAM):
 	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
 	opam init -a
 
-.ocamlformat:
+$(OCAMLC): $(OPAM)
+# 	opam switch list-available ; opam switch list
+	opam switch create cs3110 ocaml-base-compiler.5.3.0 && touch $@
+	opam switch set cs3110 ; eval $(opam env --switch=cs3110)
+
+$(UTOP) $(DUNE) $(OFMT) $(OLSP): $(OCAMLC)
+	opam install -y utop dune ocamlformat ocaml-lsp-server
+
+.ocamlformat: $(OFMT)
 	echo "version = `ocamlformat --version`" > $@
+
+$(CAMLP5): $(OCAMLC)
+	opam install -y camlp5 && touch $@
