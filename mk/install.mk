@@ -27,4 +27,4 @@ Ubuntu_update: apt.Ubuntu
 Msys_install:
 	pacman -Suy
 Msys_update: apt.Msys
-	pacman -S $(shell cat $< | tr '\n' ' ') $(MSYS)
+	pacman -S $(shell cat $< | tr '\n' ' ')

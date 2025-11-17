@@ -3,6 +3,9 @@
 file(GLOB S
     RELATIVE ${CMAKE_SOURCE_DIR}
     hw/${HW}/*.s
+    hw/${HW}/src/*.s
+    cpu/${CPU}/src/*.s
+    arch/${ARCH}/src/*.s
 )
 
 file(GLOB C
@@ -13,7 +16,7 @@ file(GLOB C
      cpu/src/*.c*  cpu/${CPU}/src/*.c*
     arch/src/*.c* arch/${ARCH}/src/*.c*
       os/src/*.c*   os/${OS}/src/*.c*
-    # libs
+    # lib
     lib/src/*.c* lib/*/src/*.c*
     # CortexM/CubeMX
     hw/${HW}/Core/Src/*.c*
@@ -31,7 +34,7 @@ file(GLOB H
      cpu/inc/*.h*  cpu/${CPU}/inc/*.h*
     arch/inc/*.h* arch/${ARCH}/inc/*.h*
       os/inc/*.h*   os/${OS}/inc/*.h*
-    # libs
+    # lib
     lib/inc/*.h* lib/*/inc/*.h*
     # CortexM/CubeMX
     hw/${HW}/Core/Inc/*.h*
@@ -54,7 +57,7 @@ file(GLOB INC
      cpu/inc  cpu/${CPU}/inc
     arch/inc arch/${ARCH}/inc
       os/inc   os/${OS}/inc
-    # libs
+    # lib
     lib/inc lib/*/inc
     # CortexM/CubeMX
     hw/${HW}/Core/Inc

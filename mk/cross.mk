@@ -1,5 +1,6 @@
-HW     ?= pc
-# HW     ?= qemu386
+HW ?= pc
+# HW ?= qemu386
+# HW ?= ndp2
 # HW     ?= rpi3
 # HW     ?= rpi4
 # HW     ?= rpi5
