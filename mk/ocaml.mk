@@ -1,6 +1,7 @@
 ocaml: $(UTOP) $(DUNE) $(OFMT) $(OLSP) .ocamlformat
 
 $(OPAM):
+# sudo apt install bubblewrap
 	bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
 	opam init -a
 
