@@ -132,6 +132,10 @@
     // "rust-analyzer.cargo.features"       : ["f429disco","stm32f4","cortex","cortexm4"],
     // "rust-analyzer.cargo.target"         : "x86_64-pc-windows-gnu",
 
+    // Erlang
+    "erlang.codeLensEnabled": true,
+    "erlang.formattingLineLength": 80
+
     // OCaml (cs3110)
     "[ocaml]": {
         "editor.tabSize": 2, "editor.rulers": [80],
