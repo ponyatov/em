@@ -43,6 +43,9 @@ T += $(wildcard src/*.ts)
 # Python
 P += $(wildcard src/*.py) $(wildcard lib/*.py)
 
+# Erlang
+E += $(wildcard lib/*.erl)
+
 # OCaml
 M += $(wildcard lib/*.ml*)
 
