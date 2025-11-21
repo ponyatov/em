@@ -6,7 +6,8 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-        // "bin/**": true, "tmp/**": true, "ref/**": true,
+        "ref/**": true,
+        // "bin/**": true, "tmp/**": true,
         "target/**": true,
         "_build/**": true,
         "obj/**": true,
@@ -99,7 +100,9 @@
     // "ruff.interpreter"             : ["${workspaceFolder}/bin/python3"],
     "autopep8.args"                : ["--ignore","E26,E302,E305,E401,E402,E701,E702"],
     "python.analysis.extraPaths"   : ["${workspaceFolder}/src", "${workspaceFolder}/lib"],
-    "[python]": { "editor.defaultFormatter" : "ms-python.autopep8" },
+    "[python]": {
+        "editor.defaultFormatter" : "ms-python.autopep8",
+        "editor.formatOnSave"    :  true},
     "ruff.configuration": ".ruff.toml",
     // "ruff.interpreter": ["${workspaceFolder}/bin/python3"],
     "ruff.lint.preview": true,
