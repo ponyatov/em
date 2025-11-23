@@ -72,7 +72,8 @@
         "fttx.language-forth",
         // OCaml
         "ocamllabs.ocaml-platform",
-        // Erlang 
+        // Erlang
+        "pgourlain.erlang",
         // F#
         "ionide.ionide-fsharp",
         "redhat.vscode-xml",
