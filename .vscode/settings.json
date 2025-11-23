@@ -6,13 +6,8 @@
         "lib/python*": true, "lib64":true, "include":true,
     },
     "files.watcherExclude": {
-<<<<<<< HEAD
-        // "bin/**": true, "tmp/**": true, "ref/**": true,
-        "ref/**": true,
-=======
         "ref/**": true,
         // "bin/**": true, "tmp/**": true,
->>>>>>> 95daf956099bf02082c82b6f3c6f7dfd9a4ff910
         "target/**": true,
         "_build/**": true,
         "obj/**": true,
@@ -142,7 +137,7 @@
 
     // Erlang
     "erlang.codeLensEnabled": true,
-    "erlang.formattingLineLength": 80
+    "erlang.formattingLineLength": 80,
 
     // OCaml (cs3110)
     "[ocaml]": {
