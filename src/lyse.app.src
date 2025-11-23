@@ -1,0 +1,5 @@
+{application, lyse ,[
+    {description, "Learn You Some Erlang"},
+    {vsn,"0.0.1"},
+    {applications,[kernel,stdlib]}
+]}.

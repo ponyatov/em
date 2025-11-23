@@ -248,6 +248,15 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
+            "label"          : "rebar3: compile",
+            "type"           : "shell",
+            "command"        : "rebar3 compile",
+            // "dependsOn"      : "CMake: build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
             "label"          : "doxy: gen",
             "type"           : "shell",
             "group"          : {"kind": "build", "isDefault": true },
