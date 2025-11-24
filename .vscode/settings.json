@@ -138,6 +138,7 @@
     // Erlang
     "erlang.codeLensEnabled": true,
     "erlang.formattingLineLength": 80,
+    "[erlang]": { "editor.formatOnSave": true },
 
     // OCaml (cs3110)
     "[ocaml]": {

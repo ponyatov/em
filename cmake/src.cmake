@@ -2,6 +2,7 @@
 
 file(GLOB S
     RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.s
     hw/${HW}/*.s
     hw/${HW}/src/*.s
     cpu/${CPU}/src/*.s
