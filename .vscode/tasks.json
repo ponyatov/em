@@ -239,18 +239,18 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          : "make: root",
+            "label"          : "rebar3: compile",
             "type"           : "shell",
-            "command"        : "make root",
+            "command"        : "rebar3 compile",
             // "dependsOn"      : "CMake: build",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
-            "label"          : "rebar3: compile",
+            "label"          : "make: run",
             "type"           : "shell",
-            "command"        : "rebar3 compile",
+            "command"        : "make run",
             // "dependsOn"      : "CMake: build",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},

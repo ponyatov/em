@@ -56,7 +56,7 @@
             "defines"              : ["PC", "I5", "X86_64", "LINUX"],
             "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
             "cStandard"            : "c17",
-            "cppStandard"          : "c++17",
+            "cppStandard"          : "c++23",
             "intelliSenseMode"     : "gcc-x64"
         }
     ]
