@@ -222,6 +222,15 @@
             "group"          : {"kind": "build", "isDefault": true}
         },
         {
+            "label"          : "rebar3: compile",
+            "type"           : "shell",
+            "command"        : "rebar3 compile",
+            // "dependsOn"      : "CMake: build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
             "label"          : "git: checkout .vscode",
             "type"           : "shell",
             "command"        : "git checkout .vscode/settings.json",
@@ -233,15 +242,6 @@
             "label"          : "make: watch",
             "type"           : "shell",
             "command"        : "make watch",
-            // "dependsOn"      : "CMake: build",
-            "problemMatcher" : [],
-            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
-            "group"          : {"kind": "build", "isDefault": true}
-        },
-        {
-            "label"          : "rebar3: compile",
-            "type"           : "shell",
-            "command"        : "rebar3 compile",
             // "dependsOn"      : "CMake: build",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
