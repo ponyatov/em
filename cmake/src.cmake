@@ -2,10 +2,14 @@
 
 file(GLOB S
     RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.s
+    # cross
     hw/${HW}/*.s
     hw/${HW}/src/*.s
     cpu/${CPU}/src/*.s
     arch/${ARCH}/src/*.s
+    # lib
+    lib/src/*.s lib/*/src/*.s
 )
 
 file(GLOB C

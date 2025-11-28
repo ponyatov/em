@@ -5,6 +5,7 @@ project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
+include(erlang)   # Erlang jigs
 include(wasm)     # WebAssembly WASI runtime
 include(kaitai)   # binary parsers
 include(net)      # raw packets networking
@@ -38,9 +39,11 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
-    ${DATA}             # precompiled binary data
-    ${WASD}             # WASM + dumps
+    ${DATA}             # precompiled binary data (bytecode,..)
+    ${INI}              # init/config files & scripts
 )
+
+set_source_files_properties(${INI} PROPERTIES HEADER_FILE_ONLY TRUE)
 
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 

@@ -1,9 +1,9 @@
 find_package(FLEX     REQUIRED)
 find_package(BISON    REQUIRED)
-find_program(RAGEL    REQUIRED)
+# find_program(RAGEL    REQUIRED)
 find_package(READLINE REQUIRED)
 
-file(GLOB L
+file(GLOB X
     RELATIVE ${CMAKE_SOURCE_DIR}
     src/*.lex
     lib/src/*.lex lib/*/src/*.lex
@@ -21,7 +21,7 @@ file(GLOB R
     lib/src/*.ragel lib/*/src/*.ragel
 )
 
-foreach(LEX_FILE ${L})
+foreach(LEX_FILE ${X})
     string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.cpp"
         LEXER_CPP           ${LEX_FILE})
         list(APPEND CP      ${LEXER_CPP})
@@ -53,20 +53,18 @@ foreach(YACC_FILE ${Y})
     )
 endforeach()
 
-if(RAGEL_EXECUTABLE)
-    foreach(RAGEL_FILE ${R})
-        string(REGEX REPLACE ".+\/(.+)\.ragel$" "${CMAKE_BINARY_DIR}/\\1.ragel.cpp"
-            RAGEL_CPP           ${RAGEL_FILE})
-        list(APPEND CP          ${RAGEL_CPP})
-        add_custom_command(
-            OUTPUT              ${RAGEL_CPP}
-            DEPENDS             ${RAGEL_FILE}
-            WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-            COMMAND             ${RAGEL_EXECUTABLE}
-            ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
-        )
-    endforeach()
-endif()
+foreach(RAGEL_FILE ${R})
+    string(REGEX REPLACE ".+\/(.+)\.ragel$" "${CMAKE_BINARY_DIR}/\\1.ragel.cpp"
+        RAGEL_CPP           ${RAGEL_FILE})
+    list(APPEND CP          ${RAGEL_CPP})
+    add_custom_command(
+        OUTPUT              ${RAGEL_CPP}
+        DEPENDS             ${RAGEL_FILE}
+        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+        COMMAND             ragel
+        ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
+    )
+endforeach()
 
 find_program( LEMON_EXECUTABLE lemon   )
 find_program(BINPAC_EXECUTABLE binpac  )

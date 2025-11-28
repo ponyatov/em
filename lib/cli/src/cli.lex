@@ -1,6 +1,7 @@
 %{
-    #include "cli.hpp"
-    char *yyfile = nullptr;
+    #include "app.hpp"
+    // char *yyfile = nullptr;
+    // std::string yystr;
     #define YY_DO_BEFORE_ACTION {}
     #define YY_NEW_FILE {}
     bool yywrap() { return true; }
@@ -8,17 +9,19 @@
 
 %option noyywrap yylineno
 
-sign  [+\-]
-digit [0-9]
-alpha [a-zA-Z_]
-alnum [a-zA-Z_0-9]
+s  [+\-]
+n  [0-9]
 
-/* special states for block comments */
+alpha [_a-zA-Z]
+alnum [_a-zA-Z0-9]
+
+/* block states */
 %x STACK COMMENT
+%x str
 
 %%
 "#!"[^\n]+              {}                              // shebang
-"//"[^\n]+              {}                              // line comment
+"//"[^\n]*              {}                              // line comment
 
 "/*"                    {BEGIN(COMMENT);}               // start block comment
 <COMMENT>"*/"           {BEGIN(INITIAL);}               // end stack notation
@@ -28,17 +31,25 @@ alnum [a-zA-Z_0-9]
 <STACK>")"              {BEGIN(INITIAL);}               // end stack notation
 <STACK>.                {}                              // ignore any chars
 
-{s}?{n}+[eE]{s}?{n}+    {yylval.f = num(yytext); return NUM;}   // float
-{s}?{n}+\.{n}+          {yylval.f = num(yytext); return NUM;}   // float
-{s}?{n}+                {yylval.n = dec(yytext); return INT;}   // integer
-0x[0-9a-fA-F]+          {yylval.n = hex(yytext); return HEX;}   // hexadecimal
-0o[0-7]+                {yylval.n = oct(yytext); return OCT;}   // octal
-0b[01]+                 {yylval.n = bin(yytext); return BIN;}   // binary
+\'                      { BEGIN(str); yystr = ""; }
+<str>\'                 { BEGIN(INITIAL);
+                          yylval.s = new std::string(yystr); return t_STR; }
+<str>\\t                { yystr += '\t';   }
+<str>\\r                { yystr += '\r';   }
+<str>\\n                { yystr += '\n';   }
+<str>.                  { yystr += yytext; }
+
+{s}?{n}+[eE]{s}?{n}+    {yylval.f = num(yytext); return t_NUM;}   // float
+{s}?{n}+\.{n}+          {yylval.f = num(yytext); return t_NUM;}   // float
+{s}?[_0-9]+             {yylval.n = dec(yytext); return t_INT;}   // integer
+0x[_0-9a-fA-F]+         {yylval.n = hex(yytext); return t_HEX;}   // hexadecimal
+0o[_0-7]+               {yylval.n = oct(yytext); return t_OCT;}   // octal
+0b[_01]+                {yylval.n = bin(yytext); return t_BIN;}   // binary
 
 ":"                     {return COLON;}
 
-({alnum}+\/)*{alnum}+\.ini  { yylval.s = new std::string(yytext); return INI; }
-{alpha}{alnum}*             { yylval.s = new std::string(yytext); return ID;  }
+({alnum}+\/)*{alnum}+\.ini  { yylval.s = new std::string(yytext); return t_INI; }
+{alpha}{alnum}*         { yylval.s = new std::string(yytext); return t_ID;  }
 
 [ \t\r\n]+              {}                              // drop spaces
-.                       {yyerror("");}                  // any undetected char
+.                       {yyerror(yytext);}              // any undetected char

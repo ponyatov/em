@@ -52,7 +52,7 @@
             "targets"         : ["wasm"]
         },
         {
-            "name"            :  "linux/24",
+            "name"            :  "ubuntu",
             "configurePreset" :  "linux",
             "targets"         : ["all","install"],
             "jobs"            :   24

@@ -1,49 +1,20 @@
+#pragma once
 /// @defgroup cli cli
 /// @ingroup lib
+/// @brief CLI: command line interface (REPL)
 /// @{
 
-#pragma once
+#include "rl.hpp"
 
-#include "os.hpp"
-#include <string>
-
-/// @name lexer
-/// @{
-extern int yylex();   ///< lexer (`flex`)
-extern int yylineno;  ///< current line
-extern char *yyfile;  ///< current file name
-extern FILE *yyin;    ///< current file handler
-extern char *yytext;  ///< token lexeme value
-
-/// @brief construct token `(Class,ID)`
-/// @param[in] C class name: calls `C(char*)` constructor
-/// @param[in] X .yacc token identifier
-#define TOKEN(C, X)               \
-    {                             \
-        yylval.o = new C(yytext); \
-        return X;                 \
-    }
-/// @}
+extern void cli(char *filename);  ///< process script file
 
 /// @name number parsers
 /// @{
-extern float num(char *val);  ///< @returns float
-extern int dec(char *val);    ///< @returns decimal
-extern int hex(char *val);    ///< @returns hexadecimal
-extern int oct(char *val);    ///< @returns octal
-extern int bin(char *val);    ///< @returns binary
+extern float num(char *s);  ///< @returns float
+extern int dec(char *s);    ///< @returns decimal
+extern int hex(char *s);    ///< @returns hexadecimal
+extern int oct(char *s);    ///< @returns octal
+extern int bin(char *s);    ///< @returns binary
 /// @}
-
-/// @name parser
-/// @{
-extern int yyparse();                  ///< parser (`bison`)
-extern void yyerror(const char *msg);  ///< syntax error callback
-
-#include "cli.yacc.hpp"
-/// @}
-
-/// @brief process script file
-/// @param[in] filename
-extern void cli(char *filename);
 
 /// @}

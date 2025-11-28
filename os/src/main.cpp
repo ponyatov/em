@@ -1,17 +1,28 @@
-#include "os.hpp"
+#include "app.hpp"
+
+std::thread background;
 
 __attribute__((weak)) int main(int argc, char *argv[]) {
     arg(0, argv[0]);
+    rl_init();
+#ifdef DPDK
+    std::cout << "\nrte:" << rte_eal_init(argc, argv) << '\n';
+#endif
     setup();
     for (int i = 1; i < argc; i++) {  //
         arg(i, argv[i]);
+        yyfile = argv[i];
+        assert(yyin = fopen(yyfile, "r"));
+        yyparse();
+        fclose(yyin);
+        yyfile = nullptr;
     }
-    while (!stop) loop();
-    return 0;
+    background = std::thread(loop);
+    return rl_repl();
 }
 
 __attribute__((weak)) void arg(int argc, char *argv) {  //
-    std::clog << "argv[" << argc << "] = <" << argv << "]\n";
+    std::clog << "arg[" << argc << "] = <" << argv << ">\n";
 }
 
 __attribute__((weak)) void setup() {

@@ -1,6 +1,4 @@
-#include "os.hpp"
-#include "cli.hpp"
-#include "vm.hpp"
+#include "app.hpp"
 
 #ifdef LEMON
 __attribute__((weak)) void arg(int index, char* filename) {

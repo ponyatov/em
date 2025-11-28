@@ -1,4 +1,4 @@
-#include "cli.hpp"
+#include "app.hpp"
 
 %%machine oct;
 %%write  data;

@@ -1,4 +1,4 @@
-#include "cli.hpp"
+#include "app.hpp"
 
 %%machine bin;
 %%write  data;
