@@ -18,14 +18,16 @@ pkg_check_modules(DPDK REQUIRED libdpdk>=22.11)
 #   pkg_check_modules(DPDK QUIET IMPORTED_TARGET libdpdk>=22.11)
 # endif()
 
-add_library(DPDK::DPDK INTERFACE IMPORTED)
-
-target_include_directories(DPDK::DPDK INTERFACE ${DPDK_INCLUDE_DIRS})
-target_compile_options(DPDK::DPDK INTERFACE ${DPDK_CFLAGS_OTHER})
-target_link_libraries(DPDK::DPDK INTERFACE ${DPDK_LIBRARIES})
-
 if(DPDK_FOUND)
   message("-- | DPDK: ${DPDK_VERSION}")
+  add_compile_definitions(DPDK_FOUND)
+
+  add_library(DPDK::DPDK INTERFACE IMPORTED)
+
+  target_include_directories(DPDK::DPDK INTERFACE ${DPDK_INCLUDE_DIRS})
+  target_compile_options(DPDK::DPDK INTERFACE ${DPDK_CFLAGS_OTHER})
+  target_link_libraries(DPDK::DPDK INTERFACE ${DPDK_LIBRARIES})
+
   if(DPDK_DEBUG)
     message("-----------")
     message("Libraries: ${DPDK_LIBRARIES}")
