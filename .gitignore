@@ -1,6 +1,7 @@
 *~
 *.swp
 *.log
+/_build/
 /target/
 *.pyc
 lib64

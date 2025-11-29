@@ -1,6 +1,6 @@
 {
     "files.exclude": {
-        "doc/html": true, "**/node_modules/**": true,
+        "doc/html": true, "**/node_modules/**": true, "_build": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true, ".pytest*": true,
         "lib/python*": true, "lib64":true, "include":true,

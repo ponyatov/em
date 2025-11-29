@@ -2,6 +2,7 @@ ruff
 autopep8
 pytest
 ply
+semgrep
 py-pcapplusplus
 pygls
 ffmpeg-python
