@@ -1,10 +1,11 @@
-let app = Sys.getcwd() |> String.split_on_char '/' |> List.rev |> List.hd
-let orig = "ref/v25.05"
+let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
 let title = "Espruino /vibe"
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
 let year = 2025
 let license = "MIT"
+let orig = "https://github.com/seladb/PcapPlusPlus.git"
+let tag = "v25.05"
 
 let touch name ?(c = "") () =
   (* if not (Sys.file_exists name) then *)
@@ -19,17 +20,22 @@ let mkd name ?(c = "!.gitignore\n") () =
 open Unix
 
 let ocaml () =
-  touch ".ocamlinit" ~c:"#use \"topfind\";;
+  touch ".ocamlinit"
+    ~c:"#use \"topfind\";;
 #require \"unix\";;
 (* #require \"ppx_string\";; *)
-" ()
+"
+    ();
 
   let ic = Unix.open_process_in "ocamlformat --version" in
   let version = input_line ic in
-  (ignore (Unix.close_process_in ic);
+  Unix.close_process_in ic |> ignore;
 
-  touch ".ocamlformat" ~c:("version = " ^ version ^ "
-profile = default
+  touch ".ocamlformat"
+    ~c:
+      ("version=" ^ version
+     ^ "
+profile=default
 margin=80
 line-endings=lf
 break-cases=all
@@ -39,11 +45,12 @@ break-string-literals=never
 # break-infix = fit-or-vertical
 # break-separators = after
 # let-and = sparse
-") ())
+"
+      )
+    ()
 
 let dirs () =
-  [ ".vscode"; "lib"; "inc"; "src"]
-  |> List.iter (fun d -> mkd d ())
+  [ ".vscode"; "lib"; "inc"; "src" ] |> List.iter (fun d -> mkd d ())
 
 let bins () =
   [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ())
@@ -56,11 +63,28 @@ let giti () = touch ".gitignore" ~c:"*~
 !.gitignore
 " ()
 
-let mk () =
-  touch "Makefile" ()
+let mk () = touch "Makefile" ()
 
-  let vibe0 () = 
-    (* iterate over ref/${ref} 
-    - touch files not exists
-    - mkdir dirs not exists
-    - skip dirs: .git *)
+let apt () =
+  touch "apt.Debian"
+    ~c:
+      "git make curl fzf
+code meld doxygen
+g++ cmake pkg-config clang-format
+gdb gdbserver valgrind
+flex bison ragel libreadline-dev
+"
+    ()
+
+let gitref = "ref/" ^ tag
+
+let git () =
+  if not (Sys.file_exists (gitref ^ "/README.md")) then
+    Sys.command
+      ("git clone -o orig -b " ^ tag ^ " --depth 1 " ^ orig ^ " " ^ gitref)
+    = 0
+  else true
+
+(* let vibe0 () = *)
+(* iterate over ref/${ref} - touch files not exists - mkdir dirs not exists -
+   skip dirs: .git *)
