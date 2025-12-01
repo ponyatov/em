@@ -1,112 +1,30 @@
 let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
 let title = "PcapPlusPlus"
-
-let about =
-  "
-[PcapPlusPlus](https://pcapplusplus.github.io/) is a multiplatform C++ library
-for capturing, parsing and crafting of network packets. It is designed to be
-efficient, powerful and easy to use.
-"
-
+let about = ""
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
 let year = 2025
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
 let orig = "https://github.com/seladb/PcapPlusPlus.git"
-let tag = "v25.05"
+let tag = "v25.05";;
 
-let touch name ?(c = "") () =
-  (* if not (Sys.file_exists name) then *)
-  let f = open_out name in
-  output_string f c;
-  close_out f
+#use "lib/legas.ml"
 
-let mkd name ?(c = "!.gitignore\n") () =
-  if not (Sys.file_exists name) then Sys.mkdir name 0o755;
-  touch (Filename.concat name ".gitignore") ~c ()
+#use "legas/files.ml"
 
-open Unix
+dirs();;
+bins();;
+giti();;
 
-let ocaml () =
-  touch ".ocamlinit"
-    ~c:"#use \"topfind\";;
-#require \"unix\";;
-(* #require \"ppx_string\";; *)
-"
-    ();
+#use "legas/ocaml.ml"
 
-  let ic = Unix.open_process_in "ocamlformat --version" in
-  let version = input_line ic in
-  Unix.close_process_in ic |> ignore;
+#use "legas/doc.ml"
+doc();
 
-  touch ".ocamlformat"
-    ~c:
-      ("version=" ^ version
-     ^ "
-profile=default
-margin=80
-line-endings=lf
-break-cases=all
-wrap-comments=true
-break-string-literals=never
-# break-infix-before-func = false
-# break-infix = fit-or-vertical
-# break-separators = after
-# let-and = sparse
-"
-      )
-    ()
+#use "legas/mk.ml";;
+mk();;
 
-let dune () =
-  touch "legas/dune"
-    ~c:"(library
-  (name legas)
-  (modules dummy)
-  (libraries ppx_string))
-" ();
-  let lang = "(lang dune           3.20)\n" in
-  let name = "(name                " ^ app ^ ")\n" in
-  let opam = "(generate_opam_files true)\n" in
-  let authors = "(authors             \"" ^ author ^ " <" ^ email ^ ">\")\n" in
-  let maintr = "(maintainers         \"" ^ author ^ " <" ^ email ^ ">\")\n" in
-  let bugs = "(bug_reports         \"" ^ email ^ "\")\n" in
-  let home = "(homepage            \"" ^ github ^ "\")\n" in
-  let lic = "(license             \"" ^ license ^ "\")\n" in
-  let src = "(source              (github ponyatov/" ^ app ^ "))\n" in
-  let pack = "(package\n" in
-  let syno = " (synopsis            \"" ^ title ^ "\")\n" in
-  let about = "(description \"" ^ about ^ "\")\n" in
-  let empty = "(allow_empty)\n" in
-  touch "dune-project"
-    ~c:
-      (lang ^ name ^ opam ^ authors ^ maintr ^ bugs ^ home ^ lic ^ src ^ pack
-     ^ " " ^ name ^ syno ^ about ^ empty ^ ")\n")
-    ();
-  Sys.command "dune build"
-
-let dirs () =
-  [ ".vscode"; "lib"; "inc"; "src" ] |> List.iter (fun d -> mkd d ())
-
-let bins () =
-  [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ())
-
-let doc () =
-  mkd "doc" ~c:"html/\n!.gitignore\n" ();
-  Sys.command "doxygen -l";
-  Sys.command "mv DoxygenLayout.xml doc/";
-  Sys.command "cp ~/icons/control_64x64.png doc/logo.png"
-
-let giti () =
-  touch ".gitignore" ~c:"*~
-*.swp
-*.log
-/_build/
-/target/
-!.gitignore
-" ()
-
-let mk () = touch "Makefile" ()
 
 let apt () =
   touch "apt.Debian"
@@ -179,4 +97,3 @@ let cpp () =
 int main() {}
 ")
     ()
-
