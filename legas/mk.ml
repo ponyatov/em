@@ -1,4 +1,5 @@
 let var () = touch "mk/var.mk" ~c:"APP = $(notdir $(CURDIR))\n" ()
+let dirmk () = touch "mk/dir.mk" ~c:"CWD = $(CURDIR)\n" ()
 
 let mk () =
   mkd "mk" ();
@@ -25,4 +26,5 @@ let mk () =
   makes |> List.iter (fun m -> touch m ());
   makes |> List.iter (fun r -> Printf.fprintf m "include %s\n" r);
   close_out m;
-  var ()
+  var ();
+  dirmk ()
