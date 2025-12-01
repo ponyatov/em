@@ -69,12 +69,5 @@ let dotfiles () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;
   Sys.command "cp ~/em/.prettierrc ./" |> ignore
 
-let cpp () =
-  touch ("inc/" ^ app ^ ".hpp") ~c:"#pragma once" ();
-  touch
-    ("src/" ^ app ^ ".cpp")
-    ~c:("#include \"" ^ app ^ ".hpp\"
-
-int main() {}
-")
-    ()
+#use "legas/cpp.ml"
+hpp();cpp();
