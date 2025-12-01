@@ -1,0 +1,4 @@
+(library
+  (name legas)
+  (modules dummy)
+  (libraries ppx_string))
