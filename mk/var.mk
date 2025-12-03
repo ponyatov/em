@@ -7,6 +7,8 @@ BINFILE = $(APP)_$(HW)_$(BRANCH)_$(NOW)
 CORES   = $(shell grep processor /proc/cpuinfo| wc -l)
 WS      = $(shell lsb_release -si)
 HW     ?= pc
+IP     ?= 127.0.0.1
+PORT   ?= 12345
 
 ifeq ($(OS),Windows_NT)
 	WS  = $(shell uname -o)

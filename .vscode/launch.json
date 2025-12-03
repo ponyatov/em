@@ -86,7 +86,7 @@
             ],
         },
         {
-            "name"            : "cmake:remote",
+            "name"            : "cmake:linux",
             "type"            : "cppdbg",
             "request"         : "launch",
             "cwd"             : "${workspaceFolder}",
@@ -102,21 +102,6 @@
                 {"text": "-enable-pretty-printing","ignoreFailures": true},
                 {"text": "source ${workspaceFolder}/.gdbinit","ignoreFailures": true}
             ]
-        },
-        {
-            "name"            : "cmake:linux",
-            "type"            : "cppdbg",
-            "request"         : "launch",
-            "cwd"             : "${workspaceFolder}",
-            "program"         : "${command:cmake.launchTargetPath}",
-            "args"            : ["lib/${workspaceFolderBasename}.ini"],
-            "environment"     : [],
-            "preLaunchTask"   : "CMake: build",
-            "stopAtEntry"     : true,
-            "externalConsole" : false,
-            "MIMode"          : "gdb",
-            "miDebuggerPath"  : "gdb",
-            "setupCommands"   : [{"text": "-enable-pretty-printing","ignoreFailures": true}]
         }
     ]
 }

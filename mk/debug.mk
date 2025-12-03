@@ -1,5 +1,5 @@
 # IP ?= 10.120.100.39
-IP ?= 127.0.0.1
+IP   ?= 127.0.0.1
 PORT ?= 12345
 .PHONY: gdbs gdb
 gdbs: bin/$(BINFILE) $(S)
@@ -18,7 +18,7 @@ ocd: $(CWD)/hw/$(HW)/$(HW).ocd
 
 .PHONY: gdb
 gdb: $(CWD)/hw/$(HW)/$(HW).gdb $(ELF)
-	gdb-multiarch -q -se $(ELF) -x $<
+	gdb-multiarch -q -x $< -se $(ELF)
 
 .PHONY: fw
 fw: $(CWD)/hw/$(HW)/$(HW).ocd $(ELF)

@@ -1,6 +1,6 @@
 .PHONY : install update ref gz
-# $(PIP) $(RUSTUP) $(TSC) $(OPAM)
-install: $(WS)_install doc ref gz
+# $(PIP) $(RUSTUP) $(TSC)
+install: $(WS)_install doc ref gz $(OPAM)
 	$(MAKE) update
 update : $(WS)_update
 	$(RUSTUP) self update && $(RUSTUP) update
