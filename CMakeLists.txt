@@ -18,7 +18,7 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-message("-- |      wasm: " "${WASM}")
+message("-- |  bytecode: " "${WASM} ${DATA}")
 message("-- |    kaitai: " "${KSY}")
 message("-- |")
 if(Qt6_FOUND)
@@ -39,7 +39,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
-    ${DATA}             # precompiled binary data (bytecode,..)
+    ${DATA} ${WASM}     # precompiled binary data (bytecode,..)
     ${INI}              # init/config files & scripts
 )
 

@@ -1,7 +1,7 @@
-# CMakeLists.txt fragment for linker script generation
-# set(LD "${CMAKE_BINARY_DIR}/${HW}.ld")
-
 string(TOUPPER ${HW} BOARD)
+
+# CMakeLists.txt fragment for linker script generation
+# set(LD "${CMAKE_BINARY_DIR}/gen/${BOARD}.ld")
 
 message("-- |         board: " "${BOARD}")
 message("-- | linker script: " "${LD}")

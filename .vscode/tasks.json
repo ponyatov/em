@@ -79,7 +79,7 @@
         {
             "label"          : "deno: watch",
             "type"           : "shell",
-            "command"        : "deno --watch src/${workspaceFolderBasename}.ts",
+            "command"        : "deno --watch lib/${workspaceFolderBasename}.ts",
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}

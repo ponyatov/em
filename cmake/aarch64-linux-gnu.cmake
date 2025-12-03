@@ -1,6 +1,6 @@
 set(CMAKE_SYSTEM_NAME       Linux)
 set(CMAKE_SYSTEM_PROCESSOR  aarch64)
-set(TOOLCHAIN_PREFIX        ${ARCH}-${OS}-gnu)
+set(TOOLCHAIN_PREFIX        aarch64-linux-gnu)
 set(CMAKE_EXECUTABLE_SUFFIX "")
 
 include(any_toolchain)
