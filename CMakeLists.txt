@@ -18,22 +18,12 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-message("-- |  bytecode: " "${WASM} ${DATA}")
-message("-- |    kaitai: " "${KSY}")
+message("-- |      data: " "${DATA} ${WASM}")
+message("-- |       ini: " "${INI}")
 message("-- |")
-if(Qt6_FOUND)
-message("-- | GUI: ${Qt6_} ${Qt6_VERSION}")
-endif()
-if(PCAP_FOUND)
-message("-- | PCAP: ${PCAP_VERSION}")
-endif()
-if(DPDK_FOUND)
-message("-- | DPDK: ${DPDK_VERSION}")
-endif()
-if(PCPP_FOUND)
-message("-- | PCPP: ${PCPP_VERSION}")
-endif()
-message("-- |")
+
+#include(json2cpp)
+#include(gen2obj)
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source

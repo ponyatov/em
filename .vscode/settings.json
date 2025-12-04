@@ -100,7 +100,6 @@
     "[python]": {
         "editor.defaultFormatter"  : "ms-python.autopep8",
         "editor.formatOnSave"      :  true},
-    // "ruff.interpreter": ["${workspaceFolder}/bin/python3"],
     "ruff.configuration"               : ".ruff.toml",
     "ruff.lint.preview"                : true,
     "ruff.format.preview"              : true,
