@@ -9,7 +9,9 @@ let github = "github: https://github.com/ponyatov/" ^ app
 let orig = "https://github.com/seladb/PcapPlusPlus.git"
 let tag = "v25.05";;
 
-#use "lib/legas.ml"
+let user = "dponyatov"
+let devserver = "10.120.100.39"
+let devuser = "dev01"
 
 #use "legas/files.ml"
 
@@ -20,6 +22,7 @@ apt();;
 readme();;
 
 #use "legas/ocaml.ml"
+ocaml();;
 
 #use "legas/doc.ml"
 doc();
@@ -27,14 +30,8 @@ doc();
 #use "legas/mk.ml";;
 mk();;
 
-let gitref = "ref/" ^ tag
-
-let git () =
-  if not (Sys.file_exists (Filename.concat gitref "README.md")) then
-    Sys.command
-      ("git clone -o orig -b " ^ tag ^ " --depth 1 " ^ orig ^ " " ^ gitref)
-    = 0
-  else true
+#use "legas/git.ml";;
+git();;
 
 let refdirs ?(p = Sys.is_directory) d =
   Sys.readdir d |> Array.to_list
@@ -70,4 +67,7 @@ let dotfiles () =
   Sys.command "cp ~/em/.prettierrc ./" |> ignore
 
 #use "legas/cpp.ml"
-hpp();cpp();
+hpp();cpp();init();
+
+#use "legas/cmake.ml"
+
