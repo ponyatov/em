@@ -1,8 +1,0 @@
-
-#!/bin/sh
-
-export APP=horizon
-export R=ref/HorizonPLC
-export Z=legas/legas.rc
-
-find $R >> $Z
