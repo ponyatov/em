@@ -37,6 +37,8 @@
     "editor.formatOnSave": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
+    "auto-tab-closer.numLeftTabs": 3,
+    "auto-tab-closer.numMaxTabs": 3,
     // "git.enabled": false,
 
     // terminal

@@ -1,5 +1,6 @@
 {
     "recommendations": [
+        "statiolake.vscode-auto-tab-closer",
         "stkb.rewrap",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
