@@ -1,3 +1,7 @@
+RF += static/cdn/jquery.min.js
+static/cdn/jquery.min.js:
+	$(CURL) $@ https://cdnjs.cloudflare.com/ajax/libs/jquery/$(JQUERY_VER)/jquery.min.js
+
 REF += $(CROSS)/src/newlib-salsa/README
 $(CROSS)/src/newlib-salsa/README: /usr/src/newlib/$(NEWLIB_GZ)
 	cd $(dir $@)/.. ; xzcat $< | tar x && touch $@
