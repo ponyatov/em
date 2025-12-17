@@ -44,9 +44,24 @@ let app () =
   touch "src/app.cpp" ~c:"#include \"app.hpp\"
 " ()
 
-let libc () = touch "inc/libc.hpp" ~c:"#pragma once
+let libc () =
+  touch "inc/libc.hpp"
+    ~c:
+      "#pragma once
+
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+
 #include <iostream>
-" ()
+#include <sstream>
+#include <vector>
+#include <map>
+
+#include <thread>
+#include <chrono>
+"
+    ()
 
 let cpp () =
   mkd "inc" ();
