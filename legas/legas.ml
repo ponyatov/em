@@ -29,7 +29,7 @@ doc();
 mk();
 
 #use "legas/cpp.ml"
-hpp();cpp();
+cpp();
 
 #use "legas/cmake.ml"
 cmake();

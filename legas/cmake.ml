@@ -141,5 +141,6 @@ let cmake () =
   Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/";
   Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/";
   Sys.command "cp ~/em/cmake/version.cmake cmake/";
+  Sys.command "cp ~/em/cmake/clean.cmake cmake/";
   src ();
   install ()
