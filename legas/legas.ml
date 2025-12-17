@@ -9,31 +9,18 @@ let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
 
 let legas () =
-  mkd "lib";
+  mkd "lib" ();
   Sys.command "cp legas/legas.ml lib/legas.ml";
   Sys.command "code lib/legas.ml"
-legas ();;
 
 #use "legas/files.ml"
 files();;
-#use "legas/appfiles.ml"
-appfiles();;
 
 #use "legas/vscode.ml"
-vscode()
-
-#use "legas/git.ml";;
-git();;
-
-#use "legas/ref.ml";;
-ref();
-
-#use "legas/dev01.ml"
-dev01();
+vscode();;
 
 #use "legas/ocaml.ml"
 ocamldots();
-(* ocaml(); *)
 
 #use "legas/doc.ml"
 doc();
@@ -42,9 +29,10 @@ doc();
 mk();
 
 #use "legas/cpp.ml"
-hpp();cpp();init();
+hpp();cpp();
 
 #use "legas/cmake.ml"
+cmake();
 
 #use "legas/rust.ml"
 rust();

@@ -87,6 +87,16 @@ M += $(wildcard lib/*.ml*) $(wildcard legas/*.ml*)
 "
     ()
 
+let doc () =
+  touch "mk/doc.mk" ~c:".PHONY: doc
+doc:
+\trsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
+
+.PHONY: doxy
+doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png doc
+\trm -rf doc/html ; doxygen $< 1>/dev/null
+" ()
+
 let sync () =
   (* *)
   touch "mk/sync.mk" ~c:".PHONY: sync
@@ -105,11 +115,6 @@ gz     : $(GZ)
 
 Debian_install:
 Debian_update: apt.$(WS)
-\tsudo apt update
-\tsudo apt install -uy `cat apt.$(WS)` $(APT)
-
-Ubuntu_install:
-Ubuntu_update: apt.$(WS)
 \tsudo apt update
 \tsudo apt install -uy `cat apt.$(WS)` $(APT)
 "
@@ -146,5 +151,6 @@ let mk () =
   (* version (); *)
   all ();
   src ();
+  doc ();
   sync ();
   install ()

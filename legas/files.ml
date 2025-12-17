@@ -38,6 +38,7 @@ code meld doxygen
 g++ cmake pkg-config clang-format
 gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
+ocaml opam ocaml-dune utop
 " ()
     (* () touch "apt.Ubuntu"
     ~c:

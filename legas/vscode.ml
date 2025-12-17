@@ -1,5 +1,7 @@
 let extensions () =
-  touch ".vscode/extensions.json" ~c:"{
+  touch ".vscode/extensions.json"
+    ~c:
+      "{
     \"recommendations\": [
         \"statiolake.vscode-auto-tab-closer\",
         \"stkb.rewrap\",
@@ -38,10 +40,13 @@ let extensions () =
         \"ocamllabs.ocaml-platform\",
     ]
 }
-" ()
+"
+    ()
 
 let launch () =
-  touch ".vscode/launch.json" ~c:"{
+  touch ".vscode/launch.json"
+    ~c:
+      "{
     \"version\": \"0.2.0\",
     \"configurations\": [
         {
@@ -63,11 +68,14 @@ let launch () =
             ]
         }
     ]
-}  
-" ()
+}
+"
+    ()
 
 let settings () =
-  touch ".vscode/settings.json" ~c:"{
+  touch ".vscode/settings.json"
+    ~c:
+      "{
     \"files.exclude\": {
         \"doc/html\": true, \"**/node_modules/**\": true, \"_build\": true,
     },
@@ -178,10 +186,13 @@ let settings () =
             \"CHERE_INVOKING\": \"1\",
     }}}
 }
-" ();
+"
+    ()
 
 let c_cpp_properties () =
-  touch ".vscode/c_cpp_properties.json" ~c:"{
+  touch ".vscode/c_cpp_properties.json"
+    ~c:
+      "{
     \"version\": 4,
     \"env\": {
         \"appInclude\": [
@@ -211,10 +222,13 @@ let c_cpp_properties () =
         }
     ]
 }
-" ()
+"
+    ()
 
 let tasks () =
-  touch ".vscode/tasks.json" ~c:"{
+  touch ".vscode/tasks.json"
+    ~c:
+      "{
     \"version\": \"2.0.0\",
     \"tasks\": [
         {
@@ -285,13 +299,14 @@ let tasks () =
         },
     ]
 }
-" ();
+"
+    ()
 
-let vscode () = 
-  mkd ".vscode";
-  extensions();
-  settings();
+let vscode () =
+  mkd ".vscode" ();
+  extensions ();
+  settings ();
   tasks ();
   c_cpp_properties ();
-  launch();
-  Sys.command "meld .vscode ~/em/.vscode"
+  launch ()
+(* Sys.command "meld .vscode ~/em/.vscode" *)

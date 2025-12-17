@@ -1,6 +1,8 @@
-let hpp () = 
+let hpp () =
   mkd "inc" ();
-  touch ("inc/app.hpp") ~c:"#pragma once
+  touch "inc/app.hpp"
+    ~c:
+      "#pragma once
 
 #include <iostream>
 
@@ -8,13 +10,14 @@ extern int main(int argc, char* argv[]);
 extern void setup(int argc, char* argv[]);
 extern void arg(int argc, char* argv);
 extern int loop();
-" ();
+"
+    ()
 
 let cpp () =
   mkd "src" ();
-  touch
-    ("src/main.cpp")
-    ~c:("#include \"app.hpp\"
+  touch "src/main.cpp"
+    ~c:
+      "#include \"app.hpp\"
 
 int main(int argc, char* argv[]) {  //
     arg(0, argv[0]);
@@ -26,5 +29,5 @@ int main(int argc, char* argv[]) {  //
 void arg(int argc, char* argv) {  //
     std::clog << \"arg[\" << argc << \"] = <\" << argv << \"]\\n\";
 }
-")
-    ();;
+"
+    ()
