@@ -8,20 +8,32 @@ let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
 
+let legas () =
+  mkd "lib";
+  Sys.command "cp legas/legas.ml lib/legas.ml";
+  Sys.command "code lib/legas.ml"
+legas ();;
+
 #use "legas/files.ml"
-lib();
+files();;
+#use "legas/appfiles.ml"
+appfiles();;
 
-let orig = "https://github.com/seladb/PcapPlusPlus.git"
-let tag = "v25.05";;
+#use "legas/vscode.ml"
+vscode()
 
-let user = "dponyatov"
-let devserver = "10.120.100.39"
-let devuser = "dev01"
+#use "legas/git.ml";;
+git();;
 
-files();
+#use "legas/ref.ml";;
+ref();
+
+#use "legas/dev01.ml"
+dev01();
 
 #use "legas/ocaml.ml"
-ocaml();
+ocamldots();
+(* ocaml(); *)
 
 #use "legas/doc.ml"
 doc();
@@ -29,49 +41,10 @@ doc();
 #use "legas/mk.ml"
 mk();
 
-#use "legas/vscode.ml"
-vscode()
-
 #use "legas/cpp.ml"
 hpp();cpp();init();
 
 #use "legas/cmake.ml"
 
 #use "legas/rust.ml"
-main();cargo();
-
-(********************)
-
-#use "legas/git.ml";;
-git();;
-
-let refdirs ?(p = Sys.is_directory) d =
-  Sys.readdir d |> Array.to_list
-  |> List.filter (fun f -> p (Filename.concat d f))
-  |> List.filter (fun f ->
-      not (List.mem f [ "."; ".."; ".git"; ".github"; ".vscode" ]))
-;;
-
-refdirs gitref |> List.iter (fun d -> mkd d ());;
-
-let rfd ?(p = Sys.is_directory) r d =
-  Sys.readdir (Filename.concat r d)
-  |> Array.to_list
-  |> List.filter (fun f -> p (r ^ '/' ^ d ^ '/' f))
-  |> List.map (fun f -> Filename.concat d f)
-;;
-
-rfd "ref/v25.05" "Pcap++";;
-
-let refiles d =
-  refdirs d ~p:Sys.is_regular_file
-  |> List.filter (fun f -> not (Sys.file_exists f))
-;;
-
-refiles gitref
-(* let vibe0 () = *)
-(* iterate over ref/${ref} - touch files not exists - mkdir dirs not exists -
-   skip dirs: .git *)
-;;
-
-
+rust();

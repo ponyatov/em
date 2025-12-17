@@ -1,5 +1,7 @@
-let rust () =
-  touch "src/main.rs" ~c:"mod config;\nmod vm;
+let rsmain () =
+  touch "src/main.rs"
+    ~c:
+      "mod config;\nmod vm;
 
 use memmap2::Mmap;
 use std::fs::File;
@@ -24,28 +26,61 @@ fn main() {
 fn arg(argc: usize, argv: &str) {
     eprintln!(\"argv[{argc}] = {argv:?}\");
 }
-" ();
+"
+    ();
   touch "src/config.rs" ();
-  touch "src/vm.rs" ();
-  Sys.command "cargo run";
+  touch "src/vm.rs" ()
 
 let cargo () =
   touch "Cargo.toml"
     ~c:
       ("[package]
-name        =  \"" ^ app ^ "\"
-version     =  \"" ^ version ^ "\"
-description =  \"" ^ title ^ "\"
-authors     = [\""^author^" <"^email^">\"]
-license     =  \""^license^"\"
-repository  =  \""^github^"\"
-edition     =  \"2024\"
+name            =  \"" ^ app ^ "\"
+version         =  \""
+     ^ version ^ "\"
+description     =  \"" ^ title ^ "\"
+authors         = [\""
+     ^ author ^ " <" ^ email ^ ">\"]
+license         =  \"" ^ license
+     ^ "\"
+repository      =  \"" ^ github
+     ^ "\"
+edition         =  \"2024\"
 
 [dependencies]
+const_format    = \"0.2\"
 
 [target.'cfg(target_os = \"linux\")'.dependencies]
-libc        = \"0.2\"
-memmap2     = \"0.9\"
-")
+libc            = \"0.2\"
+memmap2         = \"0.9\"
+"
+      )
     ();
-  Sys.command ("cargo run -- lib/"^app^".ini")
+  Sys.command ("cargo run -- lib/" ^ app ^ ".ini")
+
+let rustmk () =
+  touch "mk/all.mk"
+    ~c:
+      ".PHONY: all run watch
+all:
+\tcargo build
+run:
+\tcargo run -- lib/$(APP).ini
+watch:
+\tcargo watch -x 'run -- lib/$(APP).ini'
+"
+    ();
+  touch "mk/rust.mk"
+    ~c:
+      "RTARGET = x86_64-unknown-linux-gnu
+
+$(RUSTUP) $(CARGO):
+\tcurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+\trustup target add x86_64-unknown-linux-gnu
+"
+    ()
+
+let rust () =
+  rustmk ();
+  rsmain ();
+  cargo ()

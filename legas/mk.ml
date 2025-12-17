@@ -1,6 +1,8 @@
-let var () = 
+let var () =
   mkd "mk" ();
-  touch "mk/var.mk" ~c:"APP     = $(notdir $(CURDIR))
+  touch "mk/var.mk"
+    ~c:
+      "APP     = $(notdir $(CURDIR))
 REL     = $(shell git rev-parse --short=4    HEAD)
 BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
 NOW     = $(shell date +%y%m%d)
@@ -11,7 +13,8 @@ WS      = $(shell lsb_release -si)
 HW     ?= pc
 IP     ?= 127.0.0.1
 PORT   ?= 12345
-" ()
+"
+    ()
 
 let dirmk () =
   touch "mk/dir.mk"
@@ -41,9 +44,7 @@ PEP    = autopep8 --ignore $(PEPS) -i
 "
     ()
 
-let version () =
-   touch "mk/version.mk" ~c:"PCPP_VER = v25.05
-" ()
+let version () = touch "mk/version.mk" ()
 
 let all () =
   touch "mk/all.mk"
@@ -75,21 +76,22 @@ LX += $(wildcard src/*.lex src/*.yacc src/*.ragel)
 C  += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
 H  += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 
+# Rust
+R  += $(wildcard src/*.rs) Cargo.toml
+
 # ini
 S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # OCaml
-M += $(wildcard lib/*.ml*)
+M += $(wildcard lib/*.ml*) $(wildcard legas/*.ml*)
 "
     ()
 
 let sync () =
-  touch "mk/sync.mk"
-    ~c:
-      ".PHONY: sync
+  (* *)
+  touch "mk/sync.mk" ~c:".PHONY: sync
 sync: doc
-"
-    ()
+" ()
 
 let install () =
   touch "mk/install.mk"
@@ -139,9 +141,10 @@ let mk () =
   makes |> List.iter (fun r -> Printf.fprintf m "include %s\n" r);
   close_out m;
   var ();
-  dirmk() ; tool();
+  dirmk ();
+  tool ();
   (* version (); *)
-  src();
   all ();
+  src ();
   sync ();
   install ()

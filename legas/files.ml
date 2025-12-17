@@ -36,7 +36,7 @@ let apt () =
       "git make curl fzf
 code meld doxygen
 g++ cmake pkg-config clang-format
-gdb gdbserver valgrind
+gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
 " ()
     (* () touch "apt.Ubuntu"

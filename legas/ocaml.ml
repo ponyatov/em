@@ -1,7 +1,10 @@
 let ocamldots () =
   touch ".ocamlinit"
-    ~c:"#use \"topfind\";;
+    ~c:
+      "#use \"topfind\";;
 #require \"unix\";;
+open Unix;;
+#use \"legas/files.ml\";;
 (* #require \"ppx_string\";; *)
 "
     ();
