@@ -49,22 +49,35 @@ let libc () =
     ~c:
       "#pragma once
 
+#include <cassert>
 #include <cstdio>
 #include <cstdlib>
-#include <cassert>
-
+//
 #include <iostream>
 #include <sstream>
-#include <vector>
+//
 #include <map>
-
-#include <thread>
+#include <vector>
+//
 #include <chrono>
+#include <thread>
+//
+#include \"linux.hpp\"
 "
     ()
+
+let linux () =
+  (* *)
+  touch "inc/linux.hpp"
+    ~c:"#pragma once
+
+#include <sys/inotify.h>
+#include <x86intrin.h>
+" ()
 
 let cpp () =
   mkd "inc" ();
   mkd "src" () main ();
   app ();
-  libc ()
+  libc ();
+  linux ()
