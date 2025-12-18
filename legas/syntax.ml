@@ -9,7 +9,12 @@ let lex () =
 s [+\\-]
 n [0-9]
 %%
-. {yyerror(\"\");} // any undetected char
+#[^\\n]*         {}              // line comment
+[ \\t\\r\\n]+      {}              // drop spaces
+
+{s}?{n}+        {yylval.n = atoi(yytext); return INT;}
+
+.               {yyerror(\"\");}  // any undetected char
 " ()
 
 let yacc () =
@@ -20,8 +25,14 @@ let yacc () =
 
 %defines %union { int n ; float f ; char c; std::string* s; }
 
+%token<n> INT
+%token<f> NUM
+
 %%
-syntax:
+syntax:|syntax ex
+
+ex  : INT   { std::clog << \"int:\" << $1 << \"\\n\"; }
+    | NUM   { std::clog << \"num:\" << $1 << \"\\n\"; }
 "
     ()
 
