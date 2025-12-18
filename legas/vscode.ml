@@ -308,5 +308,6 @@ let vscode () =
   settings ();
   tasks ();
   c_cpp_properties ();
-  launch ()
+  launch ();
 (* Sys.command "meld .vscode ~/em/.vscode" *)
+  Sys.command "git add .vscode"

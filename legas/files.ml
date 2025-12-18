@@ -10,16 +10,15 @@ let mkd name ?(c = "!.gitignore\n") () =
   if not (Sys.file_exists name) then Sys.mkdir name 0o755;
   touch (Filename.concat name ".gitignore") ~c ()
 
-let lib () =
-  mkd "lib";
-  Sys.command "cp legas/legas.ml lib/legas.ml";
-  Sys.command "code lib/legas.ml"
-
 let dirs () =
-  [ ".vscode"; "lib"; "src" ] |> List.iter (fun d -> mkd d ())
+  [ ".vscode"; "lib"; "src" ] |> List.iter (fun d -> mkd d ());
+  Sys.command "git add .vscode lib src"
+
 
 let bins () =
-  [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ())
+  [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ());
+  Sys.command "git add bin tmp ref"
+
 
 let giti () =
   touch ".gitignore" ~c:"*~
@@ -29,6 +28,7 @@ let giti () =
 /target/
 !.gitignore
 " ()
+    Sys.command "git add .gitignore";
 
 let apt () =
   touch "apt.Debian"
@@ -38,8 +38,9 @@ code meld doxygen
 g++ cmake pkg-config clang-format
 gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
-ocaml opam ocaml-dune utop
 " ()
+    Sys.command "git add apt.*";
+(* ocaml opam ocaml-dune utop *)
     (* () touch "apt.Ubuntu"
     ~c:
       "git make curl fzf
@@ -58,10 +59,12 @@ let readme () =
      ^ " <<" ^ email ^ ">> " ^ Int.to_string year ^ " " ^ license ^ "\n\n"
      ^ github ^ "\n" ^ about)
     ()
+  Sys.command "git add README.md";
 
 let ini() =
     mkd "lib" ();
     touch ("lib/"^app^".ini") ~c:"# line comment\n" ()
+    Sys.command "git add lib";
 
 let dotfiles () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;
@@ -74,4 +77,4 @@ let files () =
   apt();
   readme();
   ini();
-  dotfiles();
+  dotfiles()

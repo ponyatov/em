@@ -138,9 +138,10 @@ let cmake () =
   mkd "cmake" ();
   cMakeLists ();
   cMakePresets ();
-  Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/";
-  Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/";
-  Sys.command "cp ~/em/cmake/version.cmake cmake/";
-  Sys.command "cp ~/em/cmake/clean.cmake cmake/";
+  Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/version.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
   src ();
-  install ()
+  install ();
+  Sys.command "git add CMake* cmake"

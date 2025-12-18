@@ -77,7 +77,9 @@ let linux () =
 
 let cpp () =
   mkd "inc" ();
-  mkd "src" () main ();
+  mkd "src" ();
+  main ();
   app ();
   libc ();
-  linux ()
+  linux ();
+  Sys.command "git add inc src"

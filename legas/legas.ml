@@ -1,6 +1,6 @@
 let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
-let title = "Rust/DPDK"
-let about = "high-speed traffic generator"
+let title = "precision timer"
+let about = "\nprecision timers on server-side Linux\n"
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
 let year = 2025
@@ -10,6 +10,7 @@ let github = "github: https://github.com/ponyatov/" ^ app
 
 let legas () =
   mkd "lib" ();
+  Sys.command "ln -fs ../em/legas legas";
   Sys.command "cp legas/legas.ml lib/legas.ml";
   Sys.command "code lib/legas.ml"
 

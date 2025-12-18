@@ -88,14 +88,18 @@ M += $(wildcard lib/*.ml*) $(wildcard legas/*.ml*)
     ()
 
 let doc () =
-  touch "mk/doc.mk" ~c:".PHONY: doc
+  touch "mk/doc.mk"
+    ~c:
+      ".PHONY: doc
 doc:
 \trsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
+\tgit add $@
 
 .PHONY: doxy
 doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png doc
 \trm -rf doc/html ; doxygen $< 1>/dev/null
-" ()
+"
+    ()
 
 let sync () =
   (* *)
@@ -120,6 +124,16 @@ Debian_update: apt.$(WS)
 "
     ()
 
+let ai () =
+  touch "mk/ai.mk"
+    ~c:
+      ".PHONY: ai tmp/$(APP).ai.md
+ai: tmp/$(APP).ai.md
+tmp/$(APP).ai.md: doc
+\tcat doc/ai.md README.md doc/$(APP)/*.md > $@ ; touch $@
+"
+    ()
+
 let mk () =
   mkd "mk" ();
   let m = open_out "Makefile" in
@@ -139,6 +153,7 @@ let mk () =
       "ref";
       "gz";
       "install";
+      "ai";
     ]
     |> List.map (fun f -> Filename.concat "mk" (f ^ ".mk"))
   in
@@ -153,4 +168,6 @@ let mk () =
   src ();
   doc ();
   sync ();
-  install ()
+  install ();
+  ai ();
+  Sys.command "git add Makefile mk"
