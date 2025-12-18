@@ -1,6 +1,8 @@
 let lex () =
   (* *)
-  touch "src/cli.lex" ~c:"%{
+  touch "src/cli.lex"
+    ~c:
+      "%{
     #include \"app.hpp\"
 %}
 
@@ -15,7 +17,8 @@ n [0-9]
 {s}?{n}+        {yylval.n = atoi(yytext); return INT;}
 
 .               {yyerror(\"\");}  // any undetected char
-" ()
+"
+    ()
 
 let yacc () =
   (* *)
@@ -64,8 +67,10 @@ extern void yyerror(std::string msg);  ///< syntax error callback
 "
     ()
 
-let cli_cpp () = 
-  touch "src/cli.cpp" ~c:"#include \"app.hpp\"
+let cli_cpp () =
+  touch "src/cli.cpp"
+    ~c:
+      "#include \"app.hpp\"
 
 std::string yystr;
 char *yyfile = nullptr;
@@ -88,9 +93,10 @@ void setup(int argc, char* argv[]) {
         yyfile = nullptr;
     }
 }
-" ()
+"
+    ()
 
-let syntax () =
+let cli () =
   lex ();
   yacc ();
   cli_hpp ();

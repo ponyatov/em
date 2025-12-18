@@ -135,8 +135,10 @@ file(GLOB INI
 "
     ()
 
-let syntax () = 
-  touch "cmake/syntax.cmake" ~c:"find_package(FLEX     REQUIRED)
+let syntax () =
+  touch "cmake/syntax.cmake"
+    ~c:
+      "find_package(FLEX     REQUIRED)
 find_package(BISON    REQUIRED)
 # find_program(RAGEL    REQUIRED)
 find_package(READLINE REQUIRED)
@@ -203,7 +205,10 @@ foreach(RAGEL_FILE ${R})
         ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
     )
 endforeach()
-" ()
+
+add_compile_definitions(YYSTYPE=cell)
+"
+    ()
 
 let cmake () =
   mkd "cmake" ();

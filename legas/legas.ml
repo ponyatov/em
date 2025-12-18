@@ -10,9 +10,14 @@ let github = "github: https://github.com/ponyatov/" ^ app
 
 let legas () =
   mkd "lib" ();
+  Sys.command "git checkout --orphan `whoami`";
   Sys.command "ln -fs ../em/legas legas";
-  Sys.command "cp legas/legas.ml lib/legas.ml";
+  Sys.command "cp ~/em/legas/legas.ml lib/legas.ml";
+  Sys.command "git add legas lib";
   Sys.command "code lib/legas.ml"
+
+#use "legas/git.ml"
+git();
 
 #use "legas/files.ml"
 files();;
@@ -31,6 +36,12 @@ mk();
 
 #use "legas/cpp.ml"
 cpp();
+
+#use "legas/cli.ml"
+cli();
+
+#use "legas/vm.ml"
+vm();
 
 #use "legas/cmake.ml"
 cmake();

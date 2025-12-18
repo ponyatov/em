@@ -41,8 +41,11 @@ let app () =
     ~c:
       "#pragma once
 #include \"libc.hpp\"
-#include \"main.hpp\"
+//
+#include \"vm.hpp\"
+//
 #include \"cli.hpp\"
+#include \"main.hpp\"
 "
     ();
   touch "src/app.cpp" ~c:"#include \"app.hpp\"
@@ -74,11 +77,14 @@ let libc () =
 let linux () =
   (* *)
   touch "inc/linux.hpp"
-    ~c:"#pragma once
+    ~c:
+      "#pragma once
 
 #include <sys/inotify.h>
+#include <sys/types.h>
 #include <x86intrin.h>
-" ()
+"
+    ()
 
 let cpp () =
   mkd "inc" ();
