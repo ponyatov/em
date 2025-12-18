@@ -23,12 +23,13 @@ void arg(int argc, char* argv) {
     std::clog << \"\\targ[\" << argc << \"] = <\" << argv << \"]\\n\";
 }
 
-void setup(int argc, char* argv[]) {
+__attribute__((weak)) void setup(int argc, char* argv[]) {
     std::clog << \"setup:\\n\";
-    for (int i = 0; i < argc; i++) arg(i,argv[i]);
+    arg(0,argv[0]);
+    for (int i = 1; i < argc; i++) arg(i,argv[i]);
 }
 
-int loop() {
+__attribute__((weak)) int loop() {
     std::clog << \"loop:\\n\\texit\\n\";
     return 0;
 }
@@ -37,10 +38,13 @@ int loop() {
 
 let app () =
   touch "inc/app.hpp"
-    ~c:"#pragma once
+    ~c:
+      "#pragma once
 #include \"libc.hpp\"
 #include \"main.hpp\"
-" ();
+#include \"cli.hpp\"
+"
+    ();
   touch "src/app.cpp" ~c:"#include \"app.hpp\"
 " ()
 
@@ -55,6 +59,7 @@ let libc () =
 //
 #include <iostream>
 #include <sstream>
+#include <string>
 //
 #include <map>
 #include <vector>
