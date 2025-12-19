@@ -103,8 +103,8 @@ let settings () =
     \"editor.formatOnSave\": false,
     \"files.autoSave\": \"afterDelay\",
     \"files.autoSaveDelay\": 2222,
-    \"auto-tab-closer.numLeftTabs\": 3,
-    \"auto-tab-closer.numMaxTabs\": 3,
+    \"auto-tab-closer.numLeftTabs\": 5,
+    \"auto-tab-closer.numMaxTabs\": 5,
     // \"git.enabled\": false,
 
     // terminal
@@ -309,5 +309,5 @@ let vscode () =
   tasks ();
   c_cpp_properties ();
   launch ();
-(* Sys.command "meld .vscode ~/em/.vscode" *)
+  (* Sys.command "meld .vscode ~/em/.vscode" *)
   Sys.command "git add .vscode"

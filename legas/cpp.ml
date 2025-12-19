@@ -86,6 +86,20 @@ let linux () =
 "
     ()
 
+let timer () =
+  touch "inc/timer.hpp" ~c:"#pragma once
+
+/// @defgroup timer timer
+/// @{
+extern void rdtsc();  ///< `( ns -- )` run timer `ns` nanoseconds
+/// @}
+" ();
+  touch "src/timer.cpp" ~c:"" ();
+
+let mproc () =
+  touch "inc/mproc.hpp" ~c:"" ();
+  touch "src/mproc.cpp" ~c:"" ()
+
 let cpp () =
   mkd "inc" ();
   mkd "src" ();
@@ -93,4 +107,6 @@ let cpp () =
   app ();
   libc ();
   linux ();
+  timer();
+  mproc();
   Sys.command "git add inc src"
