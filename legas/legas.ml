@@ -1,6 +1,11 @@
 let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
+<<<<<<< HEAD
 let title = "Rust/DPDK"
 let about = "high-speed traffic generator"
+=======
+let title = "precision timer"
+let about = "\nprecision timers on server-side Linux\n"
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
 let year = 2025
@@ -8,6 +13,7 @@ let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
 
+<<<<<<< HEAD
 #use "legas/files.ml"
 lib();
 
@@ -22,6 +28,27 @@ files();
 
 #use "legas/ocaml.ml"
 ocaml();
+=======
+let legas () =
+  mkd "lib" ();
+  Sys.command "git checkout --orphan `whoami`";
+  Sys.command "ln -fs ../em/legas legas";
+  Sys.command "cp ~/em/legas/legas.ml lib/legas.ml";
+  Sys.command "git add legas lib";
+  Sys.command "code lib/legas.ml"
+
+#use "legas/git.ml"
+git();
+
+#use "legas/files.ml"
+files();;
+
+#use "legas/vscode.ml"
+vscode();;
+
+#use "legas/ocaml.ml"
+ocamldots();
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 #use "legas/doc.ml"
 doc();
@@ -29,6 +56,7 @@ doc();
 #use "legas/mk.ml"
 mk();
 
+<<<<<<< HEAD
 #use "legas/vscode.ml"
 vscode()
 
@@ -75,3 +103,19 @@ refiles gitref
 ;;
 
 
+=======
+#use "legas/cpp.ml"
+cpp();
+
+#use "legas/cli.ml"
+cli();
+
+#use "legas/vm.ml"
+vm();
+
+#use "legas/cmake.ml"
+cmake();
+
+#use "legas/rust.ml"
+rust();
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d

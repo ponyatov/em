@@ -3,7 +3,10 @@ let git () =
   Sys.command ("git remote add flic git@gitflic.ru:dponyatov/"^app^".git");
   Sys.command ("git checkout --orphan `whoami`");
   Sys.command ("git add -A ; git commit -am '.' ; git push -uv gh `whoami` ");
+<<<<<<< HEAD
 
+=======
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
   
 (* let gitref = "ref/" ^ tag *)
 

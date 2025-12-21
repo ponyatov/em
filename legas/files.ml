@@ -10,6 +10,7 @@ let mkd name ?(c = "!.gitignore\n") () =
   if not (Sys.file_exists name) then Sys.mkdir name 0o755;
   touch (Filename.concat name ".gitignore") ~c ()
 
+<<<<<<< HEAD
 let lib () =
   mkd "lib";
   Sys.command "cp legas/legas.ml lib/legas.ml";
@@ -20,6 +21,17 @@ let dirs () =
 
 let bins () =
   [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ())
+=======
+let dirs () =
+  [ ".vscode"; "lib"; "src" ] |> List.iter (fun d -> mkd d ());
+  Sys.command "git add .vscode lib src"|> ignore
+
+
+let bins () =
+  [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ());
+  Sys.command "git add bin tmp ref"|> ignore
+
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 let giti () =
   touch ".gitignore" ~c:"*~
@@ -28,7 +40,12 @@ let giti () =
 /_build/
 /target/
 !.gitignore
+<<<<<<< HEAD
 " ()
+=======
+" ();
+    Sys.command "git add .gitignore"|> ignore
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 let apt () =
   touch "apt.Debian"
@@ -38,8 +55,14 @@ code meld doxygen
 g++ cmake pkg-config clang-format
 gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
+<<<<<<< HEAD
 ocaml opam dune utop
 " ()
+=======
+" ();
+    Sys.command "git add apt.*"|> ignore
+(* ocaml opam ocaml-dune utop *)
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
     (* () touch "apt.Ubuntu"
     ~c:
       "git make curl fzf
@@ -57,11 +80,21 @@ let readme () =
       ("# `" ^ app ^ "` " ^ version ^ "\n## " ^ title ^ "\n\n(c) " ^ author
      ^ " <<" ^ email ^ ">> " ^ Int.to_string year ^ " " ^ license ^ "\n\n"
      ^ github ^ "\n" ^ about)
+<<<<<<< HEAD
     ()
 
 let ini() =
     mkd "lib" ();
     touch ("lib/"^app^".ini") ~c:"# line comment\n" ()
+=======
+    ();
+  Sys.command "git add README.md"|> ignore
+
+let ini() =
+    mkd "lib" ();
+    touch ("lib/"^app^".ini") ~c:"# line comment\n" ();
+    Sys.command "git add lib"|> ignore
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 let dotfiles () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;
@@ -74,4 +107,8 @@ let files () =
   apt();
   readme();
   ini();
+<<<<<<< HEAD
   dotfiles();
+=======
+  dotfiles()
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d

@@ -2,9 +2,19 @@ let doxygen () =
   Sys.command "doxygen -l" |> ignore;
   Sys.command "mv DoxygenLayout.xml doc/" |> ignore;
   Sys.command "cp ~/icons/control_64x64.png doc/logo.png" |> ignore;
+<<<<<<< HEAD
   touch ".doxygen" ~c:("
 PROJECT_NAME           = \""^app^"\"
 PROJECT_BRIEF          = \""^title^"\"
+=======
+  touch ".doxygen"
+    ~c:
+      ("
+PROJECT_NAME           = \"" ^ app ^ "\"
+PROJECT_BRIEF          = \""
+     ^ title
+     ^ "\"
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 PROJECT_LOGO           = doc/logo.png
 LAYOUT_FILE            = doc/DoxygenLayout.xml
 OUTPUT_DIRECTORY       = doc
@@ -31,8 +41,20 @@ SORT_GROUP_NAMES       = YES
 REPEAT_BRIEF           = NO
 CALL_GRAPH             = YES
 CALLER_GRAPH           = YES
+<<<<<<< HEAD
 ") ()
 
 let doc () =
   mkd "doc" ~c:"html/\n!.gitignore\n" ();
   doxygen()
+=======
+"
+      )
+    ()
+
+let doc () =
+  mkd "doc" ~c:"html/\n!.gitignore\n" ();
+  doxygen ();
+  Sys.command "cp ~/em/doc/ai.md doc/";
+  Sys.command "git add doc .doxygen"
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d

@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 let var () = 
   mkd "mk" ();
   touch "mk/var.mk" ~c:"APP     = $(notdir $(CURDIR))
+=======
+let var () =
+  mkd "mk" ();
+  touch "mk/var.mk"
+    ~c:
+      "APP     = $(notdir $(CURDIR))
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 REL     = $(shell git rev-parse --short=4    HEAD)
 BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
 NOW     = $(shell date +%y%m%d)
@@ -11,7 +19,12 @@ WS      = $(shell lsb_release -si)
 HW     ?= pc
 IP     ?= 127.0.0.1
 PORT   ?= 12345
+<<<<<<< HEAD
 " ()
+=======
+"
+    ()
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 let dirmk () =
   touch "mk/dir.mk"
@@ -41,9 +54,13 @@ PEP    = autopep8 --ignore $(PEPS) -i
 "
     ()
 
+<<<<<<< HEAD
 let version () =
    touch "mk/version.mk" ~c:"PCPP_VER = v25.05
 " ()
+=======
+let version () = touch "mk/version.mk" ()
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 let all () =
   touch "mk/all.mk"
@@ -75,21 +92,52 @@ LX += $(wildcard src/*.lex src/*.yacc src/*.ragel)
 C  += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
 H  += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
 
+<<<<<<< HEAD
+=======
+# Rust
+R  += $(wildcard src/*.rs) Cargo.toml
+
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 # ini
 S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # OCaml
+<<<<<<< HEAD
 M += $(wildcard lib/*.ml*)
+=======
+M += $(wildcard lib/*.ml*) $(wildcard legas/*.ml*)
+"
+    ()
+
+let doc () =
+  touch "mk/doc.mk"
+    ~c:
+      ".PHONY: doc
+doc:
+\trsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
+\tgit add $@
+
+.PHONY: doxy
+doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png doc
+\trm -rf doc/html ; doxygen $< 1>/dev/null
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 "
     ()
 
 let sync () =
+<<<<<<< HEAD
   touch "mk/sync.mk"
     ~c:
       ".PHONY: sync
 sync: doc
 "
     ()
+=======
+  (* *)
+  touch "mk/sync.mk" ~c:".PHONY: sync
+sync: doc
+" ()
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 let install () =
   touch "mk/install.mk"
@@ -105,11 +153,24 @@ Debian_install:
 Debian_update: apt.$(WS)
 \tsudo apt update
 \tsudo apt install -uy `cat apt.$(WS)` $(APT)
+<<<<<<< HEAD
 
 Ubuntu_install:
 Ubuntu_update: apt.$(WS)
 \tsudo apt update
 \tsudo apt install -uy `cat apt.$(WS)` $(APT)
+=======
+"
+    ()
+
+let ai () =
+  touch "mk/ai.mk"
+    ~c:
+      ".PHONY: ai tmp/$(APP).ai.md
+ai: tmp/$(APP).ai.md
+tmp/$(APP).ai.md: doc
+\tcat doc/ai.md README.md doc/$(APP)/*.md > $@ ; touch $@
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 "
     ()
 
@@ -132,6 +193,10 @@ let mk () =
       "ref";
       "gz";
       "install";
+<<<<<<< HEAD
+=======
+      "ai";
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
     ]
     |> List.map (fun f -> Filename.concat "mk" (f ^ ".mk"))
   in
@@ -139,9 +204,22 @@ let mk () =
   makes |> List.iter (fun r -> Printf.fprintf m "include %s\n" r);
   close_out m;
   var ();
+<<<<<<< HEAD
   dirmk() ; tool();
   (* version (); *)
   src();
   all ();
   sync ();
   install ()
+=======
+  dirmk ();
+  tool ();
+  (* version (); *)
+  all ();
+  src ();
+  doc ();
+  sync ();
+  install ();
+  ai ();
+  Sys.command "git add Makefile mk"
+>>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
