@@ -1,14 +1,9 @@
 let extensions () =
-<<<<<<< HEAD
-  touch ".vscode/extensions.json" ~c:"{
-    \"recommendations\": [
-=======
   touch ".vscode/extensions.json"
     ~c:
       "{
     \"recommendations\": [
         \"statiolake.vscode-auto-tab-closer\",
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
         \"stkb.rewrap\",
         \"ms-vscode.makefile-tools\",
         \"IBM.output-colorizer\",
@@ -28,41 +23,23 @@ let extensions () =
         // parser
         \"daohong-emilio.yash\",
         \"rreverser.ragel\",
-<<<<<<< HEAD
-=======
         // embedded
         \"dan-c-underwood.arm\",
         \"zixuanwang.linkerscript\",
         \"ms-vscode.vscode-serial-monitor\",
         // \"espressif.esp-idf-extension\",
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
         // Python
         \"ms-python.python\",
         \"ms-python.autopep8\",
         \"charliermarsh.ruff\",
-<<<<<<< HEAD
-=======
         // Rust
         \"rust-lang.rust-analyzer\",
         \"tamasfe.even-better-toml\",
         \"vadimcn.vscode-lldb\",
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
         // OCaml
         \"ocamllabs.ocaml-platform\",
     ]
 }
-<<<<<<< HEAD
-" ()
-
-let vscode () = 
-  mkd ".vscode";
-  touch ".vscode/extensions.json" ();
-  touch ".vscode/launch.json" ();
-  touch ".vscode/settings.json" ();
-  touch ".vscode/c_cpp_properties.json" ();
-  touch ".vscode/tasks.json" ();
-  extensions()
-=======
 "
     ()
 
@@ -334,4 +311,3 @@ let vscode () =
   launch ();
   (* Sys.command "meld .vscode ~/em/.vscode" *)
   Sys.command "git add .vscode"
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
