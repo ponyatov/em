@@ -12,11 +12,11 @@ let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
 
-(* ln -fs ../em/legas legas *)
-(* cp legas/.ocaml* ./ *)
-(* mkdir lib *)
+(* ln -fs ../em/legas legas       *)
+(* cp legas/.ocaml* ./            *)
+(* mkdir lib                      *)
 (* cp legas/legas.ml lib/legas.ml *)
-(* code lib/legas.ml *)
+(* code lib/legas.ml              *)
 
 #use "legas/git.ml"
 git();
