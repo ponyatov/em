@@ -50,3 +50,9 @@ cmake();
 
 #use "legas/rust.ml"
 rust();
+
+#use "legas/js.ml"
+js();
+
+#use "legas/sync.ml"
+sync();

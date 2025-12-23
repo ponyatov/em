@@ -1,3 +1,8 @@
+
+let user = "dponyatov"
+let devuser = "dev01"
+let devserver = "10.110.1.106"
+
 let sync () =
   touch "mk/sync.mk" ~c:".PHONY: sync
 sync: $(HOME)/.unison/$(APP).prf doc
@@ -7,9 +12,10 @@ $(HOME)/.unison/$(APP).prf: $(CWD)/.unison
 " ()
 
 let unison () =
-  Sys.command ("ln -fs ~/"^app^"/.unison ~/.unison/"^app^".prf");;
-  touch ".unison" ~c:("# .unicon
+  (* Sys.command ("ln -fs ~/"^app^"/.unison ~/.unison/"^app^".prf");; *)
+  touch ".unison" ~c:("# .unison
 ## cd ~/.unison ; ln -fs ~/"^app^"/.unison "^app^".prf ; cd ~/"^app^" ; ls -la ~/.unison
+## unison "^app^"
 
 # Название профиля (опционально)
 label = "^app^" sync

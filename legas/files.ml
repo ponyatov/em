@@ -26,6 +26,7 @@ let giti () =
 *.log
 /_build/
 /target/
+node_modules/
 !.gitignore
 " ();
     Sys.command "git add .gitignore"|> ignore
@@ -39,17 +40,19 @@ g++ cmake pkg-config clang-format
 gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
 " ();
-    Sys.command "git add apt.*"|> ignore
 (* ocaml opam ocaml-dune utop *)
-    (* () touch "apt.Ubuntu"
+    () ;
+    touch "apt.Ubuntu"
     ~c:
       "git make curl fzf
 doxygen
 g++ cmake pkg-config clang-format
-gdb gdbserver valgrind
+gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
+nodejs npm
 "
-    () *)
+    ();
+  Sys.command "git add apt.*"|> ignore
 
 let readme () =
   (* *)
@@ -68,7 +71,8 @@ let ini() =
 
 let dotfiles () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;
-  Sys.command "cp ~/em/.prettierrc ./" |> ignore
+  Sys.command "cp ~/em/.prettierrc ./" |> ignore;
+  Sys.command "git add .clang-format .prettierrc"|> ignore
 
 let files () =
   dirs();
