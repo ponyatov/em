@@ -10,6 +10,7 @@ include(wasm)     # WebAssembly WASI runtime
 include(kaitai)   # binary parsers
 include(net)      # raw packets networking
 include(qt)       # portable GUI
+include(kmod)     # Linux kernel module
 
 message("-- |")
 message("-- | toolchain: " ${CMAKE_CXX_COMPILER} " @ " ${CMAKE_TOOLCHAIN_FILE})
@@ -20,6 +21,7 @@ message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 message("-- |      data: " "${DATA} ${WASM}")
 message("-- |       ini: " "${INI}")
+message("-- |      kmod: " "${KMOD}")
 message("-- |")
 
 #include(json2cpp)
@@ -31,6 +33,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${CP} ${HP}         # parsers
     ${DATA} ${WASM}     # precompiled binary data (bytecode,..)
     ${INI}              # init/config files & scripts
+    ${KMOD}             # Linux kernel module
 )
 
 set_source_files_properties(${INI} PROPERTIES HEADER_FILE_ONLY TRUE)
