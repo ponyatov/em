@@ -2,7 +2,7 @@
 all: bin/$(BINFILE) $(S)
 	cargo build
 run: bin/$(BINFILE) $(S)
-	$^
+	cgexec -g memory:$(APP) $^
 	cargo run -- $(S)
 watch: bin/$(BINFILE) $(S)
 	@$^ ; while [ $$? -eq 1 ]; do $^ ; done

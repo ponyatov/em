@@ -1,4 +1,5 @@
 let git () = 
+  Sys.command ("git init");
   Sys.command ("git remote add gh git@github.com:ponyatov/"^app^".git");
   Sys.command ("git remote add flic git@gitflic.ru:dponyatov/"^app^".git");
   Sys.command ("git checkout --orphan `whoami`");

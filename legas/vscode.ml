@@ -49,24 +49,6 @@ let launch () =
       "{
     \"version\": \"0.2.0\",
     \"configurations\": [
-        {
-            \"name\"            : \"cmake:linux\",
-            \"type\"            : \"cppdbg\",
-            \"request\"         : \"launch\",
-            \"cwd\"             : \"${workspaceFolder}\",
-            \"program\"         : \"${command:cmake.launchTargetPath}\",
-            \"args\"            : [\"lib/${workspaceFolderBasename}.ini\"],
-            \"environment\"     : [],
-            \"preLaunchTask\"   : \"CMake: build\",
-            \"stopAtEntry\"     : true,
-            \"externalConsole\" : false,
-            \"MIMode\"          : \"gdb\",
-            \"miDebuggerPath\"  : \"gdb\",
-            \"setupCommands\"   : [
-                {\"text\": \"-enable-pretty-printing\",\"ignoreFailures\": true},
-                {\"text\": \"source ${workspaceFolder}/.gdbinit\",\"ignoreFailures\": true}
-            ]
-        }
     ]
 }
 "
@@ -189,41 +171,6 @@ let settings () =
 "
     ()
 
-let c_cpp_properties () =
-  touch ".vscode/c_cpp_properties.json"
-    ~c:
-      "{
-    \"version\": 4,
-    \"env\": {
-        \"appInclude\": [
-            \"${workspaceFolder}/inc/**\",
-            \"${workspaceFolder}/tmp/**\",
-            \"${workspaceFolder}/src/**\",
-            \"${workspaceFolder}/lib/inc/**\" ,\"${workspaceFolder}/lib/*/inc/**\"
-        ]
-        \"crossInclude\": [
-            \"${workspaceFolder}/hw/inc/**\"  ,\"${workspaceFolder}/hw/*/inc/**\"  ,
-            \"${workspaceFolder}/cpu/inc/**\" ,\"${workspaceFolder}/cpu/*/inc/**\" ,
-            \"${workspaceFolder}/arch/inc/**\",\"${workspaceFolder}/arch/*/inc/**\",
-            \"${workspaceFolder}/os/inc/**\"  ,\"${workspaceFolder}/os/*/inc/**\"
-        ]
-    },
-    \"configurations\": [
-        {
-            \"name\"                 : \"linux\",
-            \"configurationProvider\": \"ms-vscode.cmake-tools\",
-            \"mergeConfigurations\"  :  true,
-            \"includePath\"          : [\"${appInclude}\", \"${crossInclude}\"],
-            \"defines\"              : [\"PC\", \"I5\", \"X86_64\", \"LINUX\"],
-            \"compilerPath\"         : \"/usr/bin/x86_64-linux-gnu-g++\",
-            \"cStandard\"            : \"c17\",
-            \"cppStandard\"          : \"c++23\",
-            \"intelliSenseMode\"     : \"gcc-x64\"
-        }
-    ]
-}
-"
-    ()
 
 let tasks () =
   touch ".vscode/tasks.json"
@@ -306,8 +253,7 @@ let vscode () =
   mkd ".vscode" ();
   extensions ();
   settings ();
-  tasks ();
-  c_cpp_properties ();
   launch ();
+  tasks ();
   (* Sys.command "meld .vscode ~/em/.vscode" *)
   Sys.command "git add .vscode"
