@@ -102,12 +102,12 @@ let mproc () =
 
 let aptcpp () =
   let c = "
-g++ cmake pkg-config clang-format
+g++ cmake pkg-config clang-format doxygen
 gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
 " in
-  append "apt.Debian" ~c:("code meld doxygen"^c) ();
-  append "apt.Ubuntu" ~c:("doxygen"^c) ();
+  append "apt.Debian" ~c:("code meld\n"^c) ();
+  append "apt.Ubuntu" ~c:(""^c) ();
 
 let cf () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;

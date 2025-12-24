@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-let rust () =
-  touch "src/main.rs" ~c:"mod config;\nmod vm;
-=======
 let rsmain () =
   touch "src/main.rs"
     ~c:
       "mod config;\nmod vm;
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
 
 use memmap2::Mmap;
 use std::fs::File;
@@ -31,40 +26,50 @@ fn main() {
 fn arg(argc: usize, argv: &str) {
     eprintln!(\"argv[{argc}] = {argv:?}\");
 }
-<<<<<<< HEAD
-" ();
-  touch "src/config.rs" ();
-  touch "src/vm.rs" ();
-  Sys.command "cargo run";
-=======
 "
-    ();
-  touch "src/config.rs" ();
-  touch "src/vm.rs" ()
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
+    ()
+
+let allow = "
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
+#![allow(non_camel_case_types)]
+#![allow(dead_code)]
+"
+
+let vmrs () =
+  touch "src/vm.rs" ~c:(allow^"
+use crate::config::vm::*;
+
+/// main memory
+pub static mut M: [u8; Msz] = [0; Msz];
+pub static mut Cp: u16 = 0;
+pub static mut Ip: u16 = 0;
+
+/// return stack
+pub static mut R: [u16; Rsz] = [0; Rsz];
+pub static mut Rp: u8 = 0;
+
+/// data stack
+pub static mut D: [i32; Dsz] = [0; Dsz];
+pub static mut Dp: u8 = 0;
+") ()
+
+let configrs () =
+  touch "src/config.rs" ~c:("//! shared config\n"^allow^"
+pub mod vm {
+    /// @ref M size, bytes
+    pub const Msz: usize = 0x10000;
+    /// @ref R size, addresses
+    pub const Rsz: usize = 0x100;
+    /// @ef D size, cells
+    pub const Dsz: usize = 0x10;
+}
+") ();
 
 let cargo () =
   touch "Cargo.toml"
     ~c:
       ("[package]
-<<<<<<< HEAD
-name        =  \"" ^ app ^ "\"
-version     =  \"" ^ version ^ "\"
-description =  \"" ^ title ^ "\"
-authors     = [\""^author^" <"^email^">\"]
-license     =  \""^license^"\"
-repository  =  \""^github^"\"
-edition     =  \"2024\"
-
-[dependencies]
-
-[target.'cfg(target_os = \"linux\")'.dependencies]
-libc        = \"0.2\"
-memmap2     = \"0.9\"
-")
-    ();
-  Sys.command ("cargo run -- lib/"^app^".ini")
-=======
 name            =  \"" ^ app ^ "\"
 version         =  \""
      ^ version ^ "\"
@@ -85,8 +90,7 @@ libc            = \"0.2\"
 memmap2         = \"0.9\"
 "
       )
-    ();
-  Sys.command ("cargo run -- lib/" ^ app ^ ".ini")
+    ()
 
 let rustmk () =
   touch "mk/all.mk"
@@ -113,5 +117,8 @@ $(RUSTUP) $(CARGO):
 let rust () =
   rustmk ();
   rsmain ();
-  cargo ()
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
+  cargo ();
+  configrs (); vmrs();
+  append ".gitignore" ~c:"/target/\n" ();
+  Sys.command ("git add src");
+  Sys.command ("cargo run -- lib/" ^ app ^ ".ini")
