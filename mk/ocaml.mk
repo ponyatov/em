@@ -1,3 +1,5 @@
+OCAML_VER ?= 5.4.0
+
 ocaml: $(UTOP) $(DUNE) $(OFMT) $(OLSP) .ocamlformat .ocamlformat
 
 $(OPAM):
@@ -8,8 +10,11 @@ $(HOME)/.opam: $(OPAM)
 
 $(OCAMLC): $(OPAM)
 # 	opam switch list-available ; opam switch list
-	opam switch create cs3110 ocaml-base-compiler.5.2.0 && touch $@
-	opam switch set cs3110 ; eval $(opam env --switch=cs3110)
+	opam switch create default ocaml-base-compiler.5.4.0 && touch $@
+# 	opam switch create cs134b ocaml-base-compiler.5.4.0 && touch $@
+# 	opam switch create cs3110 ocaml-base-compiler.5.2.0 && touch $@
+	opam switch set default ; eval $(opam env --switch=default)
+# 	opam switch set cs3110 ; eval $(opam env --switch=cs134b)
 
 $(UTOP) $(DUNE) $(OFMT) $(OLSP): $(OCAMLC)
 	opam install -y utop dune ocamlformat ocaml-lsp-server ppx_string menhir

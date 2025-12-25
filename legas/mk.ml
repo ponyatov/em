@@ -181,4 +181,5 @@ let mk () =
   sync ();
   install ();
   ai ();
+  Sys.command("cp ~/em/mk/ocaml.mk mk/");
   Sys.command "git add Makefile mk"
