@@ -29,7 +29,8 @@ break-string-literals=never
 # let-and = sparse
 "
       )
-    ()
+    ();
+  Sys.command("git add .ocaml*")
 
 let dune () =
   touch "lib/dune"
@@ -50,14 +51,15 @@ let dune () =
   let src = "(source              (github ponyatov/" ^ app ^ "))\n" in
   let pack = "(package\n" in
   let syno = " (synopsis            \"" ^ title ^ "\")\n" in
-  let about = "(description         \"\")\n" in
+  let about = "(description         \""^about^"\")\n" in
   let empty = "(allow_empty)\n" in
   touch "dune-project"
     ~c:
       (lang ^ name ^ opam ^ authors ^ maintr ^ bugs ^ home ^ lic ^ src ^ pack
      ^ " " ^ name ^ syno ^ about ^ empty ^ ")\n")
     ();
-  Sys.command "dune build"
+  Sys.command "dune build";
+  Sys.command("git add dune* *.opam lib")
 
 let ocaml () =
   ocamldots ();

@@ -1,7 +1,15 @@
+let allow = "
+#![allow(dead_code)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
+#![allow(unused_imports)]
+"
+
 let rsmain () =
   touch "src/main.rs"
-    ~c:
-      "mod config;\nmod vm;
+    ~c:(allow^"
+mod config;\nmod vm;
 
 use memmap2::Mmap;
 use std::fs::File;
@@ -26,16 +34,8 @@ fn main() {
 fn arg(argc: usize, argv: &str) {
     eprintln!(\"argv[{argc}] = {argv:?}\");
 }
-"
-    ()
-
-let allow = "
-#![allow(dead_code)]
-#![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
-#![allow(non_upper_case_globals)]
-#![allow(unused_imports)]
-"
+")
+    ();
 
 let vmrs () =
   touch "src/vm.rs" ~c:(allow^"
@@ -53,7 +53,7 @@ pub static mut Rp: u8 = 0;
 /// data stack
 pub static mut D: [i32; Dsz] = [0; Dsz];
 pub static mut Dp: u8 = 0;
-") ()
+") ();
 
 let configrs () =
   touch "src/config.rs" ~c:("//! shared config\n"^allow^"
@@ -68,9 +68,7 @@ pub mod vm {
 ") ();
 
 let cargo () =
-  touch "Cargo.toml"
-    ~c:
-      ("[package]
+  touch "Cargo.toml" ~c:("[package]
 name            =  \"" ^ app ^ "\"
 version         =  \""
      ^ version ^ "\"
@@ -91,7 +89,7 @@ libc            = \"0.2\"
 memmap2         = \"0.9\"
 "
       )
-    ()
+    ();
 
 let rustmk () =
   touch "mk/all.mk"
@@ -113,13 +111,13 @@ $(RUSTUP) $(CARGO):
 \tcurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 \trustup target add x86_64-unknown-linux-gnu
 "
-    ()
+    ();
 
 let rust () =
   rustmk ();
-  rsmain ();
   cargo ();
+  rsmain ();
   configrs (); vmrs();
   append ".gitignore" ~c:"/target/\n" ();
-  Sys.command ("git add src");
-  Sys.command ("cargo run -- lib/" ^ app ^ ".ini")
+  Sys.command ("cargo run -- lib/" ^ app ^ ".ini")|>ignore;
+  Sys.command "git add mk src Cargo.* .gitignore"|>ignore;

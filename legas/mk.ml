@@ -140,7 +140,7 @@ let ai () =
       ".PHONY: ai tmp/$(APP).ai.md
 ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md: doc
-\tcat doc/ai.md README.md doc/$(APP)/*.md > $@ ; touch $@
+\tcat doc/ai.md doc/$(APP)/bib.md README.md doc/$(APP)/*.md > $@ ; touch $@
 "
     ()
 
@@ -181,5 +181,5 @@ let mk () =
   sync ();
   install ();
   ai ();
-  Sys.command("cp ~/em/mk/ocaml.mk mk/");
+  Sys.command("cp ~/em/mk/ocaml.mk mk/")|>ignore;
   Sys.command "git add Makefile mk"

@@ -43,7 +43,7 @@ let apt () =
 let readme () =
   touch "README.md"
     ~c:
-      ("# `" ^ app ^ "` " ^ version ^ "\n## " ^ title ^ "\n\n(c) " ^ author
+      ("# `" ^ app ^ "` " ^ version ^ "\n## " ^ title ^ "\n![](doc/logo.png)\n\n(c) " ^ author
      ^ " <<" ^ email ^ ">> " ^ Int.to_string year ^ " " ^ license ^ "\n\n"
      ^ github ^ "\n" ^ about)
     ();

@@ -1,3 +1,4 @@
+Sys.command("ln -fs ../rc rc")
 Sys.command("ln -fs ../em/legas legas")
 Sys.command("cp legas/.ocaml* ./")
 Sys.command("mkdir lib")
@@ -11,12 +12,14 @@ let about = "
 - ASCII data parsing
 - programming language workbench
 "
+let user = "dponyatov"
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
 let year = 2025
 let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
+let github = "github: https://gitflic.ru/project/"^user^"/" ^ app
 
 #use "legas/git.ml"
 git();
@@ -29,6 +32,7 @@ vscode();;
 
 #use "legas/ocaml.ml"
 ocamldots();
+(* dune() *)
 
 #use "legas/doc.ml"
 doc();
@@ -54,5 +58,4 @@ rust();
 #use "legas/js.ml"
 js();
 
-#use "legas/sync.ml"
-sync();
+(* #use "legas/sync.ml" *)

@@ -1,7 +1,6 @@
-
 let user = "dponyatov"
-let devuser = "dev01"
-let devserver = "10.110.1.106"
+let devuser = "dimon"
+let devserver = "10.110.1.101"
 
 let sync () =
   touch "mk/sync.mk" ~c:".PHONY: sync
