@@ -1,3 +1,9 @@
+Sys.command("ln -fs ../em/legas legas")
+Sys.command("cp legas/.ocaml* ./")
+Sys.command("mkdir lib")
+Sys.command("cp ~/em/legas/legas.ml lib/legas.ml")
+Sys.command("code lib/legas.ml")
+
 let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
 let title = "OCaml/C compiler"
 let about = "
@@ -11,12 +17,6 @@ let year = 2025
 let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
-
-(* ln -fs ../em/legas legas       *)
-(* cp legas/.ocaml* ./            *)
-(* mkdir lib                      *)
-(* cp legas/legas.ml lib/legas.ml *)
-(* code lib/legas.ml              *)
 
 #use "legas/git.ml"
 git();
