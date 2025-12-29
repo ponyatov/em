@@ -75,7 +75,6 @@ let libc () =
     ()
 
 let linux () =
-  (* *)
   touch "inc/linux.hpp"
     ~c:
       "#pragma once
@@ -96,18 +95,14 @@ extern void rdtsc();  ///< `( ns -- )` run timer `ns` nanoseconds
 " ();
   touch "src/timer.cpp" ~c:"" ();
 
-let mproc () =
-  touch "inc/mproc.hpp" ~c:"" ();
-  touch "src/mproc.cpp" ~c:"" ()
-
 let aptcpp () =
-  let c = "
-g++ cmake pkg-config clang-format doxygen
+  let c = "g++ cmake pkg-config clang-format doxygen
 gdb gdbserver valgrind cgroup-tools
 flex bison ragel libreadline-dev
 " in
   append "apt.Debian" ~c:("code meld\n"^c) ();
   append "apt.Ubuntu" ~c:(""^c) ();
+  append "apt.Raspbian" ~c:(""^c) ();
 
 let cf () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;

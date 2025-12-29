@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-
-let cMakeLists () = touch "CMakeLists.txt" ()
-let cMakePresets () = touch "CMakePresets.json" ()
-
-let install () =
-  touch "cmake/install.cmake" ~c:"set_target_properties(${CMAKE_PROJECT_NAME}
-=======
 let cMakeLists () =
   (* *)
   touch "CMakeLists.txt"
@@ -100,29 +92,11 @@ let install () =
   touch "cmake/install.cmake"
     ~c:
       "set_target_properties(${CMAKE_PROJECT_NAME}
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d
     PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
 install(TARGETS ${CMAKE_PROJECT_NAME}
     DESTINATION ${CMAKE_INSTALL_PREFIX})
 file(CREATE_LINK ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
     ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME} SYMBOLIC)
-<<<<<<< HEAD
-" ()
-
-let src () =
-  touch "cmake/src.cmake" ()
-
-let cmake () =
-  cMakeLists ();
-  cMakePresets ();
-  mkd "cmake" ();
-  Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/";
-  Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/";
-  Sys.command "cp ~/em/cmake/cross.cmake cmake/";
-  Sys.command "cp ~/em/cmake/version.cmake cmake/";
-  src()
-  install ()
-=======
 "
     ()
 
@@ -250,4 +224,3 @@ let cmake () =
   install ();
   syntax ();
   Sys.command "git add CMake* cmake"
->>>>>>> ebc2351d16f8ac53c3e45a30e4e3ceef0045b36d

@@ -11,6 +11,7 @@ PCPP_CFG += -DCMAKE_CXX_FLAGS="-march=native"
 PCPP_CFG += -DPCAPPP_INSTALL_CMAKEDIR=$(LIB)/pcpp/cmake
 PCPP_CFG += -DPCAPPP_INSTALL_CMAKEDIR=$(LIB)/pcpp/include
 
+RF += lib/pcpp/setup_dpdk.py
 .PHONY: pcpp
 pcpp: lib/pcpp/setup_dpdk.py
 # rm -rf lib/pcpp tmp/pcpp ; time make pcpp
@@ -21,3 +22,6 @@ lib/pcpp/lib/libPacket++.a: ref/PcapPlusPlus/README.md
 	cmake $(PCPP_CFG) -S $(dir $<) -B tmp/pcpp --install-prefix=$(LIB)/pcpp
 	cmake --build   tmp/pcpp -j
 	cmake --install tmp/pcpp
+
+ref/PcapPlusPlus/README.md:
+	$(GITREF) https://github.com/seladb/PcapPlusPlus.git $(dir $@)

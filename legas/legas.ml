@@ -19,7 +19,7 @@ let year = 2025
 let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
-let github = "github: https://gitflic.ru/project/"^user^"/" ^ app
+let gitflic = "github: https://gitflic.ru/project/"^user^"/" ^ app
 
 #use "legas/git.ml"
 git();

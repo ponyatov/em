@@ -38,6 +38,7 @@ let apt () =
   let a = "git make curl fzf\n" in
   touch "apt.Debian" ~c:(a^"code meld\n") ();
   touch "apt.Ubuntu" ~c:a ();
+  touch "apt.Raspbian" ~c:a ();
   Sys.command "git add apt.*"|> ignore
 
 let readme () =

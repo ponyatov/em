@@ -22,7 +22,8 @@ NPM_VER    = 9.2.0
 JQUERY_VER = 3.7.1
 
 # net
-PCPP_VER = 25.05
+PCPP_VER = v25.05
+DPDK_VER = 24.11.3
 
 # misc
 KAITAI_VER = 0.11

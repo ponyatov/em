@@ -1,27 +1,35 @@
-let user = "dponyatov"
-let devuser = "dimon"
-let devserver = "10.110.1.101"
 
 let sync () =
-  touch "mk/sync.mk" ~c:".PHONY: sync
+  touch "mk/sync.mk"
+    ~c:
+      ".PHONY: sync
 sync: $(HOME)/.unison/$(APP).prf doc
 \tunison $(APP)
 $(HOME)/.unison/$(APP).prf: $(CWD)/.unison
 \tln -fs $< $@
-" ()
+"
+    ()
 
 let unison () =
   (* Sys.command ("ln -fs ~/"^app^"/.unison ~/.unison/"^app^".prf");; *)
-  touch ".unison" ~c:("# .unison
-## cd ~/.unison ; ln -fs ~/"^app^"/.unison "^app^".prf ; cd ~/"^app^" ; ls -la ~/.unison
-## unison "^app^"
+  touch ".unison"
+    ~c:
+      ("# .unison
+## cd ~/.unison ; ln -fs ~/" ^ app ^ "/.unison " ^ app
+     ^ ".prf ; cd ~/" ^ app ^ " ; ls -la ~/.unison
+## unison " ^ app
+     ^ "
 
 # Название профиля (опционально)
-label = "^app^" sync
+label = " ^ app
+     ^ " sync
 
 # Корневые директории
-root = /home/"^user^"/"^app^"
-root = ssh://"^devuser^"@"^devserver^"//home/"^devuser^"/"^app^"
+root = /home/" ^ user ^ "/" ^ app
+     ^ "
+root = ssh://" ^ ruser ^ "@" ^ devserver ^ "//home/" ^ ruser ^ "/"
+     ^ app
+     ^ "
 
 # Автоматизация
 auto   = true
@@ -36,4 +44,6 @@ ignore = Name {bin,tmp,ref}
 ignore = Name {doc/html,lib/pcpp}
 ignore = Name {node_modules,.cache}
 ignore = Name {*.pyc,__pycache__}
-") ()
+"
+      )
+    ()
