@@ -1,4 +1,4 @@
-# include(FindPackageHandleStandardArgs)
+include(FindPackageHandleStandardArgs)
 
 # ~~~
 # - Try to find DPDK include dirs and libraries
@@ -19,6 +19,8 @@ pkg_check_modules(DPDK REQUIRED libdpdk>=22.11)
 # endif()
 
 if(DPDK_FOUND)
+  message("-- Found DPDK: with pkg-config (found version ${DPDK_VERSION})")
+
   add_compile_definitions(DPDK_FOUND)
 
   add_library(DPDK::DPDK INTERFACE IMPORTED)
