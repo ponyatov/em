@@ -13,6 +13,9 @@ let about = "
 - programming language workbench
 "
 let user = "dponyatov"
+let ruser = "dimon"
+let devserver = "10.110.1.101"
+
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
 let year = 2025
@@ -59,3 +62,5 @@ rust();
 js();
 
 (* #use "legas/sync.ml" *)
+#use "legas/etc.ml"
+etc();
