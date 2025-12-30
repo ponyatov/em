@@ -162,10 +162,10 @@
             "group"          : {"kind": "build","isDefault": true}
         },
         {
-            "label"          : "cargo: send",
+            "label"          : "cargo: watch",
             "type"           : "shell",
             "command"        : "cargo",
-            "args"           : ["watch","-x","run --bin send --features=pc --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
+            "args"           : ["watch","-x","run -p ${workspaceFolderBasename} -- lib/${workspaceFolderBasename}.ini"],
             "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "group"          : {"kind": "build", "isDefault": true },
