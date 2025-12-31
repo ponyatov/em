@@ -4,7 +4,7 @@ let git () =
   Sys.command ("git remote add flic git@gitflic.ru:"^user^"/"^app^".git");
   Sys.command ("git checkout --orphan "^user);
   Sys.command ("git add -A ; git commit -am '.' ; git push -uv gh `whoami` ");
-(* Sys.command ("git add -A ; git commit -am '.' ; git push -uv flic `whoami` "); *)
+  Sys.command ("git add -A ; git commit -am '.' ; git push flic `whoami` ");
   
 (* let gitref = "ref/" ^ tag *)
 
