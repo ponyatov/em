@@ -18,23 +18,23 @@ let devserver = "10.110.1.101"
 
 let author = "Dmitry Ponyatov"
 let email = "dponyatov@gmail.com"
-let year = 2025
+let year = 2026
 let version = "0.0.1"
 let license = "MIT"
 let github = "github: https://github.com/ponyatov/" ^ app
 let gitflic = "github: https://gitflic.ru/project/"^user^"/" ^ app
 
-#use "legas/git.ml"
-git();
-
 #use "legas/files.ml"
 files();;
+
+#use "legas/git.ml"
+git();
 
 #use "legas/vscode.ml"
 vscode();;
 
-#use "legas/ocaml.ml"
-ocamldots();
+(* #use "legas/ocaml.ml"
+ocamldots(); *)
 (* dune() *)
 
 #use "legas/doc.ml"
