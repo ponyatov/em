@@ -1,15 +1,13 @@
-
-
 let doxygen () =
   Sys.command "doxygen -l" |> ignore;
   Sys.command "mv DoxygenLayout.xml doc/" |> ignore;
   touch ".doxygen"
-      ~c:
-        ("
-  PROJECT_NAME           = \"" ^ app ^ "\"
-  PROJECT_BRIEF          = \""
-       ^ title
-       ^ "\"
+    ~c:
+      ("
+  PROJECT_NAME           = \"" ^ app
+     ^ "\"
+  PROJECT_BRIEF          = \"" ^ title
+     ^ "\"
   PROJECT_LOGO           = doc/logo.png
   LAYOUT_FILE            = doc/DoxygenLayout.xml
   OUTPUT_DIRECTORY       = doc
@@ -37,21 +35,53 @@ let doxygen () =
   CALL_GRAPH             = YES
   CALLER_GRAPH           = YES
   "
-        )
-      ()
+      )
+    ()
 
-let cppmin () =
 let hpp () =
-  touch ("inc/"^app^".hpp") ~c:("#pragma once
+  touch
+    ("inc/" ^ app ^ ".hpp")
+    ~c:
+      "#pragma once
 
+/// @defgroup libc libc
+/// @{
+#include <iostream>
+/// @}
 
-") ();
+/// @defgroup main main
+/// @{
+extern int main(int argc, char *argv[]);
+extern void arg(int argc, char *argv);
+/// @}
+"
+    ()
 
 let cpp () =
-    touch ("src/"^app^".cpp") ~c:("#include \""^app^".hpp\"\nint main() {}\n") ();
+  touch
+    ("src/" ^ app ^ ".cpp")
+    ~c:
+      ("#include \"" ^ app
+     ^ ".hpp\"
+
+int main(int argc, char *argv[]) {
+    arg(0, argv[0]);
+    for (int i = 1; i < argc; i++) {  //
+        arg(i, argv[i]);
+    }
+}
+
+void arg(int argc, char *argv) {  //
+    std::cout << \"arg[\" << argc << \"] = <\" << argv << \"]\\n\";
+}
+"
+      )
+    ()
 
 let lists () =
-  touch "CMakeLists.txt" ~c:("cmake_minimum_required(VERSION 3.25)
+  touch "CMakeLists.txt"
+    ~c:
+      "cmake_minimum_required(VERSION 3.25)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
 project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 
@@ -87,10 +117,13 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
 include(install) # target install
 include(clean)   # project clean-up (remove generated & temp files)
-") ();
+"
+    ()
 
 let presets () =
-    touch "CMakePresets.json" ~c:("{
+  touch "CMakePresets.json"
+    ~c:
+      "{
     \"version\": 6,
     \"buildPresets\": [
         {
@@ -129,207 +162,153 @@ let presets () =
         }
     ]
 }
-") ()
-  
+"
+    ()
+
+let src () =
+  touch "cmake/src.cmake"
+    ~c:
+      "# file(GLOB LD -> cmake/any_toolchain.cmake
+
+file(GLOB S
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.s
+)
+
+file(GLOB C
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.c*
+)
+
+file(GLOB H
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    inc/*.h*
+)
+
+file(GLOB INC
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+    inc src
+)
+include_directories(${INC})
+
+file(GLOB INI
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    lib/*.ini lib/*.f
+)
+"
+    ()
+
+let syntax () =
+  (* *)
+  touch "cmake/syntax.cmake" ()
+
+let install () =
+  touch "cmake/install.cmake"
+    ~c:
+      {|set_target_properties(${CMAKE_PROJECT_NAME}
+    PROPERTIES OUTPUT_NAME ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX})
+install(TARGETS ${CMAKE_PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_PREFIX})
+file(CREATE_LINK ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
+    ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME} SYMBOLIC)
+|}
+    ()
+
 let cmake () =
-  mkdir "cmake" ();
-  lists (); presets();
-  Sys.command "git add CMake* cmake"
+  mkd "cmake" ();
+  lists ();
+  presets ();
+  src ();
+  syntax ();
+  Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/" |> ignore;
+  install ();
+  Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/version.cmake cmake/" |> ignore;
+  Sys.command "git add CMake* cmake" |> ignore
 
 let aptcpp () =
-  let c = "g++ cmake pkg-config clang-format doxygen
-gdb gdbserver valgrind cgroup-tools
-flex bison ragel libreadline-dev
-" in
-  append "apt.Debian" ~c:("code meld\n"^c) ();
-  append "apt.Ubuntu" ~c:(""^c) ();
-  append "apt.Raspbian" ~c:(""^c) ();
-  Sys.command "git add apt.*"
+  let c =
+    "g++ cmake pkg-config clang-format doxygen gdb
+  gdbserver valgrind cgroup-tools flex bison ragel libreadline-dev "
+  in
+  append "apt.Debian" ~c:("code meld\n" ^ c) ();
+  append "apt.Ubuntu" ~c:("" ^ c) ();
+  append "apt.Raspbian" ~c:("" ^ c) ();
+  Sys.command "git add apt.*" |> ignore
 
 let cf () =
   Sys.command "cp ~/em/.clang-format ./" |> ignore;
-  Sys.command "git add .clang-format"|> ignore;
+  Sys.command "git add .clang-format" |> ignore
 
 let cpplaunch () =
-    touch ".vscode/launch.json"
-      ~c:"{
-    \"version\": \"0.2.0\",
-    \"configurations\": [
+  touch ".vscode/launch.json"
+    ~c:
+      {|{
+    "version": "0.2.0",
+    "configurations": [
         {
-            \"name\"            : \"cmake:linux\",
-            \"type\"            : \"cppdbg\",
-            \"request\"         : \"launch\",
-            \"cwd\"             : \"${workspaceFolder}\",
-            \"program\"         : \"${command:cmake.launchTargetPath}\",
-            \"args\"            : [\"lib/${workspaceFolderBasename}.ini\"],
-            \"environment\"     : [],
-            \"preLaunchTask\"   : \"CMake: build\",
-            \"stopAtEntry\"     : true,
-            \"externalConsole\" : false,
-            \"MIMode\"          : \"gdb\",
-            \"miDebuggerPath\"  : \"gdb\",
-            \"setupCommands\"   : [
-                {\"text\": \"-enable-pretty-printing\",\"ignoreFailures\": true},
-                {\"text\": \"source ${workspaceFolder}/.gdbinit\",\"ignoreFailures\": true}
+            "name"            : "cmake:linux",
+            "type"            : "cppdbg",
+            "request"         : "launch",
+            "cwd"             : "${workspaceFolder}",
+            "program"         : "${command:cmake.launchTargetPath}",
+            "args"            : ["lib/${workspaceFolderBasename}.ini"],
+            "environment"     : [],
+            "preLaunchTask"   : "CMake: build",
+            "stopAtEntry"     : true,
+            "externalConsole" : false,
+            "MIMode"          : "gdb",
+            "miDebuggerPath"  : "gdb",
+            "setupCommands"   : [
+                {"text": "-enable-pretty-printing","ignoreFailures": true},
+                {"text": "source ${workspaceFolder}/.gdbinit","ignoreFailures": true}
             ]
         }
     ]
 }
-"
-      ()
-  
-let cpp () =
-  mkd "inc" (); mkd "src" ();
-  hpp ()l; cpp(); cmake ();
-  doxygen (); aptcpp () ; cf ();
-  cpplaunch ()
-    
-(* let main () =
-  touch "inc/main.hpp"
-    ~c:
-      "#pragma once
-
-extern int main(int argc, char* argv[]);
-extern void arg(int argc, char* argv);
-extern void setup(int argc, char* argv[]);
-extern int loop();
-"
-    ();
-  touch "src/main.cpp"
-    ~c:
-      "#include \"app.hpp\"
-
-int main(int argc, char* argv[]) {
-    setup(argc,argv);
-    // for (int i = 1; i < argc; i++) arg(i, argv[i]);
-    return loop();
-}
-
-void arg(int argc, char* argv) {
-    std::clog << \"\\targ[\" << argc << \"] = <\" << argv << \"]\\n\";
-}
-
-__attribute__((weak)) void setup(int argc, char* argv[]) {
-    std::clog << \"setup:\\n\";
-    arg(0,argv[0]);
-    for (int i = 1; i < argc; i++) arg(i,argv[i]);
-}
-
-__attribute__((weak)) int loop() {
-    std::clog << \"loop:\\n\\texit\\n\";
-    return 0;
-}
-"
+|}
     ()
-
-let app () =
-  touch "inc/app.hpp"
-    ~c:
-      "#pragma once
-#include \"libc.hpp\"
-//
-#include \"vm.hpp\"
-//
-#include \"cli.hpp\"
-#include \"main.hpp\"
-"
-    ();
-  touch "src/app.cpp" ~c:"#include \"app.hpp\"
-" ()
-
-let libc () =
-  touch "inc/libc.hpp"
-    ~c:
-      "#pragma once
-
-#include <cassert>
-#include <cstdio>
-#include <cstdlib>
-//
-#include <iostream>
-#include <sstream>
-#include <string>
-//
-#include <map>
-#include <vector>
-//
-#include <chrono>
-#include <thread>
-//
-#include \"linux.hpp\"
-"
-    ()
-
-let linux () =
-  touch "inc/linux.hpp"
-    ~c:
-      "#pragma once
-
-#include <sys/inotify.h>
-#include <sys/types.h>
-#include <x86intrin.h>
-"
-    ()
-
-let timer () =
-  touch "inc/timer.hpp" ~c:"#pragma once
-
-/// @defgroup timer timer
-/// @{
-extern void rdtsc();  ///< `( ns -- )` run timer `ns` nanoseconds
-/// @}
-" ();
-  touch "src/timer.cpp" ~c:"" ();
-
 
 let c_cpp_properties () =
   touch ".vscode/c_cpp_properties.json"
     ~c:
-      "{
-    \"version\": 4,
-    \"env\": {
-        \"appInclude\": [
-            \"${workspaceFolder}/inc/**\",
-            \"${workspaceFolder}/tmp/**\",
-            \"${workspaceFolder}/src/**\",
-            \"${workspaceFolder}/lib/inc/**\" ,\"${workspaceFolder}/lib/*/inc/**\"
-        ]
-        \"crossInclude\": [
-            \"${workspaceFolder}/hw/inc/**\"  ,\"${workspaceFolder}/hw/*/inc/**\"  ,
-            \"${workspaceFolder}/cpu/inc/**\" ,\"${workspaceFolder}/cpu/*/inc/**\" ,
-            \"${workspaceFolder}/arch/inc/**\",\"${workspaceFolder}/arch/*/inc/**\",
-            \"${workspaceFolder}/os/inc/**\"  ,\"${workspaceFolder}/os/*/inc/**\"
+      {|{
+    "version": 4,
+    "env": {
+        "appInclude": [
+            "${workspaceFolder}/inc/**",
+            "${workspaceFolder}/tmp/**",
+            "${workspaceFolder}/src/**"
         ]
     },
-    \"configurations\": [
+    "configurations": [
         {
-            \"name\"                 : \"linux\",
-            \"configurationProvider\": \"ms-vscode.cmake-tools\",
-            \"mergeConfigurations\"  :  true,
-            \"includePath\"          : [\"${appInclude}\", \"${crossInclude}\"],
-            \"defines\"              : [\"PC\", \"I5\", \"X86_64\", \"LINUX\"],
-            \"compilerPath\"         : \"/usr/bin/x86_64-linux-gnu-g++\",
-            \"cStandard\"            : \"c17\",
-            \"cppStandard\"          : \"c++23\",
-            \"intelliSenseMode\"     : \"gcc-x64\"
+            "name"                 : "linux",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  :  true
+//            "includePath"          : ["${appInclude}"],
+//            "defines"              : ["PC", "I5", "X86_64", "LINUX"],
+//            "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
+//            "cStandard"            : "c17",
+//            "cppStandard"          : "c++17",
+//            "intelliSenseMode"     : "gcc-x64"
         }
     ]
 }
-"
+|}
     ()
-
 
 let cpp () =
   mkd "inc" ();
   mkd "src" ();
-  main ();
-  app ();
-  libc ();
-  linux ();
-  timer();
-  mproc();
-  aptcpp();
-  cf();
-  cpplaunch();c_cpp_properties();
-  doxygen();
-  Sys.command "git add doc inc src" *)
+  hpp ();
+  cpp ();
+  cmake ();
+  doxygen ();
+  aptcpp ();
+  cf ();
+  cpplaunch ();
+  c_cpp_properties ();
+  Sys.command "git add .vscode doc cmake inc src"
