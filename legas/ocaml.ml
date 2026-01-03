@@ -33,11 +33,18 @@ break-string-literals=never
   Sys.command("git add .ocaml*")
 
 let dune () =
+  touch ("lib/"^app^".ml") ~c:("(** "^title^" *)\n") ();
+  touch ("lib/test.ml") ~c:("(** "^app^" tests *)") ();
   touch "lib/dune"
     ~c:("(library
   (name " ^ app ^ ")
-  (modules)
+  (modules "^app^")
   (libraries ppx_string))
+
+(test
+ (modules test)
+ (libraries "^app^")
+ (name test))
 ")
     ();
   let lang = "(lang dune           3.20)\n" in
@@ -51,12 +58,13 @@ let dune () =
   let src = "(source              (github ponyatov/" ^ app ^ "))\n" in
   let pack = "(package\n" in
   let syno = " (synopsis            \"" ^ title ^ "\")\n" in
-  let about = "(description         \""^about^"\")\n" in
-  let empty = "(allow_empty)\n" in
+  let about = " (description         \""^about^"\")\n" in
+  let empty = " (allow_empty)\n" in
+  let allow = " (depends ocaml utop dune)" in
   touch "dune-project"
     ~c:
       (lang ^ name ^ opam ^ authors ^ maintr ^ bugs ^ home ^ lic ^ src ^ pack
-     ^ " " ^ name ^ syno ^ about ^ empty ^ ")\n")
+     ^ " " ^ name ^ syno ^ about ^ empty ^ allow ^ ")\n")
     ();
   Sys.command "dune build";
   Sys.command("git add dune* *.opam lib")
