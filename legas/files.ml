@@ -7,7 +7,7 @@ let touch name ?(c = "") () =
   close_out f
 
 let append name ?(c = "") () =
-  let f = open_out_gen [Open_append] 0o644 name in
+  let f = open_out_gen [ Open_append ] 0o644 name in
   output_string f c;
   close_out f
 
@@ -17,13 +17,11 @@ let mkd name ?(c = "!.gitignore\n") () =
 
 let dirs () =
   [ ".vscode"; "lib"; "src" ] |> List.iter (fun d -> mkd d ());
-  Sys.command "git add .vscode lib src"|> ignore
-
+  Sys.command "git add .vscode lib src" |> ignore
 
 let bins () =
   [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ());
-  Sys.command "git add bin tmp ref"|> ignore
-
+  Sys.command "git add bin tmp ref" |> ignore
 
 let giti () =
   touch ".gitignore" ~c:"*~
@@ -32,38 +30,44 @@ let giti () =
 /_build/
 !.gitignore
 " ();
-    Sys.command "git add .gitignore"|> ignore
+  Sys.command "git add .gitignore" |> ignore
 
 let apt () =
   let a = "git make curl fzf\n" in
-  touch "apt.Debian" ~c:(a^"code meld\n") ();
-  touch "apt.Ubuntu" ~c:a ();
+  touch "apt.Debian" ~c:[%string "%{a}code meld\n"] ();
+  touch "apt.Ubuntu" ~c:[%string "%{a}"] ();
   touch "apt.Raspbian" ~c:a ();
-  Sys.command "git add apt.*"|> ignore
+  Sys.command "git add apt.*" |> ignore
 
 let readme () =
   touch "README.md"
     ~c:
-      ("# `" ^ app ^ "` " ^ version ^ "\n## " ^ title ^ "\n![](doc/logo.png)\n\n(c) " ^ author
-     ^ " <<" ^ email ^ ">> " ^ Int.to_string year ^ " " ^ license ^ "\n\n"
-     ^ github ^ "\n" ^ about)
-    ();
-  Sys.command "git add README.md"|> ignore
+      [%string
+        "# ![](doc/logo.png) %{app} %{version}
+## %{title}
 
-let ini() =
-    mkd "lib" ();
-    touch ("lib/"^app^".ini") ~c:"# line comment\n" ();
-    Sys.command "git add lib"|> ignore
+(c) %{author} <<%{email}>> %{year#Int} %{license}
+
+github: %{github}
+
+%{about}"]
+    ();
+  Sys.command "git add README.md" |> ignore
+
+let ini () =
+  mkd "lib" ();
+  touch ("lib/" ^ app ^ ".ini") ~c:"# line comment\n" ();
+  Sys.command "git add lib" |> ignore
 
 let dotfiles () =
   Sys.command "cp ~/em/.prettierrc ./" |> ignore;
-  Sys.command "git add .prettierrc"|> ignore
+  Sys.command "git add .prettierrc" |> ignore
 
 let files () =
-  dirs();
-  bins();
-  giti();
-  apt();
-  readme();
-  ini();
-  dotfiles()
+  dirs ();
+  bins ();
+  giti ();
+  apt ();
+  readme ();
+  ini ();
+  dotfiles ()

@@ -21,8 +21,8 @@ let email = "dponyatov@gmail.com"
 let year = 2026
 let version = "0.0.1"
 let license = "MIT"
-let github = "github: https://github.com/ponyatov/" ^ app
-let gitflic = "github: https://gitflic.ru/project/"^user^"/" ^ app
+let github = "https://github.com/ponyatov/" ^ app
+let gitflic = "https://gitflic.ru/project/"^user^"/" ^ app
 
 #use "legas/files.ml"
 files();;
