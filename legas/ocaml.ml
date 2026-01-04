@@ -1,12 +1,11 @@
 let ocamldots () =
   touch ".ocamlinit"
     ~c:
-      "#use \"topfind\";;
-#require \"unix\";;
+      {|#use "topfind";;
+#require "unix";;
 open Unix;;
-#use \"legas/files.ml\";;
-(* #require \"ppx_string\";; *)
-"
+#require "ppx_string";;
+|}
     ();
 
   let ic = Unix.open_process_in "ocamlformat --version" in
@@ -16,7 +15,7 @@ open Unix;;
   touch ".ocamlformat"
     ~c:
       ("version=" ^ version
-     ^ "
+     ^ {|
 profile=default
 margin=80
 line-endings=lf
@@ -27,25 +26,27 @@ break-string-literals=never
 # break-infix = fit-or-vertical
 # break-separators = after
 # let-and = sparse
-"
+|}
       )
     ();
-  Sys.command("git add .ocaml*")
+  Sys.command "git add .ocaml*"
 
 let dune () =
-  touch ("lib/"^app^".ml") ~c:("(** "^title^" *)\n") ();
-  touch ("lib/test.ml") ~c:("(** "^app^" tests *)") ();
+  touch ("lib/" ^ app ^ ".ml") ~c:("(** " ^ title ^ " *)\n") ();
+  touch "lib/test.ml" ~c:("(** " ^ app ^ " tests *)\n") ();
   touch "lib/dune"
-    ~c:("(library
-  (name " ^ app ^ ")
-  (modules "^app^")
+    ~c:
+      [%string
+        "(library
+  (name %{app})
+  (modules %{app})
   (libraries ppx_string))
 
 (test
  (modules test)
- (libraries "^app^")
+ (libraries %{app})
  (name test))
-")
+"]
     ();
   let lang = "(lang dune           3.20)\n" in
   let name = "(name                " ^ app ^ ")\n" in
@@ -58,16 +59,18 @@ let dune () =
   let src = "(source              (github ponyatov/" ^ app ^ "))\n" in
   let pack = "(package\n" in
   let syno = " (synopsis            \"" ^ title ^ "\")\n" in
-  let about = " (description         \""^about^"\")\n" in
+  let about = " (description         \"" ^ about ^ "\")\n" in
   let empty = " (allow_empty)\n" in
-  let allow = " (depends ocaml utop dune)" in
+  let allow =
+    " (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir)"
+  in
   touch "dune-project"
     ~c:
       (lang ^ name ^ opam ^ authors ^ maintr ^ bugs ^ home ^ lic ^ src ^ pack
      ^ " " ^ name ^ syno ^ about ^ empty ^ allow ^ ")\n")
     ();
   Sys.command "dune build";
-  Sys.command("git add dune* *.opam lib")
+  Sys.command "git add dune* *.opam lib"
 
 let ocaml () =
   ocamldots ();

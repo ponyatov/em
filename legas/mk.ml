@@ -88,21 +88,24 @@ M += $(wildcard lib/*.ml*) $(wildcard legas/*.ml*)
     ()
 
 let rule () =
-  touch "mk/rule.mk" ~c:"bin/$(BINFILE): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
+  touch "mk/rule.mk"
+    ~c:
+      "bin/$(BINFILE): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 \tcmake --fresh --preset linux
 \tcmake --build --preset linux -j
 
 # $(ELF): $(C) $(H) $(CP) $(HP) $(MK) $(CM)
 # \tcmake --fresh --preset ${HW}
 # \tcmake --build --preset ${HW} -j
-" ()
+"
+    ()
 
 let doc () =
   touch "mk/doc.mk"
     ~c:
       ".PHONY: doc
 doc:
-\trsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
+\trm -rf doc/$(APP)/ ; rsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
 \tgit add $@
 
 .PHONY: doxy
@@ -181,5 +184,5 @@ let mk () =
   sync ();
   install ();
   ai ();
-  Sys.command("cp ~/em/mk/ocaml.mk mk/")|>ignore;
+  Sys.command "cp ~/em/mk/ocaml.mk mk/" |> ignore;
   Sys.command "git add Makefile mk"

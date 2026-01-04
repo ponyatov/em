@@ -230,12 +230,15 @@ let cmake () =
 
 let aptcpp () =
   let c =
-    "g++ cmake pkg-config clang-format doxygen gdb
-  gdbserver valgrind cgroup-tools flex bison ragel libreadline-dev "
+    {|
+g++ cmake pkg-config clang-format doxygen
+gdb gdbserver valgrind cgroup-tools
+flex bison ragel libreadline-dev
+|}
   in
-  append "apt.Debian" ~c:("code meld\n" ^ c) ();
-  append "apt.Ubuntu" ~c:("" ^ c) ();
-  append "apt.Raspbian" ~c:("" ^ c) ();
+  append "apt.Debian" ~c:("code meld" ^ c) ();
+  append "apt.Ubuntu" ~c ();
+  append "apt.Raspbian" ~c ();
   Sys.command "git add apt.*" |> ignore
 
 let cf () =
