@@ -138,9 +138,9 @@ file(GLOB INI
 let syntax () =
   touch "cmake/syntax.cmake"
     ~c:
-      "find_package(FLEX     REQUIRED)
+      {|find_package(FLEX     REQUIRED)
 find_package(BISON    REQUIRED)
-# find_program(RAGEL    REQUIRED)
+find_package(RAGEL    REQUIRED)
 find_package(READLINE REQUIRED)
 
 file(GLOB X
@@ -155,17 +155,11 @@ file(GLOB Y
     lib/src/*.yacc lib/*/src/*.yacc
 )
 
-file(GLOB R
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.ragel
-    lib/src/*.ragel lib/*/src/*.ragel
-)
-
 foreach(LEX_FILE ${X})
-    string(REGEX REPLACE \".+\\/(.+)\\.lex$\" \"${CMAKE_BINARY_DIR}/\\\\1.lex.cpp\"
+    string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.cpp"
         LEXER_CPP           ${LEX_FILE})
         list(APPEND CP      ${LEXER_CPP})
-    string(REGEX REPLACE \".+\\/(.+)\\.lex$\" \"${CMAKE_BINARY_DIR}/\\\\1.lex.hpp\"
+    string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.hpp"
         LEXER_HPP           ${LEX_FILE})
         list(APPEND HP      ${LEXER_HPP})
     add_custom_command(
@@ -178,9 +172,9 @@ foreach(LEX_FILE ${X})
 endforeach()
 
 foreach(YACC_FILE ${Y})
-    string(REGEX REPLACE \".+\\/(.+)\\.yacc$\" \"${CMAKE_BINARY_DIR}/\\\\1.yacc.cpp\"
+    string(REGEX REPLACE ".+\/(.+)\.yacc$" "${CMAKE_BINARY_DIR}/\\1.yacc.cpp"
         PARSER_CPP          ${YACC_FILE})
-    string(REGEX REPLACE \".+\\/(.+)\\.yacc$\" \"${CMAKE_BINARY_DIR}/\\\\1.yacc.hpp\"
+    string(REGEX REPLACE ".+\/(.+)\.yacc$" "${CMAKE_BINARY_DIR}/\\1.yacc.hpp"
         PARSER_HPP          ${YACC_FILE})
     list(APPEND CP          ${PARSER_CPP})
     list(APPEND HP          ${PARSER_HPP})
@@ -192,23 +186,10 @@ foreach(YACC_FILE ${Y})
         ARGS                -o ${PARSER_CPP} ${YACC_FILE}
     )
 endforeach()
-
-foreach(RAGEL_FILE ${R})
-    string(REGEX REPLACE \".+\/(.+)\.ragel$\" \"${CMAKE_BINARY_DIR}/\\\\1.ragel.cpp\"
-        RAGEL_CPP           ${RAGEL_FILE})
-    list(APPEND CP          ${RAGEL_CPP})
-    add_custom_command(
-        OUTPUT              ${RAGEL_CPP}
-        DEPENDS             ${RAGEL_FILE}
-        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-        COMMAND             ragel
-        ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
-    )
-endforeach()
-
-add_compile_definitions(YYSTYPE=cell)
-"
-    ()
+|}
+    ();
+  Sys.command "cp ~/em/cmake/FindRAGEL.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/FindREADLINE.cmake cmake/" |> ignore
 
 let cmake () =
   mkd "cmake" ();
@@ -218,8 +199,6 @@ let cmake () =
   Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/version.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
-  Sys.command "cp ~/em/cmake/FindRAGEL.cmake cmake/" |> ignore;
-  Sys.command "cp ~/em/cmake/FindREADLINE.cmake cmake/" |> ignore;
   src ();
   install ();
   syntax ();

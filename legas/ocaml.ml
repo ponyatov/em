@@ -37,37 +37,48 @@ let dune () =
   touch "lib/dune"
     ~c:
       [%string
-        "(library
+        "(executable
+ (name hello)
+ (public_name hello)
+ (modules hello)
+ (libraries %{app})
+ (package hello))
+ 
+(library
   (name %{app})
   (modules %{app})
-  (libraries ppx_string))
+  (libraries ppx_string)
+  (package %{app}))
 
 (test
+ (name test)
  (modules test)
  (libraries %{app})
- (name test))
+ (package %{app}))
 "]
     ();
-  let lang = "(lang dune           3.20)\n" in
-  let name = "(name                " ^ app ^ ")\n" in
-  let opam = "(generate_opam_files true)\n" in
-  let authors = "(authors             \"" ^ author ^ " <" ^ email ^ ">\")\n" in
-  let maintr = "(maintainers         \"" ^ author ^ " <" ^ email ^ ">\")\n" in
-  let bugs = "(bug_reports         \"" ^ email ^ "\")\n" in
-  let home = "(homepage            \"" ^ github ^ "\")\n" in
-  let lic = "(license             \"" ^ license ^ "\")\n" in
-  let src = "(source              (github ponyatov/" ^ app ^ "))\n" in
-  let pack = "(package\n" in
-  let syno = " (synopsis            \"" ^ title ^ "\")\n" in
-  let about = " (description         \"" ^ about ^ "\")\n" in
-  let empty = " (allow_empty)\n" in
-  let allow =
-    " (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir)"
-  in
   touch "dune-project"
     ~c:
-      (lang ^ name ^ opam ^ authors ^ maintr ^ bugs ^ home ^ lic ^ src ^ pack
-     ^ " " ^ name ^ syno ^ about ^ empty ^ allow ^ ")\n")
+      [%string
+        "(lang dune           3.20)
+(name                %{app})
+(generate_opam_files true)
+(authors             \"Jason Hickey <jyh@cs.caltech.edu>\")
+(maintainers         \"%{author} <%{email}>\")
+(bug_reports         \"%{email}\")
+(homepage            \"%{github}\")
+(license             \"%{license}\")
+(source              (github ponyatov/%{app}))
+(package
+ (name               hello)
+ (allow_empty))
+(package
+ (name               %{app})
+ (synopsis           \"%{title}\")
+ (description        \"%{about}\")
+ (allow_empty)
+ (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir))
+"]
     ();
   Sys.command "dune build";
   Sys.command "git add dune* *.opam lib"
