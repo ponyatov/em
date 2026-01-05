@@ -143,7 +143,10 @@ let ai () =
       ".PHONY: ai tmp/$(APP).ai.md
 ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md: doc
-\tcat doc/ai.md doc/$(APP)/bib.md README.md doc/$(APP)/*.md > $@ ; touch $@
+\tcat \\
+\t\tdoc/$(APP)/*.md \\
+\t\tdoc/ai.md doc/$(APP)/bib.md README.md \\
+\t> $@ ; touch $@
 "
     ()
 
