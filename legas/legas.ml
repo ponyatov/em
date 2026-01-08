@@ -1,28 +1,11 @@
-Sys.command("ln -fs ../rc rc")
-Sys.command("ln -fs ../em/legas legas")
-Sys.command("cp legas/.ocaml* ./")
-Sys.command("mkdir lib")
-Sys.command("cp ~/em/legas/legas.ml lib/legas.ml")
-Sys.command("code lib/legas.ml")
+Sys.command("ln -fs ~/rc rc")|>ignore;
+Sys.command("ln -fs ~/em/legas legas")|>ignore;
+Sys.command("cp legas/.ocaml* ./")|>ignore;
+Sys.command("mkdir lib")|>ignore;
+Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
+Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
 
-let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
-let title = "OCaml/C compiler"
-let about = "
-- OCaml workout
-- ASCII data parsing
-- programming language workbench
-"
-let user = "dponyatov"
-let ruser = "dimon"
-let devserver = "10.110.1.101"
-
-let author = "Dmitry Ponyatov"
-let email = "dponyatov@gmail.com"
-let year = 2026
-let version = "0.0.1"
-let license = "MIT"
-let github = "https://github.com/ponyatov/" ^ app
-let gitflic = "https://gitflic.ru/project/"^user^"/" ^ app
+#use "lib/meta.ml"
 
 #use "legas/files.ml"
 files();;

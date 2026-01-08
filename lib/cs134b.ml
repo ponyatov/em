@@ -1,0 +1,11 @@
+(* Sys.command("ln -fs ~/rc rc")|>ignore; *)
+(* Sys.command("ln -fs ~/em/legas legas")|>ignore; *)
+(* Sys.command("cp legas/.ocaml* ./")|>ignore; *)
+(* Sys.command("mkdir lib")|>ignore; *)
+(* Sys.command([%string "ln -fs ~/em/lib/%{app}.ml lib/%{app}.ml"])|>ignore; *)
+
+(* #use "lib/meta.ml"; *)
+(* #use "lib/git.ml"; *)
+(* #use "lib/files.ml"; *)
+(* #use "lib/ocaml.ml"; *)
+(* #use "lib/vscode.ml"; *)

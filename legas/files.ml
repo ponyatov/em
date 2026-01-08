@@ -16,12 +16,9 @@ let mkd name ?(c = "!.gitignore\n") () =
   touch (Filename.concat name ".gitignore") ~c ()
 
 let dirs () =
-  [ ".vscode"; "lib"; "src" ] |> List.iter (fun d -> mkd d ());
-  Sys.command "git add .vscode lib src" |> ignore
-
-let bins () =
-  [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ());
-  Sys.command "git add bin tmp ref" |> ignore
+  [ ".vscode"; "lib"; "inc"; "src" ] |> List.iter (fun d -> mkd d ());
+  [ "doc" ] |> List.iter (fun d -> mkd d ~c:"html/\n!.gitignore\n" ());
+  [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ())
 
 let giti () =
   touch ".gitignore" ~c:"*~
