@@ -11,26 +11,18 @@
             "type"   : "lldb",
             "request": "launch",
             "name"   : "rust:linux",
-            "cargo"  : {
-                "args": [
-                    "build",
-                    "--bin=${workspaceFolderBasename}",
-                    "--package=${workspaceFolderBasename}",
-                    "--target=x86_64-unknown-linux-gnu",
-                    "--features=pc"
-                ],
-                "filter": {
-                    "name": "main",
-                    "kind": "bin"
-                }
-            },
-            "args": ["lib/${workspaceFolderBasename}.ini"],
-            "cwd" : "${workspaceFolder}"
-            "stopOnEntry"   : true,
-            "preLaunchTask" : "cargo: build",
-            "preRunCommands": [
-                "process launch --stop-at-entry"
-            ]
+            "program": "target/x86_64-unknown-linux-gnu/debug/${workspaceFolderBasename}",
+            "args"   : ["lib/${workspaceFolderBasename}.ini"],
+            "cwd"    : "${workspaceFolder}",
+            "cargo"  : {"args": ["build"]}
+            // "--bin=${workspaceFolderBasename}",
+            // "--package=${workspaceFolderBasename}",
+            // "--target=x86_64-unknown-linux-gnu",
+            // "--features=pc"
+            // "filter": {"name": "main","kind": "bin"}
+            // "stopOnEntry"   : true,
+            // "preLaunchTask" : "cargo: build",
+            // "preRunCommands": [ "process launch --stop-at-entry" ]
         },
         {
             "name"              : "pillf103",
