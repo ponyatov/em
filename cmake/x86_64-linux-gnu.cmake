@@ -8,3 +8,4 @@ include(any_toolchain)
 add_compile_definitions(X86_64 LINUX)
 add_compile_options(-mtune=native)
 add_link_options()
+# -fsanitize=thread -static-libtsan -ltsan
