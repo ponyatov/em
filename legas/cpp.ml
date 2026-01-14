@@ -358,6 +358,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION .)
 
 let cpplib () =
   (* *)
+  mkd "inc" (); mkd "src" ();
   cmake_any (); liblists ();
   Sys.command "git add CMake* cmake" |> ignore;
   libhpp ();

@@ -6,9 +6,11 @@ Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
 Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
 
 #use "lib/meta.ml"
-
 #use "legas/files.ml"
-files();;
+files()
+
+#use "legas/sync.ml"
+sync();
 
 #use "legas/git.ml"
 git();

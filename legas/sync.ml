@@ -1,4 +1,4 @@
-let sync () =
+let syncmk () =
   touch "mk/sync.mk"
     ~c:
       ".PHONY: sync
@@ -37,3 +37,7 @@ ignore = Name {node_modules,.cache}
 ignore = Name {*.pyc,__pycache__}
 "]
     ()
+
+let sync () =
+  syncmk ();
+  unison ()

@@ -53,7 +53,7 @@ github: %{github}
   Sys.command "git add README.md" |> ignore
 
 let ini () =
-  mkd "lib" ();
+  mkd "lib" ~c:"pcpp/\n!.gitignore\n" ();
   touch ("lib/" ^ app ^ ".ini") ~c:"# line comment\n" ();
   Sys.command "git add lib" |> ignore
 
