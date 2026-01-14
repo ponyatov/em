@@ -1,8 +1,9 @@
-
 let etcservice () =
   let systemd = [%string "/etc/systemd/system/%{app}@%{user}.service"] in
-  touch [%string "etc/%{app}.service"] ~c:[%string "\
-# sudo ln -fs ~/%{app}/etc/%{app}.service %{systemd}
+  touch [%string "etc/%{app}.service"]
+    ~c:
+      [%string
+        "# sudo ln -fs ~/%{app}/etc/%{app}.service %{systemd}
 # ls -la %{systemd}
 
 [Unit]
@@ -21,18 +22,21 @@ ExecStop         = /bin/sh etc/%{app}.stop
 
 [Install]
 WantedBy         = multi-user.target
-"] ()
+"]
+    ()
 
 let etcconfig () =
-  touch [%string "etc/%{app}.config"] ~c:[%string "\
-#!/bin/sh
+  touch [%string "etc/%{app}.config"]
+    ~c:[%string "#!/bin/sh
 MAX=200M
 SWAP=100M
 "] ()
 
 let etcstart () =
-  touch [%string "etc/%{app}.start"] ~c:[%string "\
-#!/bin/sh
+  touch [%string "etc/%{app}.start"]
+    ~c:
+      [%string
+        "#!/bin/sh
 . $(dirname $0)/%{app}.config
 # sudo systemctl daemon-reload
 # sudo systemctl enable  %{app}@%{user}
@@ -46,16 +50,24 @@ echo 1     | tee /sys/fs/cgroup/%{app}/memory.oom.group
 # cat /sys/fs/cgroup/%{app}/memory.max
 # cat /sys/fs/cgroup/%{app}/memory.swap.max
 # cat /sys/fs/cgroup/%{app}/memory.oom.group
-"] ()
+"]
+    ()
 
 let etcstop () =
-  touch [%string "etc/%{app}.stop"] ~c:[%string "\
-#!/bin/sh
+  touch [%string "etc/%{app}.stop"]
+    ~c:
+      [%string
+        "#!/bin/sh
 . $(dirname $0)/%{app}.config
+# sudo systemctl daemon-reload
+# sudo systemctl disable %{app}@%{user}
+# sudo systemctl stop    %{app}@%{user}
+# sudo systemctl status  %{app}@%{user}
 
 cgdelete -g memory:%{app}
 # ls -la /sys/fs/cgroup/%{app}
-"] ()
+"]
+    ()
 
 let etc () =
   mkd "etc" ();
