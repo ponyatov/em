@@ -120,6 +120,14 @@ let sync () =
 sync: doc
 " ()
 
+let ref () =
+  (* *)
+  touch "mk/ref.mk" ~c:"\
+RF += static/cdn/jquery.min.js
+static/cdn/jquery.min.js:
+\t$(CURL) $@ https://cdnjs.cloudflare.com/ajax/libs/jquery/$(JQUERY_VER)/jquery.min.js
+" ()
+
 let install () =
   touch "mk/install.mk"
     ~c:
@@ -185,6 +193,7 @@ let mk () =
   rule ();
   doc ();
   sync ();
+  ref ();
   install ();
   ai ();
   Sys.command "cp ~/em/mk/ocaml.mk mk/" |> ignore;

@@ -215,18 +215,21 @@ file(CREATE_LINK ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
 |}
     ()
 
-let cmake () =
+let cmake_any () =
   mkd "cmake" ();
-  lists ();
   presets ();
   src ();
-  syntax ();
   Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/" |> ignore;
+
+let cmake () =
+  cmake_any ();
+  lists ();
+  syntax ();
   install ();
   Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/version.cmake cmake/" |> ignore;
-  Sys.command "git add CMake* cmake" |> ignore
+  Sys.command "git add CMake* cmake" |> ignore;
 
 let aptcpp () =
   let c =
@@ -291,12 +294,12 @@ let c_cpp_properties () =
             "name"                 : "linux",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true
-//            "includePath"          : ["${appInclude}"],
-//            "defines"              : ["PC", "I5", "X86_64", "LINUX"],
-//            "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
-//            "cStandard"            : "c17",
-//            "cppStandard"          : "c++17",
-//            "intelliSenseMode"     : "gcc-x64"
+            "includePath"          : ["${appInclude}"],
+            "defines"              : ["PC", "I5", "X86_64", "LINUX"],
+            "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
+            "cStandard"            : "c17",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-x64"
         }
     ]
 }
@@ -315,3 +318,51 @@ let cpp () =
   cpplaunch ();
   c_cpp_properties ();
   Sys.command "git add .vscode doc cmake inc src"
+
+let libhpp () =
+  (* *)
+  touch [%string "inc/%{app}.hpp"]
+    ~c:[%string "\
+#pragma once
+
+#include <cstdlib>
+#include <cstdio>
+
+extern \"C\" void %{app}();
+"] ()
+
+let libcpp () =
+  (* *)
+  touch [%string "src/%{app}.cpp"]
+    ~c:[%string "\
+#include \"%{app}.hpp\"
+
+void %{app}() { fprintf(stderr, \"Hello, %{app}\\n\"); }
+"] ()
+
+let liblists () =
+  touch "CMakeLists.txt"
+    ~c:
+      [%string "cmake_minimum_required(VERSION 3.25)
+get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
+project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
+
+include(src)      # scan project for source code files
+
+add_library(${CMAKE_PROJECT_NAME} STATIC ${C} ${CP})
+
+install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION .)
+"]
+    ();
+  Sys.command "git add CMakeLists.txt"
+
+let cpplib () =
+  (* *)
+  cmake_any (); liblists ();
+  Sys.command "git add CMake* cmake" |> ignore;
+  libhpp ();
+  libcpp ();
+  doxygen ();
+  cf ();
+  c_cpp_properties ();
+  Sys.command "git add cmake inc src" |> ignore

@@ -1,4 +1,3 @@
-
 let sync () =
   touch "mk/sync.mk"
     ~c:
@@ -11,39 +10,30 @@ $(HOME)/.unison/$(APP).prf: $(CWD)/.unison
     ()
 
 let unison () =
-  (* Sys.command ("ln -fs ~/"^app^"/.unison ~/.unison/"^app^".prf");; *)
   touch ".unison"
     ~c:
-      ("# .unison
-## cd ~/.unison ; ln -fs ~/" ^ app ^ "/.unison " ^ app
-     ^ ".prf ; cd ~/" ^ app ^ " ; ls -la ~/.unison
-## unison " ^ app
-     ^ "
+      [%string
+        "# .unison
+## ln -fs ~/%{app}/.unison ~/.unison/%{app}.prf
 
-# Название профиля (опционально)
-label = " ^ app
-     ^ " sync
+# profile name (optional)
+label = %{app} sync
 
-# Корневые директории
-root = /home/" ^ user ^ "/" ^ app
-     ^ "
-root = ssh://" ^ ruser ^ "@" ^ devserver ^ "//home/" ^ ruser ^ "/"
-     ^ app
-     ^ "
+# directories (local/remote)
+root = /home/%{user}/%{app}
+root = ssh://%{ruser}@%{devserver}//home/%{ruser}/%{app}
 
-# Автоматизация
+# automation
 auto   = true
 batch  = true
 prefer = newer
 
-# Игнорирование специфичных файлов и кэшей
-# ignore = Name {.unison}
+# temp/build/local-only files ignoring
 ignore = Name {.git}
 ignore = Name {*~,*.log,*.sw?}
-ignore = Name {bin,tmp,ref}
+ignore = Name {bin,tmp,ref,_build,target}
 ignore = Name {doc/html,lib/pcpp}
 ignore = Name {node_modules,.cache}
 ignore = Name {*.pyc,__pycache__}
-"
-      )
+"]
     ()
