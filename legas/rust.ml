@@ -110,6 +110,12 @@ watch:
 $(RUSTUP) $(CARGO):
 \tcurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 \trustup target add x86_64-unknown-linux-gnu
+$(RUSTUP) $(CARGO):
+# PROXY = -x 10.110.1.12:8888
+\tcurl $(PROXY) --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+\t. $HOME/.cargo/env
+\trustup target add x86_64-unknown-linux-gnu
+# rustup self update ; rustup update
 "
     ();
 

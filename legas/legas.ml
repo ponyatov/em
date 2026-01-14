@@ -14,7 +14,7 @@ files();;
 git();
 
 #use "legas/vscode.ml"
-vscode();;
+vscode();
 
 (* #use "legas/ocaml.ml"
 ocamldots(); *)
@@ -25,6 +25,9 @@ doc();
 
 #use "legas/mk.ml"
 mk();
+
+#use "legas/ref.ml";;
+ref();
 
 #use "legas/cpp.ml"
 cpp();
@@ -40,6 +43,8 @@ cmake();
 
 #use "legas/rust.ml"
 rust();
+#use "legas/cpp.ml"
+cpplib();
 
 #use "legas/js.ml"
 js();
