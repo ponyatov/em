@@ -1,0 +1,24 @@
+# 1.2 List of abbreviations for registers
+
+- `rw`
+	- **read/write** bits
+- `r`
+	- **read-only** bits
+- `w` 
+	- **write-only** bits
+	- Reading the bit returns the reset value.
+- `rc_w1`
+	- **read/clear**
+	- can read as well as 
+	- clear this bit by writing 1
+	- writing 0 has no effect
+- `rc_w0`
+	- **read/clear**
+	- can read as well as 
+	- clear by writing 0
+- `t`
+	- **toggle** by writing 1
+	- writing 0 has no effect
+- `res`
+	- **reserved**
+	- must be kept at reset value
