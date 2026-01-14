@@ -1,4 +1,4 @@
-Sys.command("ln -fs ~/rc rc")|>ignore;
+Sys.command("ln -fs ../rc rc")|>ignore;
 Sys.command("ln -fs ~/em/legas legas")|>ignore;
 Sys.command("cp legas/.ocaml* ./")|>ignore;
 Sys.command("mkdir lib")|>ignore;

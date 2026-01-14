@@ -25,6 +25,7 @@ let giti () =
 *.swp
 *.log
 /_build/
+/target/
 !.gitignore
 " ();
   Sys.command "git add .gitignore" |> ignore
@@ -62,7 +63,6 @@ let dotfiles () =
 
 let files () =
   dirs ();
-  bins ();
   giti ();
   apt ();
   readme ();
