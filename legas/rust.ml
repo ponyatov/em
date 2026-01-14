@@ -115,6 +115,7 @@ $(RUSTUP) $(CARGO):
 \tcurl $(PROXY) --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 \t. $HOME/.cargo/env
 \trustup target add x86_64-unknown-linux-gnu
+\tcargo install cargo-watch
 # rustup self update ; rustup update
 "
     ();
