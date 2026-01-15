@@ -1,3 +1,4 @@
+Sys.command("git init")|>ignore;
 Sys.command("ln -fs ../rc rc")|>ignore;
 Sys.command("ln -fs ~/em/legas legas")|>ignore;
 Sys.command("cp legas/.ocaml* ./")|>ignore;
@@ -15,8 +16,8 @@ git();
 #use "legas/vscode.ml"
 vscode();
 
-(* #use "legas/ocaml.ml"
-ocamldots(); *)
+(* #use "legas/ocaml.ml" *)
+(* ocamldots(); *)
 (* dune() *)
 
 #use "legas/doc.ml"
@@ -24,8 +25,8 @@ doc();
 
 #use "legas/mk.ml"
 mk();
-#use "legas/sync.ml"
-sync();
+(* #use "legas/sync.ml" *)
+(* sync(); *)
 
 #use "legas/ref.ml";;
 ref();

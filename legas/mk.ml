@@ -122,11 +122,13 @@ sync: doc
 
 let ref () =
   (* *)
-  touch "mk/ref.mk" ~c:"\
-RF += static/cdn/jquery.min.js
+  touch "mk/ref.mk"
+    ~c:
+      "RF += static/cdn/jquery.min.js
 static/cdn/jquery.min.js:
 \t$(CURL) $@ https://cdnjs.cloudflare.com/ajax/libs/jquery/$(JQUERY_VER)/jquery.min.js
-" ()
+"
+    ()
 
 let install () =
   touch "mk/install.mk"
@@ -153,7 +155,7 @@ ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md: doc
 \tcat \\
 \t\tdoc/$(APP)/*.md \\
-\t\tdoc/ai.md doc/$(APP)/bib.md README.md \\
+\t\tdoc/ai.md doc/bib.md doc/$(APP)/bib.md doc/$(APP)/*.md README.md \\
 \t> $@ ; touch $@
 "
     ()

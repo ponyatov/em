@@ -34,6 +34,7 @@ break-string-literals=never
 let dune () =
   touch ("lib/" ^ app ^ ".ml") ~c:("(** " ^ title ^ " *)\n") ();
   touch "lib/test.ml" ~c:("(** " ^ app ^ " tests *)\n") ();
+  touch "lib/hello.ml" ~c:"(** Hello, OCaml *)\n" ();
   touch "lib/dune"
     ~c:
       [%string
@@ -48,6 +49,7 @@ let dune () =
   (name %{app})
   (modules %{app})
   (libraries ppx_string)
+  (preprocess (pps ppx_string))
   (package %{app}))
 
 (test
@@ -63,7 +65,7 @@ let dune () =
         "(lang dune           3.20)
 (name                %{app})
 (generate_opam_files true)
-(authors             \"Jason Hickey <jyh@cs.caltech.edu>\")
+(authors             \"%{author} <%{email}>\")
 (maintainers         \"%{author} <%{email}>\")
 (bug_reports         \"%{email}\")
 (homepage            \"%{github}\")
@@ -75,7 +77,7 @@ let dune () =
 (package
  (name               %{app})
  (synopsis           \"%{title}\")
- (description        \"%{about}\")
+ (description        \"\n%{about}\")
  (allow_empty)
  (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir))
 "]
