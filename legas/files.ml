@@ -38,6 +38,8 @@ let apt () =
   Sys.command "git add apt.*" |> ignore
 
 let readme () =
+  mkd "doc" ~c:"html/\n!.gitignore\n" ();
+  Sys.command "cp ~/icons/control_64x64.png doc/logo.png";
   touch "README.md"
     ~c:
       [%string

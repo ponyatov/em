@@ -1,7 +1,7 @@
-(* let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd *)
-let app = "cs134b"
-let title = "OCaml/C compiler"
-let about = "
+let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
+(* let app = "cs134b" *)
+let title = "Compilers in OCaml"
+let about = "\
 - OCaml workout
 - ASCII data parsing
 - programming language workbench
@@ -10,7 +10,7 @@ let about = "
 
 (* *)
 let user = "dponyatov"
-let ruser = "dimon"
+let devuser = user
 let devserver = "10.110.1.101"
 
 (* *)
@@ -20,4 +20,4 @@ let year = 2026
 let version = "0.0.1"
 let license = "MIT"
 let github = [%string "https://github.com/ponyatov/%{app}"]
-let gitflic = [% string "https://gitflic.ru/project/%{user}/%{app}"]
+let gitflic = [%string "https://gitflic.ru/project/%{user}/%{app}"]

@@ -9,9 +9,6 @@ Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
 #use "legas/files.ml"
 files()
 
-#use "legas/sync.ml"
-sync();
-
 #use "legas/git.ml"
 git();
 
@@ -27,6 +24,8 @@ doc();
 
 #use "legas/mk.ml"
 mk();
+#use "legas/sync.ml"
+sync();
 
 #use "legas/ref.ml";;
 ref();

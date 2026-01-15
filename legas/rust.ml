@@ -125,6 +125,5 @@ let rust () =
   cargo ();
   rsmain ();
   configrs (); vmrs();
-  append ".gitignore" ~c:"/target/\n" ();
   Sys.command ("cargo run -- lib/" ^ app ^ ".ini")|>ignore;
   Sys.command "git add mk src Cargo.* .gitignore"|>ignore;
