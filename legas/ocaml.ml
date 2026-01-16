@@ -62,24 +62,25 @@ let dune () =
   touch "dune-project"
     ~c:
       [%string
-        "(lang dune           3.20)
+        "\
+(lang dune           3.20)
 (name                %{app})
 (generate_opam_files true)
 (authors             \"%{author} <%{email}>\")
 (maintainers         \"%{author} <%{email}>\")
 (bug_reports         \"%{email}\")
 (homepage            \"%{github}\")
+(documentation       \"%{github}/wiki\")
 (license             \"%{license}\")
 (source              (github ponyatov/%{app}))
-(package
- (name               hello)
- (allow_empty))
 (package
  (name               %{app})
  (synopsis           \"%{title}\")
  (description        \"\n%{about}\")
+ (tags   (OCaml \"programming language\"))
  (allow_empty)
- (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir))
+ (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir ounit2)
+ (allow_empty))
 "]
     ();
   Sys.command "dune build";
