@@ -39,11 +39,11 @@ let dune () =
     ~c:
       [%string
         "(executable
- (name hello)
- (public_name hello)
- (modules hello)
- (libraries %{app})
- (package hello))
+  (name hello)
+  (public_name hello)
+  (modules hello)
+  (libraries %{app})
+  (package hello))
  
 (library
   (name %{app})
@@ -53,10 +53,10 @@ let dune () =
   (package %{app}))
 
 (test
- (name test)
- (modules test)
- (libraries %{app})
- (package %{app}))
+  (name test)
+  (modules test)
+  (libraries %{app})
+  (package %{app}))
 "]
     ();
   touch "dune-project"

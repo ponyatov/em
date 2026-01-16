@@ -149,13 +149,13 @@ let settings () =
     \"rust-analyzer.cargo.target\"         : \"x86_64-unknown-linux-gnu\",
     \"rust-analyzer.cargo.features\"       : [\"pc\",\"i5\",\"x86_64\",\"linux\"],
 
-    // OCaml (cs3110)
+    // OCaml (cs3110/cs134b)
     \"[ocaml]\": {
-        \"editor.tabSize\": 2, \"editor.rulers\": [80],
-        \"editor.formatOnSave\": true },
+        \"editor.tabSize\": 2, \"editor.formatOnSave\": false },
     \"[ocaml.interface]\": {
-        \"editor.tabSize\": 2, \"editor.rulers\": [80],
-        \"editor.formatOnSave\": true },
+        \"editor.tabSize\": 2, \"editor.formatOnSave\": false },
+    \"[dune]\": {
+        \"editor.tabSize\": 2, \"editor.formatOnSave\": false },
 
     // MinGW/MSYS2
     \"terminal.integrated.defaultProfile.windows\": \"UCRT64\",
