@@ -1,3 +1,4 @@
+let allow = ""
 let allow = "
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
@@ -105,20 +106,46 @@ watch:
     ();
   touch "mk/rust.mk"
     ~c:
-      "RTARGET = x86_64-unknown-linux-gnu
-
-$(RUSTUP) $(CARGO):
-\tcurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-\trustup target add x86_64-unknown-linux-gnu
+      "\
 $(RUSTUP) $(CARGO):
 # PROXY = -x 10.110.1.12:8888
 \tcurl $(PROXY) --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 \t. $HOME/.cargo/env
-\trustup target add x86_64-unknown-linux-gnu
 \tcargo install cargo-watch
+\trustup target add x86_64-unknown-linux-gnu
+# rustup target add i586-unknown-linux-musl
+# rustup target add aarch64-unknown-linux-gnu
+# rustup target add armv7-unknown-linux-gnueabihf
+# rustup target add thumbv7em-none-eabihf
+# rustup target add thumbv7em-none-eabi
+# rustup target add thumbv7m-none-eabi
+# rustup target add thumbv6m-none-eabi
 # rustup self update ; rustup update
 "
     ();
+
+let cross () =
+  mkd ".cargo" ();
+  touch ".cargo/config.toml" ~c:"\
+[build]
+target    = \"x86_64-unknown-linux-gnu\"
+jobs      = 4
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = [\"--cfg\", \"feature=\\\"pc,i5,linux\\\"\"]
+linker    = \"x86_64-linux-gnu-gcc\"
+
+[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = \"sparse+https://mirrors.ustc.edu.cn/crates.io-index/\"
+[source.tuna]
+registry = \"sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/\"
+" ()
+
+let nightly () =
+  touch "rust-toolchain.toml" ~c:"[toolchain]\nchannel = \"nightly\"\n" ()
 
 let rust () =
   rustmk ();
