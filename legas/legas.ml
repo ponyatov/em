@@ -8,10 +8,8 @@ Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
 
 #use "lib/meta.ml"
 #use "legas/git.ml"
-git();
 #use "legas/files.ml"
 files()
-
 
 #use "legas/vscode.ml"
 vscode();
