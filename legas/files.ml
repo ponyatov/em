@@ -26,6 +26,7 @@ let giti () =
 *.log
 /_build/
 /target/
+node_modules/
 !.gitignore
 " ();
   Sys.command "git add .gitignore" |> ignore
@@ -39,11 +40,11 @@ let apt () =
 
 let readme () =
   mkd "doc" ~c:"html/\n!.gitignore\n" ();
-  Sys.command "cp ~/icons/control_64x64.png doc/logo.png";
+  Sys.command "cp ~/icons/control_64x64.png doc/logo.png" |> ignore;
   touch "README.md"
     ~c:
       [%string
-        "# ![](doc/logo.png) %{app} %{version}
+        "# ![](doc/logo.png) `%{app}` %{version}
 ## %{title}
 
 (c) %{author} <<%{email}>> %{year#Int} %{license}
