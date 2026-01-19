@@ -7,21 +7,22 @@ sync: $(HOME)/.unison/$(APP).prf doc
 $(HOME)/.unison/$(APP).prf: $(CWD)/.unison
 \tln -fs $< $@
 "
-    ()
+    ();
+  Sys.command "git add mk" |> ignore
 
 let unison () =
   touch ".unison"
     ~c:
       [%string
         "# .unison
-## ln -fs ~/%{app}/.unison ~/.unison/%{app}.prf
+## ln -fs ~/%{app}/.unison ~/.unison/%{app}.prf ; unison %{app}
 
 # profile name (optional)
 label = %{app} sync
 
 # directories (local/remote)
 root = /home/%{user}/%{app}
-root = ssh://%{ruser}@%{devserver}//home/%{ruser}/%{app}
+root = ssh://%{devuser}@%{devserver}//home/%{devuser}/%{app}
 
 # automation
 auto   = true
@@ -36,7 +37,10 @@ ignore = Name {doc/html,lib/pcpp}
 ignore = Name {node_modules,.cache}
 ignore = Name {*.pyc,__pycache__}
 "]
-    ()
+    ();
+  Sys.command [%string "ln -fs ~/%{app}/.unison ~/.unison/%{app}.prf"] |> ignore;
+  Sys.command [%string "unison %{app}"] |> ignore;
+  Sys.command "git add .unison" |> ignore
 
 let sync () =
   syncmk ();

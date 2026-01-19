@@ -6,25 +6,26 @@ Sys.command("mkdir lib")|>ignore;
 Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
 Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
 
-#use "lib/meta.ml"
-#use "legas/git.ml"
-#use "legas/files.ml"
+#use "lib/meta.ml";;
+#use "legas/git.ml";;
+#use "legas/files.ml";;
 files()
 
-#use "legas/vscode.ml"
+#use "legas/vscode.ml";;
 vscode();
+
+(* #use "legas/sync.ml" *)
+(* sync(); *)
 
 (* #use "legas/ocaml.ml" *)
 (* ocamldots(); *)
 (* dune() *)
 
-#use "legas/doc.ml"
-doc();
+#use "legas/doc.ml";;
+(* doc(); *)
 
-#use "legas/mk.ml"
+#use "legas/mk.ml";;
 mk();
-(* #use "legas/sync.ml" *)
-(* sync(); *)
 
 #use "legas/ref.ml";;
 ref();
@@ -49,6 +50,5 @@ cpplib();
 #use "legas/js.ml"
 js();
 
-(* #use "legas/sync.ml" *)
 #use "legas/etc.ml"
 etc();

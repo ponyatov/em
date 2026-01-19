@@ -6,6 +6,6 @@ let doc () =
   touch "doc/bib.md" ~c:"# bib\n" ();
   mkd ("../metadoc/"^app) ();
   Sys.command [%string "cp ../metadoc/%{app}/bib.md doc/bib.md"]|>ignore;
-  Sys.command [%string "cp README.md ../metadoc/%{app}/%{app}.md"];
-  Sys.command [%string "cp doc/bib.md ../metadoc/%{app}/bib.md"];
+  Sys.command [%string "cp README.md ../metadoc/%{app}/%{app}.md"]|>ignore;
+  Sys.command [%string "cp doc/bib.md ../metadoc/%{app}/bib.md"]|>ignore;
   Sys.command "git add doc"|>ignore;

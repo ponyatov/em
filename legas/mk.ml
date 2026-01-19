@@ -44,7 +44,7 @@ PEP    = autopep8 --ignore $(PEPS) -i
 "
     ()
 
-let version () = touch "mk/version.mk" ()
+let versionmk () = touch "mk/version.mk" ()
 
 let all () =
   touch "mk/all.mk"
@@ -189,7 +189,7 @@ let mk () =
   var ();
   dirmk ();
   tool ();
-  (* version (); *)
+  versionmk ();
   all ();
   src ();
   rule ();
