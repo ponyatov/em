@@ -32,7 +32,10 @@ let package () =
         \"node\": \">=18.0.0\"
     },
     \"scripts\": {
-        \"start\": \"node index.js\",
+        \"repl\" : \"deno repl\",
+        \"start\": \"deno js/main.ts\",
+        \"build\": \"tsc\",
+        \"build:watch\": \"tsc --watch\",
         \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"
     },
     \"files\": [
