@@ -10,15 +10,19 @@ PY     = $(BIN)/python3
 PIP    = $(BIN)/pip3
 PEP    = $(BIN)/autopep8 --ignore $(PEPS) -i
 #
+CAR    = $(HOME)/.cargo
 RUSTUP = $(CAR)/bin/rustup
 CARGO  = $(CAR)/bin/cargo
 #
 OPAM   = /usr/local/bin/opam
-OCAMLC = $(ODIR)/ocamlc
-UTOP   = $(ODIR)/utop
-DUNE   = $(ODIR)/dune
-OFMT   = $(ODIR)/ocamlformat
-OLSP   = $(ODIR)/ocamllsp
+SWITCH = default
+OBIN   = $(HOME)/.opam/$(SWITCH)/bin
+OCAMLC = $(OBIN)/ocamlc
+DUNE   = $(OBIN)/dune
+UTOP   = $(OBIN)/utop
+OFMT   = $(OBIN)/ocamlformat
+OLSP   = $(OBIN)/ocamllsp
+OPPX   = $(OBIN)/ppx-base
 #
 NPM    = /usr/bin/npm
 TSC    = $(HOME)/.npm/bin/tsc
