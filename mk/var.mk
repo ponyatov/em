@@ -9,6 +9,12 @@ WS      = $(shell lsb_release -si)
 HW     ?= pc
 IP     ?= 127.0.0.1
 PORT   ?= 12345
+PROXY  ?= 10.110.1.12:8888
+
+DEVUSER = $(USER)
+DEVIP   = 10.110.1.101
+ETHOUT  = ens1f0np0
+ETHIN   = ens3f0np0
 
 ifeq ($(OS),Windows_NT)
 	WS  = $(shell uname -o)

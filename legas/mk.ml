@@ -13,6 +13,7 @@ WS      = $(shell lsb_release -si)
 HW     ?= pc
 IP     ?= 127.0.0.1
 PORT   ?= 12345
+PROXY  ?= 10.110.1.12:8888
 "
     ()
 
