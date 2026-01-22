@@ -1,7 +1,7 @@
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
-file(GLOB S
-    RELATIVE ${CMAKE_SOURCE_DIR}
+file(GLOB_RECURSE S
+    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     src/*.s
     # cross
     hw/${HW}/*.s
@@ -12,8 +12,8 @@ file(GLOB S
     lib/src/*.s lib/*/src/*.s
 )
 
-file(GLOB C
-    RELATIVE ${CMAKE_SOURCE_DIR}
+file(GLOB_RECURSE C
+    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     src/*.c*
     # cross
       hw/src/*.c*   hw/${HW}/src/*.c*
@@ -30,8 +30,8 @@ file(GLOB C
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/*.c*
 )
 
-file(GLOB H
-    RELATIVE ${CMAKE_SOURCE_DIR}
+file(GLOB_RECURSE H
+    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     inc/*.h*
     # cross
       hw/inc/*.h*   hw/${HW}/inc/*.h*
@@ -53,7 +53,7 @@ file(GLOB H
 )
 
 file(GLOB INC
-    RELATIVE ${CMAKE_SOURCE_DIR}
+    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     ${CMAKE_BINARY_DIR}
     inc src
     # cross
@@ -77,6 +77,6 @@ file(GLOB INC
 include_directories(${INC})
 
 file(GLOB INI
-    RELATIVE ${CMAKE_SOURCE_DIR}
+    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     lib/*.ini lib/*.f
 )
