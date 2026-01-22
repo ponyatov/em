@@ -86,6 +86,21 @@ let dune () =
   Sys.command "dune build";
   Sys.command "git add dune* *.opam lib"
 
+let otools () =
+  append "mk/tool.mk" ~c:[%string "\
+#
+OPAM   = /usr/local/bin/opam
+SWITCH = default
+OBIN   = $(HOME)/.opam/$(SWITCH)/bin
+OCAMLC = $(OBIN)/ocamlc
+DUNE   = $(OBIN)/dune
+UTOP   = $(OBIN)/utop
+OFMT   = $(OBIN)/ocamlformat
+OLSP   = $(OBIN)/ocamllsp
+OPPX   = $(OBIN)/ppx-base
+"] ()
+
 let ocaml () =
   ocamldots ();
-  dune ()
+  dune ();
+  otools ()

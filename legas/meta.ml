@@ -1,5 +1,4 @@
 let app = Sys.getcwd () |> String.split_on_char '/' |> List.rev |> List.hd
-(* let app = "cs134b" *)
 let title = "Compilers in OCaml"
 let about = "\
 - OCaml workout

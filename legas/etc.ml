@@ -1,10 +1,22 @@
 let etcservice () =
-  let systemd = [%string "/etc/systemd/system/%{app}@%{user}.service"] in
+  let systemd = [%string "/etc/systemd/system/%{app}@$USER.service"] in
   touch [%string "etc/%{app}.service"]
     ~c:
       [%string
         "# sudo ln -fs ~/%{app}/etc/%{app}.service %{systemd}
 # ls -la %{systemd}
+#
+# sudo systemctl daemon-reload
+# sudo systemctl stop    %{app}@$USER
+# sudo systemctl start   %{app}@$USER
+# sudo systemctl status  %{app}@$USER
+#
+# sudo systemctl enable  %{app}@$USER
+# sudo systemctl disable %{app}@$USER
+#
+# cat /sys/fs/cgroup/%{app}/memory.max
+# cat /sys/fs/cgroup/%{app}/memory.swap.max
+# sudo lib/pcpp/setup_dpdk.py status
 
 [Unit]
 Description      = %{app} @ %I
@@ -28,8 +40,8 @@ WantedBy         = multi-user.target
 let etcconfig () =
   touch [%string "etc/%{app}.config"]
     ~c:[%string "#!/bin/sh
-MAX=200M
-SWAP=100M
+MAX=111M
+SWAP=1M
 "] ()
 
 let etcstart () =
@@ -39,9 +51,9 @@ let etcstart () =
         "#!/bin/sh
 . $(dirname $0)/%{app}.config
 # sudo systemctl daemon-reload
-# sudo systemctl enable  %{app}@%{user}
-# sudo systemctl start   %{app}@%{user}
-# sudo systemctl status  %{app}@%{user}
+# sudo systemctl enable  %{app}@$USER
+# sudo systemctl start   %{app}@$USER
+# sudo systemctl status  %{app}@$USER
 
 cgcreate -g memory:%{app}
 echo $MAX  | tee /sys/fs/cgroup/%{app}/memory.max
@@ -60,9 +72,9 @@ let etcstop () =
         "#!/bin/sh
 . $(dirname $0)/%{app}.config
 # sudo systemctl daemon-reload
-# sudo systemctl disable %{app}@%{user}
-# sudo systemctl stop    %{app}@%{user}
-# sudo systemctl status  %{app}@%{user}
+# sudo systemctl disable %{app}@$USER
+# sudo systemctl stop    %{app}@$USER
+# sudo systemctl status  %{app}@$USER
 
 cgdelete -g memory:%{app}
 # ls -la /sys/fs/cgroup/%{app}
@@ -76,4 +88,3 @@ let etc () =
   etcstart ();
   etcstop ();
   (* touch ("etc/"^app^".stop") (); *)
-  Sys.command "git add etc"

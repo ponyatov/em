@@ -7,5 +7,4 @@ let doc () =
   mkd ("../metadoc/"^app) ();
   Sys.command [%string "cp ../metadoc/%{app}/bib.md doc/bib.md"]|>ignore;
   Sys.command [%string "cp README.md ../metadoc/%{app}/%{app}.md"]|>ignore;
-  Sys.command [%string "cp doc/bib.md ../metadoc/%{app}/bib.md"]|>ignore;
-  Sys.command "git add doc"|>ignore;
+  Sys.command [%string "cp doc/bib.md ../metadoc/%{app}/bib.md"]|>ignore

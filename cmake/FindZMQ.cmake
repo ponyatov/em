@@ -13,7 +13,7 @@
 # ~~~
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(ZMQ REQUIRED cppzmq>=4.10)
+pkg_check_modules(ZMQ REQUIRED cppzmq>=4.9)
 
 if(ZMQ_FOUND)
   add_compile_definitions(ZMQ_FOUND)
@@ -39,7 +39,13 @@ if(ZMQ_FOUND)
   endif()
     list(APPEND INC ${ZMQ_INCLUDE_DIRS})
     list(APPEND L ${ZMQ_LINK_LIBRARIES})
-    add_compile_options(${ZMQ_CFLAGS})
-    add_compile_definitions()
-    add_link_options(${ZMQ_LDFLAGS})
+
+    target_include_directories(ZMQ::ZMQ INTERFACE ${ZMQ_INCLUDE_DIRS})
+    target_compile_options    (ZMQ::ZMQ INTERFACE ${ZMQ_CFLAGS_OTHER})
+    target_link_libraries     (ZMQ::ZMQ INTERFACE ${ZMQ_LIBRARIES}   )
+    target_link_options       (ZMQ::ZMQ INTERFACE ${ZMQ_LDFLAGS}     )
+
+    # add_compile_options(${ZMQ_CFLAGS})
+    # add_compile_definitions()
+    # add_link_options(${ZMQ_LDFLAGS})
 endif()

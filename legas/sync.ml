@@ -1,14 +1,12 @@
 let syncmk () =
+  mkd "mk" ();
   touch "mk/sync.mk"
     ~c:
       ".PHONY: sync
-sync: $(HOME)/.unison/$(APP).prf doc
+sync: doc $(HOME)/.unison/$(APP).prf
 \tunison $(APP)
-$(HOME)/.unison/$(APP).prf: $(CWD)/.unison
-\tln -fs $< $@
 "
-    ();
-  Sys.command "git add mk" |> ignore
+    ()
 
 let unison () =
   touch ".unison"
@@ -39,8 +37,7 @@ ignore = Name {*.pyc,__pycache__}
 "]
     ();
   Sys.command [%string "ln -fs ~/%{app}/.unison ~/.unison/%{app}.prf"] |> ignore;
-  Sys.command [%string "unison %{app}"] |> ignore;
-  Sys.command "git add .unison" |> ignore
+  Sys.command [%string "unison %{app}"] |> ignore
 
 let sync () =
   syncmk ();

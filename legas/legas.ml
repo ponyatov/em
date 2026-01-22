@@ -7,15 +7,19 @@ Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
 Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
 
 #use "lib/meta.ml";;
-#use "legas/git.ml";;
 #use "legas/files.ml";;
 files()
+#use "legas/git.ml";;
+git();
 
 #use "legas/vscode.ml";;
 vscode();
 
-(* #use "legas/sync.ml" *)
-(* sync(); *)
+#use "legas/mk.ml";;
+mk();
+
+#use "legas/sync.ml"
+sync();
 
 (* #use "legas/ocaml.ml" *)
 (* ocamldots(); *)
@@ -24,31 +28,25 @@ vscode();
 #use "legas/doc.ml";;
 (* doc(); *)
 
-#use "legas/mk.ml";;
-mk();
-
 #use "legas/ref.ml";;
 ref();
 
 #use "legas/cpp.ml"
-cpp();
-
-#use "legas/cli.ml"
-cli();
-
-#use "legas/vm.ml"
-vm();
-
+(* cpp(); *)
 #use "legas/cmake.ml"
-cmake();
+(* cmake(); *)
 
 #use "legas/rust.ml"
 rust();
-#use "legas/cpp.ml"
-cpplib();
 
 #use "legas/js.ml"
 js();
 
 #use "legas/etc.ml"
 etc();
+
+#use "legas/cli.ml"
+cli();
+
+#use "legas/vm.ml"
+vm();

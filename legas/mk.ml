@@ -179,6 +179,7 @@ let mk () =
       "net";
       "ref";
       "gz";
+      "ocaml";
       "install";
       "ai";
     ]
@@ -199,5 +200,4 @@ let mk () =
   ref ();
   install ();
   ai ();
-  Sys.command "cp ~/em/mk/ocaml.mk mk/" |> ignore;
-  Sys.command "git add Makefile mk"
+  Sys.command "cp ~/em/mk/ocaml.mk mk/" |> ignore

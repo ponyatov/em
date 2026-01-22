@@ -1,4 +1,6 @@
 let package () =
+  mkd "js" ();
+  touch "js/main.js" ();
   touch "package.json"
     ~c:
       [%string
@@ -6,7 +8,7 @@ let package () =
     \"name\": \"%{String.lowercase_ascii app}\",
     \"version\": \"%{version}\",
     \"description\": \"%{title}\",
-    \"main\": \"index.js\",
+    \"main\": \"js/main.js\",
     \"private\": true,
     \"workspaces\": [ \"js/*\" ],
     \"keywords\": [
@@ -45,7 +47,7 @@ let package () =
         \"src/\",
         \"CMakeLists.txt\",
         \"cmake/\"
-  ],
+    ],
 }
 "]
     ()
