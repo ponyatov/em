@@ -1,11 +1,22 @@
 #pragma once
-#include "cli.hpp"
-#include "libc.hpp"
-#include "main.hpp"
-#include "net.hpp"
-#include "os.hpp"
-#include "syntax.hpp"
-#include "watch.hpp"
 
-/// @defgroup app app
-/// @brief application-specific components
+#include "libc.hpp"
+#include "linux.hpp"
+#include "watch.hpp"
+// 
+#include "main.hpp"
+//
+#include "garp.hpp"
+#include "net.hpp"
+#include "stat.hpp"
+#include "worker.hpp"
+//
+#include "sensor.hpp"
+// 
+#include "group.hpp"
+//
+#include "config.hpp"
+#include "sender.hpp"
+//
+#include "dev.hpp"
+#include "riftek.hpp"

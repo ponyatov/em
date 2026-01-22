@@ -90,14 +90,13 @@ let otools () =
   append "mk/tool.mk" ~c:[%string "\
 #
 OPAM   = /usr/local/bin/opam
-SWITCH = default
-OBIN   = $(HOME)/.opam/$(SWITCH)/bin
-OCAMLC = $(OBIN)/ocamlc
-DUNE   = $(OBIN)/dune
-UTOP   = $(OBIN)/utop
-OFMT   = $(OBIN)/ocamlformat
-OLSP   = $(OBIN)/ocamllsp
-OPPX   = $(OBIN)/ppx-base
+OCAMLC = $(CAML)/bin/ocamlc
+DUNE   = $(CAML)/bin/dune
+UTOP   = $(CAML)/bin/utop
+OFMT   = $(CAML)/bin/ocamlformat
+OLSP   = $(CAML)/bin/ocamllsp
+OPPX   = $(CAML)/bin/ppx-base
+CAMLP  = $(CAML)/bin/camlp5o
 "] ()
 
 let ocaml () =

@@ -5,10 +5,11 @@ project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,lemon,..)
+include(net)      # raw packets networking
+
 include(erlang)   # Erlang jigs
 include(wasm)     # WebAssembly WASI runtime
 include(kaitai)   # binary parsers
-include(net)      # raw packets networking
 include(qt)       # portable GUI
 include(kmod)     # Linux kernel module
 
@@ -21,17 +22,16 @@ message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 message("-- |      data: " "${DATA} ${WASM}")
 message("-- |       ini: " "${INI}")
-message("-- |      kmod: " "${KMOD}")
 message("-- |")
 
-#include(json2cpp)
-#include(gen2obj)
+include(json2cpp)
+include(gen2obj)
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
-    ${DATA} ${WASM}     # precompiled binary data (bytecode,..)
+    ${DATA}             # precompiled binary data (bytecode,..)
     ${INI}              # init/config files & scripts
     ${KMOD}             # Linux kernel module
 )

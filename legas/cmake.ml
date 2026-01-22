@@ -25,7 +25,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ source
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # parsers
-    ${DATA} ${WASM}     # precompiled binary data (bytecode,..)
+    ${DATA}             # precompiled binary data (bytecode,..)
     ${INI}              # init/config files & scripts
 )
 

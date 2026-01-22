@@ -19,17 +19,20 @@ PROXY  ?= 10.110.1.12:8888
 
 let dirmk () =
   touch "mk/dir.mk"
-    ~c:
-      "CWD = $(CURDIR)
-BIN = $(CWD)/bin
-DOC = $(CWD)/doc
-LIB = $(CWD)/lib
-INC = $(CWD)/inc
-SRC = $(CWD)/src
-TMP = $(CWD)/tmp
-REF = $(CWD)/ref
-ETC = $(CWD)/etc
-"
+    ~c:[%string "\
+CWD       = $(CURDIR)
+BIN       = $(CWD)/bin
+DOC       = $(CWD)/doc
+LIB       = $(CWD)/lib
+INC       = $(CWD)/inc
+SRC       = $(CWD)/src
+TMP       = $(CWD)/tmp
+REF       = $(CWD)/ref
+ETC       = $(CWD)/etc
+CAR       = $(HOME)/.cargo
+SWITCH   ?= default
+CAML      = $(HOME)/.opam/$(SWITCH)
+"]
     ()
 
 let tool () =
@@ -52,11 +55,10 @@ let all () =
     ~c:
       ".PHONY: all run watch
 all: bin/$(APP)
-run: bin/$(APP)
-\t$^
+run: bin/$(APP) lib/$(APP).ini
+\tcgexec -g memory:$(APP) $^
 watch: bin/$(APP)
 \t@$^ ; while [ $$? -eq 1 ]; do $^ ; done
-#\t@$^ ; while [ true ]; do $^ ; done
 "
     ()
 

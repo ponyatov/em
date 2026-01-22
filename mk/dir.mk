@@ -8,7 +8,8 @@ TMP       = $(CWD)/tmp
 REF       = $(CWD)/ref
 ETC       = $(CWD)/etc
 CAR       = $(HOME)/.cargo
-ODIR      = $(HOME)/.opam/$(OCAML_VER)/bin
+SWITCH   ?= default
+CAML      = $(HOME)/.opam/$(SWITCH)
 #
 CROSS     = $(HOME)/cross
 ROOT      = $(CWD)/root
