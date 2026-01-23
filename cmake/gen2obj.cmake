@@ -1,6 +1,6 @@
 file(GLOB GEN
     RELATIVE ${CMAKE_SOURCE_DIR}
-    data/**/*.gen
+    data/PLT4600_gen_1/*.gen
 )
 
 # message("-- | gen: ${GEN}")
@@ -14,6 +14,7 @@ foreach(GEN_FILE ${GEN})
         DEPENDS             ${GEN_FILE}
         WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
         COMMAND             objcopy -I binary -O elf64-x86-64 -B i386
+                            --add-section .note.GNU-stack=/dev/null
         ARGS                ${GEN_FILE} ${DATA_FILE}
     )
 endforeach()
