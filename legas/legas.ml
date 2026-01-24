@@ -18,15 +18,14 @@ vscode();
 #use "legas/mk.ml";;
 mk();
 
-#use "legas/sync.ml"
-sync();
+(* #use "legas/sync.ml" *)
 
 (* #use "legas/ocaml.ml" *)
 (* ocamldots(); *)
 (* dune() *)
 
 #use "legas/doc.ml";;
-(* doc(); *)
+doc();
 
 #use "legas/ref.ml";;
 ref();
