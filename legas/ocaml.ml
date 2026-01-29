@@ -38,12 +38,13 @@ let dune () =
   touch "lib/dune"
     ~c:
       [%string
-        "(executable
-  (name hello)
-  (public_name hello)
-  (modules hello)
-  (libraries %{app})
-  (package hello))
+        "\
+; (executable
+;   (name hello)
+;   (public_name hello)
+;   (modules hello)
+;   (libraries %{app})
+;   (package hello))
  
 (library
   (name %{app})
@@ -78,8 +79,7 @@ let dune () =
  (synopsis           \"%{title}\")
  (description        \"\n%{about}\")
  (tags   (OCaml \"programming language\"))
- (allow_empty)
- (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir ounit2)
+s (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir ounit2)
  (allow_empty))
 "]
     ();
