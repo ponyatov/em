@@ -10,7 +10,7 @@ let about = "\
 (* *)
 let user = "dponyatov"
 let devuser = user
-let devserver = "10.110.1.101"
+let devserver = "10.110.1.110"
 
 (* *)
 let author = "Dmitry Ponyatov"

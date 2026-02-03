@@ -39,14 +39,25 @@ PEP    = $(CWD)/bin/autopep8 --ignore $(PEPS) -i
 
 let pymk () = touch "mk/python.mk" ~c:"$(PY) $(PIP):
 \tpython3 -m venv .
+\tbin/pip3 install -U pip
+\tbin/pip3 install -U -r requirements.txt
 " ()
 
 let pygit () =
   append "lib/.gitignore" ~c:"python*/\n" ();
   append ".gitignore" ~c:"*.pyc\nlib64\n" ()
 
+let pyreqs () =
+  (* *)
+  touch "requirements.txt" ~c:"autopep8\nply\n" ()
+
+let pysrc() =
+  touch [%string "src/%{app}.py"] ()
+
 let python () =
   pyvar ();
   pytool ();
   pymk ();
-  pygit ()
+  pygit ();
+  pyreqs ();
+  pysrc()
