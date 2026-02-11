@@ -150,15 +150,14 @@ Debian_update: apt.$(WS)
 let ai () =
   touch "mk/ai.mk"
     ~c:
-      ".PHONY: ai tmp/$(APP).ai.md
+      "\
+.PHONY: ai tmp/$(APP).ai.md
 ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md: doc
-\tcat \\
-\t\tdoc/$(APP)/*.md \\
-\t\tdoc/ai.md doc/bib.md doc/$(APP)/bib.md doc/$(APP)/*.md README.md \\
+\tcat doc/ai.md README.md doc/bib.md doc/$(APP)/bib.md \\
+\t	  doc/$(APP)/*.md \\
 \t> $@ ; touch $@
-"
-    ()
+" ()
 
 let mk () =
   mkd "mk" ();
