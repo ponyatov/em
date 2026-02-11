@@ -64,8 +64,8 @@ let dune () =
  (description        \"\n%{about}\")
  (allow_empty))
 "] ();
-  Sys.command "dune build";
-  Sys.command "dune test"
+  Sys.command "dune build"|>ignore;
+  Sys.command "dune test"|>ignore
 
   (* 
   touch "lib/dune"
@@ -91,6 +91,7 @@ s (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir ounit2
 "]
     ();
   Sys.command "git add dune* *.opam lib"
+ *)
 
 let otools () =
   append "mk/tool.mk" ~c:[%string "\
@@ -103,9 +104,13 @@ OFMT   = $(CAML)/bin/ocamlformat
 OLSP   = $(CAML)/bin/ocamllsp
 OPPX   = $(CAML)/bin/ppx-base
 CAMLP  = $(CAML)/bin/camlp5o
-"] ()
+"] ();
+  append "mk/dir.mk" ~c:"\
+SWITCH   ?= default
+CAML      = $(HOME)/.opam/$(SWITCH)
+" ()
 
 let ocaml () =
   ocamldots ();
   dune ();
-  otools () *)
+  otools ()

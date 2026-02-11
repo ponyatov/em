@@ -24,7 +24,7 @@ mk();
 
 #use "legas/ocaml.ml"
 ocamldots();
-(* dune() *)
+(* dune(); otools(); *)
 
 #use "legas/doc.ml";;
 doc();

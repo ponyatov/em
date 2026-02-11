@@ -29,9 +29,6 @@ SRC       = $(CWD)/src
 TMP       = $(CWD)/tmp
 REF       = $(CWD)/ref
 ETC       = $(CWD)/etc
-CAR       = $(HOME)/.cargo
-SWITCH   ?= default
-CAML      = $(HOME)/.opam/$(SWITCH)
 "]
     ()
 
