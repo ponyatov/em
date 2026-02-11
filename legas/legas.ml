@@ -4,7 +4,9 @@ Sys.command("ln -fs ~/em/legas legas")|>ignore;
 Sys.command("cp legas/.ocaml* ./")|>ignore;
 Sys.command("mkdir lib")|>ignore;
 Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
-Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
+Sys.command("code lib/meta.ml")|>ignore;
+
+(* edit meta.ml & restart utop *)
 
 #use "lib/meta.ml";;
 #use "legas/files.ml";;
@@ -20,8 +22,8 @@ mk();
 
 (* #use "legas/sync.ml" *)
 
-(* #use "legas/ocaml.ml" *)
-(* ocamldots(); *)
+#use "legas/ocaml.ml"
+ocamldots();
 (* dune() *)
 
 #use "legas/doc.ml";;
