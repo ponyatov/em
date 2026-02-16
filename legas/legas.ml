@@ -4,7 +4,9 @@ Sys.command("ln -fs ~/em/legas legas")|>ignore;
 Sys.command("cp legas/.ocaml* ./")|>ignore;
 Sys.command("mkdir lib")|>ignore;
 Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
-Sys.command("code legas/legas.ml lib/meta.ml")|>ignore;
+Sys.command("code lib/meta.ml")|>ignore;
+
+(* fill meta.ml & restart utop here *)
 
 #use "lib/meta.ml";;
 #use "legas/files.ml";;
