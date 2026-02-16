@@ -20,7 +20,7 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-message("-- |      data: " "${DATA} ${WASM}")
+message("-- |      data: " "${DATA}")
 message("-- |       ini: " "${INI}")
 message("-- |")
 

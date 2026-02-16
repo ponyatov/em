@@ -28,42 +28,26 @@ break-string-literals=never
 # let-and = sparse
 |}
       )
-    ();
-  Sys.command "git add .ocaml*"
+    ()
 
 let dune () =
-  touch ("lib/" ^ app ^ ".ml") ~c:("(** " ^ title ^ " *)\n") ();
-  touch "lib/test.ml" ~c:("(** " ^ app ^ " tests *)\n") ();
-  touch "lib/hello.ml" ~c:"(** Hello, OCaml *)\n" ();
-  touch "lib/dune"
-    ~c:
-      [%string
-        "\
-; (executable
-;   (name hello)
-;   (public_name hello)
-;   (modules hello)
-;   (libraries %{app})
-;   (package hello))
- 
+  touch [%string "lib/%{app}.ml"] ~c:[%string "(** %{app}: %{title} *)\n"] ();
+  touch [%string "lib/test.ml"] ~c:[%string "(** %{title} tests *)\n"] ();
+  touch "lib/dune" ~c:[%string "\
 (library
-  (name %{app})
-  (modules %{app})
-  (libraries ppx_string)
+  (name       %{app})
+  (modules    %{app})
+  (libraries  ppx_string)
   (preprocess (pps ppx_string))
-  (package %{app}))
+  (package    %{app}))
 
 (test
-  (name test)
-  (modules test)
-  (libraries %{app})
-  (package %{app}))
-"]
-    ();
-  touch "dune-project"
-    ~c:
-      [%string
-        "\
+  (name       test)
+  (modules    test)
+  (libraries  %{app})
+  (package    %{app}))
+"] ();
+  touch "dune-project" ~c:[%string "\
 (lang dune           3.20)
 (name                %{app})
 (generate_opam_files true)
@@ -78,13 +62,36 @@ let dune () =
  (name               %{app})
  (synopsis           \"%{title}\")
  (description        \"\n%{about}\")
- (tags   (OCaml \"programming language\"))
-s (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir ounit2)
  (allow_empty))
+"] ();
+  Sys.command "dune build"|>ignore;
+  Sys.command "dune test"|>ignore
+
+  (* 
+  touch "lib/dune"
+    ~c:
+      [%string
+        "\
+; (executable
+;   (name hello)
+;   (public_name hello)
+;   (modules hello)
+;   (libraries %{app})
+;   (package hello))
+ 
+
 "]
     ();
-  Sys.command "dune build";
+  touch "dune-project"
+    ~c:
+      [%string
+        "\
+ (tags   (OCaml \"programming language\"))
+s (depends ocaml utop dune ocamlformat ocaml-lsp-server ppx_string menhir ounit2)
+"]
+    ();
   Sys.command "git add dune* *.opam lib"
+ *)
 
 let otools () =
   append "mk/tool.mk" ~c:[%string "\
@@ -97,7 +104,11 @@ OFMT   = $(CAML)/bin/ocamlformat
 OLSP   = $(CAML)/bin/ocamllsp
 OPPX   = $(CAML)/bin/ppx-base
 CAMLP  = $(CAML)/bin/camlp5o
-"] ()
+"] ();
+  append "mk/dir.mk" ~c:"\
+SWITCH   ?= default
+CAML      = $(HOME)/.opam/$(SWITCH)
+" ()
 
 let ocaml () =
   ocamldots ();

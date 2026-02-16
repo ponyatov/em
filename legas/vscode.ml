@@ -249,6 +249,23 @@ let tasks () =
             \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
         },
         {
+            \"label\"          : \"dune: build\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"dune build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"dune: test\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"dune test\",
+            \"dependsOn\"      : \"dune: build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
             \"label\"          : \"AI: context\",
             \"type\"           : \"shell\",
             \"command\"        : \"make ai\",

@@ -6,7 +6,7 @@ Sys.command("mkdir lib")|>ignore;
 Sys.command("cp ~/em/legas/meta.ml lib/meta.ml")|>ignore;
 Sys.command("code lib/meta.ml")|>ignore;
 
-(* fill meta.ml & restart utop here *)
+(* edit meta.ml & restart utop *)
 
 #use "lib/meta.ml";;
 #use "legas/files.ml";;
@@ -22,9 +22,9 @@ mk();
 
 (* #use "legas/sync.ml" *)
 
-(* #use "legas/ocaml.ml" *)
-(* ocamldots(); *)
-(* dune() *)
+#use "legas/ocaml.ml"
+ocamldots();
+(* dune(); otools(); *)
 
 #use "legas/doc.ml";;
 doc();
@@ -33,8 +33,8 @@ doc();
 ref();
 
 #use "legas/cpp.ml"
-(* cpp(); *)
-#use "legas/cmake.ml"
+cpp();
+(* #use "legas/cmake.ml" *)
 (* cmake(); *)
 
 #use "legas/rust.ml"
