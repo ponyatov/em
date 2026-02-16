@@ -1,6 +1,7 @@
 let cMakeLists () =
-  touch "CMakeLists.txt" ~c:"\
-cmake_minimum_required(VERSION 3.25)
+  touch "CMakeLists.txt"
+    ~c:
+      "cmake_minimum_required(VERSION 3.25)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
 project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
 
@@ -29,11 +30,13 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 include(install) # target install
 include(clean)   # project clean-up (remove generated & temp files)
-" ()
+"
+    ()
 
 let cMakePresets () =
-  touch "CMakePresets.json" ~c:"\
-{
+  touch "CMakePresets.json"
+    ~c:
+      "{
     \"version\": 6,
     \"buildPresets\": [
         {
@@ -72,10 +75,13 @@ let cMakePresets () =
         }
     ]
 }
-"()
+"
+    ()
 
 let src () =
-  touch "cmake/src.cmake" ~c:"
+  touch "cmake/src.cmake"
+    ~c:
+      "
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
 file(GLOB_RECURSE S
@@ -104,10 +110,10 @@ file(GLOB INI
     RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     lib/*.ini lib/*.f
 )
-" ()
+"
+    ()
 
-let syntax () =
-  touch "cmake/syntax.cmake" ~c:"" ()
+let syntax () = touch "cmake/syntax.cmake" ~c:"" ()
 
 let cmake () =
   mkd "cmake" ();
@@ -118,12 +124,15 @@ let cmake () =
   Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/FindRAGEL.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/FindREADLINE.cmake cmake/" |> ignore;
-  src (); syntax();
-  cMakeLists (); cMakePresets()
+  src ();
+  syntax ();
+  cMakeLists ();
+  cMakePresets ()
 
-  let libc () = 
-    touch "inc/libc.hpp" ~c:"\
-#pragma once
+let libc () =
+  touch "inc/libc.hpp"
+    ~c:
+      "#pragma once
 
 #include <cassert>
 #include <cstdio>
@@ -131,17 +140,21 @@ let cmake () =
 //
 #include <iostream>
 #include <sstream>
-" ()
+"
+    ()
 
 let main () =
-  touch "inc/main.hpp" ~c:"\
-#pragma once
+  touch "inc/main.hpp"
+    ~c:
+      "#pragma once
 
 extern int main(int argc, char *argv[]);
 extern void arg(int argc, char *argv);
-" ();
-  touch "src/main.cpp" ~c:"\
-#include \"app.hpp\"
+"
+    ();
+  touch "src/main.cpp"
+    ~c:
+      "#include \"app.hpp\"
 
 int main(int argc, char *argv[]) {  //
     arg(0, argv[0]);
@@ -150,13 +163,14 @@ int main(int argc, char *argv[]) {  //
 void arg(int argc, char *argv) {  //
     std::clog << \"arg[\" << argc << \"] = <\" << argv << \"]\\n\";
 }
-" ()
+"
+    ()
 
 let hpp () =
   mkd "inc" ();
-  libc (); 
-  touch [%string "inc/app.hpp"] ~c:"\
-#pragma once
+  libc ();
+  touch [%string "inc/app.hpp"]
+    ~c:"#pragma once
 
 #include \"libc.hpp\"
 #include \"main.hpp\"
@@ -164,8 +178,7 @@ let hpp () =
 
 let cpp () =
   mkd "src" ();
-  touch [%string "src/%{app}.cpp"] ~c:[%string "\
-#include \"app.hpp\"
+  touch [%string "src/%{app}.cpp"] ~c:[%string "#include \"app.hpp\"
 "] ()
 
 let doxygen () =
@@ -173,8 +186,8 @@ let doxygen () =
   Sys.command "mv DoxygenLayout.xml doc/" |> ignore;
   touch ".doxygen"
     ~c:
-      [%string "\
-PROJECT_NAME           = \"%{app}\"
+      [%string
+        "PROJECT_NAME           = \"%{app}\"
 PROJECT_BRIEF          = \"%{title}\"
 PROJECT_LOGO           = doc/logo.png
 LAYOUT_FILE            = doc/DoxygenLayout.xml
@@ -204,13 +217,13 @@ CALL_GRAPH             = YES
 CALLER_GRAPH           = YES
 "]
     ()
-  
-let cf () =
-  Sys.command "cp ~/em/.clang-format ./" |> ignore
 
-let   c_cpp_properties () =
-  touch ".vscode/c_cpp_properties.json" ~c:"\
-{
+let cf () = Sys.command "cp ~/em/.clang-format ./" |> ignore
+
+let c_cpp_properties () =
+  touch ".vscode/c_cpp_properties.json"
+    ~c:
+      "{
     \"version\": 4,
     \"configurations\": [
         {
@@ -220,12 +233,58 @@ let   c_cpp_properties () =
         }
     ]
 }
-" ()
+"
+    ()
+
+let cpplaunch () =
+  touch ".vscode/launch.json"
+    ~c:
+      {|{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name"            : "cmake:linux",
+            "type"            : "cppdbg",
+            "request"         : "launch",
+            "cwd"             : "${workspaceFolder}",
+            "program"         : "${command:cmake.launchTargetPath}",
+            "args"            : ["lib/${workspaceFolderBasename}.ini"],
+            "environment"     : [],
+            "preLaunchTask"   : "CMake: build",
+            "stopAtEntry"     : true,
+            "externalConsole" : false,
+            "MIMode"          : "gdb",
+            "miDebuggerPath"  : "gdb",
+            "setupCommands"   : [
+                {"text": "-enable-pretty-printing","ignoreFailures": true},
+                {"text": "source ${workspaceFolder}/.gdbinit","ignoreFailures": true}
+            ]
+        }
+    ]
+}
+|}
+    ()
+
+let aptcpp () =
+  let c =
+    {|
+g++ cmake clang-format doxygen
+gdb valgrind cgroup-tools
+flex bison ragel libreadline-dev
+|}
+  in
+  append "apt.Debian" ~c:[%string "code meld%{c}"] ();
+  append "apt.Ubuntu" ~c ();
+  append "apt.Raspbian" ~c ()
 
 let cpp () =
   mkd "src" ();
-  hpp () ; cpp (); main ();
+  hpp ();
+  cpp ();
+  main ();
   cmake ();
   doxygen ();
   cf ();
-  c_cpp_properties ()
+  c_cpp_properties ();
+  aptcpp ();
+  cpplaunch ()
