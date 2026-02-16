@@ -22,7 +22,7 @@ $(UTOP) $(DUNE) $(OFMT) $(OLSP): $(OCAMLC) .ocamlformat .ocamlinit
 	opam install -y utop dune ocamlformat ocaml-lsp-server
 
 $(OPPX): $(OCAMLC)
-	opam install -y ppx_string
+	opam install -y ppx_string ppx_deriving
 # 	opam install -y camlp5 menhir
 
 .ocamlformat:

@@ -33,7 +33,7 @@ doc();
 ref();
 
 #use "legas/cpp.ml"
-(* cpp(); *)
+cpp();
 #use "legas/cmake.ml"
 (* cmake(); *)
 
