@@ -34,7 +34,7 @@ ref();
 
 #use "legas/cpp.ml"
 cpp();
-#use "legas/cmake.ml"
+(* #use "legas/cmake.ml" *)
 (* cmake(); *)
 
 #use "legas/rust.ml"
