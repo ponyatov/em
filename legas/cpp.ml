@@ -113,7 +113,47 @@ file(GLOB INI
 "
     ()
 
-let syntax () = touch "cmake/syntax.cmake" ~c:"" ()
+let syntax () =
+  Sys.command "cp ~/em/cmake/FindRAGEL.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/FindREADLINE.cmake cmake/" |> ignore;
+  touch "cmake/syntax.cmake" ~c:"\
+find_package(FLEX     REQUIRED)
+find_package(BISON    REQUIRED)
+find_package(RAGEL    REQUIRED)
+find_package(READLINE REQUIRED)
+
+file(GLOB X
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.lex
+)
+
+file(GLOB Y
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.yacc
+)
+
+file(GLOB R
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    src/*.ragel
+)
+
+foreach(LEX_FILE ${X})
+    string(REGEX REPLACE \".+\\/(.+)\\.lex$\" \"${CMAKE_BINARY_DIR}/\\\\1.lex.cpp\"
+        LEXER_CPP           ${LEX_FILE})
+        list(APPEND CP      ${LEXER_CPP})
+    string(REGEX REPLACE \".+\\/(.+)\\.lex$\" \"${CMAKE_BINARY_DIR}/\\\\1.lex.hpp\"
+        LEXER_HPP           ${LEX_FILE})
+        list(APPEND HP      ${LEXER_HPP})
+    add_custom_command(
+        OUTPUT              ${LEXER_CPP} ${LEXER_HPP}
+        DEPENDS             ${LEX_FILE}
+        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
+        COMMAND             ${FLEX_EXECUTABLE}
+        ARGS                --header-file=${LEXER_HPP} -o ${LEXER_CPP} ${LEX_FILE}
+    )
+endforeach()
+"
+    ()
 
 let cmake () =
   mkd "cmake" ();
@@ -122,8 +162,6 @@ let cmake () =
   Sys.command "cp ~/em/cmake/version.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/instal.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
-  Sys.command "cp ~/em/cmake/FindRAGEL.cmake cmake/" |> ignore;
-  Sys.command "cp ~/em/cmake/FindREADLINE.cmake cmake/" |> ignore;
   src ();
   syntax ();
   cMakeLists ();
@@ -156,8 +194,12 @@ extern void arg(int argc, char *argv);
     ~c:
       "#include \"app.hpp\"
 
-int main(int argc, char *argv[]) {  //
+int main(int argc, char *argv[]) {
     arg(0, argv[0]);
+    for (int i = 1; i < argc; i++) {  //
+        arg(i, argv[i]);
+    }
+    return 0;
 }
 
 void arg(int argc, char *argv) {  //
