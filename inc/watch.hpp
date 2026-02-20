@@ -3,7 +3,7 @@
 #include "app.hpp"
 
 class Watch {
-    static std::vector<std::thread *> threads;  ///< file wather threads
+    static std::vector<std::thread *> threads;  ///< file watcher threads
     static void watch(int argc, char *argv);    ///< inotify background worker
 
    public:
