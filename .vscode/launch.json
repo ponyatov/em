@@ -11,7 +11,7 @@
             "type"   : "lldb",
             "request": "launch",
             "name"   : "rust:linux",
-            "program": "target/x86_64-unknown-linux-gnu/debug/${workspaceFolderBasename}",
+            "program": "target/debug/${workspaceFolderBasename}",
             "args"   : ["lib/${workspaceFolderBasename}.ini"],
             "cwd"    : "${workspaceFolder}",
             "cargo"  : {"args": ["build"]}

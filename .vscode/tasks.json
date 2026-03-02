@@ -182,6 +182,16 @@
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
         {
+            "label"          : "cargo: install",
+            "type"           : "shell",
+            "command"        : "cargo",
+            "args"           : ["install","--path",".","--root","${workspaceFolder}/tmp"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
             "label"          : "dune: build",
             "type"           : "shell",
             "command"        : "dune build",
