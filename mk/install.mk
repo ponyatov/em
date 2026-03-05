@@ -13,9 +13,9 @@ update : $(WS)_update
 ref    : $(RF)
 gz     : $(GZ)
 
-Debian_install:
+Debian_install Ubuntu_install:
 # sudo dpkg --add-architecture i386
-Debian_update: apt.$(WS)
+Debian_update  Ubuntu_update : apt.$(WS)
 	sudo apt update
 	sudo apt install -uy `cat $<` $(APT)
 	$(PIP) install -U    pip
