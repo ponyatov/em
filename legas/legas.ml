@@ -10,7 +10,7 @@ Sys.command("code lib/meta.ml")|>ignore;
 
 #use "lib/meta.ml";;
 #use "legas/files.ml";;
-files()
+files();
 #use "legas/git.ml";;
 git();
 
