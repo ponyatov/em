@@ -48,13 +48,13 @@
         // "supremeconset.binpac-vscode-extension",
         // "AlecGhost.tree-sitter-vscode",
         // embedded
-        "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
+        "basdp.language-gas-x86",
+        "ms-vscode.hexeditor",
+        "dan-c-underwood.arm",
         "ms-vscode.vscode-serial-monitor",
         // "espressif.esp-idf-extension",
-        // "basdp.language-gas-x86",
         // "mechatroner.rainbow-csv",
-        // "ms-vscode.hexeditor",
         "ivannovak1004.gnuradio-integration",
         // Python
         "ms-python.python",
@@ -71,8 +71,6 @@
         // "probe-rs.probe-rs-debugger",
         // FORTH
         "fttx.language-forth",
-        // OCaml
-        "ocamllabs.ocaml-platform",
         // Erlang
         "pgourlain.erlang",
         // F#
@@ -91,5 +89,7 @@
         // share
         "ms-vsliveshare.vsliveshare",
         "lostintangent.vsls-whiteboard",
+        // OCaml
+        "ocamllabs.ocaml-platform",
     ]
 }

@@ -1,4 +1,3 @@
-let allow = ""
 let allow = "
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
@@ -6,6 +5,81 @@ let allow = "
 #![allow(non_upper_case_globals)]
 #![allow(unused_imports)]
 "
+let allow = ""
+
+let config () = 
+  (*  *)
+  touch "src/config.rs" ()
+
+let cargo () =
+    touch "Cargo.toml" ~c:("\
+[package]
+name            =  \"" ^ app ^ "\"
+version         =  \""
+      ^ version ^ "\"
+description     =  \"" ^ title ^ "\"
+authors         = [\""
+      ^ author ^ " <" ^ email ^ ">\"]
+license         =  \"" ^ license
+      ^ "\"
+repository      =  \"" ^ github
+      ^ "\"
+edition         =  \"2024\"
+
+[dependencies]
+const_format    = \"0.2\"
+
+[target.'cfg(target_os = \"linux\")'.dependencies]
+libc            = \"0.2\"
+memmap2         = \"0.9\"
+"
+        )
+      ();
+  
+let rustmk () =
+  touch "mk/all.mk"
+    ~c:
+      ".PHONY: all run watch
+all:
+\tcargo build
+run:
+\tcargo run -- lib/$(APP).ini
+watch:
+\tcargo watch -x 'run -- lib/$(APP).ini'
+"
+    ();
+  touch "mk/rust.mk"
+    ~c:
+      "\
+$(RUSTUP) $(CARGO):
+# PROXY = -x 10.110.1.12:8888
+\tcurl $(PROXY) --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+\t. $HOME/.cargo/env
+\trustup self update ; rustup update
+\tcargo install cargo-watch
+\trustup target add x86_64-unknown-linux-gnu
+# rustup target add i586-unknown-linux-musl
+# rustup target add aarch64-unknown-linux-gnu
+# rustup target add armv7-unknown-linux-gnueabihf
+# rustup target add thumbv7em-none-eabihf
+# rustup target add thumbv7em-none-eabi
+# rustup target add thumbv7m-none-eabi
+# rustup target add thumbv6m-none-eabi
+"
+    ();    
+
+let no_std () =
+  touch [%string "src/%{app}.rs"] ~c:("\
+#![no_std]
+#![no_main]
+
+use core::panic::PanicInfo;
+
+#[panic_handler]
+fn panic(_info: &PanicInfo) -> ! {
+    loop {}
+}
+") ()
 
 let rsmain () =
   touch "src/main.rs"
@@ -68,72 +142,24 @@ pub mod vm {
 }
 ") ();
 
-let cargo () =
-  touch "Cargo.toml" ~c:("[package]
-name            =  \"" ^ app ^ "\"
-version         =  \""
-     ^ version ^ "\"
-description     =  \"" ^ title ^ "\"
-authors         = [\""
-     ^ author ^ " <" ^ email ^ ">\"]
-license         =  \"" ^ license
-     ^ "\"
-repository      =  \"" ^ github
-     ^ "\"
-edition         =  \"2024\"
-
-[dependencies]
-const_format    = \"0.2\"
-
-[target.'cfg(target_os = \"linux\")'.dependencies]
-libc            = \"0.2\"
-memmap2         = \"0.9\"
-"
-      )
-    ();
-
-let rustmk () =
-  touch "mk/all.mk"
-    ~c:
-      ".PHONY: all run watch
-all:
-\tcargo build
-run:
-\tcargo run -- lib/$(APP).ini
-watch:
-\tcargo watch -x 'run -- lib/$(APP).ini'
-"
-    ();
-  touch "mk/rust.mk"
-    ~c:
-      "\
-$(RUSTUP) $(CARGO):
-# PROXY = -x 10.110.1.12:8888
-\tcurl $(PROXY) --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-\t. $HOME/.cargo/env
-\tcargo install cargo-watch
-\trustup target add x86_64-unknown-linux-gnu
-# rustup target add i586-unknown-linux-musl
-# rustup target add aarch64-unknown-linux-gnu
-# rustup target add armv7-unknown-linux-gnueabihf
-# rustup target add thumbv7em-none-eabihf
-# rustup target add thumbv7em-none-eabi
-# rustup target add thumbv7m-none-eabi
-# rustup target add thumbv6m-none-eabi
-# rustup self update ; rustup update
-"
-    ();
-
 let cross () =
   mkd ".cargo" ();
   touch ".cargo/config.toml" ~c:"\
 [build]
-target    = \"x86_64-unknown-linux-gnu\"
+target    = \".cargo/i386-pc-none.json\"
 jobs      = 4
 
 [target.x86_64-unknown-linux-gnu]
 rustflags = [\"--cfg\", \"feature=\\\"pc,i5,linux\\\"\"]
 linker    = \"x86_64-linux-gnu-gcc\"
+
+[target.i386-pc-none]
+rustflags = [\"--cfg\", \"feature=\\\"pc,i486,none\\\"\"]
+linker    = \"rust-lld\"
+runner    = \"qemu-system-i386 -kernel\"
+
+[unstable]
+build-std = [\"core\", \"compiler_builtins\"]
 
 [source.crates-io]
 replace-with = 'ustc'
