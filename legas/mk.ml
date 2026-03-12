@@ -29,6 +29,7 @@ SRC       = $(CWD)/src
 TMP       = $(CWD)/tmp
 REF       = $(CWD)/ref
 ETC       = $(CWD)/etc
+DISTR     = $(HOME)/distr
 "]
     ()
 

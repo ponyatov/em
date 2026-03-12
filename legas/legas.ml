@@ -40,6 +40,9 @@ cpp();
 #use "legas/rust.ml"
 rust();
 
+#use "legas/wasm.ml"
+wasm();
+
 #use "legas/js.ml"
 js();
 
