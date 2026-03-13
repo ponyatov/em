@@ -1,13 +1,17 @@
 #include "app.hpp"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     Watch::init(argc, argv);
+    for (int i = 1; i < argc; i++) {  //
+        arg(i, argv[i]);
+    }
+    return 0;
     setup(argc, argv);
     return loop();
 }
 
-void arg(int argc, char* argv) {
-    std::clog << "\targ[" << argc << "] = <" << argv << ">\n";
+void arg(int argc, char *argv) {  //
+    std::clog << "arg[" << argc << "] = <" << argv << ">\n";
 }
 
 __attribute__((weak)) void setup(int argc, char* argv[]) {

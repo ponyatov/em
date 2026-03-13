@@ -5,6 +5,8 @@
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
         "usernamehw.errorlens",
+        "redhat.vscode-xml",
+        "mechatroner.rainbow-csv",
         // documenting
         "bierner.markdown-mermaid",
         "jebbs.plantuml",
@@ -54,7 +56,6 @@
         "dan-c-underwood.arm",
         "ms-vscode.vscode-serial-monitor",
         // "espressif.esp-idf-extension",
-        // "mechatroner.rainbow-csv",
         "ivannovak1004.gnuradio-integration",
         // Python
         "ms-python.python",
