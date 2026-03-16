@@ -34,8 +34,6 @@
         "jock.svg",
         "denoland.vscode-deno",
         // "dbaeumer.vscode-eslint",
-        // Go
-        "golang.go",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
@@ -51,8 +49,8 @@
         // "AlecGhost.tree-sitter-vscode",
         // embedded
         "zixuanwang.linkerscript",
-        "basdp.language-gas-x86",
         "ms-vscode.hexeditor",
+        "basdp.language-gas-x86",
         "dan-c-underwood.arm",
         "ms-vscode.vscode-serial-monitor",
         // "espressif.esp-idf-extension",
@@ -74,12 +72,6 @@
         "fttx.language-forth",
         // Erlang
         "pgourlain.erlang",
-        // F#
-        "ionide.ionide-fsharp",
-        "redhat.vscode-xml",
-        "mnxn.fsharp-fsl-fsy",
-        // "tintoy.msbuild-project-tools",
-        // "ms-dotnettools.csdevkit",
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
