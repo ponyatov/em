@@ -30,7 +30,7 @@ let html () =
 let ts () = 
   touch [%string "src/%{app}.ts"] ~c:"" ();
   touch [%string "static/%{app}.js"] ~c:"console.log('Hello');\n" ();
-  append "static/.gitignore" ~c:"static/*.?s\nstatic/*.map\n" ()
+  append "static/.gitignore" ~c:"*.?s\n*.map\n" ()
 
 let package () =
   touch "package.json" ~c:      [%string
@@ -52,8 +52,7 @@ let package () =
         \"build\": \"tsc\",
         \"watch\": \"tsc --watch\",
         \"clean\": \"rm -rf static/*.?s static/*.?s.map\",
-        \"prebuild\": \"npm run clean\",
-        \"start\": \"npm run watch\"
+        \"start\": \"npx live-server static --port=12345\"
     }
 }
 "] ();
@@ -98,6 +97,7 @@ let js () =
   aptjs () ;
   Sys.command "cp ~/em/.prettierrc ./" |> ignore;
   Sys.command "git add *.json apt.*" |> ignore
+  Sys.command "cp doc/logo.png static/logo.png" |> ignore
 
 let ts () =
   touch "js/main.ts" ();
