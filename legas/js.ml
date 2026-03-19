@@ -1,61 +1,103 @@
+let jsdirs () =
+  mkd "src" ();
+  mkd "static" ();
+  mkd "static/cdn" ();
+
+let html () =
+  touch "static/index.html" ~c:[%string "<!DOCTYPE html>
+<html lang=\"en\">
+
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>%{app}</title>
+    <link rel=\"stylesheet\" href=\"%{app}.css\">
+</head>
+
+<body>
+</body>
+
+<script src=\"%{app}.js\"></script>
+
+</html>
+"] ();
+  touch [%string "static/%{app}.css"] ~c:[%string "* {
+    background: #222;
+    color: lightgreen;
+}
+"] ();
+
+let ts () = 
+  touch [%string "src/%{app}.ts"] ~c:"" ();
+  touch [%string "static/%{app}.js"] ~c:"console.log('Hello');\n" ();
+  append "static/.gitignore" ~c:"static/*.?s\nstatic/*.map\n" ()
+
 let package () =
-  mkd "js" ();
-  touch "js/main.js" ();
-  touch "package.json"
-    ~c:
-      [%string
+  touch "package.json" ~c:      [%string
         "{
     \"name\": \"%{String.lowercase_ascii app}\",
     \"version\": \"%{version}\",
     \"description\": \"%{title}\",
-    \"main\": \"js/main.js\",
-    \"private\": true,
-    \"workspaces\": [ \"js/*\" ],
-    \"keywords\": [
-        \"udp\",
-        \"generator\",
-        \"multithreaded\",
-        \"network\"
-    ],
     \"author\": {
-        \"name\": \"%{author}\",
-        \"email\": \"%{email}\"
+        \"name\": \"%{author}\", \"email\": \"%{email}\"
     },
     \"license\": \"%{license}\",
+    \"keywords\": [\"CAD\", \"schematic\", \"EDA\", \"drawing\"],
     \"repository\": {
         \"type\": \"git\",
         \"url\": \"%{github}\"
     },
-    \"bugs\": {
-        \"url\": \"%{github}/issues\"
-    },
-    \"homepage\": \"%{github}/wiki\",
-    \"engines\": {
-        \"node\": \">=18.0.0\"
-    },
+    \"main\": \"static/%{app}.js\",
     \"scripts\": {
-        \"repl\" : \"deno repl\",
-        \"start\": \"deno js/main.ts\",
         \"build\": \"tsc\",
-        \"build:watch\": \"tsc --watch\",
-        \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"
-    },
-    \"files\": [
-        \"js/\",
-        \"res/\",
-        \"inc/\",
-        \"src/\",
-        \"CMakeLists.txt\",
-        \"cmake/\"
-    ],
+        \"watch\": \"tsc --watch\",
+        \"clean\": \"rm -rf static/*.?s static/*.?s.map\",
+        \"prebuild\": \"npm run clean\",
+        \"start\": \"npm run watch\"
+    }
 }
-"]
-    ()
+"] ();
+  touch "tsconfig.json" ~c:"{
+  \"compilerOptions\": {
+    \"target\": \"ES2020\",
+    \"module\": \"ES2020\",
+    \"lib\": [\"ES2020\", \"DOM\"],
+    \"rootDir\": \"./src\",
+    \"outDir\": \"./static\",
+    \"strict\": true,
+    \"esModuleInterop\": true,
+    \"skipLibCheck\": true,
+    \"forceConsistentCasingInFileNames\": true,
+    \"declaration\": true,
+    \"declarationMap\": true,
+    \"sourceMap\": true,
+    \"moduleResolution\": \"node\",
+    \"resolveJsonModule\": true,
+    \"isolatedModules\": true,
+    \"noUnusedLocals\": true,
+    \"noUnusedParameters\": true,
+    \"noImplicitReturns\": true,
+    \"noFallthroughCasesInSwitch\": true
+  },
+  \"include\": [\"src/**/*.ts\"],
+  \"exclude\": [\"node_modules\", \"static\"]
+}
+" ();
 
 let aptjs () =
-  append "apt.Debian" ~c:"nodejs npm\n" ();
-  append "apt.Ubuntu" ~c:"nodejs npm\n" ();
-  append "apt.Raspbian" ~c:"nodejs npm\n" ()
+  let c = "nodejs npm\n" in
+  append "apt.Debian" ~c ();
+  append "apt.Ubuntu" ~c ();
+  append "apt.Raspbian" ~c ()
+
+let js () =
+  jsdirs ();
+  html ();
+  ts ();
+  package ();
+  aptjs () ;
+  Sys.command "cp ~/em/.prettierrc ./" |> ignore;
+  Sys.command "git add *.json apt.*" |> ignore
 
 let ts () =
   touch "js/main.ts" ();
@@ -77,10 +119,3 @@ let ts () =
 }
 "]
     ()
-
-let js () =
-  package ();
-  aptjs ();
-  ts ();
-  Sys.command "cp ~/em/.prettierrc ./" |> ignore;
-  Sys.command "git add *.json apt.*" |> ignore
