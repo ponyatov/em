@@ -156,8 +156,10 @@ let ai () =
 ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md: doc
 \tcat doc/ai.md README.md doc/bib.md doc/$(APP)/bib.md \\
-\t	  doc/$(APP)/*.md \\
-\t> $@ ; touch $@
+\t\tdoc/$(APP)/*.md > $@
+\t\techo '# files' >> $@
+\t\ttree -L 1 . static >> $@
+\t\ttree lib inc src >> $@
 " ()
 
 let mk () =
