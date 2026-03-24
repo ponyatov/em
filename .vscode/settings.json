@@ -11,7 +11,7 @@
     },
     "files.associations": {
         "*.kernel": "properties", "*.uclibc": "properties",
-        "*.service": "systemd-unit-file",
+        "*.rc": "shell", "*.service": "systemd-unit-file",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.ocd": "properties",
