@@ -3,8 +3,8 @@ set(CMAKE_CXX_STANDARD 23)
 
 # set(CMAKE_C_COMPILER_FORCED   TRUE) # breaks Qt
 # set(CMAKE_CXX_COMPILER_FORCED TRUE)
-set(CMAKE_C_COMPILER_ID       GNU)
-set(CMAKE_CXX_COMPILER_ID     GNU)
+# set(CMAKE_C_COMPILER_ID       GNU)
+# set(CMAKE_CXX_COMPILER_ID     GNU)
 
 set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}-gcc)
 set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}-as)
@@ -14,8 +14,9 @@ set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 
-set   (APP ${CMAKE_PROJECT_NAME})
-string(TOUPPER ${APP} APP_)
+set                    (APP ${CMAKE_PROJECT_NAME})
+string                 (TOUPPER ${APP} APP_      )
+add_compile_definitions(${APP_} APP="${APP}"     )
 
 # include(cross)
 
@@ -28,9 +29,9 @@ add_compile_options(
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 
-add_compile_definitions(
-    ${APP_} APP="${APP}" ${HW_} ${CPU_} ${ARCH_} ${OS_}
-)
+# add_compile_definitions(
+#     ${HW_} ${CPU_} ${ARCH_} ${OS_}
+# )
 
 add_link_options(
     -Wl,--print-memory-usage

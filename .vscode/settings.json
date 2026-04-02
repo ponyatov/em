@@ -30,17 +30,17 @@
     "editor.detectIndentation": false,
     "editor.rulers": [80],
     "editor.lineNumbers": "on",
-    "workbench.tree.indent": 24,
-    "editor.fontSize": 14,
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
     "editor.formatOnSave": false,
+    // "git.enabled": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
     "auto-tab-closer.delayMs": 5555,
     "auto-tab-closer.numLeftTabs": 5,
     "auto-tab-closer.numMaxTabs": 5,
-    // "git.enabled": false,
+    "workbench.tree.indent": 24,
+    "editor.fontSize": 14,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],
@@ -76,10 +76,10 @@
     // C++
     "[c]"  : {
         "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave": false },
+        "editor.formatOnSave"     : false },
     "[cpp]": {
         "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave": false },
+        "editor.formatOnSave"     : false },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.files.exclude": { "ref": true },
 
@@ -87,15 +87,15 @@
     "cmake.sourceDirectory" : "${workspaceFolder}",
     "cmake.buildDirectory"  : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"       : "Unix Makefiles",
-    "cmake.parallelJobs"    :  4,
+    "cmake.buildBeforeRun"  : true,
+    "cmake.saveBeforeBuild" : true,
+    "cmake.parallelJobs"    : 4,
     "cmake.useCMakePresets" : "always",
-    "cmake.buildBeforeRun"  :  true,
-    "cmake.saveBeforeBuild" :  true,
+    "cmake.ignoreCMakeListsMissing" : false,
+    "cmake.allowCommentsInPresetsFile" : true,
     "cmake.debugConfig"     : {
         "cwd" :   "${workspaceFolder}",
         "args": [ "lib/${workspaceFolderBasename}.ini" ] },
-    "cmake.allowCommentsInPresetsFile" : true,
-    "cmake.ignoreCMakeListsMissing"    : false,
 
     // Python
     // "python.defaultInterpreterPath":  "${workspaceFolder}/bin/python3",
@@ -145,11 +145,11 @@
     "[erlang]": { "editor.formatOnSave": true },
 
     // OCaml (cs3110/cs134b)
-    "[ocaml]": {
+    "[ocaml]"           : {
         "editor.tabSize": 2, "editor.formatOnSave": false },
-    "[ocaml.interface]": {
+    "[ocaml.interface]" : {
         "editor.tabSize": 2, "editor.formatOnSave": false },
-    "[dune]": {
+    "[dune]"            : {
         "editor.tabSize": 2, "editor.formatOnSave": false },
 
     // MinGW/MSYS2

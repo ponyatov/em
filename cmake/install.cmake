@@ -7,7 +7,7 @@ add_custom_command(
     OUTPUT              ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME}
     DEPENDS             ${CMAKE_PROJECT_NAME}
     WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-    COMMAND             ${CMAKE_COMMAND} -E create_symlink 
+    COMMAND             ${CMAKE_COMMAND} -E create_symlink
     ARGS                ${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}
                         ${CMAKE_INSTALL_PREFIX}/${CMAKE_PROJECT_NAME})
 

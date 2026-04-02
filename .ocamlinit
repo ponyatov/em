@@ -1,5 +1,5 @@
 #use "topfind";;
 #require "unix";;
 open Unix;;
+#require "ppx_string";;
 #use "legas/files.ml";;
-(* #require "ppx_string";; *)
