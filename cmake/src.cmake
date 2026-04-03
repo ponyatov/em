@@ -1,7 +1,18 @@
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
-# file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
-# message("C:\t\t${C}")
+file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
+message("C:\t\t${C}")
+file(GLOB_RECURSE H CONFIGURE_DEPENDS inc/*.h*)
+message("H:\t\t${H}")
+file(GLOB_RECURSE L CONFIGURE_DEPENDS src/*.lex)
+message("L:\t\t${L}")
+file(GLOB_RECURSE Y CONFIGURE_DEPENDS src/*.yacc)
+message("Y:\t\t${Y}")
+file(GLOB_RECURSE R CONFIGURE_DEPENDS src/*.ragel)
+message("R:\t\t${R}")
+file(GLOB_RECURSE I CONFIGURE_DEPENDS lib/*.ini)
+message("I:\t\t${I}")
+
 file(GLOB_RECURSE S
     RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     src/*.s

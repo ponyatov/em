@@ -5,7 +5,6 @@ include(FindPackageHandleStandardArgs)
 
 if(NOT RAGEL_EXECUTABLE)
 find_program(RAGEL_EXECUTABLE ragel)
-message(STATUS "Looking for ragel")
 endif()
 
 if(RAGEL_EXECUTABLE)
@@ -18,7 +17,7 @@ if(RAGEL_EXECUTABLE)
     if(_version_result EQUAL 0)
         string(REGEX MATCH "[0-9]+\\.[0-9]+(\\.[0-9]+)*" RAGEL_VERSION "${_version_output}")
         set(RAGEL_FOUND TRUE)
-        message("-- | RAGEL: " ${RAGEL_VERSION})
+        message("-- Found RAGEL: ${RAGEL_EXECUTABLE} (found version \"${RAGEL_VERSION}\")")
     endif()
 endif()
 
