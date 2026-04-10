@@ -40,7 +40,7 @@
     "auto-tab-closer.numLeftTabs": 5,
     "auto-tab-closer.numMaxTabs": 5,
     "workbench.tree.indent": 24,
-    "editor.fontSize": 14,
+    // "editor.fontSize": 14,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],

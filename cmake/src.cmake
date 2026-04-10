@@ -1,5 +1,6 @@
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
+# C++ sources
 file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
 message("C:\t\t${C}")
 file(GLOB_RECURSE H CONFIGURE_DEPENDS inc/*.h*)
@@ -65,17 +66,13 @@ file(GLOB_RECURSE H
     lib/pcpp/include/pcapplusplus/*.h*
 )
 
-## scan include dirs
-list(APPEND INC ${PROJECT_BINARY_DIR})
+# include dirs
 foreach(h ${H})
     get_filename_component(d ${h} DIRECTORY)
     list(APPEND INC ${d})
 endforeach()
 list(REMOVE_DUPLICATES INC)
-message("INC:\t${INC}")
 include_directories(${INC})
 
-file(GLOB INI
-    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
-    lib/*.ini lib/*.f
-)
+# init/scripts
+file(GLOB_RECURSE INI CONFIGURE_DEPENDS lib/*.ini lib/*.f)
