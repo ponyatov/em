@@ -21,7 +21,9 @@ message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 message("-- |      data: " "${DATA}")
-message("-- |       ini: " "${INI}")
+message("-- |       ini: " "${I}")
+message("-- |       cpp: " "${C} ${CP}")
+message("-- |       hpp: " "${H} ${HP}")
 message("-- |")
 
 include(json2cpp)
@@ -43,7 +45,7 @@ set_source_files_properties(${INI} PROPERTIES HEADER_FILE_ONLY TRUE)
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    -Wl,--start-group ${LIB} -Wl,--end-group
+    -Wl,--start-group ${L} -Wl,--end-group
 ) # -static
 
 include(install) # target install

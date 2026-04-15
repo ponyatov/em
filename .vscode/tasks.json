@@ -276,9 +276,9 @@
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
         },
         {
-            "label"          : "make: sync",
+            "label"          : "make: doxy",
             "type"           : "shell",
-            "command"        : "make sync",
+            "command"        : "make doxy",
             // "dependsOn"      : "CMake: build",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},

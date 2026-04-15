@@ -1,5 +1,5 @@
 .PHONY: doc
-doc:
+doc: $(DOC)
 	rm -rf doc/$(APP)/ ; rsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
 	git add $@
 

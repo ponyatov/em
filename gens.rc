@@ -7,8 +7,18 @@ cp ~/em/bin/.gitignore bin/
 cp ~/em/bin/.gitignore tmp/
 cp ~/em/bin/.gitignore ref/
 cp ~/em/doc/.gitignore doc/
-touch README.md Makefile
+touch doc/{bib,ai}.md
+touch README.md
+mkdir mk
+touch Makefile mk/{var,tool,doc,ref,gz,install}.mk
 mkdir cmake
 touch CMakeLists.txt  CMakePresets.json
-cp ~/em/{.clang-format,.prettierrc,.doxygen} ./
+touch cmake/{aarch64-linux-gnu,armv7-linux-gnu}.cmake
+cp ~/em/cmake/{any_toolchain,x86_64-linux-gnu}.cmake cmake/
+cp ~/em/cmake/{i686-w64-mingw32,mingw-w64-ucrt-x86_64}.cmake cmake/
+touch cmake/{install,clean,src,qt}.cmake
+cp ~/em/cmake/{version,clean}.cmake cmake/
+cp ~/em/{.clang-format,.prettierrc,.doxygen,.ruff.toml} ./
 doxygen -l ; mv DoxygenLayout.xml doc/
+touch inc/{app,main,libs}.hpp src/{app,main,watch}.cpp
+meld . ~/em &

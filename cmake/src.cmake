@@ -2,17 +2,24 @@
 
 # C++ sources
 file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
-message("C:\t\t${C}")
 file(GLOB_RECURSE H CONFIGURE_DEPENDS inc/*.h*)
-message("H:\t\t${H}")
-file(GLOB_RECURSE L CONFIGURE_DEPENDS src/*.lex)
-message("L:\t\t${L}")
+file(GLOB_RECURSE X CONFIGURE_DEPENDS src/*.lex)
 file(GLOB_RECURSE Y CONFIGURE_DEPENDS src/*.yacc)
-message("Y:\t\t${Y}")
 file(GLOB_RECURSE R CONFIGURE_DEPENDS src/*.ragel)
-message("R:\t\t${R}")
 file(GLOB_RECURSE I CONFIGURE_DEPENDS lib/*.ini lib/*.f)
-message("I:\t\t${I}")
+
+# include dirs
+foreach(h ${H})
+    get_filename_component(d ${h} DIRECTORY)
+    list(APPEND INC ${d})
+endforeach()
+list(REMOVE_DUPLICATES INC)
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${INC})
+
+# init/scripts
+file(GLOB_RECURSE INI CONFIGURE_DEPENDS lib/*.ini lib/*.f)
+
+## depricated:
 
 file(GLOB_RECURSE S
     RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
@@ -65,14 +72,3 @@ file(GLOB_RECURSE H
     # net
     lib/pcpp/include/pcapplusplus/*.h*
 )
-
-# include dirs
-foreach(h ${H})
-    get_filename_component(d ${h} DIRECTORY)
-    list(APPEND INC ${d})
-endforeach()
-list(REMOVE_DUPLICATES INC)
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${INC})
-
-# init/scripts
-file(GLOB_RECURSE INI CONFIGURE_DEPENDS lib/*.ini lib/*.f)
