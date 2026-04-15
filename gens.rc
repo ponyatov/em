@@ -1,0 +1,14 @@
+#!/bin/sh
+
+mkdir {.vscode,bin,doc,lib,inc,src,tmp,ref}
+touch {.,.vscode,bin,doc,lib,inc,src,tmp,ref}/.gitignore
+touch .vscode/{settings,extensions,launch,tasks,c_cpp_properties}.json
+cp ~/em/bin/.gitignore bin/
+cp ~/em/bin/.gitignore tmp/
+cp ~/em/bin/.gitignore ref/
+cp ~/em/doc/.gitignore doc/
+touch README.md Makefile
+mkdir cmake
+touch CMakeLists.txt  CMakePresets.json
+cp ~/em/{.clang-format,.prettierrc,.doxygen} ./
+doxygen -l ; mv DoxygenLayout.xml doc/

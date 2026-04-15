@@ -1,6 +1,7 @@
 {
     "files.exclude": {
-        "doc/html": true, "**/node_modules/**": true, "_build": true,
+        "doc/html": true, "**/node_modules/**": true,
+        "_build/**": true, "target/**": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true, ".pytest*": true,
         "lib/python*": true, "lib64":true, "include":true,
@@ -33,7 +34,6 @@
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
     "editor.formatOnSave": false,
-    // "git.enabled": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
     "auto-tab-closer.delayMs": 5555,
@@ -41,6 +41,7 @@
     "auto-tab-closer.numMaxTabs": 5,
     "workbench.tree.indent": 24,
     // "editor.fontSize": 14,
+    // "git.enabled": false,
 
     // terminal
     "SerialTerminal.serial port.configurations": ["115200n1"],
@@ -91,7 +92,7 @@
     "cmake.saveBeforeBuild" : true,
     "cmake.parallelJobs"    : 4,
     "cmake.useCMakePresets" : "always",
-    "cmake.ignoreCMakeListsMissing" : false,
+    "cmake.ignoreCMakeListsMissing"    : false,
     "cmake.allowCommentsInPresetsFile" : true,
     "cmake.debugConfig"     : {
         "cwd" :   "${workspaceFolder}",

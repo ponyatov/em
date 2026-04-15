@@ -11,7 +11,7 @@ file(GLOB_RECURSE Y CONFIGURE_DEPENDS src/*.yacc)
 message("Y:\t\t${Y}")
 file(GLOB_RECURSE R CONFIGURE_DEPENDS src/*.ragel)
 message("R:\t\t${R}")
-file(GLOB_RECURSE I CONFIGURE_DEPENDS lib/*.ini)
+file(GLOB_RECURSE I CONFIGURE_DEPENDS lib/*.ini lib/*.f)
 message("I:\t\t${I}")
 
 file(GLOB_RECURSE S
@@ -72,7 +72,7 @@ foreach(h ${H})
     list(APPEND INC ${d})
 endforeach()
 list(REMOVE_DUPLICATES INC)
-include_directories(${INC})
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${INC})
 
 # init/scripts
 file(GLOB_RECURSE INI CONFIGURE_DEPENDS lib/*.ini lib/*.f)

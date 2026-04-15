@@ -31,10 +31,12 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ sources
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # generated parsers
+    ${I}                # init/config files & scripts
     ${DATA}             # precompiled binary data (bytecode,..)
-    ${INI}              # init/config files & scripts
     ${KMOD}             # Linux kernel module
 )
+
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${INC})
 
 set_source_files_properties(${INI} PROPERTIES HEADER_FILE_ONLY TRUE)
 
