@@ -21,4 +21,5 @@ cp ~/em/cmake/{version,clean}.cmake cmake/
 cp ~/em/{.clang-format,.prettierrc,.doxygen,.ruff.toml} ./
 doxygen -l ; mv DoxygenLayout.xml doc/
 touch inc/{app,main,libs}.hpp src/{app,main,watch}.cpp
+touch apt.{Debian,Raspbian}
 meld . ~/em &

@@ -33,6 +33,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ sources
     ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # generated parsers
+    ${U}                # Qt Designer sources
     ${I}                # init/config files & scripts
     ${DATA}             # precompiled binary data (bytecode,..)
     ${KMOD}             # Linux kernel module
