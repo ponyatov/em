@@ -40,7 +40,7 @@
         "ms-vscode.cmake-tools",
         "krosf.vscode-valgrind",
         "theqtcompany.qt-cpp",
-        // "theqtcompany.qt-qml",
+        "theqtcompany.qt-qml",
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
