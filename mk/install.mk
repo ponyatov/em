@@ -27,6 +27,9 @@ Ubuntu_update: apt.$(WS)
 	sudo apt install -uy `cat $<` $(APT)
 
 Msys_install:
+# 	export  http_proxy="http://10.110.12.12:8888"
+# 	export https_proxy="http://10.110.12.12:8888"
+	pacman -S git make curl
 	pacman -Suy
 Msys_update: apt.Msys
 	pacman -S $(shell cat $< | tr '\n' ' ')
