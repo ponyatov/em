@@ -3,6 +3,9 @@ doc: $(DOC)
 	rm -rf doc/$(APP)/ ; rsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
 	git add $@
 
+.PHONY: sync
+sync: doc
+
 .PHONY: doxy
 doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png doc
 	rm -rf doc/html ; doxygen $< 1>/dev/null
