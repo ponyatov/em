@@ -1,7 +1,7 @@
 git make curl fzf
-code meld doxygen
+code meld
 g++ cmake pkg-config clang-format
-gdb gdbserver valgrind
+gdb gdbserver valgrind doxygen
 flex bison ragel libreadline-dev
 qt6-base-dev qt6-tools-dev designer-qt6
 python3 python3-venv python3-pytest python3-autopep8 python3-ply

@@ -35,12 +35,12 @@
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
     "editor.formatOnSave": false,
+    "workbench.tree.indent": 24,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
     "auto-tab-closer.delayMs": 5555,
     "auto-tab-closer.numLeftTabs": 5,
     "auto-tab-closer.numMaxTabs": 5,
-    "workbench.tree.indent": 24,
     // "editor.fontSize": 14,
     // "git.enabled": false,
 
@@ -93,8 +93,8 @@
     "cmake.saveBeforeBuild" : true,
     "cmake.parallelJobs"    : 4,
     "cmake.useCMakePresets" : "always",
-    "cmake.ignoreCMakeListsMissing"    : false,
     "cmake.allowCommentsInPresetsFile" : true,
+    "cmake.ignoreCMakeListsMissing"    : false,
     "cmake.debugConfig"     : {
         "cwd" :   "${workspaceFolder}",
         "args": [ "lib/${workspaceFolderBasename}.ini" ] },

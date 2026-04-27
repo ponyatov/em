@@ -17,9 +17,6 @@ endforeach()
 list(REMOVE_DUPLICATES INC)
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${INC})
 
-# init/scripts
-file(GLOB_RECURSE INI CONFIGURE_DEPENDS lib/*.ini lib/*.f)
-
 ## depricated:
 
 file(GLOB_RECURSE S
