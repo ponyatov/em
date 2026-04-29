@@ -3,9 +3,9 @@ find_package(BISON    REQUIRED)
 find_package(RAGEL    REQUIRED)
 find_package(READLINE REQUIRED)
 
-file(GLOB_RECURSE L CONFIGURE_DEPENDS "src/*.l*")
-file(GLOB_RECURSE Y CONFIGURE_DEPENDS "src/*.y*")
-file(GLOB_RECURSE R CONFIGURE_DEPENDS "src/*.r*")
+file(GLOB_RECURSE L CONFIGURE_DEPENDS src/*.l*)
+file(GLOB_RECURSE Y CONFIGURE_DEPENDS src/*.y*)
+file(GLOB_RECURSE R CONFIGURE_DEPENDS src/*.r*)
 
 foreach(lex ${L})
     get_filename_component(name ${lex} NAME_WE)

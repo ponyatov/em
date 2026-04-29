@@ -1,13 +1,11 @@
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
-# C++ sources
-## file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
-file(GLOB C CONFIGURE_DEPENDS src/*.c* src/${OS}/*.c*)
-file(GLOB H CONFIGURE_DEPENDS inc/*.h* src/${OS}/*.c*)
-file(GLOB X CONFIGURE_DEPENDS src/*.lex)
-file(GLOB Y CONFIGURE_DEPENDS src/*.yacc)
-file(GLOB R CONFIGURE_DEPENDS src/*.ragel)
-file(GLOB I CONFIGURE_DEPENDS lib/*.ini lib/*.f)
+file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
+file(GLOB_RECURSE H CONFIGURE_DEPENDS inc/*.h*)
+file(GLOB_RECURSE X CONFIGURE_DEPENDS src/*.lex)
+file(GLOB_RECURSE Y CONFIGURE_DEPENDS src/*.yacc)
+file(GLOB_RECURSE R CONFIGURE_DEPENDS src/*.ragel)
+file(GLOB_RECURSE I CONFIGURE_DEPENDS lib/*.ini)
 
 # include dirs
 foreach(h ${H})
