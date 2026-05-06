@@ -1,6 +1,7 @@
 .PHONY: all run watch
-all: bin/$(APP) $(S)
-run: bin/$(APP) $(S)
+all: bin/$(APP) $(F)
+run: bin/$(APP) $(F)
+	$^
 	cgexec -g memory:$(APP) $^
 	cargo run -- $(S)
 watch:bin/$(APP) etc/config.json

@@ -33,7 +33,7 @@ H  += $(wildcard   os/inc/*.h*) $(wildcard   os/*/inc/*.h*)
 R += Cargo.toml $(wildcard src/*.rs)
 
 # ini
-S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
+F  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # JavaScript
 J += $(wildcard src/*.js)

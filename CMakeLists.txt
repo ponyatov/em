@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES CXX C ASM)
 
 include(version)  # binary files naming by version & git branch/hash
@@ -20,8 +21,8 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
+message("-- |       ini: " "${F}")
 message("-- |      data: " "${DATA}")
-message("-- |       ini: " "${I}")
 message("-- |       cpp: " "${C} ${CP}")
 message("-- |       hpp: " "${H} ${HP}")
 message("-- |")
@@ -31,17 +32,17 @@ include(gen2obj)
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ sources
-    ${S}  ${LD}         # embedded/lowlevel
     ${CP} ${HP}         # generated parsers
-    ${U}                # Qt Designer sources
-    ${I}                # init/config files & scripts
+    ${S}  ${LD}         # embedded/lowlevel
+    ${F}                # init/config files & scripts
+    ${Q}                # Qt Designer sources
     ${DATA}             # precompiled binary data (bytecode,..)
     ${KMOD}             # Linux kernel module
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${INC})
 
-set_source_files_properties(${INI} PROPERTIES HEADER_FILE_ONLY TRUE)
+set_source_files_properties(${F} PROPERTIES HEADER_FILE_ONLY TRUE)
 
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
@@ -50,5 +51,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 ) # -static
 
 include(install) # target install
-include(fw)      # cross compiler binaries: elf/dfu
 include(clean)   # project clean-up (remove generated & temp files)
+include(fw)      # cross compiler binaries: elf/dfu

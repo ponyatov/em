@@ -19,7 +19,5 @@ add_dependencies(app_symlink ${CMAKE_PROJECT_NAME})
 add_custom_command(
     TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMAND $<TARGET_FILE:${CMAKE_PROJECT_NAME}> lib/${CMAKE_PROJECT_NAME}.ini
-#     COMMENT "build preloaded bytecode"
-#     COMMAND hexdump -C tmp/${CMAKE_PROJECT_NAME}.bcx > tmp/${CMAKE_PROJECT_NAME}.bcx.hex
+    COMMAND $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${F}
 )
