@@ -5,8 +5,9 @@
             "${workspaceFolder}/inc/**",
             "${workspaceFolder}/tmp/**",
             "${workspaceFolder}/src/**",
-            "${workspaceFolder}/lib/inc/**" ,"${workspaceFolder}/lib/*/inc/**"
-        ]
+            "${workspaceFolder}/lib/inc/**",
+            "${workspaceFolder}/lib/*/inc/**"
+        ],
         "crossInclude": [
             "${workspaceFolder}/hw/inc/**"  ,"${workspaceFolder}/hw/*/inc/**"  ,
             "${workspaceFolder}/cpu/inc/**" ,"${workspaceFolder}/cpu/*/inc/**" ,
@@ -51,13 +52,17 @@
         {
             "name"                 : "linux",
             "configurationProvider": "ms-vscode.cmake-tools",
-            "mergeConfigurations"  :  true,
+            "mergeConfigurations"  : true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
             "defines"              : ["PC", "I5", "X86_64", "LINUX"],
             "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
             "cStandard"            : "c17",
             "cppStandard"          : "c++23",
             "intelliSenseMode"     : "gcc-x64"
+        },
+        {
+            "name"                 : "cmake",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ]
 }

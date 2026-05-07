@@ -16,7 +16,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(READLINE REQUIRED readline>=8.2)
 
 if(READLINE_FOUND)
-  message("-- | READLINE: ${READLINE_VERSION}")
+  message("-- Found READLINE: ${READLINE_LIBRARIES} (found version \"${READLINE_VERSION}\")")
   add_compile_definitions(READLINE_FOUND)
 
   add_library(READLINE::READLINE INTERFACE IMPORTED)    

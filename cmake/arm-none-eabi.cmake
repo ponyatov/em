@@ -1,12 +1,11 @@
 set(CMAKE_SYSTEM_NAME       Generic)
 set(CMAKE_SYSTEM_PROCESSOR  arm)
 set(TOOLCHAIN_PREFIX        arm-none-eabi)
-set(CMAKE_CROSS_COMPILING   true)
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 include(any_toolchain)
 
-add_compile_definitions(CORTEX)
+add_compile_definitions(ARM CORTEXM)
 
 add_compile_options(
     -mthumb

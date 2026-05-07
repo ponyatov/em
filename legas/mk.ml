@@ -1,3 +1,42 @@
+let mk () =
+    touch "Makefile" ~c:"\
+APP     = $(notdir $(CURDIR))
+REL     = $(shell git rev-parse --short=4    HEAD)
+BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
+NOW     = $(shell date +%y%m%d)
+PEPS    = E26,E302,E305,E401,E402,E701,E702
+HW     ?= pc
+BINFILE = $(APP)_$(HW)_$(BRANCH)_$(NOW)
+
+CURL   = curl -L -o
+CF     = clang-format -style=file -i
+GITREF = git clone -o gh --depth 1
+
+.PHONY: doc
+doc:
+
+.PHONY: ref
+ref: $(RF)
+
+.PHONY: gz
+gz: $(GZ)
+
+.PHONY: install update
+install: doc ref gz
+\t$(MAKE) update
+update:
+\tsudo apt update
+\tsudo apt install -uy `cat apt.Debian` $(APT)
+
+.PHONY: sync
+sync: doc
+\trm -rf doc/$(APP)/ ; rsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
+
+.PHONY: ai
+ai: sync
+\tcat README.md doc/$(APP)/*.md > tmp/$(APP).ai.md
+" ()
+
 let var () =
   mkd "mk" ();
   touch "mk/var.mk"
@@ -7,10 +46,11 @@ REL     = $(shell git rev-parse --short=4    HEAD)
 BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
 NOW     = $(shell date +%y%m%d)
 PEPS    = E26,E302,E305,E401,E402,E701,E702
+HW     ?= pc
 BINFILE = $(APP)_$(HW)_$(BRANCH)_$(NOW)
+
 CORES   = $(shell grep processor /proc/cpuinfo| wc -l)
 WS      = $(shell lsb_release -si)
-HW     ?= pc
 IP     ?= 127.0.0.1
 PORT   ?= 12345
 PROXY  ?= 10.110.12.12:8888
@@ -29,6 +69,7 @@ SRC       = $(CWD)/src
 TMP       = $(CWD)/tmp
 REF       = $(CWD)/ref
 ETC       = $(CWD)/etc
+DISTR     = $(HOME)/distr
 "]
     ()
 
@@ -155,8 +196,10 @@ let ai () =
 ai: tmp/$(APP).ai.md
 tmp/$(APP).ai.md: doc
 \tcat doc/ai.md README.md doc/bib.md doc/$(APP)/bib.md \\
-\t	  doc/$(APP)/*.md \\
-\t> $@ ; touch $@
+\t\tdoc/$(APP)/*.md > $@
+\t\techo '# files' >> $@
+\t\ttree -L 1 . static >> $@
+\t\ttree lib inc src >> $@
 " ()
 
 let mk () =

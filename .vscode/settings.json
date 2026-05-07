@@ -1,6 +1,8 @@
 {
     "files.exclude": {
-        "doc/html": true, "**/node_modules/**": true, "_build": true,
+        "doc/html": true, "**/node_modules": true,
+        "_build/**": true, "target/**": true,
+        "**/__pycache__": true,
         "bin/py*": true, "bin/pip*": true,
         "bin/?ctivate*": true, "bin/autopep*": true, ".pytest*": true,
         "lib/python*": true, "lib64":true, "include":true,
@@ -11,7 +13,7 @@
     },
     "files.associations": {
         "*.linux": "properties", "*.uclibc": "properties",
-        "*.service": "systemd-unit-file",
+        "*.rc": "shell", "*.service": "systemd-unit-file",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
         "*.ioc": "properties", "*.ocd": "properties",
@@ -30,11 +32,10 @@
     "editor.detectIndentation": false,
     "editor.rulers": [80],
     "editor.lineNumbers": "on",
-    "workbench.tree.indent": 24,
-    "editor.fontSize": 14,
     "explorer.autoReveal": false,
     "terminal.integrated.copyOnSelection": true,
     "editor.formatOnSave": false,
+    "workbench.tree.indent": 24,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
     "auto-tab-closer.delayMs": 5555,
@@ -76,10 +77,10 @@
     // C++
     "[c]"  : {
         "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave": false },
+        "editor.formatOnSave"     : false },
     "[cpp]": {
         "editor.defaultFormatter" : "xaver.clang-format",
-        "editor.formatOnSave": false },
+        "editor.formatOnSave"     : false },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.files.exclude": { "ref": true },
 
@@ -87,15 +88,15 @@
     "cmake.sourceDirectory" : "${workspaceFolder}",
     "cmake.buildDirectory"  : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"       : "Unix Makefiles",
-    "cmake.parallelJobs"    :  4,
+    "cmake.buildBeforeRun"  : true,
+    "cmake.saveBeforeBuild" : true,
+    "cmake.parallelJobs"    : 4,
     "cmake.useCMakePresets" : "always",
-    "cmake.buildBeforeRun"  :  true,
-    "cmake.saveBeforeBuild" :  true,
+    "cmake.allowCommentsInPresetsFile" : true,
+    "cmake.ignoreCMakeListsMissing"    : false,
     "cmake.debugConfig"     : {
         "cwd" :   "${workspaceFolder}",
         "args": [ "lib/${workspaceFolderBasename}.ini" ] },
-    "cmake.allowCommentsInPresetsFile" : true,
-    "cmake.ignoreCMakeListsMissing"    : false,
 
     // Python
     // "python.defaultInterpreterPath":  "${workspaceFolder}/bin/python3",
@@ -104,8 +105,8 @@
     "autopep8.args"                : ["--ignore","E26,E302,E305,E401,E402,E701,E702"],
     "python.analysis.extraPaths"   : ["${workspaceFolder}/src", "${workspaceFolder}/lib"],
     "[python]": {
-        "editor.defaultFormatter"  : "ms-python.autopep8",
-        "editor.formatOnSave"      :  true},
+        "editor.defaultFormatter"      : "ms-python.autopep8",
+        "editor.formatOnSave"          : true},
     "ruff.configuration"               : ".ruff.toml",
     "ruff.lint.preview"                : true,
     "ruff.format.preview"              : true,
@@ -124,6 +125,7 @@
     // Rust
     "rust-analyzer.checkOnSave"          : false,
     "rust-analyzer.check.allTargets"     : false,
+    "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer" },
     "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
     "rust-analyzer.cargo.features"       : ["pc","i5","x86_64","linux"],
     // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
@@ -144,11 +146,11 @@
     "[erlang]": { "editor.formatOnSave": true },
 
     // OCaml (cs3110/cs134b)
-    "[ocaml]": {
+    "[ocaml]"           : {
         "editor.tabSize": 2, "editor.formatOnSave": false },
-    "[ocaml.interface]": {
+    "[ocaml.interface]" : {
         "editor.tabSize": 2, "editor.formatOnSave": false },
-    "[dune]": {
+    "[dune]"            : {
         "editor.tabSize": 2, "editor.formatOnSave": false },
 
     // MinGW/MSYS2

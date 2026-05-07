@@ -1,3 +1,53 @@
+let settings () =
+  touch ".vscode/settings.json" ~c:"\
+{
+    // editor
+    \"files.eol\": \"\\n\",
+    \"files.insertFinalNewline\": true,
+    \"files.trimFinalNewlines\": true,
+    \"editor.tabSize\": 4,
+    \"editor.insertSpaces\": true,
+    \"editor.detectIndentation\": false,
+    \"editor.rulers\": [80],
+    \"editor.lineNumbers\": \"on\",
+    \"explorer.autoReveal\": false,
+    \"terminal.integrated.copyOnSelection\": true,
+    \"editor.formatOnSave\": false,
+    \"workbench.tree.indent\": 24,
+    \"files.autoSave\": \"afterDelay\",
+    \"files.autoSaveDelay\": 2222,
+
+    // clang-format
+    \"clang-format.executable\"     : \"clang-format\",
+    \"clang-format.fallbackStyle\"  : \"Google\",
+    \"clang-format.style\"          : \"file\",
+
+    // CMake
+    \"cmake.sourceDirectory\" : \"${workspaceFolder}\",
+    \"cmake.buildDirectory\"  : \"${workspaceFolder}/tmp/${workspaceFolderBasename}\",
+    \"cmake.debugConfig\"     : {
+        \"cwd\" :   \"${workspaceFolder}\",
+        \"args\": [ \"lib/${workspaceFolderBasename}.ini\" ] },
+}
+" ()
+
+let tasks () =
+  touch ".vscode/tasks.json" ~c:"\
+{
+    \"version\": \"2.0.0\",
+    \"tasks\": [
+        {
+            \"label\"          : \"AI: context\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make ai\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        }
+    ]
+}
+" ()
+
 let extensions () =
   touch ".vscode/extensions.json"
     ~c:
@@ -8,6 +58,9 @@ let extensions () =
         \"ms-vscode.makefile-tools\",
         \"IBM.output-colorizer\",
         \"usernamehw.errorlens\",
+        \"redhat.vscode-xml\",
+        \"redhat.vscode-yaml\",
+        \"mechatroner.rainbow-csv\",
         // formatters
         \"xaver.clang-format\",
         \"esbenp.prettier-vscode\",
@@ -24,24 +77,28 @@ let extensions () =
         \"daohong-emilio.yash\",
         \"rreverser.ragel\",
         // embedded
-        \"dan-c-underwood.arm\",
         \"zixuanwang.linkerscript\",
         \"ms-vscode.vscode-serial-monitor\",
+        \"dan-c-underwood.arm\",
         // \"espressif.esp-idf-extension\",
         // Python
         \"ms-python.python\",
         \"ms-python.autopep8\",
         \"charliermarsh.ruff\",
-        // Rust
-        \"rust-lang.rust-analyzer\",
-        \"tamasfe.even-better-toml\",
-        \"vadimcn.vscode-lldb\",
         // OCaml
         \"ocamllabs.ocaml-platform\",
     ]
 }
 "
     ()
+
+let vscode () =
+  mkd ".vscode" ();
+  settings ();
+  tasks ();
+  extensions ();
+  [ "launch"; "c_cpp_properties" ]
+  |> List.iter (fun j -> touch (".vscode/" ^ j ^ ".json") ~c:"{\n}\n" ())
 
 let launch () =
   touch ".vscode/launch.json"
@@ -78,11 +135,10 @@ let settings () =
     \"editor.detectIndentation\": false,
     \"editor.rulers\": [80],
     \"editor.lineNumbers\": \"on\",
-    \"workbench.tree.indent\": 24,
-    \"editor.fontSize\": 14,
     \"explorer.autoReveal\": false,
     \"terminal.integrated.copyOnSelection\": true,
     \"editor.formatOnSave\": false,
+    \"workbench.tree.indent\": 24,
     \"files.autoSave\": \"afterDelay\",
     \"files.autoSaveDelay\": 2222,
     \"auto-tab-closer.numLeftTabs\": 5,

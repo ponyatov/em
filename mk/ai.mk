@@ -1,4 +1,3 @@
-.PHONY: ai tmp/$(APP).ai.md
-ai: tmp/$(APP).ai.md
-tmp/$(APP).ai.md: doc
-	cat doc/ai.md doc/bib.md README.md doc/$(APP)/*.md > $@ ; touch $@
+.PHONY: ai
+ai: sync
+	cat README.md doc/$(APP)/*.md > tmp/$(APP).ai.md

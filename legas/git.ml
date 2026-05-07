@@ -7,7 +7,7 @@ let git () =
   Sys.command [%string "git remote add flic %{flic}" ]|> ignore;
   Sys.command [%string "git checkout --orphan %{user}" ]|> ignore;
   Sys.command [%string "git add -A ; git commit -am '.' ; git push -uv gh `whoami` "] |> ignore;
-  Sys.command [%string "git add -A ; git commit -am '.' ; git push flic `whoami` "] |> ignore;
+  Sys.command [%string "git add -A ; git commit -am '.' ; git push %{flic} `whoami` "] |> ignore;
   (* *)
   Sys.command [%string "ssh %{devuser}@%{devserver} git clone -o gh %{gh} ~/%{app}"] |> ignore;
   Sys.command [%string "ssh %{devuser}@%{devserver} 'cd %{app} ; git remote add flic %{flic}'"] |> ignore

@@ -1,11 +1,7 @@
 include(FindPackageHandleStandardArgs)
 
-# find_package(PkgConfig REQUIRED)
-# pkg_check_modules(RAGEL REQUIRED ragel)
-
 if(NOT RAGEL_EXECUTABLE)
 find_program(RAGEL_EXECUTABLE ragel)
-message(STATUS "Looking for ragel")
 endif()
 
 if(RAGEL_EXECUTABLE)
@@ -18,19 +14,12 @@ if(RAGEL_EXECUTABLE)
     if(_version_result EQUAL 0)
         string(REGEX MATCH "[0-9]+\\.[0-9]+(\\.[0-9]+)*" RAGEL_VERSION "${_version_output}")
         set(RAGEL_FOUND TRUE)
-        message("-- | RAGEL: " ${RAGEL_VERSION})
+        message("-- Found RAGEL: ${RAGEL_EXECUTABLE} (found version \"${RAGEL_VERSION}\")")
     endif()
 endif()
 
-if(RAGEL_EXECUTABLE)
-file(GLOB R
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.ragel
-    lib/src/*.ragel lib/*/src/*.ragel
-)
-endif()
+file(GLOB_RECURSE R RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS src/*.ragel)
 
-if(RAGEL_EXECUTABLE)
 foreach(RAGEL_FILE ${R})
     string(REGEX REPLACE ".+\/(.+)\.ragel$" "${CMAKE_BINARY_DIR}/\\1.ragel.cpp"
         RAGEL_CPP           ${RAGEL_FILE})
@@ -43,4 +32,3 @@ foreach(RAGEL_FILE ${R})
         ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
     )
 endforeach()
-endif()

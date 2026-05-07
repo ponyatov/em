@@ -160,7 +160,7 @@ let cmake () =
   Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/version.cmake cmake/" |> ignore;
-  Sys.command "cp ~/em/cmake/instal.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/install.cmake cmake/" |> ignore;
   Sys.command "cp ~/em/cmake/clean.cmake cmake/" |> ignore;
   src ();
   syntax ();
@@ -308,14 +308,13 @@ let cpplaunch () =
     ()
 
 let aptcpp () =
-  let c =
-    {|
+  let c = "\
 g++ cmake clang-format doxygen
 gdb valgrind cgroup-tools
 flex bison ragel libreadline-dev
-|}
+"
   in
-  append "apt.Debian" ~c:[%string "code meld%{c}"] ();
+  append "apt.Debian" ~c:[%string "code meld\n%{c}"] ();
   append "apt.Ubuntu" ~c ();
   append "apt.Raspbian" ~c ()
 

@@ -1,5 +1,19 @@
 # file(GLOB LD -> cmake/any_toolchain.cmake
 
+file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
+file(GLOB_RECURSE H CONFIGURE_DEPENDS inc/*.h*)
+file(GLOB_RECURSE F CONFIGURE_DEPENDS lib/*.f lib/*.ini)
+
+# include dirs
+foreach(h ${H})
+    get_filename_component(d ${h} DIRECTORY)
+    list(APPEND INC ${d})
+endforeach()
+list(REMOVE_DUPLICATES INC)
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${INC})
+
+## depricated:
+
 file(GLOB_RECURSE S
     RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
     src/*.s
@@ -50,33 +64,4 @@ file(GLOB_RECURSE H
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/*.h*
     # net
     lib/pcpp/include/pcapplusplus/*.h*
-)
-
-file(GLOB INC
-    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
-    ${CMAKE_BINARY_DIR}
-    inc src
-    # cross
-      hw/inc   hw/${HW}/inc
-     cpu/inc  cpu/${CPU}/inc
-    arch/inc arch/${ARCH}/inc
-      os/inc   os/${OS}/inc
-    # lib
-    lib/inc lib/*/inc
-    # CortexM/CubeMX
-    hw/${HW}/Core/Inc
-    hw/${HW}/Drivers/CMSIS/Include
-    hw/${HW}/Drivers/*xx_HAL_Driver/Inc
-    hw/${HW}/Drivers/CMSIS/Device/ST/*xx/Include
-    hw/${HW}/USB_DEVICE/App hw/${HW}/USB_DEVICE/Target
-    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
-    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
-    # net
-    lib/pcpp/include/pcapplusplus
-)
-include_directories(${INC})
-
-file(GLOB INI
-    RELATIVE ${CMAKE_SOURCE_DIR} CONFIGURE_DEPENDS
-    lib/*.ini lib/*.f
 )

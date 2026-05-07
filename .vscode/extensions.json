@@ -5,6 +5,9 @@
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
         "usernamehw.errorlens",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
+        "mechatroner.rainbow-csv",
         // documenting
         "bierner.markdown-mermaid",
         "jebbs.plantuml",
@@ -23,7 +26,6 @@
         // "nico-castell.linux-desktop-file",
         // "ms-azuretools.vscode-docker",
         // "github.vscode-github-actions",
-        // "redhat.vscode-yaml",
         // misc
         // "hbenl.vscode-test-explorer",
         // Web/JS
@@ -32,14 +34,13 @@
         "jock.svg",
         "denoland.vscode-deno",
         // "dbaeumer.vscode-eslint",
-        // Go
-        "golang.go",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
         "ms-vscode.cmake-tools",
         "krosf.vscode-valgrind",
-        // "theqtcompany.qt-qml",
+        "theqtcompany.qt-cpp",
+        "theqtcompany.qt-qml",
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
@@ -49,12 +50,11 @@
         // "AlecGhost.tree-sitter-vscode",
         // embedded
         "zixuanwang.linkerscript",
-        "basdp.language-gas-x86",
+        "ms-vscode.vscode-serial-monitor",
         "ms-vscode.hexeditor",
         "dan-c-underwood.arm",
-        "ms-vscode.vscode-serial-monitor",
         // "espressif.esp-idf-extension",
-        // "mechatroner.rainbow-csv",
+        // "basdp.language-gas-x86",
         "ivannovak1004.gnuradio-integration",
         // Python
         "ms-python.python",
@@ -73,12 +73,6 @@
         "fttx.language-forth",
         // Erlang
         "pgourlain.erlang",
-        // F#
-        "ionide.ionide-fsharp",
-        "redhat.vscode-xml",
-        "mnxn.fsharp-fsl-fsy",
-        // "tintoy.msbuild-project-tools",
-        // "ms-dotnettools.csdevkit",
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",

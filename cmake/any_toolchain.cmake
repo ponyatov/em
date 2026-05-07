@@ -1,8 +1,6 @@
 set(CMAKE_C_STANDARD   17)
 set(CMAKE_CXX_STANDARD 23)
 
-# set(CMAKE_C_COMPILER_FORCED   TRUE) # breaks Qt
-# set(CMAKE_CXX_COMPILER_FORCED TRUE)
 set(CMAKE_C_COMPILER_ID       GNU)
 set(CMAKE_CXX_COMPILER_ID     GNU)
 
@@ -13,9 +11,6 @@ set(CMAKE_LINKER       ${TOOLCHAIN_PREFIX}-ld)
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
-
-set   (APP ${CMAKE_PROJECT_NAME})
-string(TOUPPER ${APP} APP_)
 
 # include(cross)
 
@@ -28,9 +23,15 @@ add_compile_options(
     $<$<CONFIG:Debug>:-DDEBUG>
 )
 
-add_compile_definitions(
-    ${APP_} APP="${APP}" ${HW_} ${CPU_} ${ARCH_} ${OS_}
-)
+# string (TOUPPER ${APP}  APP_  )
+# string (TOUPPER ${HW}   HW_   )
+# string (TOUPPER ${CPU}  CPU_  )
+# string (TOUPPER ${ARCH} ARCH_ )
+# string (TOUPPER ${OS}   OS_   )
+
+# add_compile_definitions(
+#     APP=$(APP) ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}
+# )
 
 add_link_options(
     -Wl,--print-memory-usage
@@ -47,4 +48,4 @@ set(CMAKE_EXECUTABLE_SUFFIX_ASM ${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_EXECUTABLE_SUFFIX_C   ${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_EXECUTABLE_SUFFIX_CXX ${CMAKE_EXECUTABLE_SUFFIX})
 
-file(GLOB LD hw/${HW}/*.ld)
+# file(GLOB LD hw/${HW}/*.ld)

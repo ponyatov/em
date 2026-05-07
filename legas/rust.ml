@@ -1,41 +1,3 @@
-let allow = "
-#![allow(dead_code)]
-#![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
-#![allow(non_upper_case_globals)]
-#![allow(unused_imports)]
-"
-let allow = ""
-
-let config () = 
-  (*  *)
-  touch "src/config.rs" ()
-
-let cargo () =
-    touch "Cargo.toml" ~c:("\
-[package]
-name            =  \"" ^ app ^ "\"
-version         =  \""
-      ^ version ^ "\"
-description     =  \"" ^ title ^ "\"
-authors         = [\""
-      ^ author ^ " <" ^ email ^ ">\"]
-license         =  \"" ^ license
-      ^ "\"
-repository      =  \"" ^ github
-      ^ "\"
-edition         =  \"2024\"
-
-[dependencies]
-const_format    = \"0.2\"
-
-[target.'cfg(target_os = \"linux\")'.dependencies]
-libc            = \"0.2\"
-memmap2         = \"0.9\"
-"
-        )
-      ();
-  
 let rustmk () =
   touch "mk/all.mk"
     ~c:
@@ -56,127 +18,72 @@ $(RUSTUP) $(CARGO):
 \tcurl $(PROXY) --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 \t. $HOME/.cargo/env
 \trustup self update ; rustup update
+\trustup component add rust-analyzer rustfmt
 \tcargo install cargo-watch
 \trustup target add x86_64-unknown-linux-gnu
-# rustup target add i586-unknown-linux-musl
-# rustup target add aarch64-unknown-linux-gnu
-# rustup target add armv7-unknown-linux-gnueabihf
-# rustup target add thumbv7em-none-eabihf
-# rustup target add thumbv7em-none-eabi
-# rustup target add thumbv7m-none-eabi
-# rustup target add thumbv6m-none-eabi
 "
     ();    
+    append "Makefile" ~c:"include mk/rust.mk\n" ();
 
-let no_std () =
-  touch [%string "src/%{app}.rs"] ~c:("\
-#![no_std]
-#![no_main]
+let toml () =
+  touch [%string "src/%{app}.rs"] ();
+  touch "Cargo.toml" ~c:[%string "[package]
+name        = \"%{app}\"
+version     = \"%{version}\"
+edition     = \"2024\"
+description = \"%{title}\"
+authors     = [\"%{author} %{email}\"]
+license     = \"%{license}\"
+repository  = \"%{github}\"
 
-use core::panic::PanicInfo;
+[[bin]]
+name = \"%{app}\"
+path = \"src/%{app}.rs\"
+"]
+      ();
 
-#[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    loop {}
-}
-") ()
-
-let rsmain () =
-  touch "src/main.rs"
-    ~c:(allow^"
-mod config;\nmod vm;
-
-use memmap2::Mmap;
-use std::fs::File;
-use std::io;
-use std::io::Write;
-use std::path::Path;
-
-fn main() {
-    let argv: Vec<String> = std::env::args().collect();
-    let _argc = argv.len();
-    arg(0, &argv[0]);
-    for (argc, argv) in argv.iter().enumerate().skip(1) {
-        arg(argc, argv);
-        let file = File::open(Path::new(argv)).unwrap();
-        let src = unsafe { Mmap::map(&file).unwrap() };
-        eprintln!(\"\\tsize: {} bytes\", src.len());
-        // eprintln!(\"{:?}\", &mmap[..] as &str);
-        io::stdout().write_all(&src[..]).unwrap();
-    }
-}
-
-fn arg(argc: usize, argv: &str) {
-    eprintln!(\"argv[{argc}] = {argv:?}\");
-}
-")
-    ();
-
-let vmrs () =
-  touch "src/vm.rs" ~c:(allow^"
-use crate::config::vm::*;
-
-/// main memory
-pub static mut M: [u8; Msz] = [0; Msz];
-pub static mut Cp: u16 = 0;
-pub static mut Ip: u16 = 0;
-
-/// return stack
-pub static mut R: [u16; Rsz] = [0; Rsz];
-pub static mut Rp: u8 = 0;
-
-/// data stack
-pub static mut D: [i32; Dsz] = [0; Dsz];
-pub static mut Dp: u8 = 0;
-") ();
-
-let configrs () =
-  touch "src/config.rs" ~c:("//! shared config\n"^allow^"
-pub mod vm {
-    /// @ref M size, bytes
-    pub const Msz: usize = 0x10000;
-    /// @ref R size, addresses
-    pub const Rsz: usize = 0x100;
-    /// @ef D size, cells
-    pub const Dsz: usize = 0x10;
-}
-") ();
-
-let cross () =
+let cargo_config () =
   mkd ".cargo" ();
   touch ".cargo/config.toml" ~c:"\
 [build]
-target    = \".cargo/i386-pc-none.json\"
+target    = \"x86_64-unknown-linux-gnu\"
 jobs      = 4
 
 [target.x86_64-unknown-linux-gnu]
 rustflags = [\"--cfg\", \"feature=\\\"pc,i5,linux\\\"\"]
 linker    = \"x86_64-linux-gnu-gcc\"
 
-[target.i386-pc-none]
-rustflags = [\"--cfg\", \"feature=\\\"pc,i486,none\\\"\"]
-linker    = \"rust-lld\"
-runner    = \"qemu-system-i386 -kernel\"
-
-[unstable]
-build-std = [\"core\", \"compiler_builtins\"]
-
 [source.crates-io]
-replace-with = 'ustc'
+replace-with = \"ustc\"
 
 [source.ustc]
 registry = \"sparse+https://mirrors.ustc.edu.cn/crates.io-index/\"
 [source.tuna]
 registry = \"sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/\"
-" ()
+" ();
 
-let nightly () =
-  touch "rust-toolchain.toml" ~c:"[toolchain]\nchannel = \"nightly\"\n" ()
+let bare_i386 () =
+  touch ".cargo/i386-pc-none.json" ~c:"" ();
+  touch [%string "src/%{app}.rs"] ~c:"" ();
+  touch "mk/all.mk" ~c:"\
+.PHONY: all run watch
+all:
+\tcargo +nightly build -Z build-std
+run:
+\tcargo +nightly run -Z build-std
+watch:
+\tcargo watch -x '+nightly build -Z build-std'
+" ();
+  append "mk/rust.mk" ~c:"\
+\trustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+" ();
+  touch "rust-toolchain.toml" ~c:"[toolchain]
+channel = \"nightly\"
+" ();
+  append "apt.Debian" ~c:"qemu-system-i386\n" ();
+  append "apt.Ubuntu" ~c:"qemu-system-i386\n" ();
 
 let rust () =
   rustmk ();
-  cargo ();
-  rsmain ();
-  configrs (); vmrs();
-  Sys.command ("cargo run -- lib/" ^ app ^ ".ini")|>ignore;
-  Sys.command "git add mk src Cargo.* .gitignore"|>ignore;
+  cargo_config ();
+  toml ();

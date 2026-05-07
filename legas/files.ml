@@ -1,7 +1,4 @@
-(* open Unix *)
-
 let touch name ?(c = "") () =
-  (* if not (Sys.file_exists name) then *)
   let f = open_out name in
   output_string f c;
   close_out f
@@ -20,16 +17,40 @@ let dirs () =
   [ "doc" ] |> List.iter (fun d -> mkd d ~c:"html/\n!.gitignore\n" ());
   [ "bin"; "tmp"; "ref" ] |> List.iter (fun d -> mkd d ~c:"*\n!.gitignore\n" ())
 
+let ocaml () =
+  touch ".ocamlinit"
+    ~c:
+      "#require \"ppx_string\";;
+#use \"lib/files.ml\";;
+#use \"lib/meta.ml\";;
+"
+    ();
+  touch ".ocamlformat"
+    ~c:
+      "profile=default
+margin=80
+line-endings=lf
+break-cases=all
+wrap-comments=true
+break-string-literals=never
+"
+    ()
+
+let vscode () =
+  mkd ".vscode" ();
+  [ "settings"; "extensions"; "tasks"; "launch"; "c_cpp_properties" ]
+  |> List.iter (fun j -> touch (".vscode/" ^ j ^ ".json") ~c:"{\n}\n" ())
+
+let dotfiles () =
+  Sys.command "cp ~/em/.prettierrc ./" |> ignore;
+
 let giti () =
-  touch ".gitignore" ~c:"*~
+  touch ".gitignore" ~c:"\
+*~
 *.swp
 *.log
-/_build/
-/target/
-node_modules/
 !.gitignore
 " ();
-  Sys.command "git add .gitignore" |> ignore
 
 let apt () =
   let a = "git make curl fzf\n" in
@@ -66,6 +87,8 @@ let dotfiles () =
 
 let files () =
   dirs ();
+  ocaml ();
+  vscode ();
   giti ();
   apt ();
   readme ();
