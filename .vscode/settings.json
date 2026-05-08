@@ -12,7 +12,7 @@
         "_build/**": true, "target/**": true,
     },
     "files.associations": {
-        "*.kernel": "properties", "*.uclibc": "properties",
+        "*.linux": "properties", "*.uclibc": "properties",
         "*.rc": "shell", "*.service": "systemd-unit-file",
         "*.mk": "makefile", "*.make": "makefile",
         "*.ld": "linkerscript", "*.ld.fix": "linkerscript",

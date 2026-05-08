@@ -16,6 +16,7 @@ WARN_IF_UNDOCUMENTED   = NO
 RECURSIVE              = YES
 USE_MDFILE_AS_MAINPAGE = README.md
 GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
 FILE_PATTERNS         += *.lex *.yacc *.ragel *.rl
 EXTENSION_MAPPING      = lex=C++ yacc=C++ ragel=C++ rl=C++ ino=C++
 HAVE_DOT               = YES
