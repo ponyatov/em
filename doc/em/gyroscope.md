@@ -1,0 +1,3 @@
+# gyroscope
+![[ITG]]
+

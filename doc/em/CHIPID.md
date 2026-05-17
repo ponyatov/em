@@ -1,0 +1,6 @@
+# chipid
+
+|||
+|-|-|-
+0x0413 | [[STM32F407G-DISC1]] | [[STM32F407VGT6]]
+0x0461 | [[STM32L496G-DISCO]] | [[STM32L496AGI]]

@@ -1,5 +1,5 @@
-.PHONY: py
-py:     requirements.txt $(PY) $(PIP)
+.PHONY: python
+python: requirements.txt $(PY) $(PIP)
 	$(PIP) install -U -r $<
 $(PIP): $(PY)
 	$(PY) install -U pip

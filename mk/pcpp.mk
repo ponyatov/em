@@ -1,0 +1,16 @@
+PCPP_CFG += -DPCAPPP_BUILD_EXAMPLES=OFF
+PCPP_CFG += -DPCAPPP_BUILD_TESTS=OFF
+PCPP_CFG += -DPCAPPP_BUILD_TUTORIALS=OFF
+PCPP_CFG += -DBUILD_SHARED_LIBS=OFF
+# for ivan
+PCPP_CFG += -DPCAPPP_USE_DPDK=ON
+# for direct use
+PCPP_CFG += -DPCAPPP_USE_XDP=OFF
+# don't use libpcap
+PCPP_CFG += -DPCAPPP_BUILD_PCAPPP=ON
+
+.PHONY: pcpp
+pcpp: ref/PcapPlusPlus/README.md
+	cmake $(PCPP_CFG) -S $(dir $<) -B tmp/$@ --install-prefix=$(LIB)/pcpp
+	cmake --build   tmp/$@
+	cmake --install tmp/$@

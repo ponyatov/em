@@ -1,10 +1,11 @@
 HW ?= pc
 # HW ?= qemu386
+# HW ?= ndp2
+# HW     ?= rpi3
+# HW     ?= rpi4
+# HW     ?= rpi5
+# HW     ?= opi800
 # HW ?= a7n8x
-# HW ?= rpi3bp
-# HW ?= opi800
-# HW ?= rpi4
-# HW ?= rpi5
 # HW ?= pillf030
 # HW ?= pillf103
 # HW ?= lm3s6

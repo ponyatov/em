@@ -1,0 +1,5 @@
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+qt_standard_project_setup()
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+list(APPEND L Qt6::Core Qt6::Widgets)

@@ -1,0 +1,1 @@
+# __HAL_RCC_GET_MSI_RANGE

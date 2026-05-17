@@ -28,14 +28,7 @@
             "problemMatcher" : []
         },
         {
-            "label"          : "git: checkout .vscode",
-            "type"           : "shell",
-            "command"        : "git checkout .vscode/settings.json",
-            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
-            "problemMatcher" : []
-        },
-        {
-            "label"          : "cargo: main",
+            "label"          : "cargo: x86_64/main",
             "type"           : "shell",
             "command"        : "cargo",
             "args"           : ["watch","-x","run --bin main --features=pc --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
@@ -86,7 +79,7 @@
         {
             "label"          : "deno: watch",
             "type"           : "shell",
-            "command"        : "deno --watch src/${workspaceFolderBasename}.ts",
+            "command"        : "deno --watch lib/${workspaceFolderBasename}.ts",
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
@@ -144,7 +137,7 @@
             "group"          : {"kind": "build", "isDefault": true }
         },
         {
-            "label"          : "openocd: firmware",
+            "label"          : "openocd: fw",
             "type"           : "shell",
             "dependsOn"      : "CMake: build",
             "command"        : "openocd -f hw/${command:cmake.activeConfigurePresetName}/${command:cmake.activeConfigurePresetName}.ocd -c \"program ${command:cmake.launchTargetPath} verify reset exit\"",
@@ -169,10 +162,10 @@
             "group"          : {"kind": "build","isDefault": true}
         },
         {
-            "label"          : "cargo: send",
+            "label"          : "cargo: watch",
             "type"           : "shell",
             "command"        : "cargo",
-            "args"           : ["watch","-x","run --bin send --features=pc --target x86_64-unknown-linux-gnu -- lib/${workspaceFolderBasename}.ini"],
+            "args"           : ["watch","-x","run -p ${workspaceFolderBasename} -- lib/${workspaceFolderBasename}.ini"],
             "options"        : {"cwd": "${workspaceFolder}"},
             "problemMatcher" : ["$rustc"],
             "group"          : {"kind": "build", "isDefault": true },
@@ -189,9 +182,86 @@
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
         },
         {
-            "label"          : "AI: context",
+            "label"          : "cargo: install",
             "type"           : "shell",
-            "command"        : "make ai",
+            "command"        : "cargo",
+            "args"           : ["install","--path",".","--root","${workspaceFolder}/tmp"],
+            "options"        : {"cwd": "${workspaceFolder}"},
+            "problemMatcher" : ["$rustc"],
+            "group"          : {"kind": "build", "isDefault": true },
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "dune: build",
+            "type"           : "shell",
+            "command"        : "dune build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "dune: watch",
+            "type"           : "shell",
+            "command"        : "dune exec ${workspaceFolderBasename} --watch",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "dune: exec",
+            "type"           : "shell",
+            "command"        : "dune exec ${workspaceFolderBasename}",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "dune: clean",
+            "type"           : "shell",
+            "command"        : "dune clean",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "dune: test",
+            "type"           : "shell",
+            "command"        : "dune test",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "rebar3: compile",
+            "type"           : "shell",
+            "command"        : "rebar3 compile",
+            // "dependsOn"      : "CMake: build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "git: checkout .vscode",
+            "type"           : "shell",
+            "command"        : "git checkout .vscode/settings.json",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": true},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "make: watch",
+            "type"           : "shell",
+            "command"        : "make watch",
+            // "dependsOn"      : "CMake: build",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "make: run",
+            "type"           : "shell",
+            "command"        : "make run",
+            // "dependsOn"      : "CMake: build",
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
             "group"          : {"kind": "build", "isDefault": true}
@@ -205,5 +275,13 @@
             "problemMatcher" : [],
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
         },
+        {
+            "label"          : "AI: context",
+            "type"           : "shell",
+            "command"        : "make ai",
+            "problemMatcher" : [],
+            "presentation"   : {"showReuseMessage": true, "focus": true, "reveal": "silent", "close": false},
+            "group"          : {"kind": "build", "isDefault": true}
+        }
     ]
 }

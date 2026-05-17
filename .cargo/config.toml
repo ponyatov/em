@@ -1,25 +1,25 @@
 [build]
 target    = "x86_64-unknown-linux-gnu"
-jobs      = 2
+jobs      = 4
 
 [target.x86_64-unknown-linux-gnu]
-rustflags = ["--cfg", "feature=\"pc,linux\""]
+rustflags = ["--cfg", "feature=\"pc,i5,linux\""]
 linker    = "x86_64-linux-gnu-gcc"
+
+[target.wasm32-unknown-unknown]
+linker    = "rust-lld"
 
 [target.aarch64-unknown-linux-gnu]
 rustflags = ["--cfg", "feature=\"opi800,linux\""]
 linker    = "aarch64-linux-gnu-gcc"
 
-[target.wasm32-unknown-unknown]
-linker    = "rust-lld"
+[target.x86_64-pc-windows-gnu]
+rustflags = ["--cfg", "feature=\"pc,i5,win64\""]
+linker    = "x86_64-w64-mingw32-gcc"
 
 [target.i686-pc-windows-gnu]
 rustflags = ["--cfg", "feature=\"pc,i686,mingw32\""]
 linker    = "i686-w64-mingw32-gcc"
-
-[target.x86_64-pc-windows-gnu]
-rustflags = ["--cfg", "feature=\"pc,i5,win64\""]
-linker    = "x86_64-w64-mingw32-gcc"
 
 [target.thumbv7m-none-eabi]
 rustflags = ["--cfg", "feature=\"cortexm3\""]
@@ -48,6 +48,9 @@ rustflags = [
     "-C", "link-arg=-Tlink.x",
     "-C", "link-arg=-nostartfiles",
 ]
+
+[unstable]
+build-std = ["core", "compiler_builtins"]
 
 [source.crates-io]
 replace-with = 'ustc'

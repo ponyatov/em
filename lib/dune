@@ -1,0 +1,31 @@
+
+; (executable
+;   (name spivey)
+;   (public_name spivey)
+;   (modules spivey)
+; ;   (libraries lib)
+;   (package spivey))
+
+(library
+  (name spivey)
+  (modules token lexer)
+  (libraries ppx_string)
+  (preprocess (pps ppx_string))
+  (package spivey))
+
+(rule
+  (target lexer.ml)
+  (deps lexer.mll)
+  (action (run ocamllex %{deps} -o %{target})))
+
+(library
+  (name sum)
+  (modules sum)
+  (package spivey))
+
+(test
+  (name test)
+  (modules test)
+  (libraries ounit2 sum)
+  (preprocess (pps ppx_string))
+  (package spivey))

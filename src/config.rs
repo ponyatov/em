@@ -1,7 +1,16 @@
 //! shared config
 
-#![allow(dead_code)]
+#![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
+#![allow(dead_code)]
+
+pub mod server {
+    pub const ip: &str = "127.0.0.1";
+    // pub const IP: &str = "0.0.0.0";
+    pub const port: u16 = 12345;
+    /// bind address constant
+    pub const bind: &str = const_format::formatcp!("{ip}:{port}");
+}
 
 /// VM configuration parameters
 pub mod vm {
@@ -11,16 +20,6 @@ pub mod vm {
     pub const Rsz: usize = 0x100;
     /// data stack size (limited for MCU use)
     pub const Dsz: usize = 0x10;
-}
-
-/// Web server default bind ip
-pub mod server {
-    pub const ip: &str = "127.0.0.1";
-    // pub const IP: &str = "0.0.0.0";
-    /// Web server IP port
-    pub const port: u16 = 12345;
-    /// bind address constant
-    pub const bind: &str = const_format::formatcp!("{ip}:{port}");
 }
 
 /// screen width

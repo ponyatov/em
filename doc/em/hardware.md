@@ -1,0 +1,4 @@
+# embedded/hardware
+
+- [[GPIO]]
+

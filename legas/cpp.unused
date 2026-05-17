@@ -1,0 +1,143 @@
+
+let linux () =
+  touch [%string "inc/linux.hpp"] ~c:[%string "\
+#pragma once
+
+/// @defgroup linux linux
+/// @ingroup libc
+/// @{
+#include <sys/inotify.h>
+#include <sys/types.h>
+#include <time.h>
+#include <x86intrin.h>
+/// @{
+"] ()
+
+let libc () =
+  touch [%string "inc/libc.hpp"] ~c:[%string "\
+#pragma once
+
+/// @defgroup libc libc
+/// @{
+
+/// @name C
+/// @{
+#include <cassert>
+#include <csignal>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+/// @}
+  
+/// @name C++
+/// @{
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <map>
+#include <vector>
+/// @}
+
+/// @name multicore
+/// @{
+#include <chrono>
+#include <thread>
+/// @}
+/// @}
+"] ();
+
+let mainhpp () =
+  touch [%string "inc/main.hpp"] ~c:[%string "\
+#pragma once
+
+/// @defgroup main main
+/// @{
+extern int main(int argc, char* argv[]);    ///< POSIX entry point
+extern void arg(int argc, char* argv);      ///< process command line argument
+extern void setup(int argc, char* argv[]);  ///< system setup
+extern int loop();                          ///< event loop
+/// @}
+"]
+    ()
+
+let app () =
+  touch [%string "inc/app.hpp"] ~c:[%string "\
+#pragma once
+
+#include \"libc.hpp\"
+#include \"linux.hpp\"
+#include \"main.hpp\"
+#include \"watch.hpp\"
+"] ();
+
+let net () =
+  touch [%string "inc/net.hpp"] ~c:[%string "\
+#pragma once
+"] ()
+
+let hpp () =
+  mkd "inc" ();
+  libc(); linux (); mainhpp () ; app ();
+
+let cmake_any () =
+  mkd "cmake" ();
+  presets ();
+  src ();
+  Sys.command "cp ~/em/cmake/any_toolchain.cmake cmake/" |> ignore;
+  Sys.command "cp ~/em/cmake/x86_64-linux-gnu.cmake cmake/" |> ignore;
+
+let cpp () =
+  mkd "inc" ();
+  mkd "src" ();
+  hpp ();
+  cpp ();
+  cmake ();
+  doxygen ();
+  aptcpp ();
+  cf ();
+  cpplaunch ();
+  c_cpp_properties ();
+  Sys.command "git add .vscode doc cmake inc src"
+
+let libhpp () =
+  (* *)
+  touch [%string "inc/%{app}.hpp"]
+    ~c:[%string "\
+#pragma once
+
+#include <cstdlib>
+#include <cstdio>
+
+extern \"C\" void %{app}();
+"] ()
+
+let libcpp () =
+  (* *)
+  touch [%string "src/%{app}.cpp"]
+    ~c:[%string "\
+#include \"%{app}.hpp\"
+
+void %{app}() { fprintf(stderr, \"Hello, %{app}\\n\"); }
+"] ()
+
+let liblists () =
+  touch "CMakeLists.txt"
+    ~c:
+      [%string "cmake_minimum_required(VERSION 3.25)
+get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME_WE)
+project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES C CXX ASM)
+
+include(src)      # scan project for source code files
+
+add_library(${CMAKE_PROJECT_NAME} STATIC ${C} ${CP})
+
+install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION .)
+"]
+    ();
+  Sys.command "git add CMakeLists.txt"
+
+let cpplib () =
+  (* *)
+  cmake_any (); liblists ()
+  libhpp ();
+  libcpp ();

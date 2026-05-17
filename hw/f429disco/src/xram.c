@@ -4,7 +4,44 @@
 
 #include "xram.h"
 
-#ifdef DATA_IN_ExtSDRAM
+#include <stdio.h>
+#include <string.h>
+
+#ifndef F429DISCO
+#error "stm32f4xx_hal.h"
+#endif  // F429DISCO
+
+#include "usart.h"
+
+extern void xram_test(void) {
+    static uint8_t *xram_array = (uint8_t *)SDRAM_DEVICE_ADDR;
+    static const size_t xram_size = SDRAM_DEVICE_SIZE;
+    //
+    UART_log("\nxram_test() ");
+    uint32_t start = HAL_GetTick();
+    // r/w test
+    // volatile uint8_t fill;
+    for (int i = 0; i < xram_size; i++) {
+        xram_array[i] = (uint8_t)i;
+        if (xram_array[i] != (uint8_t)i) {
+            UART_log("write fail\n");
+            Error_Handler();
+        }
+    }
+    // DRAM refresh test
+    for (int i = 0; i < xram_size; i++) {
+        if (xram_array[i] != (uint8_t)i) {
+            UART_log("read fail\n");
+            Error_Handler();
+        }
+    }
+    //
+    uint32_t end = HAL_GetTick();
+    uint32_t time = end - start;
+    char time_msg[32];
+    sprintf(time_msg, "test time: %lu ms\n", time);
+    UART_log(time_msg);
+}
 
 // https://en.radzio.dxp.pl/stm32f429idiscovery/sdram.html
 
@@ -54,31 +91,3 @@ void radzio_SDRAM_init(void) {
     while (FMC_Bank5_6->SDSR & FMC_SDSR_BUSY)
         ;
 }
-
-static void speed_test() {
-  // extern void *_sxram, _exram;
-  static uint8_t *xram_array = (uint8_t *)SDRAM_DEVICE_ADDR;
-  static const size_t xram_size = SDRAM_DEVICE_SIZE / 0x40 + 0x40;
-  //
-  uint32_t start = HAL_GetTick();
-  //
-  uint8_t fill;
-  for (int i = 0, fill = 0; i < xram_size; i++, fill++) {
-    xram_array[i] = fill;
-    if (xram_array[i] != fill) Error_Handler();
-  }
-  for (int i = 0, fill = 0; i < xram_size; i++, fill++) {
-    if (xram_array[i] != fill) {
-      char msg[] = "\nspeed_test() xram test fault\n";
-      HAL_UART_Transmit(&huart1, (uint8_t *)msg, sizeof(msg), HAL_MAX_DELAY);
-      HAL_Delay(111);
-      Error_Handler();
-    }
-  }
-  //
-  uint32_t end = HAL_GetTick();
-  uint32_t time = end - start;
-}
-
-#endif  // DATA_IN_ExtSDRAM
-

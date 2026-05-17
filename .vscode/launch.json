@@ -11,26 +11,18 @@
             "type"   : "lldb",
             "request": "launch",
             "name"   : "rust:linux",
-            "cargo"  : {
-                "args": [
-                    "build",
-                    "--bin=${workspaceFolderBasename}",
-                    "--package=${workspaceFolderBasename}",
-                    "--target=x86_64-unknown-linux-gnu",
-                    "--features=pc"
-                ],
-                "filter": {
-                    "name": "main",
-                    "kind": "bin"
-                }
-            },
-            "args": ["lib/${workspaceFolderBasename}.ini"],
-            "cwd" : "${workspaceFolder}"
-            "stopOnEntry"   : true,
-            "preLaunchTask" : "cargo: build",
-            "preRunCommands": [
-                "process launch --stop-at-entry"
-            ]
+            "program": "target/debug/${workspaceFolderBasename}",
+            "args"   : ["lib/${workspaceFolderBasename}.ini"],
+            "cwd"    : "${workspaceFolder}",
+            "cargo"  : {"args": ["build"]}
+            // "--bin=${workspaceFolderBasename}",
+            // "--package=${workspaceFolderBasename}",
+            // "--target=x86_64-unknown-linux-gnu",
+            // "--features=pc"
+            // "filter": {"name": "main","kind": "bin"}
+            // "stopOnEntry"   : true,
+            // "preLaunchTask" : "cargo: build",
+            // "preRunCommands": [ "process launch --stop-at-entry" ]
         },
         {
             "name"              : "pillf103",
@@ -74,9 +66,9 @@
                 {"text": "monitor reset halt"},
                 {"text": "load"},
                 {"text": "set substitute-path /home/pere/src/newlib-salsa ${userHome}/cross/src/newlib-salsa"},
-                {"text": "b Reset_Handler"},
+                // {"text": "b Reset_Handler"},
                 {"text": "b DefaultHandler"},
-                {"text": "b SystemInit"},
+                // {"text": "b SystemInit"},
                 // {"text": "b __libc_init_array"},
                 {"text": "b main"},
                 // {"text": "b MX_GPIO_Init"},
@@ -97,7 +89,11 @@
             "stopAtEntry"     : true,
             "externalConsole" : false,
             "MIMode"          : "gdb",
-            "setupCommands"   : [{"text": "-enable-pretty-printing","ignoreFailures": true}]
+            "miDebuggerPath"  : "gdb",
+            "setupCommands"   : [
+                {"text": "-enable-pretty-printing","ignoreFailures": true},
+                {"text": "source ${workspaceFolder}/.gdbinit","ignoreFailures": true}
+            ]
         }
     ]
 }

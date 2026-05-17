@@ -1,74 +1,50 @@
-# parser generators (flex,yacc/bison,ragel,lemon,..)
+find_package(FLEX     REQUIRED)
+find_package(BISON    REQUIRED)
+find_package(RAGEL    REQUIRED)
+find_package(READLINE REQUIRED)
 
-find_package(FLEX              REQUIRED)
-find_package(BISON             REQUIRED)
-find_program( RAGEL_EXECUTABLE ragel   )
-# find_package(Readline REQUIRED)
+file(GLOB_RECURSE X CONFIGURE_DEPENDS src/*.l*)
+file(GLOB_RECURSE Y CONFIGURE_DEPENDS src/*.y*)
+file(GLOB_RECURSE R CONFIGURE_DEPENDS src/*.r*)
 
-file(GLOB L
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.lex
-    lib/src/*.lex lib/*/src/*.lex
-)
-
-file(GLOB Y
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.yacc
-    lib/src/*.yacc lib/*/src/*.yacc
-)
-
-file(GLOB R
-    RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.ragel
-    lib/src/*.ragel lib/*/src/*.ragel
-)
-
-foreach(LEX_FILE ${L})
-    string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.cpp"
-        LEXER_CPP           ${LEX_FILE})
-        list(APPEND CP      ${LEXER_CPP})
-    string(REGEX REPLACE ".+\/(.+)\.lex$" "${CMAKE_BINARY_DIR}/\\1.lex.hpp"
-        LEXER_HPP           ${LEX_FILE})
-        list(APPEND HP      ${LEXER_HPP})
+foreach(lex ${X})
+    get_filename_component(name ${lex} NAME_WE)
+    set(cpp "${CMAKE_CURRENT_BINARY_DIR}/${name}.lex.cpp")
+    set(hpp "${CMAKE_CURRENT_BINARY_DIR}/${name}.lex.hpp")
+    list(APPEND CP ${cpp})
+    list(APPEND HP ${hpp})
     add_custom_command(
-        OUTPUT              ${LEXER_CPP} ${LEXER_HPP}
-        DEPENDS             ${LEX_FILE}
-        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-        COMMAND             ${FLEX_EXECUTABLE}
-        ARGS                --header-file=${LEXER_HPP} -o ${LEXER_CPP} ${LEX_FILE}
+        OUTPUT  ${cpp} ${hpp}
+        DEPENDS ${lex}
+        COMMAND ${FLEX_EXECUTABLE} -o${cpp} --header-file=${hpp} ${lex}
     )
 endforeach()
 
-foreach(YACC_FILE ${Y})
-    string(REGEX REPLACE ".+\/(.+)\.yacc$" "${CMAKE_BINARY_DIR}/\\1.yacc.cpp"
-        PARSER_CPP          ${YACC_FILE})
-    string(REGEX REPLACE ".+\/(.+)\.yacc$" "${CMAKE_BINARY_DIR}/\\1.yacc.hpp"
-        PARSER_HPP          ${YACC_FILE})
-    list(APPEND CP          ${PARSER_CPP})
-    list(APPEND HP          ${PARSER_HPP})
+foreach(yacc ${Y})
+    get_filename_component(name ${yacc} NAME_WE)
+    set(cpp "${CMAKE_CURRENT_BINARY_DIR}/${name}.yacc.cpp")
+    set(hpp "${CMAKE_CURRENT_BINARY_DIR}/${name}.yacc.hpp")
+    list(APPEND CP ${cpp})
+    list(APPEND HP ${hpp})
     add_custom_command(
-        OUTPUT              ${PARSER_CPP} ${PARSER_HPP}
-        DEPENDS             ${YACC_FILE}
-        WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-        COMMAND             ${BISON_EXECUTABLE}
-        ARGS                -o ${PARSER_CPP} ${YACC_FILE}
+        OUTPUT  ${cpp} ${hpp}
+        DEPENDS ${yacc}
+        COMMAND ${BISON_EXECUTABLE} -o${cpp} ${yacc}
     )
 endforeach()
 
-if(RAGEL_EXECUTABLE)
-    foreach(RAGEL_FILE ${R})
-        string(REGEX REPLACE ".+\/(.+)\.ragel$" "${CMAKE_BINARY_DIR}/\\1.ragel.cpp"
-            RAGEL_CPP           ${RAGEL_FILE})
-        list(APPEND CP          ${RAGEL_CPP})
-        add_custom_command(
-            OUTPUT              ${RAGEL_CPP}
-            DEPENDS             ${RAGEL_FILE}
-            WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
-            COMMAND             ${RAGEL_EXECUTABLE}
-            ARGS                -C -G2 -o ${RAGEL_CPP} ${RAGEL_FILE}
-        )
-    endforeach()
-endif()
+foreach(ragel ${R})
+    get_filename_component(name ${ragel} NAME_WE)
+    set(cpp "${CMAKE_CURRENT_BINARY_DIR}/${name}.ragel.cpp")
+    set(hpp "${CMAKE_CURRENT_BINARY_DIR}/${name}.ragel.hpp")
+    list(APPEND CP ${cpp})
+    list(APPEND HP ${hpp})
+    add_custom_command(
+        OUTPUT  ${cpp} ${hpp}
+        DEPENDS ${ragel}
+        COMMAND ${RAGEL_EXECUTABLE} -C -G2 -o ${cpp} ${ragel}
+    )
+endforeach()
 
 find_program( LEMON_EXECUTABLE lemon   )
 find_program(BINPAC_EXECUTABLE binpac  )

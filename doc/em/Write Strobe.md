@@ -1,0 +1,4 @@
+# WR
+## Write Strobe
+
+![[FSMC]]

@@ -37,19 +37,31 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "mingw32",
-            "configurePreset" :  "mingw32",
-            "targets"         : ["all",",nstall"]
+            "name"            :  "rpi3",
+            "configurePreset" :  "rpi3",
+            "targets"         : ["all","install"]
         },
         {
-            "name"            :  "rpi3bp",
-            "configurePreset" :  "rpi3bp",
+            "name"            :  "win32",
+            "configurePreset" :  "win32",
             "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "wasm",
+            "configurePreset" :  "linux",
+            "targets"         : ["wasm"]
+        },
+        {
+            "name"            :  "ubuntu",
+            "configurePreset" :  "linux",
+            "targets"         : ["all","install"],
+            "jobs"            :   24
         },
         {
             "name"            :  "linux",
             "configurePreset" :  "linux",
-            "targets"         : ["all","install"]
+            "targets"         : ["all","install"],
+            "jobs"            :   4
         }
     ],
     "configurePresets": [
@@ -61,8 +73,8 @@
             "cacheVariables"  : {
                 "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
                 "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
-                "CMAKE_COLOR_DIAGNOSTICS" :  false,
                 "CMAKE_BUILD_TYPE"        : "Debug",
+                "CMAKE_COLOR_DIAGNOSTICS" :  false,
                 "CMAKE_VERBOSE_MAKEFILE"  :  false
             }
         },
@@ -95,8 +107,7 @@
             "name"            : "pillF030",
             "inherits"        : "cortexm0",
             "cacheVariables"  : {"HW" :"pillF030",
-                                "CPU":"stm32f030f4", "SERIES": "STM32F0"
-            }
+                                "CPU":"stm32f030f4", "SERIES": "STM32F0"}
         },
         {
             "name"            :  "pillF103",
@@ -127,30 +138,22 @@
             "cacheVariables"  : {"HW":"f429disco", "CPU":"stm32f429zi"}
         },
         {
-            "name"            : "armv7",
+            "name"            : "aarch64",
             "inherits"        : "common",
             "hidden"          : true,
-            "cacheVariables"  : {"ARCH":"armv7", "OS":"linux"}
+            "cacheVariables"  : {"ARCH":"aarch64", "OS":"linux"}
         },
         {
-            "name"            : "rpi3bp",
-            "inherits"        : "armv7",
+            "name"            : "rpi3",
+            "inherits"        : "aarch64",
             "hidden"          : false,
-            "cacheVariables"  : {"HW":"rpi3bp", "CPU":"bcm2837"}
+            "cacheVariables"  : {"HW":"rpi3", "CPU":"bcm2837"}
         },
         {
             "name"            : "pc",
             "inherits"        : "common",
             "hidden"          : true,
             "cacheVariables"  : {"HW":"pc", "CPU":"i5", "ARCH":"x86_64"}
-        },
-        {
-            "name"            : "mingw32",
-            "inherits"        : "pc",
-            "displayName"     : "i686-w64-mingw32",
-            "description"     : "mingw/32",
-            "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
-            "cacheVariables"  : {"ARCH":"i386", "OS":"win32"}
         },
         {
             "name"            : "ucrt",
@@ -168,8 +171,16 @@
             "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-musl.cmake"
         },
         {
+            "name"            : "win32",
+            "inherits"        : "pc",
+            "displayName"     : "i686-w64-mingw32",
+            "toolchainFile"   : "${sourceDir}/cmake/i686-w64-mingw32.cmake",
+            "cacheVariables"  : {"CPU":"i686", "ARCH":"i386", "OS":"win32"}
+        },
+        {
             "name"            : "linux",
             "inherits"        : "pc",
+            "displayName"     : "x86_64-linux-gnu",
             "toolchainFile"   : "${sourceDir}/cmake/x86_64-linux-gnu.cmake",
             "cacheVariables"  : {"OS":"linux"}
         }

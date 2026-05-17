@@ -2,13 +2,13 @@
 
 file(GLOB B
     RELATIVE ${CMAKE_SOURCE_DIR}
-    tmp/*.bcx
+    bin/*.bcx
 )
 
 foreach(BCX_FILE ${B})
     string(REGEX REPLACE ".+\/(.+)\.bcx$" "${CMAKE_BINARY_DIR}/\\1.bcx.o"
         BCX_OBJECT          ${BCX_FILE})
-    list(APPEND BC          ${BCX_OBJECT})
+    list(APPEND DATA        ${BCX_OBJECT})
     add_custom_command(
         OUTPUT              ${BCX_OBJECT}
         DEPENDS             ${BCX_FILE}

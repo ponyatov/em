@@ -1,0 +1,1 @@
+# [[embedded/embedded|embedded]] device

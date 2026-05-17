@@ -5,7 +5,8 @@
             "${workspaceFolder}/inc/**",
             "${workspaceFolder}/tmp/**",
             "${workspaceFolder}/src/**",
-            "${workspaceFolder}/lib/inc/**" ,"${workspaceFolder}/lib/*/inc/**"
+            "${workspaceFolder}/lib/inc/**",
+            "${workspaceFolder}/lib/*/inc/**"
         ],
         "crossInclude": [
             "${workspaceFolder}/hw/inc/**"  ,"${workspaceFolder}/hw/*/inc/**"  ,
@@ -20,14 +21,14 @@
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
-            "defines"              : ["HAVE_INIT_FINI","HAVE_INITFINI_ARRAY"]
-            // "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
-            // "cStandard"            : "c17",
-            // "cppStandard"          : "c++17",
-            // "intelliSenseMode"     : "gcc-arm"
+            "defines"              : ["F429DISCO", "STM32F429ZI", "CORTEXM4", "NONE", "HAVE_INIT_FINI", "HAVE_INITFINI_ARRAY"],
+            "compilerPath"         : "/usr/bin/arm-none-eabi-g++",
+            "cStandard"            : "c17",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-arm"
         },
         {
-            "name": "mingw32",
+            "name": "win32",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
@@ -38,15 +39,30 @@
             "intelliSenseMode"     : "gcc-x64"
         },
         {
-            "name": "linux",
+            "name"                 : "rpi3",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  :  true,
+            "includePath"          : ["${appInclude}", "${crossInclude}"],
+            "defines"              : ["RPI3", "BCM2837", "AARCH64", "LINUX"],
+            "compilerPath"         : "/usr/bin/g++-arm-linux-gnueabihf",
+            "cStandard"            : "c17",
+            "cppStandard"          : "c++17",
+            "intelliSenseMode"     : "gcc-x64"
+        },
+        {
+            "name"                 : "linux",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  : true,
             "includePath"          : ["${appInclude}", "${crossInclude}"],
             "defines"              : ["PC", "I5", "X86_64", "LINUX"],
             "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
             "cStandard"            : "c17",
-            "cppStandard"          : "c++17",
+            "cppStandard"          : "c++23",
             "intelliSenseMode"     : "gcc-x64"
+        },
+        {
+            "name"                 : "cmake",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ]
 }

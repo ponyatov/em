@@ -1,0 +1,6 @@
+# SCB_AIRCR_PRIGROUP_Pos
+```c
+#define SCB_AIRCR_PRIGROUP_Pos 8U /*!< SCB AIRCR: PRIGROUP Position */
+```
+![[SCB#AIRCR]]
+

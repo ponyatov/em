@@ -6,7 +6,7 @@ MK += $(wildcard arch/*/*.mk)
 MK += $(wildcard   os/*/*.mk)
 
 # cmake files
-CM += CMake*   $(wildcard cmake/*.cmake)
+CM += CMake* $(wildcard cmake/*.cmake)
 CM += $(wildcard   hw/*/*.cmake)
 CM += $(wildcard  cpu/*/*.cmake)
 CM += $(wildcard arch/*/*.cmake)
@@ -15,6 +15,7 @@ CM += $(wildcard   os/*/*.cmake)
 # C/C++
 C  += $(wildcard src/*.c*)
 H  += $(wildcard inc/*.h*)
+LX += $(wildcard src/*.lex src/*.yacc src/*.ragel)
 # libs
 C  += $(wildcard lib/src/*.c*) $(wildcard lib/*/src/*.c*)
 H  += $(wildcard lib/inc/*.h*) $(wildcard lib/*/inc/*.h*)
@@ -32,14 +33,24 @@ H  += $(wildcard   os/inc/*.h*) $(wildcard   os/*/inc/*.h*)
 R += Cargo.toml $(wildcard src/*.rs)
 
 # ini
-S  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
+F  += $(wildcard lib/*.ini) $(wildcard lib/*.f)
 
 # JavaScript
-T += $(wildcard src/*.ts)
 J += $(wildcard src/*.js)
+J += $(wildcard static/*.js) $(wildcard templates/*.js)
+T += $(wildcard src/*.ts)
 
 # Python
 P += $(wildcard src/*.py) $(wildcard lib/*.py)
+<<<<<<< HEAD
+=======
+
+# Erlang
+E += $(wildcard lib/*.erl)
+
+# OCaml
+M += $(wildcard lib/*.ml*)
+>>>>>>> b8314b6342329338f27a623c49db5ffe046ab624
 
 # F#
 F += $(wildcard lib/*.fs*)

@@ -1,13 +1,14 @@
 {
     "name"       : "bcx",
-    "displayName": "bcx",
-    "description": "Byte Code eXecution engine",
+    "displayName": "bcxForth",
+    "description": "Byte Code eXecution engine debug & development",
     "version"    : "0.0.1",
     "icon"       : "logo.png",
     "publisher"  : "dponyatov",
     "license"    : "MIT",
+    "homepage"   : "https://github.com/ponyatov/bcx",
     "engines": {
-        "vscode": "^1.90.0"
+        "vscode": "^1.85.0"
     },
     "categories": [
         "Programming Languages", "Debuggers"
@@ -18,18 +19,19 @@
     "bugs": {
         "url": "https://github.com/ponyatov/bcx/issue"
     },
-    "homepage": "https://github.com/ponyatov/bcx",
     "repository": {
         "type": "git",
         "url" : "https://github.com/ponyatov/bcx/tree/dponyatov/vscode"
     },
     "activationEvents": [
+        "onLanguage:bcx",
         "workspaceContains:lib/*.ini",
         "workspaceContains:lib/*.f"
     ],
     "extensionDependencies": [
+        "ms-python.python"
     ],
-    "main": "extension.js",
+    "main": "./extension.js",
     "contributes": {
         "languages": [{
             "id"           :  "bcx",

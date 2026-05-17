@@ -1,14 +1,20 @@
 {
     "recommendations": [
+        "statiolake.vscode-auto-tab-closer",
         "stkb.rewrap",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        "usernamehw.errorlens",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
         "mechatroner.rainbow-csv",
-        // GPT
-        "AmazonWebServices.aws-toolkit-vscode",
-        "jebbs.plantuml",
+        // documenting
         "bierner.markdown-mermaid",
+        "jebbs.plantuml",
         // "aleksandardev.vscode-sequence-diagrams",
+        // AI
+        "AmazonWebServices.aws-toolkit-vscode",
+        "anthropic.claude-code",
         // "ms-windows-ai-studio.windows-ai-studio",
         // formatters
         "xaver.clang-format",
@@ -20,9 +26,7 @@
         // "nico-castell.linux-desktop-file",
         // "ms-azuretools.vscode-docker",
         // "github.vscode-github-actions",
-        // "redhat.vscode-yaml",
         // misc
-        "usernamehw.errorlens",
         // "hbenl.vscode-test-explorer",
         // Web/JS
         "esbenp.prettier-vscode",
@@ -30,26 +34,28 @@
         "jock.svg",
         "denoland.vscode-deno",
         // "dbaeumer.vscode-eslint",
-        // Go
-        "golang.go",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
         "ms-vscode.cmake-tools",
+        "krosf.vscode-valgrind",
+        "theqtcompany.qt-cpp",
+        "theqtcompany.qt-qml",
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
         // "serghei-iakovlev.language-lemon",
+        // "fudgepops.kaitai-struct-vscode",
         // "supremeconset.binpac-vscode-extension",
         // "AlecGhost.tree-sitter-vscode",
         // embedded
-        "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
-        // "basdp.language-gas-x86",
+        "ms-vscode.hexeditor",
+        "dan-c-underwood.arm",
         // "espressif.esp-idf-extension",
-        // "awsxxf.serialterminal",
-        // "ms-vscode.hexeditor",
+        // "basdp.language-gas-x86",
+        "ivannovak1004.gnuradio-integration",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
@@ -65,12 +71,8 @@
         // "probe-rs.probe-rs-debugger",
         // FORTH
         "fttx.language-forth",
-        // F#
-        "ionide.ionide-fsharp",
-        "redhat.vscode-xml",
-        "mnxn.fsharp-fsl-fsy",
-        // "tintoy.msbuild-project-tools",
-        // "ms-dotnettools.csdevkit",
+        // Erlang
+        "pgourlain.erlang",
         // LLVM
         "rreverser.llvm",
         "revng.llvm-ir",
@@ -81,5 +83,7 @@
         // share
         "ms-vsliveshare.vsliveshare",
         "lostintangent.vsls-whiteboard",
+        // OCaml
+        "ocamllabs.ocaml-platform",
     ]
 }

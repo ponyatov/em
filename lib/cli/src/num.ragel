@@ -1,3 +1,6 @@
-#include "os.hpp"
+#include "app.hpp"
 
-float num(char *val) { return atof(val); }
+float num(char *s) {
+    // assert(!strchr(s, '_'));
+    return atof(s);
+}

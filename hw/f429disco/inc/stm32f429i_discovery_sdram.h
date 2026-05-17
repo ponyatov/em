@@ -84,8 +84,8 @@ extern "C" {
 /**
   * @brief  FMC SDRAM Memory Read Burst feature
   */
-#define SDRAM_READBURST         FMC_SDRAM_RBURST_DISABLE    /* Default configuration used with LCD */
-/* #define SDRAM_READBURST      FMC_SDRAM_RBURST_ENABLE */
+//.#define SDRAM_READBURST         FMC_SDRAM_RBURST_DISABLE    /* Default configuration used with LCD */
+#define SDRAM_READBURST         FMC_SDRAM_RBURST_ENABLE     /* faster snad-alone XRAM */
 
 /**
   * @brief  FMC SDRAM Bank Remap

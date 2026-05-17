@@ -1,0 +1,344 @@
+let settings () =
+  touch ".vscode/settings.json" ~c:"\
+{
+    // editor
+    \"files.eol\": \"\\n\",
+    \"files.insertFinalNewline\": true,
+    \"files.trimFinalNewlines\": true,
+    \"editor.tabSize\": 4,
+    \"editor.insertSpaces\": true,
+    \"editor.detectIndentation\": false,
+    \"editor.rulers\": [80],
+    \"editor.lineNumbers\": \"on\",
+    \"explorer.autoReveal\": false,
+    \"terminal.integrated.copyOnSelection\": true,
+    \"editor.formatOnSave\": false,
+    \"workbench.tree.indent\": 24,
+    \"files.autoSave\": \"afterDelay\",
+    \"files.autoSaveDelay\": 2222,
+
+    // clang-format
+    \"clang-format.executable\"     : \"clang-format\",
+    \"clang-format.fallbackStyle\"  : \"Google\",
+    \"clang-format.style\"          : \"file\",
+
+    // CMake
+    \"cmake.sourceDirectory\" : \"${workspaceFolder}\",
+    \"cmake.buildDirectory\"  : \"${workspaceFolder}/tmp/${workspaceFolderBasename}\",
+    \"cmake.debugConfig\"     : {
+        \"cwd\" :   \"${workspaceFolder}\",
+        \"args\": [ \"lib/${workspaceFolderBasename}.ini\" ] },
+}
+" ()
+
+let tasks () =
+  touch ".vscode/tasks.json" ~c:"\
+{
+    \"version\": \"2.0.0\",
+    \"tasks\": [
+        {
+            \"label\"          : \"AI: context\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make ai\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        }
+    ]
+}
+" ()
+
+let extensions () =
+  touch ".vscode/extensions.json"
+    ~c:
+      "{
+    \"recommendations\": [
+        \"statiolake.vscode-auto-tab-closer\",
+        \"stkb.rewrap\",
+        \"ms-vscode.makefile-tools\",
+        \"IBM.output-colorizer\",
+        \"usernamehw.errorlens\",
+        \"redhat.vscode-xml\",
+        \"redhat.vscode-yaml\",
+        \"mechatroner.rainbow-csv\",
+        // formatters
+        \"xaver.clang-format\",
+        \"esbenp.prettier-vscode\",
+        \"foxundermoon.shell-format\",
+        // Linux
+        \"ms-vscode-remote.remote-ssh\",
+        \"coolbear.systemd-unit-file\",
+        // C++
+        \"ms-vscode.cpptools\",
+        \"jeff-hykin.better-cpp-syntax\",
+        \"ms-vscode.cmake-tools\",
+        \"krosf.vscode-valgrind\",
+        // parser
+        \"daohong-emilio.yash\",
+        \"rreverser.ragel\",
+        // embedded
+        \"zixuanwang.linkerscript\",
+        \"ms-vscode.vscode-serial-monitor\",
+        \"dan-c-underwood.arm\",
+        // \"espressif.esp-idf-extension\",
+        // Python
+        \"ms-python.python\",
+        \"ms-python.autopep8\",
+        \"charliermarsh.ruff\",
+        // OCaml
+        \"ocamllabs.ocaml-platform\",
+    ]
+}
+"
+    ()
+
+let vscode () =
+  mkd ".vscode" ();
+  settings ();
+  tasks ();
+  extensions ();
+  [ "launch"; "c_cpp_properties" ]
+  |> List.iter (fun j -> touch (".vscode/" ^ j ^ ".json") ~c:"{\n}\n" ())
+
+let launch () =
+  touch ".vscode/launch.json"
+    ~c:
+      "{
+    \"version\": \"0.2.0\",
+    \"configurations\": [
+    ]
+}
+"
+    ()
+
+let settings () =
+  touch ".vscode/settings.json"
+    ~c:
+      "{
+    \"files.exclude\": {
+        \"doc/html\": true, \"**/node_modules/**\": true, \"_build\": true,
+    },
+    \"files.watcherExclude\": {
+        \"ref/**\": true,
+        \"_build/**\": true, \"target/**\": true,
+    },
+    \"files.associations\": {
+        \"*.ini\": \"properties\", \"*.f\": \"properties\"
+    },
+
+    // editor
+    \"files.eol\": \"\\n\",
+    \"files.insertFinalNewline\": true,
+    \"files.trimFinalNewlines\": true,
+    \"editor.tabSize\": 4,
+    \"editor.insertSpaces\": true,
+    \"editor.detectIndentation\": false,
+    \"editor.rulers\": [80],
+    \"editor.lineNumbers\": \"on\",
+    \"explorer.autoReveal\": false,
+    \"terminal.integrated.copyOnSelection\": true,
+    \"editor.formatOnSave\": false,
+    \"workbench.tree.indent\": 24,
+    \"files.autoSave\": \"afterDelay\",
+    \"files.autoSaveDelay\": 2222,
+    \"auto-tab-closer.numLeftTabs\": 5,
+    \"auto-tab-closer.numMaxTabs\": 5,
+    // \"git.enabled\": false,
+
+    // terminal
+    \"SerialTerminal.serial port.configurations\": [\"115200n1\"],
+
+    // JavaScript
+    \"prettier.configPath\"         : \".prettierrc\",
+    \"prettier.requireConfig\"      :  true,
+    \"json.format.enable\"          :  true,
+    \"[json]\"      : {
+        \"editor.defaultFormatter\" : \"esbenp.prettier-vscode\",
+        \"editor.formatOnSave\": false},
+    \"[jsonc]\"     : {
+        \"editor.defaultFormatter\" : \"esbenp.prettier-vscode\",
+        \"editor.formatOnSave\": false},
+    \"[javascript]\": {
+        \"editor.defaultFormatter\" : \"esbenp.prettier-vscode\",
+        \"editor.formatOnSave\": false},
+    \"[typescript]\": {
+        \"editor.defaultFormatter\" : \"esbenp.prettier-vscode\",
+        \"editor.formatOnSave\": false},
+
+    // clang-format
+    \"clang-format.executable\"     : \"clang-format\",
+    \"clang-format.fallbackStyle\"  : \"Google\",
+    \"clang-format.style\"          : \"file\",
+
+    // C++
+    \"[c]\"  : {
+        \"editor.defaultFormatter\" : \"xaver.clang-format\",
+        \"editor.formatOnSave\": false },
+    \"[cpp]\": {
+        \"editor.defaultFormatter\" : \"xaver.clang-format\",
+        \"editor.formatOnSave\": false },
+    \"C_Cpp.default.configurationProvider\": \"ms-vscode.cmake-tools\",
+    \"C_Cpp.files.exclude\": { \"ref\": true },
+
+    // CMake
+    \"cmake.sourceDirectory\" : \"${workspaceFolder}\",
+    \"cmake.buildDirectory\"  : \"${workspaceFolder}/tmp/${workspaceFolderBasename}\",
+    \"cmake.generator\"       : \"Unix Makefiles\",
+    \"cmake.parallelJobs\"    :  4,
+    \"cmake.useCMakePresets\" : \"always\",
+    \"cmake.buildBeforeRun\"  :  true,
+    \"cmake.saveBeforeBuild\" :  true,
+    \"cmake.debugConfig\"     : {
+        \"cwd\" :   \"${workspaceFolder}\",
+        \"args\": [ \"lib/${workspaceFolderBasename}.ini\" ] },
+    \"cmake.allowCommentsInPresetsFile\" : true,
+    \"cmake.ignoreCMakeListsMissing\"    : false,
+
+    // Python
+    // \"python.defaultInterpreterPath\":  \"${workspaceFolder}/bin/python3\",
+    // \"autopep8.path\"                : [\"${workspaceFolder}/bin/autopep8\"],
+    // \"ruff.interpreter\"             : [\"${workspaceFolder}/bin/python3\"],
+    \"autopep8.args\"                : [\"--ignore\",\"E26,E302,E305,E401,E402,E701,E702\"],
+    \"python.analysis.extraPaths\"   : [\"${workspaceFolder}/src\", \"${workspaceFolder}/lib\"],
+    \"[python]\": {
+        \"editor.defaultFormatter\"  : \"ms-python.autopep8\",
+        \"editor.formatOnSave\"      :  true},
+    \"ruff.configuration\"               : \".ruff.toml\",
+    \"ruff.lint.preview\"                : true,
+    \"ruff.format.preview\"              : true,
+    \"python.testing.pytestArgs\"        : [\"lib\"],
+    \"python.testing.unittestEnabled\"   : false,
+    \"python.testing.pytestEnabled\"     : true,
+
+    // Rust
+    \"rust-analyzer.checkOnSave\"          : false,
+    \"rust-analyzer.check.allTargets\"     : false,
+    \"[rust]\": { \"editor.defaultFormatter\": \"rust-lang.rust-analyzer\" },
+    \"rust-analyzer.cargo.target\"         : \"x86_64-unknown-linux-gnu\",
+    \"rust-analyzer.cargo.features\"       : [\"pc\",\"i5\",\"x86_64\",\"linux\"],
+
+    // OCaml (cs3110/cs134b)
+    \"[ocaml]\": {
+        \"editor.tabSize\": 2, \"editor.formatOnSave\": false },
+    \"[ocaml.interface]\": {
+        \"editor.tabSize\": 2, \"editor.formatOnSave\": false },
+    \"[dune]\": {
+        \"editor.tabSize\": 2, \"editor.formatOnSave\": false },
+
+    // MinGW/MSYS2
+    \"terminal.integrated.defaultProfile.windows\": \"UCRT64\",
+    \"terminal.integrated.profiles.windows\": {
+        \"UCRT64\": {
+            \"path\": \"C:\\\\msys64\\\\usr\\\\bin\\\\bash.exe\",
+            \"args\": [\"--login\",\"-i\"],
+            \"env\": {
+            \"MSYSTEM\": \"UCRT64\",
+            \"CHERE_INVOKING\": \"1\",
+    }}}
+}
+"
+    ()
+
+
+let tasks () =
+  touch ".vscode/tasks.json"
+    ~c:
+      "{
+    \"version\": \"2.0.0\",
+    \"tasks\": [
+        {
+            \"label\"          : \"project: install\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make install\",
+            \"presentation\"   : {\"focus\": true},
+            \"problemMatcher\" : []
+        },
+        {
+            \"label\"          : \"project: update\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make update\",
+            \"presentation\"   : {\"focus\": true},
+            \"problemMatcher\" : []
+        },
+        {
+            \"label\"          : \"git: checkout .vscode\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"git checkout .vscode/settings.json\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": false, \"focus\": false, \"reveal\": \"silent\", \"close\": true},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"make: watch\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make watch\",
+            // \"dependsOn\"      : \"CMake: build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"make: run\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make run\",
+            // \"dependsOn\"      : \"CMake: build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"doxy: gen\",
+            \"type\"           : \"shell\",
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true },
+            // \"dependsOn\"      : \"CMake: build\",
+            \"command\"        : \"make doxy\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": false, \"focus\": false, \"reveal\": \"silent\", \"close\": false}
+        },
+        {
+            \"label\"          : \"make: sync\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make sync\",
+            // \"dependsOn\"      : \"CMake: build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"dune: build\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"dune build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"dune: test\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"dune test\",
+            \"dependsOn\"      : \"dune: build\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+        {
+            \"label\"          : \"AI: context\",
+            \"type\"           : \"shell\",
+            \"command\"        : \"make ai\",
+            \"problemMatcher\" : [],
+            \"presentation\"   : {\"showReuseMessage\": true, \"focus\": true, \"reveal\": \"silent\", \"close\": false},
+            \"group\"          : {\"kind\": \"build\", \"isDefault\": true}
+        },
+    ]
+}
+"
+    ()
+
+let vscode () =
+  mkd ".vscode" ();
+  extensions ();
+  settings ();
+  launch ();
+  tasks ();
+  (* Sys.command "meld .vscode ~/em/.vscode" *)
+  Sys.command "git add .vscode"

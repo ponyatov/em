@@ -1,11 +1,11 @@
 #pragma once
-
-#include "os.hpp"
-
-/// @brief first call: callback on system startup
-extern void setup();
-
-/// @brief application event loop callback
-extern void loop();
-
+/// @defgroup main main
+/// @{
+extern int main(int argc, char *argv[]);    ///< POSIX entry point
+extern void arg(int argc, char *argv);      ///< process command line argument
+extern void setup(int argc, char *argv[]);  ///< system startup
+extern void loop();                         ///< event loop
+extern std::thread *background;             ///< thread for @ref loop
+extern bool stop;                           ///< @ref loop stop flag
+extern void restart(int ret = 0);           ///< program self-restart
 /// @}
