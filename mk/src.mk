@@ -39,7 +39,7 @@ T += $(wildcard src/*.ts)
 J += $(wildcard src/*.js)
 
 # Python
-P += $(wildcard src/*.py) $(wildcard scripts/*.py)
+P += $(wildcard src/*.py) $(wildcard lib/*.py)
 
 # F#
 F += $(wildcard lib/*.fs*)

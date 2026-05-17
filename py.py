@@ -4,12 +4,12 @@ import os
 import datetime as dt
 
 APP = os.getcwd().split('/')[-1]
-TITLE = 'скриптовый язык общего назначения'
+VERSION = '0.0.1'
+TITLE = 'ASAP script language'
+ABOUT = ''''''
 
 AUTHOR = 'Dmitry Ponyatov'
 EMAIL = 'dponyatov@gmail.com'
-ABOUT = ''''''
-VERSION = '0.0.1'
 YEAR = dt.date.today().year
 LICENSE = 'MIT'
 
