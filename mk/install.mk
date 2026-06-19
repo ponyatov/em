@@ -1,6 +1,5 @@
 .PHONY : install update ref gz
-# $(PIP) $(RUSTUP) $(TSC)
-install: $(WS)_install doc ref gz $(OPAM)
+install: $(WS)_install doc ref gz
 	$(MAKE) update
 	sudo adduser $(USER) wireshark
 	$(MAKE) systemd
