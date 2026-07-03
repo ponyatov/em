@@ -4,8 +4,7 @@ doc/WebAssembly-3.0-draft.pdf:
 
 .PHONY: doc
 doc: $(DOC)
-	rm -rf doc/$(APP)/ ; rsync -r $(HOME)/metadoc/$(APP)/ doc/$(APP)/
-	git add $@
+	unison $(APP)
 
 .PHONY: doxy
 doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png doc

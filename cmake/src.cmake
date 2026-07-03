@@ -2,7 +2,7 @@
 
 file(GLOB_RECURSE C CONFIGURE_DEPENDS src/*.c*)
 file(GLOB_RECURSE H CONFIGURE_DEPENDS inc/*.h*)
-file(GLOB_RECURSE F CONFIGURE_DEPENDS lib/*.f lib/*.ini)
+file(GLOB_RECURSE F CONFIGURE_DEPENDS lib/*.ini lib/*.? )
 
 # include dirs
 foreach(h ${H})

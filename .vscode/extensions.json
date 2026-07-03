@@ -51,15 +51,16 @@
         // embedded
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
-        "ms-vscode.hexeditor",
         "dan-c-underwood.arm",
         // "espressif.esp-idf-extension",
         // "basdp.language-gas-x86",
-        "ivannovak1004.gnuradio-integration",
+        // "ivannovak1004.gnuradio-integration",
+        // "ms-vscode.hexeditor",
         // Python
         "ms-python.python",
         "ms-python.autopep8",
-        "charliermarsh.ruff",
+        "pamaron.pytest-runner",
+        // "charliermarsh.ruff",
         // "batisteo.vscode-django",
         // Rust
         "rust-lang.rust-analyzer",
