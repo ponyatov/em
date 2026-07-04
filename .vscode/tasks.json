@@ -276,7 +276,7 @@
             "presentation"   : {"showReuseMessage": false, "focus": false, "reveal": "silent", "close": false}
         },
         {
-            "label"          : "AI: context",
+            "label"          : "make: ai",
             "type"           : "shell",
             "command"        : "make ai",
             "problemMatcher" : [],

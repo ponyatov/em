@@ -10,3 +10,10 @@
 #include <unistd.h>
 
 /// @}
+
+/// @defgroup main main
+/// @ingroup lib
+/// @{
+extern int main(int argc, char *argv[]);
+extern void arg(int argc, char *argv);
+/// @}

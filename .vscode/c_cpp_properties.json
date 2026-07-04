@@ -53,7 +53,7 @@
             "name"                 : "linux",
             "configurationProvider": "ms-vscode.cmake-tools",
             "mergeConfigurations"  : true,
-            "includePath"          : ["inc", "tmp"],
+            "includePath"          : ["${appInclude}", "${crossInclude}"],
             "defines"              : ["PC", "I5", "X86_64", "LINUX"],
             "compilerPath"         : "/usr/bin/x86_64-linux-gnu-g++",
             "cStandard"            : "c17",
