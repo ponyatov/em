@@ -1,4 +1,4 @@
-git make curl fzf
+git make curl wget fzf
 code meld
 g++ cmake pkg-config clang-format
 gdb gdbserver valgrind doxygen

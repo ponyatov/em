@@ -1,3 +1,3 @@
-/// @defgroup MODBUS MODBUS
+/// @defgroup modbus modbus
 /// @ingroup protocol
-/// @brief ASCII 8bit
+/// @brief MODBUS RTU (ASCII 8bit)

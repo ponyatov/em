@@ -1,5 +1,5 @@
 %{
-    #include "app.hpp"
+    #include "cli.hpp"
 
     static std::string bin(int b) {
         char buf[0x20];
@@ -8,29 +8,25 @@
     }
 %}
 
-%defines %union { char c; int n; float f; std::string *s; }
+%defines %union { char c; int n; float f; std::string* s; uint8_t b; }
 
 %define api.token.prefix {t_}
+
+%token    COLON
+%token<s> ID
+%token<b> CMD0 CMDb CMDa CMDc
+%token<n> INT
 
 %token<c> CHAR
 %token<n> INT HEX OCT BIN
 %token<f> NUM
-%token<s> STR ID
-
-%token     COLON
-%token<s>  INI
-%token<op> CMD0 CMD1
+%token<s> STR
 
 %%
-ini:| ini ex
+syntax : | syntax ex
 
-ex  : CHAR  { std::clog << "\tchar:" <<              $1  << " "; }
-    | INT   { std::clog << "\t int:" <<              $1  << " "; }
-    | HEX   { std::clog << "\t hex:" <<  std::hex << $1  << " "; }
-    | OCT   { std::clog << "\t oct:" <<  std::oct << $1  << " "; }
-    | BIN   { std::clog << "\t bin:" <<          bin($1) << " "; }
-    | NUM   { std::clog << "\t num:" <<              $1  << " "; }
-    | STR   { std::clog << "\t str:" <<             *$1  << " "; }
-    | ID    { std::clog << "\t  id:" <<             *$1  << " "; }
-  | COLON ID    { fprintf(stderr,"%.4X: [%s]\n"  , Cp, $2->c_str()); label[*$2] = Cp; }
-  | CMD0        { fprintf(stderr,"%.4X: %.2X\n"  , Cp, $1); compile($1); }
+ex: COLON ID    { label(*$2);               }
+  | CMD0        { compile((Op)$1         ); }
+  | CMDb INT    { compile((Op)$1,(byte)$2); }
+  | CMDa INT    { compile((Op)$1,(addr)$2); }
+  | CMDc INT    { compile((Op)$1,(cell)$2); }

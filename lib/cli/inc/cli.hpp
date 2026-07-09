@@ -1,20 +1,13 @@
-#pragma once
 /// @defgroup cli cli
+/// @brief REPL: command-line interface (uses @ref vm for compile & run)
 /// @ingroup lib
-/// @brief CLI: command line interface (REPL)
-/// @{
+#pragma once
 
-#include "rl.hpp"
+#include "posix.hpp"
+#include "vm.hpp"
+#include "syntax.hpp"
+#include "compiler.hpp"
 
 extern void cli(char *filename);  ///< process script file
-
-/// @name number parsers
-/// @{
-extern float num(char *s);  ///< @returns float
-extern int dec(char *s);    ///< @returns decimal
-extern int hex(char *s);    ///< @returns hexadecimal
-extern int oct(char *s);    ///< @returns octal
-extern int bin(char *s);    ///< @returns binary
-/// @}
 
 /// @}
