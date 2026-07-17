@@ -1,4 +1,5 @@
 {
+    // files
     "files.exclude": {
         "doc/html": true, "**/node_modules": true,
         "_build/**": true, "target/**": true,
@@ -73,7 +74,7 @@
     "clang-format.executable"     : "clang-format",
     "clang-format.fallbackStyle"  : "Google",
     "clang-format.style"          : "file",
-    "clang-format.assumeFilename" : ".clang",
+    "clang-format.assumeFilename" : ".clang-format",
 
     // C++
     "[c]"  : {
