@@ -33,7 +33,7 @@ file(GLOB_RECURSE H CONFIGURE_DEPENDS
     lib/inc/*.h* lib/*/inc/*.h*
 )
 
-file(GLOB_RECURSE F CONFIGURE_DEPENDS lib/*.ini lib/*.? )
+file(GLOB_RECURSE INI CONFIGURE_DEPENDS lib/*.ini lib/*.? )
 
 # include dirs
 foreach(h ${H})

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES CXX C ASM)
+project(${CMAKE_PROJECT_NAME} LANGUAGES CXX C ASM VERSION 0.0.1 )
 
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
@@ -34,7 +34,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ sources
     ${CP} ${HP}         # generated parsers
     ${S}  ${LD}         # embedded/lowlevel
-    ${F}                # init/config files & scripts
+    ${INI}              # init/config files & scripts
     ${Q}                # Qt Designer sources
     ${DATA}             # precompiled binary data (bytecode,..)
     ${KMOD}             # Linux kernel module
