@@ -7,4 +7,4 @@ include(any_toolchain)
 
 add_compile_definitions(I686 WIN32)
 add_compile_options(-march=i686 -mtune=i686 -mconsole)
-add_link_options()
+add_link_options(-static-libgcc -static-libstdc++)
