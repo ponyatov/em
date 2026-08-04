@@ -46,6 +46,12 @@ foreach(ragel ${R})
     )
 endforeach()
 
+file(GLOB_RECURSE INI CONFIGURE_DEPENDS
+    lib/*.ini lib/*.?
+)
+
+set_source_files_properties(${INI} PROPERTIES HEADER_FILE_ONLY TRUE)
+
 find_program( LEMON_EXECUTABLE lemon   )
 find_program(BINPAC_EXECUTABLE binpac  )
 
