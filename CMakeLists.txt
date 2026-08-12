@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.25)
 get_filename_component(CMAKE_PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-project(${CMAKE_PROJECT_NAME} VERSION 0.0.1 LANGUAGES CXX C ASM)
+project(${CMAKE_PROJECT_NAME} LANGUAGES CXX C ASM VERSION 0.0.1)
 
 include(version)  # binary files naming by version & git branch/hash
 include(src)      # scan project for source code files
 include(syntax)   # parser generators (flex,yacc/bison,ragel,..)
-include(qt)       # portable GUI
+include(gui)      # portable GUI (low-level/SDL)
+include(qt)       # full-fuatured GUI
 include(net)      # raw packets networking
 
 include(erlang)   # Erlang jigs
@@ -21,10 +22,11 @@ message("-- |    target: " "hw:" ${HW} " cpu:" ${CPU} " arch:" ${ARCH} " os:" ${
 message("-- |   startup: " "${S}")
 message("-- |    linker: " "${LD}")
 message("-- |    binary: " "${CMAKE_INSTALL_PREFIX}/${BIN_OUTPUT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-message("-- |       ini: " "${F}")
+message("-- |       ini: " "${INI}")
 message("-- |      data: " "${DATA}")
 message("-- |       cpp: " "${C} ${CP}")
 message("-- |       hpp: " "${H} ${HP}")
+message("-- |      libs: " "${L}")
 message("-- |")
 
 include(json2cpp)
@@ -34,17 +36,13 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${C}  ${H}          # C/C++ sources
     ${CP} ${HP}         # generated parsers
     ${S}  ${LD}         # embedded/lowlevel
-    ${F}                # init/config files & scripts
-    ${Q}                # Qt Designer sources
+    ${INI}              # init/config files & scripts
     ${DATA}             # precompiled binary data (bytecode,..)
+    ${Q}                # Qt Designer sources
     ${KMOD}             # Linux kernel module
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${INC})
-
-set_source_files_properties(${F} PROPERTIES HEADER_FILE_ONLY TRUE)
-
-target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     -Wl,--start-group ${L} -Wl,--end-group
