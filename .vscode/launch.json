@@ -94,6 +94,43 @@
                 {"text": "-enable-pretty-printing","ignoreFailures": true},
                 {"text": "source ${workspaceFolder}/.gdbinit","ignoreFailures": true}
             ]
+        },
+        {
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "Launch",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "build-debug",
+            "chip": "esp32s3",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "haltAfterReset": true,
+                "verifyBeforeFlashing": true,
+                "formatOptions": {
+                    "binaryFormat": "idf"
+                }
+            },
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "programBinary": "target/xtensa-esp32s3-none-elf/debug/${workspaceFolderBasename}",
+                    "rttEnabled": true,
+                }
+            ]
+        },
+        {
+            "type": "probe-rs-debug",
+            "request": "attach",
+            "name": "Attach",
+            "cwd": "${workspaceFolder}",
+            "chip": "esp32s3",
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "programBinary": "target/xtensa-esp32s3-none-elf/debug/${workspaceFolderBasename}",
+                    "rttEnabled": true,
+                }
+            ]
         }
     ]
 }
