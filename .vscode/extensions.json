@@ -30,6 +30,7 @@
         // "hbenl.vscode-test-explorer",
         // Web/JS
         "esbenp.prettier-vscode",
+        "vitest.explorer",
         "dtsvet.vscode-wasm",
         "jock.svg",
         "denoland.vscode-deno",
