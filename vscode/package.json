@@ -14,7 +14,7 @@
         "Programming Languages", "Debuggers"
     ],
     "keywords": [
-        "bytecode", "FORTH", "CLI", "REPL", "script", "interpreter"
+        "bytecode", "embedded", "script", "interpreter", "FORTH", "CLI", "REPL"
     ],
     "bugs": {
         "url": "https://github.com/ponyatov/bcx/issue"

@@ -1,8 +1,8 @@
-# ln -fs ~/decl/.unison ~/.unison/decl.prf
+# ln -fs ~/metadoc/decl/.unison ~/.unison/decl.prf
 # unison decl
 
 root = ./doc/decl
-root = /home/dponyatov/metadoc/decl
+root = ../metadoc/decl
 
 prefer = newer
 watch = true
