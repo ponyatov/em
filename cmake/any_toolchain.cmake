@@ -12,8 +12,6 @@ set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
 
-# include(cross)
-
 add_compile_options(
       -Wall -Wextra               # -Wpedantic
     # -Wno-implicit-fallthrough   # ragel
