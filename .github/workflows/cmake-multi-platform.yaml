@@ -1,0 +1,30 @@
+name: tagged release build
+
+on:
+    release:
+        types: [published]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - run: sudo apt-get install -uy `cat apt.Ubuntu`
+          - run: cmake --preset linux -DBRANCH=${GITHUB_REF_NAME}
+          - run: cmake --build --preset linux
+          - run: make doxy
+          - run: |
+              APP=$(basename "$PWD")
+              TAG=${GITHUB_REF#refs/tags/}
+              DATE=$(date +%Y%m%d)
+              NAME="${APP}_${TAG}_${DATE}"
+              echo "${NAME}"
+              zip -r tmp/${NAME}.zip bin/${APP}_* lib/*.ini lib/*.u README.md doc vscode || true
+          - uses: softprops/action-gh-release@v1
+            with:
+              files: |
+                tmp/*.zip
+                bin/*linux*
+                bin/*win32*
+                lib/*.ini
+              fail_on_unmatched_files: false
