@@ -21,7 +21,7 @@
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
         "*.ksy": "yaml",
-        "*.ini": "properties", "*.f": "properties"
+        "*.ini": "properties", "*.u": "properties"
     },
 
     // editor
@@ -53,19 +53,19 @@
     "json.format.enable"          :  true,
     "[json]"      : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": false},
+        "editor.formatOnSave"     : false},
     "[jsonc]"     : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": false},
+        "editor.formatOnSave"     : false},
     "[html]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": false},
+        "editor.formatOnSave"     : false},
     "[javascript]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": false},
+        "editor.formatOnSave"     : false},
     "[typescript]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
-        "editor.formatOnSave": false},
+        "editor.formatOnSave"     : false},
     //   "eslint.validate": ["typescript"],
     //   "typescript.updateImportsOnFileMove.enabled": "always",
     //   "javascript.updateImportsOnFileMove.enabled": "always",
@@ -110,7 +110,7 @@
     "python.testing.unittestEnabled"  : false,
     "[python]": {
         "editor.defaultFormatter"     : "ms-python.autopep8",
-        "editor.formatOnSave"         :  true},
+        "editor.formatOnSave"         :  false},
     "python.testing.pytestArgs"       : ["py"],
     "ruff.configuration"               : ".ruff.toml",
     "ruff.lint.preview"                : true,
@@ -125,11 +125,14 @@
     },
 
     // Rust
-    "rust-analyzer.checkOnSave"          : false,
-    "rust-analyzer.check.allTargets"     : false,
-    "rust-analyzer.cargo.allTargets"     : false,
-    "rust-analyzer.cargo.target"         : "x86_64-unknown-linux-gnu",
-    "rust-analyzer.cargo.features"       : ["pc","i5","x86_64","linux"],
+    "rust-analyzer.checkOnSave"       : false,
+    "[rust]": {
+        "editor.defaultFormatter"     : "rust-lang.rust-analyzer",
+        "editor.formatOnSave"         : true},
+    "rust-analyzer.check.allTargets"  : false,
+    "rust-analyzer.cargo.allTargets"  : false,
+    "rust-analyzer.cargo.target"      : "x86_64-unknown-linux-gnu",
+    "rust-analyzer.cargo.features"    : ["pc","i5","x86_64","linux"],
     // "rust-analyzer.cargo.target"         : "wasm32-unknown-unknown",
     // "rust-analyzer.cargo.target"         : "aarch64-unknown-linux-gnu",
     // "rust-analyzer.cargo.target"         : "i686-pc-windows-gnu",
@@ -143,8 +146,6 @@
     // "rust-analyzer.cargo.features"       : ["kc868","esp32s3","xtensa","rtos"],
     // "rust-analyzer.server.extraEnv"      : {"RUSTUP_TOOLCHAIN": "stable"},
     // "rust-analyzer.cargo.extraEnv"       : {"RUSTUP_TOOLCHAIN": "esp"},
-    "[rust]": { "editor.defaultFormatter": "rust-lang.rust-analyzer",
-                    "editor.formatOnSave": true},
 
     // Erlang
     "erlang.codeLensEnabled": true,
