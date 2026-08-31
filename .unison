@@ -1,8 +1,8 @@
-# ln -fs ~/metadoc/decl/.unison ~/.unison/decl.prf
-# unison decl
+# ln -fs ~/metadoc/u/.unison ~/.unison/u.prf
+# unison u
 
-root = ./doc/decl
-root = ../metadoc/decl
+root = ./doc/u
+root = ../metadoc/u
 
 prefer = newer
 watch = true
