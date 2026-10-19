@@ -1,8 +1,8 @@
 set(CMAKE_C_STANDARD   17)
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_C_COMPILER_ID       GNU)
-set(CMAKE_CXX_COMPILER_ID     GNU)
+set(CMAKE_C_COMPILER_ID   GNU)
+set(CMAKE_CXX_COMPILER_ID GNU)
 
 set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}-gcc)
 set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}-as)
@@ -11,6 +11,8 @@ set(CMAKE_LINKER       ${TOOLCHAIN_PREFIX}-ld)
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 set(CMAKE_SIZE         ${TOOLCHAIN_PREFIX}-size)
 set(CMAKE_RC_COMPILER  ${TOOLCHAIN_PREFIX}-windres)
+
+add_compile_definitions(APP="${CMAKE_PROJECT_NAME}")
 
 add_compile_options(
       -Wall -Wextra               # -Wpedantic
@@ -28,7 +30,7 @@ add_compile_options(
 # string (TOUPPER ${OS}   OS_   )
 
 # add_compile_definitions(
-#     APP=$(APP) ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}
+#     ${APP_} ${HW_} ${CPU_} ${ARCH_} ${OS_}
 # )
 
 add_link_options(
@@ -42,8 +44,4 @@ if(CMAKE_BUILD_TYPE MATCHES Release)
     add_compile_options(-Os -g0)
 endif()
 
-set(CMAKE_EXECUTABLE_SUFFIX_ASM ${CMAKE_EXECUTABLE_SUFFIX})
-set(CMAKE_EXECUTABLE_SUFFIX_C   ${CMAKE_EXECUTABLE_SUFFIX})
-set(CMAKE_EXECUTABLE_SUFFIX_CXX ${CMAKE_EXECUTABLE_SUFFIX})
-
-# file(GLOB LD hw/${HW}/*.ld)
+file(GLOB LD hw/${HW}/*.ld)
