@@ -1,12 +1,21 @@
 {
-    "name"       : "bcx",
-    "displayName": "bcxForth",
-    "description": "Byte Code eXecution engine debug & development",
-    "version"    : "0.0.1",
-    "icon"       : "logo.png",
-    "publisher"  : "dponyatov",
-    "license"    : "MIT",
-    "homepage"   : "https://github.com/ponyatov/bcx",
+    "name"        : "bcx",
+    "displayName" : "bcx: ByteCode eXecutor",
+    "description" : "script language VM for embedded systems",
+    "version"     : "0.0.1",
+    "icon"        : "./logo.png",
+    "publisher"   : "dponyatov",
+    "license"     : "MIT",
+    "homepage"    : "https://github.com/ponyatov/bcx",
+    "author": {
+        "name": "Dmitry Ponyatov", "email": "dponyatov@gmail.com"
+    },
+    "bugs": {
+        "url": "https://github.com/ponyatov/bcx/issue"
+    },
+    "repository": {
+        "type": "git", "url" : "https://github.com/ponyatov/bcx/tree/dponyatov/vscode"
+    },
     "engines": {
         "vscode": "^1.85.0"
     },
@@ -14,34 +23,49 @@
         "Programming Languages", "Debuggers"
     ],
     "keywords": [
-        "bytecode", "embedded", "script", "interpreter", "FORTH", "CLI", "REPL"
+        "bcx", "bytecode", "VM",
+        "FORTH","CLI", "REPL",
+        "embedded", "MCU", "STM32", "ESP32"
     ],
-    "bugs": {
-        "url": "https://github.com/ponyatov/bcx/issue"
-    },
-    "repository": {
-        "type": "git",
-        "url" : "https://github.com/ponyatov/bcx/tree/dponyatov/vscode"
-    },
     "activationEvents": [
         "onLanguage:bcx",
+        "onDebugResolve:bcx",
+        "onDebugDynamicConfigurations:bcx",
         "workspaceContains:lib/*.ini",
-        "workspaceContains:lib/*.f"
+        "workspaceContains:lib/*.?"
     ],
     "extensionDependencies": [
-        "ms-python.python"
+        "ms-vscode.cpptools",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-vscode.cmake-tools",
+        "daohong-emilio.yash",
+        "rreverser.ragel",
+        "zixuanwang.linkerscript",
+        "ms-vscode.vscode-serial-monitor"
     ],
     "main": "./extension.js",
     "contributes": {
-        "languages": [{
-            "id"           :  "bcx",
-            "extensions"   : [".ini", ".f"],
-            "configuration":  "languageConfiguration.json"
-        }],
-        "grammars": [{
-            "language" : "bcx",
-            "scopeName": "source.bcx",
-            "path"     : "tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "bcx",
+                "aliases": [
+                    "bcx",
+                    "ByteCode eXecutor"
+                ],
+                "extensions": [
+                    ".bcx",
+                    ".ini",
+                    ".f"
+                ],
+                "configuration": "./languageConfiguration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "bcx",
+                "scopeName": "source.bcx",
+                "path": "./tmLanguage.json"
+            }
+        ],
     }
 }
