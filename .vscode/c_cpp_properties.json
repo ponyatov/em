@@ -62,7 +62,9 @@
         },
         {
             "name"                 : "cmake",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  :  true,
+            "includePath"          : ["${appInclude}", "${crossInclude}"]
         }
     ]
 }
