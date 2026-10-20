@@ -1,5 +1,5 @@
 {
-    "$schema"  : "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "$schema"  : "https://raw.githubusercontent.com/martinring/tmlanguage/refs/heads/master/tmlanguage.json",
     "name"     : "bcx",
     "version"  : "0.0.1",
     "scopeName": "source.bcx",
@@ -46,7 +46,7 @@
             "patterns": [
                 {
                     "name" : "keyword.mnemonic.bcx.assembly",
-                    "match": "\\b(nop|halt|jmp|qjmp)\\b"
+                    "match": "\\b(nop|halt|jmp|jz)\\b"
                 }
             ]
         },
@@ -54,11 +54,11 @@
             "patterns": [
                 {
                     "name": "variable.label.bcx.public",
-                    "match": "^:\\s*[a-z]+"
+                    "match": ":\\s*[a-z]+"
                 },
                 {
                     "name": "string.label.bcx.local",
-                    "match": "^[a-z]+:"
+                    "match": "@[a-z]+"
                 }
             ]
         },

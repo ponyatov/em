@@ -13,6 +13,7 @@
     ],
     "autoCloseBefore": ";:.,=}])> \n\t",
     "autoClosingPairs": [
+        ["/*", "*/"],
         ["{", "}"],
         [":", ";"],
         ["[", "]"],
@@ -21,6 +22,7 @@
         {"open": "'" , "close": "'" , "notIn": [ "string", "comment" ]}
     ],
     "surroundingPairs": [
+        ["/*", "*/"],
         ["{", "}"],
         [":", ";"],
         ["[", "]"],

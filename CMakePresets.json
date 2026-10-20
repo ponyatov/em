@@ -1,5 +1,5 @@
 {
-    "version": 6,
+    "version": 3,
     "buildPresets": [
         {
             "name"            :  "pillF030",
@@ -42,11 +42,6 @@
             "targets"         : ["all","install"]
         },
         {
-            "name"            :  "win32",
-            "configurePreset" :  "win32",
-            "targets"         : ["all","install"]
-        },
-        {
             "name"            :  "wasm",
             "configurePreset" :  "linux",
             "targets"         : ["wasm"]
@@ -58,10 +53,14 @@
             "jobs"            :   24
         },
         {
+            "name"            :  "win32",
+            "configurePreset" :  "win32",
+            "targets"         : ["all","install"]
+        },
+        {
             "name"            :  "linux",
             "configurePreset" :  "linux",
-            "targets"         : ["all","install"],
-            "jobs"            :   4
+            "targets"         : ["all","install"]
         }
     ],
     "configurePresets": [
