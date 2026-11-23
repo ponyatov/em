@@ -1,7 +1,3 @@
 /// @defgroup usb usb
-/// @ingroup io
-/// @brief generic USB interfaces
-/// @{
-
-class USB : public IO {};
-/// @}
+/// @ingroup lib
+/// @brief @ref usbhal stack reimplemented
