@@ -22,7 +22,7 @@
         "requirements.*": "properties",
         "*.ksy": "yaml",
         "ws.?": "jsonc",
-        "*.ini": "properties", "*.[uf]": "properties"
+                "*.ini": "bcx", "*.f": "bcx"
     },
 
     // editor
@@ -40,9 +40,7 @@
     "workbench.tree.indent": 24,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 2222,
-    "auto-tab-closer.delayMs": 5555,
-    "auto-tab-closer.numLeftTabs": 3,
-    "auto-tab-closer.numMaxTabs": 3,
+    "closeIdleTabs.idleTimeout": 30,
     // "git.enabled": false,
 
     // terminal
@@ -52,19 +50,19 @@
     "prettier.configPath"         : ".prettierrc",
     "prettier.requireConfig"      :  true,
     "json.format.enable"          :  true,
-    "[json]"      : {
+    "[json]"       : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
         "editor.formatOnSave"     : false},
-    "[jsonc]"     : {
+    "[jsonc]"      : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
         "editor.formatOnSave"     : false},
     "[html]": {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
         "editor.formatOnSave"     : false},
-    "[javascript]": {
+    "[javascript]" : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
         "editor.formatOnSave"     : false},
-    "[typescript]": {
+    "[typescript]" : {
         "editor.defaultFormatter" : "esbenp.prettier-vscode",
         "editor.formatOnSave"     : false},
     //   "eslint.validate": ["typescript"],
