@@ -1,7 +1,7 @@
 {
     "recommendations": [
-        "statiolake.vscode-auto-tab-closer",
-        "stkb.rewrap",
+        // "stkb.rewrap",
+        "close-all-Idle-tabs.close-idle-tabs",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
         "usernamehw.errorlens",
