@@ -21,7 +21,8 @@
         "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
         "requirements.*": "properties",
         "*.ksy": "yaml",
-        "*.ini": "properties", "*.u": "properties"
+        "ws.?": "jsonc",
+        "*.ini": "properties", "*.[uf]": "properties"
     },
 
     // editor
